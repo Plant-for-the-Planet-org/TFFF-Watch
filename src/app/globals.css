@@ -3,24 +3,46 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* base colors */
+  --base-gray: rgba(227, 227, 227, 1);
+  --base-text: rgba(51, 51, 51, 1);
+
+  /* Color scheme */
+  --primary-light: rgba(240, 250, 244, 1);
+  --primary: rgba(111, 207, 151, 1);
+  --secondary-light: rgba(246, 250, 255, 1);
+  --secondary: rgba(47, 128, 237, 1);
+
+  /* Theme colors as per favicon */
+  --theme-base: rgba(8, 36, 71, 1);
+  --theme-text: rgba(111, 207, 151, 1);
+
+  /* Component colors */
+  --chip-selected-background: rgba(62, 62, 62, 1);
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /*  */
+  --color-base-gray: var(--base-gray);
+  --color-base-text: var(--base-text);
+  --color-primary-light: var(--primary-light);
+  --color-primary: var(--primary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary: var(--secondary);
+
+  /* Theme colors as per favicon */
+  --color-theme-base: var(--theme-base);
+  --color-theme-text: var(--theme-text);
+
+  /* Component colors */
+  --color-chip-selected-background: var(--chip-selected-background);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+@import "../styles/dynamics.css";

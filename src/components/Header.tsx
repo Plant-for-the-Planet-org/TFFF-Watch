@@ -1,0 +1,49 @@
+import Hr from "@/components/ui/Hr";
+import Image from "next/image";
+
+export default function Header() {
+  return (
+    <div>
+      <div className="flex justify-between py-4 lg:py-6">
+        <Logo />
+        <Menu />
+      </div>
+      <Hr />
+    </div>
+  );
+}
+
+export function Logo() {
+  return (
+    <div className="px-2">
+      <h1>
+        <Image
+          className="w-[160px] h-[24px] lg:w-[256px] lg:h-[32px]"
+          width={256}
+          height={32}
+          src="/assets/tfffwatch.svg"
+          alt="TFFF Watch"
+        />
+      </h1>
+      <p className="text-xs tracking-[0.14em] lg:text-base lg:tracking-[0.32em] font-light">
+        FOREVER STARTS NOW
+      </p>
+    </div>
+  );
+}
+
+function Menu() {
+  return (
+    <div>
+      <button className="p-2 lg:p-4">
+        <Image
+          className="w-[24px] h-[24px] lg:w-[32px] lg:h-[32px]"
+          width={32}
+          height={32}
+          src="/assets/menu.svg"
+          alt="TFFF Watch"
+        />
+      </button>
+    </div>
+  );
+}
