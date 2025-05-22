@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ReactNode, useRef, useState } from "react";
 
 export default function Menu() {
@@ -37,11 +38,21 @@ export default function Menu() {
         className="z-40 p-6 shadow-custom rounding-xl"
       >
         <div className="divide-y divide-base-gray font-semibold">
-          <MenuItem>The TFFF Idea</MenuItem>
-          <MenuItem>Investment Tracker</MenuItem>
-          <MenuItem>Friends of the TFFF</MenuItem>
-          <MenuItem>About TFFF Watch</MenuItem>
-          <MenuItem>Press Contact</MenuItem>
+          <MenuItem>
+            <Link href="the-tfff-idea">The TFFF Idea</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="investment-tracker">Investment Tracker</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="friends-of-the-tfff">Friends of the TFFF</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="about-tfff-watch">About TFFF Watch</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link href="press-contact">Press Contact</Link>
+          </MenuItem>
         </div>
       </dialog>
     </div>

@@ -11,7 +11,7 @@ export function Button({ external = false, children }: Props) {
     <button className="bg-primary text-white min-w-64 px-6 py-3 rounded-xl cursor-pointer">
       <span className="flex justify-between items-center">
         <span></span>
-        <span className="font-semibold typo-p">{children}</span>
+        <span className="font-semibold typo-p px-4">{children}</span>
         <span>
           {external && (
             <Image

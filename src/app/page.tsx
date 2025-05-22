@@ -1,5 +1,3 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import InfoGrid from "@/components/sections/features/InfoGrid";
 import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
 import NewsLetter from "@/components/sections/features/NewsLetter";
@@ -10,10 +8,7 @@ import Br from "@/components/ui/Br";
 
 export default function Home() {
   return (
-    // <div className="container mx-auto">
-    <div className="mx-auto padding-x-2">
-      <Header />
-      <Br />
+    <div>
       <TFFFMapView />
       <Br />
       <InvestmentTracker />
@@ -25,8 +20,6 @@ export default function Home() {
       <RecentPolicyPapersComentary />
       <Br />
       <NewsLetter />
-      <Br />
-      <Footer />
     </div>
   );
 }

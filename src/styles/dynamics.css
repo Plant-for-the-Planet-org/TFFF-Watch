@@ -25,6 +25,7 @@
 }
 
 .typo-h1 {
+  @apply text-xl md:text-2xl lg:text-3xl xl:text-4xl;
 }
 .typo-h2 {
   @apply text-xl lg:text-2xl;

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <div className="bg-base-gray rounding-xl padding-3">
+    <footer className="bg-base-gray rounding-xl padding-3">
       <div className="flex justify-between items-center gap-y-4 flex-wrap typo-p">
         <div className="flex gap-2 items-center">
           <span>Built by</span>
@@ -37,6 +37,6 @@ export default function Footer() {
           <p>Plant-for-the-Planet Foundation © 2025</p>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
