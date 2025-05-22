@@ -1,3 +1,4 @@
+import Menu from "@/components/Menu";
 import Hr from "@/components/ui/Hr";
 import Image from "next/image";
 
@@ -28,22 +29,6 @@ export function Logo() {
       <p className="text-xs tracking-[0.14em] lg:text-base lg:tracking-[0.32em] font-light">
         FOREVER STARTS NOW
       </p>
-    </div>
-  );
-}
-
-function Menu() {
-  return (
-    <div>
-      <button className="p-2 lg:p-4">
-        <Image
-          className="w-[24px] h-[24px] lg:w-[32px] lg:h-[32px]"
-          width={32}
-          height={32}
-          src="/assets/menu.svg"
-          alt="TFFF Watch"
-        />
-      </button>
     </div>
   );
 }

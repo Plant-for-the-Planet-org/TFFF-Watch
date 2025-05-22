@@ -22,7 +22,7 @@ export default function NewsLetter() {
         <div className="flex justify-center">
           <form
             action=""
-            className="min-w-xs md:min-w-md flex border border-primary rounded-lg"
+            className="bg-white min-w-xs md:min-w-md flex border border-primary rounded-lg"
           >
             <input
               className="grow shrink px-4 py-4"
