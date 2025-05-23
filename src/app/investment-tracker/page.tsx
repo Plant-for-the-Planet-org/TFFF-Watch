@@ -9,12 +9,14 @@ export default function Page() {
     <div>
       <InvestmentTracker />
       <Br />
-      <CountryListChips />
-      <Br />
-      <InvestmentProgress />
-      <Br />
-      <InvestmentProcess />
-      <Br />
+      <div className="extra-padding-x-4">
+        <CountryListChips />
+        <Br />
+        <InvestmentProgress />
+        <Br />
+        <InvestmentProcess />
+        <Br />
+      </div>
     </div>
   );
 }

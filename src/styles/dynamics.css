@@ -15,6 +15,13 @@
 .padding-4 {
   @apply p-4 md:p-6 lg:p-8 xl:p-12;
 }
+.padding-x-4 {
+  @apply px-4 md:px-6 lg:px-8 xl:px-12;
+}
+
+.extra-padding-x-4 {
+  @apply lg:px-8 xl:px-12;
+}
 
 .rounding-lg {
   @apply rounded-lg md:rounded-xl lg:rounded-2xl;

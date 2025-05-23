@@ -34,7 +34,7 @@ export default function InvestmentProgress() {
 
   return (
     <div className="bg-primary-light rounding-xl padding-3">
-      <div className="container mx-auto h-24 flex justify-between items-center relative">
+      <div className="container mx-auto h-24 flex justify-between items-center relative padding-x-4">
         {nodes.map((el, key) => (
           <Fragment key={key}>
             <div
