@@ -1,0 +1,76 @@
+import Br from "@/components/ui/Br";
+import Image from "next/image";
+import { Fragment } from "react";
+import { twMerge } from "tailwind-merge";
+
+export default function InvestmentProgress() {
+  const nodes = [
+    {
+      label: "Support expressed",
+      display: ["Support", "expressed"],
+      success: true,
+    },
+    {
+      label: "Intention to invest announced",
+      display: ["Intention to invest", "announced"],
+      success: false,
+    },
+    {
+      label: "Specific investment amount(s) named publicly",
+      display: ["Specific investment", "amount(s) named"],
+      success: false,
+    },
+    {
+      label: "Capital pledged",
+      display: ["Capital", "pledged"],
+      success: false,
+    },
+    {
+      label: "Capital invested",
+      display: ["Capital", "invested"],
+      success: false,
+    },
+  ];
+
+  return (
+    <div className="bg-primary-light rounding-xl padding-3">
+      <div className="container mx-auto h-24 flex justify-between items-center relative">
+        {nodes.map((el, key) => (
+          <Fragment key={key}>
+            <div
+              className={twMerge(
+                "w-6 h-6 rounded-full border border-base-text relative",
+                el.success && "bg-primary border-primary-light"
+              )}
+            >
+              <Image
+                className="p-1 pt-1.5"
+                width={30}
+                height={26}
+                src="/assets/progress-check.png"
+                alt="Completed"
+              />
+              <div className="absolute top-7 left-[50%] translate-x-[-50%]">
+                <div
+                  className={twMerge(
+                    "w-[160px] text-center typo-p",
+                    el.success && "font-bold"
+                  )}
+                >
+                  {el.display.map((el, k) => (
+                    <p key={k}>{el}</p>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {key < nodes.length - 1 && (
+              <div className="grow rounded-full border border-base-text"></div>
+            )}
+          </Fragment>
+        ))}
+      </div>
+      <Br />
+      <Br />
+    </div>
+  );
+}
