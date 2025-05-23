@@ -6,8 +6,9 @@ import Footer from "@/components/Footer";
 import Br from "@/components/ui/Br";
 
 const openSans = Open_Sans({
-  variable: "--font-geist-sans",
+  variable: "--font-open-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 // const geistMono = Geist_Mono({

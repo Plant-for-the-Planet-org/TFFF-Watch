@@ -39,12 +39,15 @@ export default function InvestmentProgress() {
           <Fragment key={key}>
             <div
               className={twMerge(
-                "w-6 h-6 rounded-full border border-base-text relative",
+                "w-7 h-7 rounded-full border border-base-text relative",
                 el.success && "bg-primary border-primary-light"
               )}
             >
               <Image
-                className="p-1 pt-1.5"
+                className={twMerge(
+                  "p-1.5 pt-2 text-center",
+                  el.success ? "block" : "hidden"
+                )}
                 width={30}
                 height={26}
                 src="/assets/progress-check.png"
