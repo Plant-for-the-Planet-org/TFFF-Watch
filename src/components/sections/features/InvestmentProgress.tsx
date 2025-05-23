@@ -61,7 +61,7 @@ export default function InvestmentProgress() {
     <div className="bg-primary-light rounding-xl padding-3">
       <div
         ref={containerRef}
-        className="container mx-auto h-32 w-full flex justify-between items-center overflow-x-scroll overscroll-x-auto padding-x-4 scrollbar-transparent"
+        className="container mx-auto h-36 w-full flex justify-between items-center overflow-x-scroll overscroll-x-auto padding-x-4 scrollbar-transparent"
       >
         {nodes.map((el, key) => (
           <Fragment key={key}>

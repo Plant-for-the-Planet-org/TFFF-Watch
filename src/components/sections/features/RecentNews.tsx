@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/Button";
 export default function RecentNews() {
   return (
     <div className="bg-secondary-light rounding-xl padding-3">
+      <Br />
       <h2 className="text-center font-bold typo-h2">🌿 Recent News</h2>
       <Br />
       <Br />
       <div>
-        <div className="flex max-w-full lg:grid lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto">
+        <div className="flex max-w-full lg:grid lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto scrollbar-transparent">
           {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5"> */}
           <NewsCard
             title="An ‘Elegant’ Idea Could Pay Billions to Protect Trees"

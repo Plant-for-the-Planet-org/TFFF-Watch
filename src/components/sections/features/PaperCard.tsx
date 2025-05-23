@@ -11,7 +11,7 @@ type Props = {
 
 export default function PaperCard(props: Props) {
   return (
-    <div className="shrink-0 w-10/12 sm:w-6/12 lg:w-full padding-2 bg-white rounding-xl">
+    <div className="shrink-0 w-10/12 sm:w-6/12 lg:w-full padding-2 bg-white border border-primary-medium rounding-xl">
       <div className="relative mb-2">
         <div className="absolute bottom-0 inset-x-0 px-4 pb-4">
           <div className="flex justify-between items-center">

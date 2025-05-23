@@ -5,6 +5,7 @@ import PaperCard from "@/components/sections/features/PaperCard";
 export default function RecentPolicyPapersComentary() {
   return (
     <div className="bg-primary-light rounding-xl padding-3">
+      <Br />
       <h2 className="text-center font-bold typo-h2">
         📰 Recent Policy Papers & Commentary
       </h2>
