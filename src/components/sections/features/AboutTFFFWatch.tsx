@@ -16,7 +16,9 @@ export default function AboutTFFFWatch() {
             </p>
           </div>
         </div>
-        <Button external>Contact Us</Button>
+        <Button type="link" external>
+          Contact Us
+        </Button>
       </div>
       <Br />
       <Hr />
@@ -33,7 +35,9 @@ export default function AboutTFFFWatch() {
             </p>
           </div>
         </div>
-        <Button external>Contact Us</Button>
+        <Button type="link" external>
+          Contact Us
+        </Button>
       </div>
       <Br />
       <Hr />

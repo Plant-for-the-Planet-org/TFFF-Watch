@@ -2,14 +2,22 @@ import Menu from "@/components/Menu";
 import Hr from "@/components/ui/Hr";
 import Image from "next/image";
 import Link from "next/link";
+import HeaderCountry from "./HeaderCountry";
+import Br from "./ui/Br";
 
 export default function Header() {
   return (
     <header>
-      <div className="flex justify-between py-4 lg:py-6">
+      <Br />
+      <div className="flex justify-between items-center ">
         <Logo />
+        {/* <HeaderCountry /> */}
         <Menu />
       </div>
+      <div className="flex justify-center">
+        <HeaderCountry />
+      </div>
+      <Br />
       <Hr />
     </header>
   );

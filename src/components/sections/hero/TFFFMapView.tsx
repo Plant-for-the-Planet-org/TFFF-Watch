@@ -1,8 +1,10 @@
+import Br from "@/components/ui/Br";
 import { PrimaryHeaderContent } from "./TFFFMapViewContent";
 
 export default function TFFFMapView() {
   return (
     <Container>
+      <Br />
       <PrimaryHeaderContent />
     </Container>
   );

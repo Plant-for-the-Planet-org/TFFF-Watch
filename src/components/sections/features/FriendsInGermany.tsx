@@ -31,7 +31,7 @@ const persons = [
 
 export default function FriendsInGermany() {
   return (
-    <div className="padding-3">
+    <div>
       <Br />
       <div className="text-center">
         <h2 className="font-bold typo-p">Friends of TFFF Germany</h2>
@@ -40,7 +40,7 @@ export default function FriendsInGermany() {
         </p>
       </div>
       <Br />
-      <div className="flex gap-4 justify-center flex-wrap">
+      <div className="flex gap-4 justify-between flex-wrap">
         {persons.map((el, key) => (
           <div
             key={key}

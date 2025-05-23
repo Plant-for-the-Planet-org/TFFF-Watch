@@ -7,7 +7,6 @@ export function PrimaryHeaderContent() {
         </span>
         <span className="grow text-center">2024 ^</span>
       </h2>
-      <div className="my-2"></div>
       <p className="text-center max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl typo-p">
         % of eligible forest cover deforested or degraded in tropical forest
         countries according to the TFFF’s standards

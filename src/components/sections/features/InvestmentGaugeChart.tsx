@@ -37,7 +37,7 @@ const CustomLabel = (props: CustomLabelProps) => {
       x={x}
       y={y}
       textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="central"
+      // dominantBaseline="central"
       fill="#333"
       fontSize="12"
     >
@@ -83,6 +83,7 @@ export default function InvestmentGaugeChart() {
             outerRadius="150%"
             dataKey="value"
             cy="85%"
+            labelLine={false}
             label={CustomLabel}
           >
             {data.map((entry, index) => (

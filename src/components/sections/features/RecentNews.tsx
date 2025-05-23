@@ -40,7 +40,9 @@ export default function RecentNews() {
       <Br />
       <Br />
       <div className="flex justify-center">
-        <Button external>See All</Button>
+        <Button type="link" external>
+          See All
+        </Button>
       </div>
       <Br />
     </div>

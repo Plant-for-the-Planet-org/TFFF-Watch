@@ -17,7 +17,9 @@ export default function WhatsTheTFFF() {
         </div>
         <Br />
         <div className="xl:max-w-[30vw] self-center-safe text-center">
-          <Button external>About the Fund</Button>
+          <Button type="link" external>
+            About the Fund
+          </Button>
         </div>
       </div>
     </div>
