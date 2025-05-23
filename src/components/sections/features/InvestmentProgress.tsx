@@ -51,7 +51,7 @@ export default function InvestmentProgress() {
     if (targetNode && container) {
       const nodeLeft = targetNode.offsetLeft;
       container.scrollTo({
-        left: nodeLeft - 80,
+        left: nodeLeft - 96,
         behavior: "smooth",
       });
     }
@@ -61,7 +61,7 @@ export default function InvestmentProgress() {
     <div className="bg-primary-light rounding-xl padding-3">
       <div
         ref={containerRef}
-        className="container mx-auto h-32 w-full flex justify-between items-center overflow-x-scroll overscroll-x-auto padding-x-4"
+        className="container mx-auto h-32 w-full flex justify-between items-center overflow-x-scroll overscroll-x-auto padding-x-4 scrollbar-transparent"
       >
         {nodes.map((el, key) => (
           <Fragment key={key}>
@@ -72,8 +72,8 @@ export default function InvestmentProgress() {
               className={twMerge(
                 "shrink-0 w-7 h-7 rounded-full border border-base-text relative",
                 el.success && "bg-primary border-primary-light",
-                key === 0 && "ml-4",
-                key === nodes.length - 1 && "mr-4"
+                key === 0 && "ml-6",
+                key === nodes.length - 1 && "mr-6"
               )}
             >
               <Image

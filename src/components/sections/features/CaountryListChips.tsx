@@ -14,7 +14,7 @@ export default function CountryListChips() {
   return (
     <div className="w-full relative">
       {/* <div className="w-16 absolute inset-y-0 left-0 bg-white/30 backdrop-blur-sm"></div> */}
-      <div className="w-full flex gap-3 overflow-x-scroll overscroll-x-auto pr-16 pb-4">
+      <div className="w-full flex gap-3 pr-16 pb-4 overflow-x-scroll overscroll-x-auto scrollbar-transparent">
         {countryList.map((el, key) => (
           <button
             className="border border-base-gray rounded-full px-5 py-1.5 text-nowrap"

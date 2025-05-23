@@ -47,6 +47,7 @@
 }
 
 @import "../styles/dynamics.css";
+@import "../styles/overwrites.css";
 
 body {
   font-family: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont,

@@ -1,0 +1,21 @@
+.scrollbar-transparent {
+  /* For Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0) transparent;
+  scrollbar-width: thin;
+}
+
+/* For WebKit-based browsers (Chrome, Safari) */
+.scrollbar-transparent::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+
+.scrollbar-transparent::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrollbar-transparent::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 4px;
+}
