@@ -1,6 +1,6 @@
+import CountryMapView from "@/components/maps/CountryMapView";
 import Br from "@/components/ui/Br";
 import { PrimaryHeaderContent } from "./TFFFMapViewContent";
-import GlobalMapView from "@/components/maps/GlobalMapView";
 
 export default function TFFFMapView() {
   return (
@@ -10,7 +10,8 @@ export default function TFFFMapView() {
         <PrimaryHeaderContent />
         <Br />
         <div className="grow">
-          <GlobalMapView />
+          {/* <WorldMapView /> */}
+          <CountryMapView iso2="BR" />
         </div>
       </div>
     </Container>

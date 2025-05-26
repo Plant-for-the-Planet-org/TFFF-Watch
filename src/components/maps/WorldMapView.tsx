@@ -44,7 +44,7 @@ const style: StyleSpecification = {
   glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
 };
 
-export default function GlobalMapView() {
+export default function WorldMapView() {
   return (
     <Map
       initialViewState={{
@@ -55,7 +55,7 @@ export default function GlobalMapView() {
       style={{}}
       mapStyle={style}
       renderWorldCopies={false}
-      minZoom={0.5}
+      minZoom={0}
       maxZoom={5}
     />
   );
