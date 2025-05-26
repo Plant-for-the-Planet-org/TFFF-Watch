@@ -2,39 +2,14 @@
 
 import turfBbox from "@turf/bbox";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Map, MapRef, StyleSpecification } from "@vis.gl/react-maplibre";
+import { Map, MapRef } from "@vis.gl/react-maplibre";
 import type { FeatureCollection } from "geojson";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 
-const style: StyleSpecification = {
-  layers: [
-    {
-      id: "background",
-      type: "background",
-      paint: { "background-color": "#F0FAF4" },
-    },
-    {
-      id: "fill",
-      type: "fill",
-      source: "country",
-      paint: {
-        "fill-color": "#E1EBE5",
-        "fill-outline-color": "#FFFFFF",
-      },
-    },
-    {
-      id: "line",
-      type: "line",
-      source: "country",
-      paint: { "line-color": "#FFFFFF", "line-width": 1.5 },
-    },
-  ],
-};
-
-interface Props {
+export type Props = {
   iso2: string;
-}
+};
 
 export default function CountryMapView({ iso2 }: Props) {
   const mapRef = useRef<MapRef>(null);
@@ -101,11 +76,36 @@ export default function CountryMapView({ iso2 }: Props) {
         sources: countryFC
           ? { country: { type: "geojson", data: countryFC } }
           : {},
-        layers: countryFC ? style.layers : [],
+        layers: countryFC
+          ? [
+              {
+                id: "background",
+                type: "background",
+                paint: { "background-color": "#F0FAF4" },
+              },
+              {
+                id: "fill",
+                type: "fill",
+                source: "country",
+                paint: {
+                  "fill-color": "#FFFFFF",
+                  "fill-outline-color": "#FFFFFF",
+                },
+              },
+              {
+                id: "line",
+                type: "line",
+                source: "country",
+                paint: { "line-color": "#FFFFFF", "line-width": 1.5 },
+              },
+            ]
+          : [],
       }}
       renderWorldCopies={false}
       minZoom={0}
       maxZoom={12}
+      // scrollZoom={false}
+      interactive={false}
     />
   );
 }

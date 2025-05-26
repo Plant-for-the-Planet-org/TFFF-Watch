@@ -19,3 +19,7 @@
   background-color: rgba(0, 0, 0, 0);
   border-radius: 4px;
 }
+
+.year-select {
+  -webkit-appearance: none;
+}

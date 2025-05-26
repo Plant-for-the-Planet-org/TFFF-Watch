@@ -1,17 +1,34 @@
 import CountryMapView from "@/components/maps/CountryMapView";
+import WorldMapView from "@/components/maps/WorldMapView";
 import Br from "@/components/ui/Br";
-import { PrimaryHeaderContent } from "./TFFFMapViewContent";
+import { WorldMapHeaderContent } from "./TFFFMapViewContent";
+import type { Props as CountryMapViewProps } from "@/components/maps/CountryMapView";
 
-export default function TFFFMapView() {
+export function TFFFWorldMapView() {
   return (
     <Container>
       <div className="h-full flex flex-col">
         <Br />
-        <PrimaryHeaderContent />
+        <WorldMapHeaderContent />
         <Br />
         <div className="grow">
-          {/* <WorldMapView /> */}
-          <CountryMapView iso2="BR" />
+          <WorldMapView />
+        </div>
+      </div>
+    </Container>
+  );
+}
+
+type TFFFCountryMapViewProps = CountryMapViewProps & {};
+export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
+  return (
+    <Container>
+      <div className="h-full flex flex-col">
+        <Br />
+        <WorldMapHeaderContent />
+        <Br />
+        <div className="grow">
+          <CountryMapView {...props} />
         </div>
       </div>
     </Container>
