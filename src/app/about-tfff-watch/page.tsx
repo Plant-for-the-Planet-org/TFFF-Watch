@@ -6,7 +6,8 @@ import Br from "@/components/ui/Br";
 
 export default function Page() {
   return (
-    <div className="extra-padding-x-4">
+    // <div className="extra-padding-x-4">
+    <div>
       <SecondaryHero OverlayComponent={<OverlayAboutTFFFWatch />} />
       <Br />
       <AboutTFFFWatch />

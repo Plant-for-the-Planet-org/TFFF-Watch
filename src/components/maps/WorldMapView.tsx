@@ -55,8 +55,8 @@ export default function WorldMapView() {
       style={{}}
       mapStyle={style}
       // renderWorldCopies={false}
-      minZoom={0}
-      maxZoom={5}
+      scrollZoom={false}
+      // interactive={false}
     />
   );
 }

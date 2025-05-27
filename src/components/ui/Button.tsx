@@ -26,7 +26,7 @@ export function Button({
           <Image
             width={16}
             height={16}
-            src="/assets/Arrow.svg"
+            src="/assets/ui/Arrow.svg"
             alt="External Arror"
           />
         )}
@@ -54,27 +54,43 @@ export function Button({
 }
 
 type IconButtonProps = {
+  small?: boolean;
+  href?: string;
+  cn?: string;
   external?: boolean;
   children?: ReactNode;
 };
 
 export function IconButton({
+  small = false,
+  href = "#",
+  cn = "",
   external = false,
   children = null,
 }: IconButtonProps) {
   return (
-    <button className="bg-primary text-white h-12 w-12 rounded-full cursor-pointer">
-      <span className="flex justify-center items-center">
+    <a
+      href={href}
+      target={external ? "_blank" : "_self"}
+      rel={external ? "noopener noreferrer" : ""}
+      className={twMerge(
+        "bg-primary text-white h-10 w-10 rounded-full cursor-pointer",
+        small && "h-8 w-8",
+        cn
+      )}
+    >
+      <span className="h-full flex justify-center items-center">
         {children && <span>{children}</span>}
         {external && (
           <Image
+            className={twMerge("", small && "w-3 h-3")}
             width={16}
             height={16}
-            src="/assets/Arrow.svg"
+            src="/assets/ui/Arrow.svg"
             alt="External Arror"
           />
         )}
       </span>
-    </button>
+    </a>
   );
 }

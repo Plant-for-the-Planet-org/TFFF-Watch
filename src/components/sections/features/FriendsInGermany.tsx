@@ -40,7 +40,7 @@ export default function FriendsInGermany() {
         </p>
       </div>
       <Br />
-      <div className="flex gap-4 justify-between flex-wrap">
+      <div className="flex gap-4 justify-center xl:justify-between flex-wrap">
         {persons.map((el, key) => (
           <div
             key={key}

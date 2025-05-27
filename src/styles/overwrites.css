@@ -22,4 +22,10 @@
 
 .year-select {
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearence: none;
+
+  background-image: url("/assets/ui/select-arrow.svg");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
 }

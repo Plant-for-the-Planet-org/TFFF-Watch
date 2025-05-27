@@ -7,7 +7,7 @@ import Br from "./ui/Br";
 
 export default function Header() {
   return (
-    <header>
+    <header className="sticky top-0 z-30 bg-white/75 backdrop-blur-sm">
       <Br />
       <div className="flex justify-between items-center ">
         <Logo />

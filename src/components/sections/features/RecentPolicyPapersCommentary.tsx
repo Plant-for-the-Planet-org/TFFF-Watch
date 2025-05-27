@@ -12,13 +12,19 @@ export default function RecentPolicyPapersComentary() {
       <Br />
       <Br />
       <div>
-        <div className="flex max-w-full lg:grid lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto">
+        {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto"> */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe">
+          {/* <div className="flex gap-3 md:gap-4 xl:gap-5"> */}
           <PaperCard
-            title="An ‘Elegant’ Idea Could Pay Billions to Protect Trees"
-            summary="Brazil is proposing a fund that would pay countries to protect tropical forests that are crucial to curbing climate change. It would generate returns, too."
-            image="https://images.pexels.com/photos/2833037/pexels-photo-2833037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            publisher="New York Times"
-            datetime={"2024-10-20"}
+            title="Comments on Tropical Forest Forever Facility Concept Note V.2"
+            summary=""
+            image="/assets/papers/griffith.png"
+            url="https://www.pexels.com/photo/photo-of-people-gathering-in-room-2833037/"
+          />
+          <PaperCard
+            title="Joint Policy Recommendations of German NGOs towards Concept Note 3.0"
+            summary=""
+            image="/assets/papers/oroverde.png"
             url="https://www.pexels.com/photo/photo-of-people-gathering-in-room-2833037/"
           />
         </div>
