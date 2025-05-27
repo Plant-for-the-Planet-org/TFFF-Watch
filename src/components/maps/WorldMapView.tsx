@@ -50,11 +50,11 @@ export default function WorldMapView() {
       initialViewState={{
         longitude: 0,
         latitude: 33.5,
-        zoom: 1,
+        // zoom: 0,
       }}
       style={{}}
       mapStyle={style}
-      renderWorldCopies={false}
+      // renderWorldCopies={false}
       minZoom={0}
       maxZoom={5}
     />

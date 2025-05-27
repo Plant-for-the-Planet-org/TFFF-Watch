@@ -7,7 +7,8 @@ import Br from "@/components/ui/Br";
 export default function Page() {
   return (
     <div>
-      <div className="extra-padding-x-4">
+      {/* <div className="extra-padding-x-4"> */}
+      <div>
         <InvestmentTracker />
         <Br />
         <CountryListChips />

@@ -28,7 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${openSans.variable} antialiased mx-auto padding-x-2`}>
+      <body
+        className={`${openSans.variable} antialiased container mx-auto padding-x-2`}
+      >
         <Header />
         <Br />
         {children}

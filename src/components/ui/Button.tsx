@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 type Props = {
   type: "button" | "link";
   href?: string;
+  cn?: string;
   external?: boolean;
   children?: ReactNode;
 };
@@ -12,6 +13,7 @@ type Props = {
 export function Button({
   type = "button",
   href = "#",
+  cn = "",
   external = false,
   children,
 }: Props) {
@@ -33,7 +35,8 @@ export function Button({
   );
 
   const className = twMerge(
-    "inline-block bg-primary hover:bg-primary/90 text-white min-w-64 px-6 py-3 rounded-xl cursor-pointer"
+    "inline-block bg-primary hover:bg-primary/90 text-white min-w-64 px-6 py-3 rounded-xl cursor-pointer",
+    cn
   );
 
   if (type === "link")
