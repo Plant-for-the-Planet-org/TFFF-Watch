@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/Button";
 export default function WhatsTFFFWatch() {
   return (
     <div className="border border-base-gray rounding-xl padding-3 text-center">
-      <div className="flex flex-col justify-between">
-        <div>
+      <div className="h-full flex flex-col justify-between">
+        <div className="extra-padding-x-4">
+          {/* <div className="xl:max-w-[33vw] mx-auto self-center-safe text-center"> */}
           <h2 className="font-bold typo-h2">What’s TFFF Watch?</h2>
           <Br />
           <p className="xl:max-w-[33vw] mx-auto typo-p">

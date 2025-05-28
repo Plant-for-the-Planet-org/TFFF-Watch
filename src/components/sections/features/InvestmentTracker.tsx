@@ -8,8 +8,9 @@ export default function InvestmentTracker() {
   return (
     <div className="bg-secondary-light rounding-xl padding-3">
       <Br />
-      <div className="grid md:grid-cols-2 gap-y-4">
-        <div className="xl:max-w-[36vw] mx-auto flex flex-col items-center md:block">
+      <div className="grid lg:grid-cols-2 gap-y-4">
+        {/* <div className="lg:max-w-[33vw] mx-auto flex flex-col items-center lg:block"> */}
+        <div className="mx-auto flex flex-col items-center lg:block extra-padding-x-4">
           <h2 className="font-bold typo-h2">Investment Tracker</h2>
           <Br />
           <p className="typo-p">

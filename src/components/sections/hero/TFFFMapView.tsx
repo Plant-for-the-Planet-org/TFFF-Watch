@@ -37,7 +37,7 @@ export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
 
 function Container({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-primary-light rounding-xl padding-3 h-[85vh]">
+    <div className="bg-primary-light md:rounded-2xl lg:rounded-3xl -mx-2 md:m-auto md:p-4 lg:p-5 xl:p-6 h-[90vh] md:h-[88vh]">
       {children}
     </div>
   );

@@ -2,74 +2,67 @@
 
 import Br from "@/components/ui/Br";
 import Image from "next/image";
-import { Fragment, useEffect, useMemo, useRef } from "react";
+import { Fragment } from "react";
 import { twMerge } from "tailwind-merge";
 
 export default function InvestmentProgress() {
-  const nodes = useMemo(
-    () => [
-      {
-        label: "Support expressed",
-        display: ["Support", "expressed"],
-        success: true,
-      },
-      {
-        label: "Intention to invest announced",
-        display: ["Intention to invest", "announced"],
-        success: true,
-      },
-      {
-        label: "Specific investment amount(s) named publicly",
-        display: ["Specific investment", "amount(s) named"],
-        success: true,
-      },
-      {
-        label: "Capital pledged",
-        display: ["Capital", "pledged"],
-        success: false,
-      },
-      {
-        label: "Capital invested",
-        display: ["Capital", "invested"],
-        success: false,
-      },
-    ],
-    []
-  );
+  const nodes = [
+    {
+      label: "Support expressed",
+      display: ["Support", "expressed"],
+      success: true,
+    },
+    {
+      label: "Intention to invest announced",
+      display: ["Intention to invest", "announced"],
+      success: true,
+    },
+    {
+      label: "Specific investment amount(s) named publicly",
+      display: ["Specific investment", "amount(s) named"],
+      success: true,
+    },
+    {
+      label: "Capital pledged",
+      display: ["Capital", "pledged"],
+      success: false,
+    },
+    {
+      label: "Capital invested",
+      display: ["Capital", "invested"],
+      success: false,
+    },
+  ];
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
+  // const containerRef = useRef<HTMLDivElement>(null);
+  // const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
-    const lastSuccessIndex = [...nodes].reverse().findIndex((el) => el.success);
-    if (lastSuccessIndex === -1) return;
+  // useEffect(() => {
+  //   const lastSuccessIndex = [...nodes].reverse().findIndex((el) => el.success);
+  //   if (lastSuccessIndex === -1) return;
 
-    const targetIndex = nodes.length - 1 - lastSuccessIndex;
-    const targetNode = nodeRefs.current[targetIndex];
-    const container = containerRef.current;
+  //   const targetIndex = nodes.length - 1 - lastSuccessIndex;
+  //   const targetNode = nodeRefs.current[targetIndex];
+  //   const container = containerRef.current;
 
-    if (targetNode && container) {
-      const nodeLeft = targetNode.offsetLeft;
-      container.scrollTo({
-        left: nodeLeft - 96,
-        behavior: "smooth",
-      });
-    }
-  }, [nodes]);
+  //   if (targetNode && container) {
+  //     const nodeLeft = targetNode.offsetLeft;
+  //     container.scrollTo({
+  //       left: nodeLeft - 96,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // }, [nodes]);
 
   return (
     <div className="bg-primary-light rounding-xl padding-3">
       <div
-        ref={containerRef}
         // className="container mx-auto h-36 w-full flex justify-between items-center overflow-x-scroll overscroll-x-auto padding-x-4 scrollbar-transparent"
         className="w-8 py-2 md:h-36 md:w-full flex flex-col md:flex-row justify-between items-center padding-x-4"
       >
         {nodes.map((el, key) => (
           <Fragment key={key}>
             <div
-              ref={(elRef) => {
-                nodeRefs.current[key] = elRef;
-              }}
               className={twMerge(
                 "shrink-0 w-7 h-7 rounded-full border border-base-text relative",
                 el.success && "bg-primary border-primary-light"
