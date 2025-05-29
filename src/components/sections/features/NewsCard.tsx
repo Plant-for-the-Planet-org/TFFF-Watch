@@ -13,7 +13,8 @@ type Props = {
 
 export default function NewsCard(props: Props) {
   return (
-    <div className="group shrink-0 w-full sm:w-6/12 lg:w-full p-3 bg-white border border-primary-medium rounded-xl">
+    // <div className="group shrink-0 w-full sm:w-6/12 lg:w-full p-3 bg-white border border-primary-medium-light rounded-xl">
+    <div className="group flex-1/3 grow-0 shrink p-3 bg-white border border-primary-medium-light rounding-xl">
       <div className="relative mb-2 overflow-hidden rounded-lg">
         <img
           className="aspect-[2.42] md:aspect-[4/3] object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"

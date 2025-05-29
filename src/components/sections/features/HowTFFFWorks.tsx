@@ -1,5 +1,6 @@
 import Br from "@/components/ui/Br";
 import Image from "next/image";
+import HowTFFFWorksFlowChart from "@/components/sections/features/HowTFFFWorksFlowChart";
 
 export default function HowTFFFWorks() {
   return (
@@ -22,7 +23,8 @@ export default function HowTFFFWorks() {
         </p>
       </div>
       <Br />
-      <div></div>
+      <HowTFFFWorksFlowChart />
+      <Br />
       <div className="bg-[#E7F8EE] border-2 border-dashed border-[#6FCE97] rounding-lg padding-3">
         <div className="text-center">
           <h2 className="font-bold typo-h2">Example recipient country </h2>

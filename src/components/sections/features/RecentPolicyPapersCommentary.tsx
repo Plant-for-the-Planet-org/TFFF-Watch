@@ -13,7 +13,8 @@ export default function RecentPolicyPapersComentary() {
       <Br />
       <div>
         {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto"> */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe">
+        {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe"> */}
+        <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
           {/* <div className="flex gap-3 md:gap-4 xl:gap-5"> */}
           <PaperCard
             title="Comments on Tropical Forest Forever Facility Concept Note V.2"
@@ -27,6 +28,18 @@ export default function RecentPolicyPapersComentary() {
             image="/assets/papers/oroverde.png"
             url="https://www.pexels.com/photo/photo-of-people-gathering-in-room-2833037/"
           />
+          <PaperCard
+            title="Joint Policy Recommendations of German NGOs towards Concept Note 3.0"
+            summary=""
+            image="/assets/papers/oroverde.png"
+            url="https://www.pexels.com/photo/photo-of-people-gathering-in-room-2833037/"
+          />
+          {/* <PaperCard
+            title="Joint Policy Recommendations of German NGOs towards Concept Note 3.0"
+            summary=""
+            image="/assets/papers/oroverde.png"
+            url="https://www.pexels.com/photo/photo-of-people-gathering-in-room-2833037/"
+          /> */}
         </div>
       </div>
       <Br />

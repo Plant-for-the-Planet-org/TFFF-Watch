@@ -10,8 +10,9 @@
 
   /* Color scheme */
   --primary-light: rgba(240, 250, 244, 1);
-  --primary-medium: rgba(111, 207, 151, 0.2);
+  --primary-dark: rgba(39, 174, 96, 1);
   --primary: rgba(111, 207, 151, 1);
+  --primary-medium-light: rgba(111, 207, 151, 0.2);
   --secondary-light: rgba(246, 250, 255, 1);
   --secondary: rgba(47, 128, 237, 1);
 
@@ -31,9 +32,10 @@
   /*  */
   --color-base-gray: var(--base-gray);
   --color-base-text: var(--base-text);
-  --color-primary-light: var(--primary-light);
-  --color-primary-medium: var(--primary-medium);
+  --color-primary-dark: var(--primary-dark);
   --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-medium-light: var(--primary-medium-light);
   --color-secondary-light: var(--secondary-light);
   --color-secondary: var(--secondary);
 

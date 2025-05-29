@@ -11,7 +11,8 @@ type Props = {
 
 export default function PaperCard(props: Props) {
   return (
-    <div className="group shrink-0 w-full sm:w-6/12 lg:w-full padding-2 bg-white border border-primary-medium rounding-xl">
+    // <div className="group shrink-0 w-full sm:w-6/12 lg:w-full padding-2 bg-white border border-primary-medium-light rounding-xl">
+    <div className="group flex-1/3 grow-0 shrink p-3 bg-white border border-primary-medium-light rounding-xl">
       <div className="flex flex-row gap-2 items-center md:block">
         <div className="flex-2/5">
           <div className="relative">
