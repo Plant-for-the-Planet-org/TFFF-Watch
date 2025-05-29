@@ -1,8 +1,10 @@
 import CountryMapView from "@/components/maps/CountryMapView";
 import WorldMapView from "@/components/maps/WorldMapView";
 import Br from "@/components/ui/Br";
-import { WorldMapHeaderContent } from "./TFFFMapViewContent";
+import { WorldMapHeaderContent } from "@/components/sections/hero/TFFFMapViewContent";
 import type { Props as CountryMapViewProps } from "@/components/maps/CountryMapView";
+import CountryTFFFCard from "@/components/maps/CountryTFFFCard";
+import CountryTFFFInvestmentCard from "@/components/maps/CountryTFFFInvestmentCard";
 
 export function TFFFWorldMapView() {
   return (
@@ -11,7 +13,11 @@ export function TFFFWorldMapView() {
         <Br />
         <WorldMapHeaderContent />
         <Br />
-        <div className="grow">
+        <div className="grow relative">
+          <div className="absolute left-0 top-0 z-20">
+            <CountryTFFFCard />
+            <CountryTFFFInvestmentCard />
+          </div>
           <WorldMapView />
         </div>
       </div>

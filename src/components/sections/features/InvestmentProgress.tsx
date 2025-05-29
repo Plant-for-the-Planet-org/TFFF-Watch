@@ -77,7 +77,7 @@ export default function InvestmentProgress() {
                 )}
                 width={30}
                 height={26}
-                src="/assets/progress-check.png"
+                src="/assets/check.png"
                 alt="Completed"
               />
               <div className="absolute top-1 left-8 md:top-7 md:left-[50%] md:translate-x-[-50%]">
