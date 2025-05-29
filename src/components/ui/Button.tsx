@@ -35,7 +35,7 @@ export function Button({
   );
 
   const className = twMerge(
-    "inline-block bg-primary hover:bg-primary/90 text-white min-w-64 px-6 py-3 rounded-xl cursor-pointer",
+    "inline-block bg-primary hover:bg-primary-dark text-white min-w-64 px-6 py-3 rounded-xl cursor-pointer transition-colors",
     cn
   );
 

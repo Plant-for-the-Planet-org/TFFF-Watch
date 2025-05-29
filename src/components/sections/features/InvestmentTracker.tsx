@@ -20,7 +20,7 @@ export default function InvestmentTracker() {
             and similar institutions.
           </p>
           <Br />
-          <Button type="link" external>
+          <Button type="link" href="/investment-tracker" external>
             Committed & Invested Funds
           </Button>
         </div>

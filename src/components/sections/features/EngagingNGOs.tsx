@@ -27,7 +27,7 @@ export default function EngagingNGOs() {
         {NGOs.map((el, key) => (
           <div
             key={key}
-            className="w-[144px] aspect-square flex justify-center items-center bg-white p-2 rounding-lg"
+            className="w-[128px] aspect-square flex justify-center items-center bg-white p-2 rounding-lg"
           >
             <Image
               width={16 * 5}

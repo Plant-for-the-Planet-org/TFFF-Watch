@@ -45,3 +45,7 @@
 .typo-p {
   @apply text-sm lg:text-base;
 }
+
+.test-box {
+  @apply h-2 w-2 bg-black;
+}

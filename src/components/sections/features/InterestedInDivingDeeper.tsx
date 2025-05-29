@@ -13,7 +13,11 @@ export default function InterestedInDivingDeeper() {
             <Button cn="bg-theme-text" type="link" external>
               TFFF Concept Note 2.0
             </Button>
-            <Button cn="bg-theme-base" type="link" external>
+            <Button
+              cn="bg-theme-base hover:bg-theme-base/75"
+              type="link"
+              external
+            >
               TFFF Website
             </Button>
           </div>

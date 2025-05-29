@@ -19,7 +19,7 @@ export default function WhatsTFFFWatch() {
         </div>
         <Br />
         <div className="xl:max-w-[30vw] self-center-safe text-center">
-          <Button type="link" external>
+          <Button type="link" href="/about-tfff-watch" external>
             Our Methodology
           </Button>
         </div>

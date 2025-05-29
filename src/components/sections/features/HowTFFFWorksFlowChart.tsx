@@ -1,35 +1,48 @@
 import Br from "@/components/ui/Br";
 import Image from "next/image";
+import HowTFFFWorksFlowChartArrows from "./FlowChartArrorw";
 
 export default function HowTFFFWorksFlowChart() {
   return (
-    <div className="padding-3">
-      <div className="max-w-3xl mx-auto border border-dashed border-primary rounding-xl padding-2">
+    <div className="p-5">
+      <div className="max-w-3xl mx-auto border border-dashed border-primary rounding-xl padding-2 relative">
+        <div
+          id="investors-from-tfif"
+          className="absolute top-[50%] -right-[4px]"
+        ></div>
         <h3 className="font-bold typo-h3 text-center">Investors</h3>
         <Br />
         <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
-          <div className="border border-base-gray p-2 rounded-xl bg-white flex gap-2 items-center">
+          <div className="border border-base-gray p-2 rounded-xl bg-white flex gap-2 items-center relative">
+            <div
+              className="md:hidden absolute -left-[10px]"
+              id="sponsors-to-tfif"
+            ></div>
             <Image
-              className="flex-1/5 bg-[#EEF5FF] aspect-square p-2 rounded-md"
+              className="flex-1/6 bg-[#EEF5FF] aspect-square p-2 rounded-md"
               width={52}
               height={36}
               src="/assets/sponsors.svg"
               alt="Sponsors"
             />
-            <div className="flex-4/5">
+            <div className="flex-5/6">
               <p className="typo-p">Sponsors</p>
               <p className="text-xs">(governments & foundations)</p>
             </div>
           </div>
-          <div className="border border-base-gray p-2 rounded-xl bg-white flex gap-2 items-center">
+          <div className="border border-base-gray p-2 rounded-xl bg-white flex gap-2 items-center relative">
+            <div
+              className="md:hidden absolute -right-[10px]"
+              id="markets-to-tfif"
+            ></div>
             <Image
-              className="flex-1/5 bg-[#EEF5FF] aspect-square p-2 rounded-md"
+              className="flex-1/6 bg-[#EEF5FF] aspect-square p-2 rounded-md"
               width={36}
               height={52}
               src="/assets/financial-markets.svg"
               alt="Financial markets"
             />
-            <div className="flex-4/5">
+            <div className="flex-5/6">
               <p className="typo-p">Financial markets</p>
               <p className="text-xs">
                 (e.g. institutional investors, sovereign wealth funds,
@@ -40,7 +53,15 @@ export default function HowTFFFWorksFlowChart() {
         </div>
       </div>
       <div className="m-2 max-w-2xl mx-auto grid grid-cols-2">
-        <div className="w-full md:w-2/3 justify-self-start text-left md:justify-self-center md:text-right">
+        <div className="w-full md:w-2/3 justify-self-start text-left md:justify-self-center md:text-right relative">
+          <div
+            className="hidden md:block absolute top-0 -right-[12px]"
+            id="sponsors-to-tfif-desktop"
+          ></div>
+          <div
+            id="tfif-from-sponsors-desktop"
+            className="hidden md:block absolute bottom-0 -right-[12px]"
+          ></div>
           <p className="text-xs uppercase">Junior debt</p>
           <p className="font-semibold text-sm">$25bn invested</p>
           <p className="text-xs">
@@ -48,7 +69,15 @@ export default function HowTFFFWorksFlowChart() {
             <span className="block">(min $1 bn for board seat)</span>
           </p>
         </div>
-        <div className="w-full md:w-2/3 justify-self-end text-right md:justify-self-center md:text-left">
+        <div className="w-full md:w-2/3 justify-self-end text-right md:justify-self-center md:text-left relative">
+          <div
+            className="hidden md:block absolute top-0 -left-[12px]"
+            id="markets-to-tfif-desktop"
+          ></div>
+          <div
+            id="tfif-from-markets-desktop"
+            className="hidden md:block absolute bottom-0 -left-[12px]"
+          ></div>
           <p className="text-xs uppercase">Senior debt</p>
           <p className="font-semibold text-sm">$100bn invested</p>
           <p className="text-xs">as market-rate fixed income bonds</p>
@@ -59,6 +88,23 @@ export default function HowTFFFWorksFlowChart() {
       <Br />
 
       <div className="max-w-xl mx-auto relative padding-3 bg-white rounding-xl">
+        <div
+          id="tfif-from-sponsors"
+          className="md:hidden absolute -left-[12px] -top-8"
+        ></div>
+        <div
+          id="tfif-from-markets"
+          className="md:hidden absolute -right-[12px] -top-8"
+        ></div>
+        <div
+          id="tfif-to-investors"
+          className="absolute left-[52%] -bottom-[16px]"
+        ></div>
+        <div
+          id="tfif-to-tfff"
+          className="absolute left-[50%] -bottom-[18px]"
+        ></div>
+
         <div className="absolute flex justify-center inset-x-0 translate-y-[-80%]">
           <Image
             className="w-12 md:w-[10%] border border-primary-light rounded-xl aspect-square p-2 md:p-3 bg-white"
@@ -108,8 +154,17 @@ export default function HowTFFFWorksFlowChart() {
       <Br cn="md:hidden" />
       <Br />
 
-      <div className="max-w-sm mx-auto relative padding-3 bg-primary-dark rounding-xl">
-        <div className="absolute flex justify-center inset-x-0 translate-y-[-80%]">
+      <div className="max-w-sm mx-auto relative p-2 bg-primary-dark rounding-xl">
+        <div
+          id="tfff-from-tfif"
+          className="absolute left-[50%] -top-[28px]"
+        ></div>
+        <div
+          id="tfff-to-recipients"
+          className="absolute left-[50%] -bottom-[8px]"
+        ></div>
+
+        <div className="absolute flex justify-center inset-x-0 translate-y-[-70%]">
           <Image
             className="w-12 md:w-[15%] border border-primary-light rounded-xl aspect-square p-1 md:p-2 bg-white"
             width={36}
@@ -138,6 +193,8 @@ export default function HowTFFFWorksFlowChart() {
           </div>
         </div>
       </div>
+
+      <HowTFFFWorksFlowChartArrows />
     </div>
   );
 }

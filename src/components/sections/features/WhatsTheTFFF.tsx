@@ -18,7 +18,7 @@ export default function WhatsTheTFFF() {
         </div>
         <Br />
         <div>
-          <Button type="link" external>
+          <Button type="link" href="https://tfff.earth" external>
             About the Fund
           </Button>
         </div>
