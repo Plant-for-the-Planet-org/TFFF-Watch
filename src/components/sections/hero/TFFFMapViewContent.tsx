@@ -1,16 +1,18 @@
-import { YearSelect } from "@/components/ui/Select";
+import Br from "@/components/ui/Br";
+import YearSelect from "@/components/ui/YearSelect";
+// import { YearSelect } from "@/components/ui/Select";
 
 export function WorldMapHeaderContent() {
   return (
     <div className="flex flex-col items-center">
-      <h2 className="flex gap-2 items-center flex-wrap typo-p">
-        <span className="grow text-center font-bold">
+      <h2 className="font-bold typo-h2">Estimated TFFF Payouts</h2>
+      <Br />
+      <h3 className="flex gap-2 items-center flex-wrap typo-h3">
+        <span className="text-center font-bold">
           Forest loss in <i>Tropical Forest Forever Facility</i> countries in
-        </span>
-        <span className="grow text-center">
           <YearSelect />
         </span>
-      </h2>
+      </h3>
       <p className="text-center max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl typo-p">
         % of eligible forest cover deforested or degraded in tropical forest
         countries according to the TFFF’s standards

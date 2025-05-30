@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.4",
     "@turf/turf": "^7.2.0",
     "@uidotdev/usehooks": "^2.4.1",
     "@vis.gl/react-maplibre": "^8.0.4",

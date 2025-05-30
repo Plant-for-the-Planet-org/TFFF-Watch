@@ -1,4 +1,4 @@
-import Menu from "@/components/Menu";
+import HeaderMenu from "@/components/HeaderMenu";
 import Hr from "@/components/ui/Hr";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +12,7 @@ export default function Header() {
       <div className="flex justify-between items-center ">
         <Logo />
         {/* <HeaderCountry /> */}
-        <Menu />
+        <HeaderMenu />
       </div>
       <div className="flex justify-center">
         <HeaderCountry />
