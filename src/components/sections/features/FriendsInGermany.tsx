@@ -44,15 +44,17 @@ export default function FriendsInGermany() {
         {persons.map((el, key) => (
           <div
             key={key}
-            className="w-[224px] aspect-[3/4] flex flex-col gap-y-4 justify-center items-center bg-primary-light rounding-lg"
+            className="group w-[224px] xl:grow aspect-[3/4] flex flex-col gap-y-4 justify-center items-center bg-primary-light rounding-lg"
           >
-            <Image
-              className="aspect-square object-cover object-center rounded-full"
-              width={16 * 9}
-              height={16 * 9}
-              src={`/assets/friends/persons/${el.src}`}
-              alt={el.src}
-            />
+            <div className="aspect-square rounded-full h-36 w-36 overflow-hidden">
+              <Image
+                className="h-full w-full object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-110"
+                width={16 * 9}
+                height={16 * 9}
+                src={`/assets/friends/persons/${el.src}`}
+                alt={el.src}
+              />
+            </div>
             <div className="text-center typo-p">
               <p>
                 <b>{el.name}</b>

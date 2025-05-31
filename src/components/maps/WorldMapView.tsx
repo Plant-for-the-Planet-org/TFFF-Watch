@@ -1,7 +1,9 @@
 "use client";
 
+import { useWindowSize } from "@uidotdev/usehooks";
 import { Map, StyleSpecification } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { useEffect, useState } from "react";
 
 const style: StyleSpecification = {
   version: 8,
@@ -45,13 +47,23 @@ const style: StyleSpecification = {
 };
 
 export default function WorldMapView() {
+  const [zoom, setZoom] = useState(0.7);
+  const { width } = useWindowSize();
+
+  useEffect(() => {
+    if (!width) return;
+    if (width > 768) setZoom(0.7);
+    else setZoom(0.3);
+  }, [width]);
+
   return (
     <Map
       initialViewState={{
         longitude: 0,
-        latitude: 33.5,
-        // zoom: 0,
+        latitude: 42,
+        zoom: 0.7,
       }}
+      zoom={zoom}
       style={{}}
       mapStyle={style}
       // renderWorldCopies={false}

@@ -5,6 +5,10 @@ import { WorldMapHeaderContent } from "@/components/sections/hero/TFFFMapViewCon
 import type { Props as CountryMapViewProps } from "@/components/maps/CountryMapView";
 import CountryTFFFCard from "@/components/maps/CountryTFFFCard";
 import CountryTFFFInvestmentCard from "@/components/maps/CountryTFFFInvestmentCard";
+import {
+  LegendForDegradedOrDeforested,
+  LegendForSponsorCapitalProviders,
+} from "@/components/maps/MapLegends";
 
 export function TFFFWorldMapView() {
   return (
@@ -13,12 +17,22 @@ export function TFFFWorldMapView() {
         <Br />
         <WorldMapHeaderContent />
         <Br />
-        <div className="grow relative">
+        <div className="grow relative flex flex-col">
+          <div className="mx-auto h-3/4 w-full md:h-full md:w-auto aspect-[198/120]">
+            <WorldMapView />
+          </div>
+          <div className="md:absolute left-3 bottom-6 min-w-48 max-w-fit mx-auto">
+            <div className="md:hidden">
+              <Br />
+            </div>
+            <LegendForDegradedOrDeforested />
+            <Br />
+            <LegendForSponsorCapitalProviders />
+          </div>
           <div className="absolute left-0 top-0 z-20">
             <CountryTFFFCard />
             <CountryTFFFInvestmentCard />
           </div>
-          <WorldMapView />
         </div>
       </div>
     </Container>
