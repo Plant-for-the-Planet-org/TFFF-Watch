@@ -3,12 +3,15 @@
 import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
 import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeChart";
+import { useParams, usePathname, useRouter } from "next/navigation";
 
 export default function InvestmentTracker() {
+  const path = usePathname();
+
   return (
-    <div className="bg-secondary-light rounding-xl padding-3">
+    <div className="bg-secondary-light outer-rounding-xl outer-padding-3">
       <Br />
-      <div className="grid lg:grid-cols-2 gap-y-4">
+      <div className="grid lg:grid-cols-2">
         {/* <div className="lg:max-w-[33vw] mx-auto flex flex-col items-center lg:block"> */}
         <div className="mx-auto flex flex-col items-center lg:block extra-padding-x-4">
           <h2 className="font-bold typo-h2">Investment Tracker</h2>
@@ -20,15 +23,30 @@ export default function InvestmentTracker() {
             and similar institutions.
           </p>
           <Br />
-          <Button type="link" href="/investment-tracker" external>
-            Committed & Invested Funds
-          </Button>
+          <div className="hidden lg:block">
+            <CTAButton />
+          </div>
         </div>
         <div>
           <InvestmentGaugeChart />
         </div>
       </div>
       <Br />
+      <div className="text-center lg:hidden">
+        <CTAButton />
+      </div>
+      <Br />
     </div>
+  );
+}
+
+function CTAButton() {
+  const path = usePathname();
+
+  if (path.includes("investment-tracker")) return null;
+  return (
+    <Button type="link" href="/investment-tracker" external>
+      Committed & Invested Funds
+    </Button>
   );
 }

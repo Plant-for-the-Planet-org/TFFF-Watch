@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function NewsLetter() {
   return (
-    <div className="bg-secondary-light rounding-xl padding-3">
+    <div className="bg-secondary-light outer-rounding-xl outer-padding-3">
       <Br />
       <Br />
       <div className="flex flex-col items-center">

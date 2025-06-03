@@ -51,7 +51,7 @@ export default function FriendsInGermany() {
                 className="h-full w-full object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-110"
                 width={16 * 9}
                 height={16 * 9}
-                src={`/assets/friends/persons/${el.src}`}
+                src={`/assets/persons/${el.src}`}
                 alt={el.src}
               />
             </div>

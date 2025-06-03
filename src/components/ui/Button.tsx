@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -41,13 +42,13 @@ export function Button({
 
   if (type === "link")
     return (
-      <a
+      <Link
         href={href}
         target={external ? "_blank" : "_self"}
         className={className}
       >
         {body}
-      </a>
+      </Link>
     );
 
   return <button className={className}>{body}</button>;
@@ -69,7 +70,7 @@ export function IconButton({
   children = null,
 }: IconButtonProps) {
   return (
-    <a
+    <Link
       href={href}
       target={external ? "_blank" : "_self"}
       rel={external ? "noopener noreferrer" : ""}
@@ -91,6 +92,6 @@ export function IconButton({
           />
         )}
       </span>
-    </a>
+    </Link>
   );
 }

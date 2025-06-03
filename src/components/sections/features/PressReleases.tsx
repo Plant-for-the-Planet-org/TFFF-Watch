@@ -2,13 +2,11 @@ import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
 import PaperCard from "@/components/sections/features/PaperCard";
 
-export default function RecentPolicyPapersComentary() {
+export default function PressReleases() {
   return (
-    <div className="bg-primary-light outer-rounding-xl outer-padding-3">
+    <div className="bg-secondary-light outer-rounding-xl outer-padding-3">
       <Br />
-      <h2 className="text-center font-bold typo-h2">
-        📰 Recent Policy Papers & Commentary
-      </h2>
+      <h2 className="text-center font-bold typo-h2">📝 Press Release</h2>
       <Br />
       <Br />
       <div>
@@ -17,7 +15,7 @@ export default function RecentPolicyPapersComentary() {
         <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
           {/* <div className="flex gap-3 md:gap-4 xl:gap-5"> */}
           <PaperCard
-            title="Comments on Tropical Forest Forever Facility Concept Note V.2"
+            title="Fires in the tropics are driving global forest loss to record levels"
             summary=""
             image="/assets/papers/griffith.png"
             url="https://www.pexels.com/photo/photo-of-people-gathering-in-room-2833037/"

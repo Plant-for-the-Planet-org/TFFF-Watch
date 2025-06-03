@@ -1,9 +1,9 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Br from "@/components/ui/Br";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Br from "@/components/ui/Br";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${openSans.variable} antialiased container mx-auto padding-x-2`}
+        className={`${openSans.variable} antialiased website-container mx-auto padding-x-3`}
       >
         <Header />
         <Br />

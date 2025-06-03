@@ -9,13 +9,17 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-30 bg-white/75 backdrop-blur-lg">
       <Br />
-      <div className="flex justify-between items-center ">
-        <Logo />
-        {/* <HeaderCountry /> */}
-        <HeaderMenu />
-      </div>
-      <div className="flex justify-center">
-        <HeaderCountry />
+      <div className="padding-x-3">
+        <div className="flex justify-between items-center ">
+          <Logo />
+          {/* <HeaderCountry /> */}
+          <div className="-mr-2 md:-mr-4">
+            <HeaderMenu />
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <HeaderCountry />
+        </div>
       </div>
       <Br />
       <Hr />
@@ -25,7 +29,7 @@ export default function Header() {
 
 export function Logo() {
   return (
-    <div className="px-2">
+    <div>
       <Link href="/">
         <h1>
           <Image

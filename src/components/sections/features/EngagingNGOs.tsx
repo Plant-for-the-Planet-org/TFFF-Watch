@@ -32,7 +32,7 @@ export default function EngagingNGOs() {
             <Image
               width={16 * 5}
               height={16 * 7}
-              src={`/assets/friends/ngos/${el.src}`}
+              src={`/assets/ngos/${el.src}`}
               alt={el.src}
             />
           </div>

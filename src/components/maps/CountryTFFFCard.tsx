@@ -37,7 +37,7 @@ export default function CountryTFFFCard({ iso2 = "" }: { iso2?: string }) {
             <b>${data.intactForest.value}</b>
           </span>
         </div>
-        <Br />
+        <Br cn="md:hidden" />
         <div className="flex justify-between items-center">
           <span>
             Discount for <b>{data.discountForDeforestation.area} ha</b>{" "}
@@ -47,7 +47,7 @@ export default function CountryTFFFCard({ iso2 = "" }: { iso2?: string }) {
             <b>${data.discountForDeforestation.value}</b>
           </span>
         </div>
-        <Br />
+        <Br cn="md:hidden" />
         <div className="flex justify-between items-center">
           <span>
             Discount for <b>{data.discountForDegradation.area} ha</b>{" "}
@@ -58,7 +58,7 @@ export default function CountryTFFFCard({ iso2 = "" }: { iso2?: string }) {
           </span>
         </div>
       </div>
-      <Br />
+      <Br cn="md:hidden" />
       <div className="p-2 px-4 sm:p-0 bg-primary-light md:-mx-3 lg:-mx-4 xl:-mx-5 md:p-3 lg:p-4 xl:p-5 xl:py-4 flex justify-between items-center">
         <span>
           <span className="font-semibold">Estimated Reward</span>{" "}
