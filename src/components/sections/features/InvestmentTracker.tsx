@@ -1,13 +1,11 @@
 "use client";
 
+import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeChart";
 import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
-import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeChart";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function InvestmentTracker() {
-  const path = usePathname();
-
   return (
     <div className="bg-secondary-light outer-rounding-xl outer-padding-3">
       <Br />

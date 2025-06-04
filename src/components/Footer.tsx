@@ -23,14 +23,14 @@ export default function Footer() {
               alt="Plant for the Planet Foundation"
             />
           </span>
-          <span>
+          {/* <span>
             <Image
               width={36}
               height={36}
               src="/assets/rffnorway.png"
               alt="Plant for the Planet Foundation"
             />
-          </span>
+          </span> */}
         </div>
         <div></div>
         <div className="flex gap-1 justify-center flex-wrap md:flex-nowrap">

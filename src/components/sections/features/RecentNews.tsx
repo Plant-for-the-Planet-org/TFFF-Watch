@@ -1,9 +1,48 @@
+// "use client";
+
 import Br from "@/components/ui/Br";
 import NewsCard from "./NewsCard";
 import { Button } from "@/components/ui/Button";
 import { ResponsiveContainer } from "@/components/ui/Container";
+import { Fragment } from "react";
+import { api, urls } from "@/utils/axios-helper";
+import { formatDateFromExcelToData } from "@/utils/datetime";
+import { News } from "@/utils/types";
 
-export default function RecentNews() {
+export default async function RecentNews() {
+  // const [newsList, setNewsList] = useState<any[]>([]);
+
+  // useEffect(() => {
+  //   const fetchNews = async () => {
+  //     try {
+  //       const data = await api({
+  //         url: urls.news,
+  //         method: "GET",
+  //         token: "", // Add token if required
+  //       });
+
+  //       setNewsList(data);
+  //     } catch (error) {
+  //       console.error("Error fetching news:", error);
+  //     }
+  //   };
+
+  //   fetchNews();
+  // }, []);
+
+  let newsList: News[] = [];
+
+  try {
+    newsList = await api<News[]>({
+      url: urls.news,
+      method: "GET",
+      token: "", // Add token if required
+    });
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    // Optionally, handle the error by returning an empty list or a fallback UI
+  }
+
   return (
     <ResponsiveContainer cn="">
       <div className="bg-secondary-light outer-rounding-xl outer-padding-3">
@@ -16,30 +55,19 @@ export default function RecentNews() {
           {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe"> */}
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
             {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5"> */}
-            <NewsCard
-              title="An ‘Elegant’ Idea Could Pay Billions to Protect Trees"
-              summary="Brazil is proposing a fund that would pay countries to protect tropical forests that are crucial to curbing climate change. It would generate returns, too."
-              image="https://images.pexels.com/photos/5336951/pexels-photo-5336951.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              publisher="New York Times"
-              datetime={"2024-10-20"}
-              url="https://www.pexels.com/photo/photo-of-people-gathering-in-room-2833037/"
-            />
-            <NewsCard
-              title="An ‘Elegant’ Idea Could Pay Billions to Protect Trees"
-              summary="Brazil is proposing a fund that would pay countries to protect tropical forests that are crucial to curbing climate change. It would generate returns, too."
-              image="https://images.pexels.com/photos/5336951/pexels-photo-5336951.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              publisher="New York Times"
-              datetime={"2024-10-20"}
-              url="https://www.pexels.com/photo/photo-of-people-gathering-in-room-2833037/"
-            />
-            <NewsCard
-              title="An ‘Elegant’ Idea Could Pay Billions to Protect Trees"
-              summary="Brazil is proposing a fund that would pay countries to protect tropical forests that are crucial to curbing climate change. It would generate returns, too."
-              image="https://images.pexels.com/photos/5336951/pexels-photo-5336951.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              publisher="New York Times"
-              datetime={"2024-10-20"}
-              url="https://www.pexels.com/photo/photo-of-people-gathering-in-room-2833037/"
-            />
+            {newsList.slice(0, 3).map((el) => (
+              <Fragment key={el.id}>
+                <NewsCard
+                  title={el.title!}
+                  summary={el.summary!}
+                  image={el.featured_image!}
+                  publisher={el.publisher!}
+                  // publisher={el.author}
+                  datetime={formatDateFromExcelToData(el.date)}
+                  url={el.url}
+                />
+              </Fragment>
+            ))}
           </div>
         </div>
         <Br />

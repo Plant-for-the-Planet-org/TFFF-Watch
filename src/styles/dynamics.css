@@ -1,6 +1,5 @@
 .website-container {
-  width: 100%;
-  max-width: 80rem;
+  @apply w-full max-w-[80rem] mx-auto;
 }
 
 .padding-2 {

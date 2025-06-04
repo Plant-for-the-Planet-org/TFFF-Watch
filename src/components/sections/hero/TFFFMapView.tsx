@@ -18,7 +18,7 @@ export function TFFFWorldMapView() {
         <WorldMapHeaderContent />
         <Br />
         <div className="grow relative flex flex-col">
-          <div className="mx-auto h-3/4 w-full md:h-full md:w-auto aspect-[198/120]">
+          <div className="mx-auto h-3/4 w-full lg:h-full lg:w-auto aspect-[198/120]">
             <WorldMapView />
           </div>
           <div className="md:absolute left-3 bottom-6 min-w-48 max-w-fit mx-auto">
