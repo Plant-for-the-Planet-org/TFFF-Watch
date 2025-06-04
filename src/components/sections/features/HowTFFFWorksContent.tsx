@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function HowTFFFWorksContent() {
   return (
-    <div className="padding-3">
+    <div className="">
       <div>
         <h2 className="font-bold typo-h2 flex items-center gap-2">
           <Image
@@ -48,7 +48,7 @@ export default function HowTFFFWorksContent() {
       <Br />
       <div>
         <h2 className="font-bold typo-h2 flex items-center gap-2">
-          <div className="rounded-full bg-black">
+          <div className="shrink-0 rounded-full bg-black">
             <Image
               className="h-4 w-4 m-2"
               width={32}
@@ -137,7 +137,7 @@ export default function HowTFFFWorksContent() {
       <Br />
       <div>
         <h2 className="font-bold typo-h2 flex items-center gap-2">
-          <div className="rounded-full bg-black">
+          <div className="shrink-0 rounded-full bg-black">
             <Image
               className="h-4 w-4 m-2"
               width={32}
@@ -171,7 +171,7 @@ export default function HowTFFFWorksContent() {
       <Br />
       <div>
         <h2 className="font-bold typo-h2 flex items-center gap-2">
-          <div className="rounded-full bg-black">
+          <div className="shrink-0 rounded-full bg-black">
             <Image
               className="h-4 w-4 m-2"
               width={32}

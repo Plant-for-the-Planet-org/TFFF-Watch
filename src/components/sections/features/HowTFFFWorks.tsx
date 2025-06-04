@@ -14,13 +14,19 @@ export default function HowTFFFWorks() {
           would work
         </h2>
         <Br />
-        <p className="typo-p">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.{" "}
+        <p className="typo-p text-justify">
+          is a proposed global, permanent fund designed to support the long-term
+          conservation of tropical forests. Spearheaded by the Government of
+          Brazil, in dialogue with 11 other countries, the initiative is
+          scheduled to be formally launched at COP30 in Belém, Brazil.
+        </p>
+        <Br />
+        <p className="typo-p text-justify">
+          Unlike traditional conservation finance efforts that often rely on new
+          donor pledges, the TFFF proposes an innovative approach—mobilizing
+          investments from governments, sovereign wealth funds and institutional
+          investors to create a long-term investment facility that generates
+          annual payments for forest conservation.
         </p>
       </div>
 

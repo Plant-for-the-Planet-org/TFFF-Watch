@@ -4,19 +4,19 @@ import InvestmentProgress from "@/components/sections/features/InvestmentProgres
 import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
 import Br from "@/components/ui/Br";
 
-export default function Page() {
-  // const investmentTrackerData =
+export async function generateStaticParams() {
+  return [{ country: "Germany" }, { country: "Norway" }, { country: "France" }];
+}
 
-  // try {
-  //     newsList = await api<News[]>({
-  //       url: urls.news,
-  //       method: "GET",
-  //       token: "", // Add token if required
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching news:", error);
-  //     // Optionally, handle the error by returning an empty list or a fallback UI
-  //   }
+type PageProps = {
+  params: Promise<{
+    country: string;
+  }>;
+};
+
+export default async function Page({ params }: PageProps) {
+  const { country } = await params;
+  console.log({ country });
 
   return (
     <div>

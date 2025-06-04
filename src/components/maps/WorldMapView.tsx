@@ -1,9 +1,10 @@
 "use client";
 
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Map, StyleSpecification } from "@vis.gl/react-maplibre";
+import { Map, MapRef, StyleSpecification } from "@vis.gl/react-maplibre";
+import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const style: StyleSpecification = {
   version: 8,
@@ -47,6 +48,8 @@ const style: StyleSpecification = {
 };
 
 export default function WorldMapView() {
+  const mapRef = useRef<MapRef>(null);
+
   const [zoom, setZoom] = useState(0.7);
   const { width } = useWindowSize();
 
@@ -56,6 +59,13 @@ export default function WorldMapView() {
     else setZoom(0.3);
   }, [width]);
 
+  useEffect(() => {
+    if (!mapRef.current) return;
+    const map = mapRef.current?.getMap();
+    // console.log(map);
+    map?.addControl(new maplibregl.AttributionControl({ compact: true }));
+  }, [mapRef]);
+
   return (
     <Map
       initialViewState={{
@@ -63,12 +73,23 @@ export default function WorldMapView() {
         latitude: 42,
         zoom: 0.7,
       }}
+      ref={mapRef}
       zoom={zoom}
       style={{}}
       mapStyle={style}
       // renderWorldCopies={false}
       scrollZoom={false}
       // interactive={false}
-    />
+      attributionControl={false}
+      onLoad={() => {
+        // console.log("onLoad");
+        const elem = document.querySelector(
+          "details.maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact"
+        );
+        elem?.classList.remove("maplibregl-compact-show");
+      }}
+    >
+      {/* <AttributionControl compact={false} /> */}
+    </Map>
   );
 }
