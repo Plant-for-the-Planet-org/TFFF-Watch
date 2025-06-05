@@ -33,14 +33,14 @@
 .rounding-lg {
   @apply rounded-lg md:rounded-xl lg:rounded-2xl;
 }
-.outer-rounding-lg {
-  @apply md:rounded-xl lg:rounded-2xl;
-}
+/* .outer-rounding-lg {
+  @apply xl:rounded-xl 2xl:rounded-2xl;
+} */
 .rounding-xl {
   @apply rounded-xl md:rounded-2xl lg:rounded-3xl;
 }
-.outer-rounding-xl {
-  @apply md:rounded-2xl lg:rounded-3xl;
+.outer-rounding {
+  @apply xl:rounded-2xl;
 }
 
 .shadow-custom {

@@ -42,7 +42,7 @@ export default function HeaderMenu() {
             {options.map((el, key) => (
               <MenuItem key={el.id} as="div">
                 <Link
-                  href={el.href}
+                  href={`/${el.href}`}
                   className={twMerge(
                     "block w-full typo-p py-4",
                     key === 0 && "pt-0",

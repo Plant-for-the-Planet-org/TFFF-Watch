@@ -8,7 +8,7 @@ type Props = {
 export default function SecondaryHero(props: Props) {
   return (
     <div>
-      <div className="rounding-xl overflow-hidden relative">
+      <div className="outer-rounding overflow-hidden relative">
         {props.OverlayComponent}
         <Image
           className="w-full aspect-[3.5] lg:aspect-[4.5] object-bottom object-cover"

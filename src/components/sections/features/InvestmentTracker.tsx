@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 export default function InvestmentTracker() {
   return (
-    <div className="bg-secondary-light outer-rounding-xl outer-padding-3">
+    <div className="bg-secondary-light outer-rounding outer-padding-3">
       <Br />
       <div className="grid lg:grid-cols-2">
         {/* <div className="lg:max-w-[33vw] mx-auto flex flex-col items-center lg:block"> */}

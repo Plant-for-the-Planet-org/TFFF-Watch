@@ -7,17 +7,23 @@ const persons = [
     name: "Tina Anjou",
     role: "Teamlead Communications",
     src: "tina-anjou.png",
+    linkedin: "https://www.linkedin.com/in/tina-anjou-5952786/",
+    email: "mailto:tina.anjou@plant-for-the-planet.org",
+    phone: "",
   },
   {
     name: "Victoria Krumbeck",
     role: "PR Manager",
     src: "victoria-krumbeck.png",
+    linkedin: "",
+    email: "mailto:victoria.krumbeck@plant-for-the-planet.org",
+    phone: "",
   },
 ];
 
 export default function PressContacts() {
   return (
-    <div className="bg-primary-light rounding-xl padding-3">
+    <div className="bg-primary-light outer-rounding outer-padding-3">
       <Br />
       <h2 className="text-center font-bold typo-h2">Contact</h2>
       <Br />
@@ -26,7 +32,7 @@ export default function PressContacts() {
         {persons.map((el, key) => (
           <div
             key={key}
-            className="group bg-white max-w-[244px] xl:grow aspect-[3/4] flex flex-col gap-y-4 justify-center items-center rounding-lg"
+            className="group bg-white w-[244px] aspect-[3/4] flex flex-col gap-y-4 justify-center items-center rounding-lg"
           >
             <div className="aspect-square rounded-full h-36 w-36 overflow-hidden">
               <Image
@@ -44,7 +50,12 @@ export default function PressContacts() {
               <p className="text-sm">{el.role}</p>
             </div>
             <div className="flex gap-2 justify-center items-center">
-              <Link href="#" className="rounded-full bg-[#219653] p-1.5">
+              <Link
+                className="rounded-full bg-[#219653] p-1.5"
+                href={el.linkedin ?? "#"}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Image
                   width={16 * 1}
                   height={16 * 1}
@@ -52,7 +63,12 @@ export default function PressContacts() {
                   alt="linkedin"
                 />
               </Link>
-              <Link href="#" className="rounded-full bg-[#219653] p-1.5">
+              <Link
+                className="rounded-full bg-[#219653] p-1.5 py-2"
+                href={el.email ?? "#"}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Image
                   width={16 * 1}
                   height={16 * 1}
@@ -60,7 +76,12 @@ export default function PressContacts() {
                   alt="email"
                 />
               </Link>
-              <Link href="#" className="rounded-full bg-[#219653] p-1.5">
+              <Link
+                className="rounded-full bg-[#219653] p-1.5"
+                href={el.phone ?? "#"}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Image
                   width={16 * 1}
                   height={16 * 1}
