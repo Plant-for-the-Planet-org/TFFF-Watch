@@ -30,7 +30,7 @@ export default function CountryListChips({ country }: Props) {
               "flex justify-center items-center gap-2"
             )}
             key={key}
-            href={el.label}
+            href={`/investment-tracker/${el.label}`}
           >
             <img
               className="w-6 h-4 p-0.5"

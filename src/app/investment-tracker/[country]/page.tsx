@@ -5,7 +5,9 @@ import InvestmentTracker from "@/components/sections/features/InvestmentTracker"
 import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
 import { InvestmentTrackerForCountry } from "@/utils/types";
+import { Metadata } from "next";
 
+// https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 export async function generateStaticParams() {
   return [{ country: "Germany" }, { country: "Norway" }, { country: "France" }];
 }
@@ -15,6 +17,18 @@ type PageProps = {
     country: string;
   }>;
 };
+
+// https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { country } = await params;
+
+  return {
+    title: `${country} | Investment Tracker`,
+    description: `Investment Tracker for ${country}`,
+  };
+}
 
 export default async function Page({ params }: PageProps) {
   const { country } = await params;
