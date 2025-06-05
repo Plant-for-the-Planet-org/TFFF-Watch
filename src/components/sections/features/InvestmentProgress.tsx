@@ -1,58 +1,51 @@
-"use client";
-
 import Br from "@/components/ui/Br";
+import { InvestmentTrackerForCountry } from "@/utils/types";
 import Image from "next/image";
 import { Fragment } from "react";
 import { twMerge } from "tailwind-merge";
 
-export default function InvestmentProgress() {
+type Props = Partial<InvestmentTrackerForCountry>;
+
+export default function InvestmentProgress({ investment_stage }: Props) {
   const nodes = [
     {
+      stage: 1,
       label: "Support expressed",
       display: ["Support", "expressed"],
-      success: true,
+      success: false,
     },
     {
+      stage: 2,
       label: "Intention to invest announced",
       display: ["Intention to invest", "announced"],
-      success: true,
+      success: false,
     },
     {
+      stage: 3,
       label: "Specific investment amount(s) named publicly",
       display: ["Specific investment", "amount(s) named"],
-      success: true,
+      success: false,
     },
     {
+      stage: 4,
       label: "Capital pledged",
       display: ["Capital", "pledged"],
       success: false,
     },
     {
+      stage: 5,
       label: "Capital invested",
       display: ["Capital", "invested"],
       success: false,
     },
   ];
 
-  // const containerRef = useRef<HTMLDivElement>(null);
-  // const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  // useEffect(() => {
-  //   const lastSuccessIndex = [...nodes].reverse().findIndex((el) => el.success);
-  //   if (lastSuccessIndex === -1) return;
-
-  //   const targetIndex = nodes.length - 1 - lastSuccessIndex;
-  //   const targetNode = nodeRefs.current[targetIndex];
-  //   const container = containerRef.current;
-
-  //   if (targetNode && container) {
-  //     const nodeLeft = targetNode.offsetLeft;
-  //     container.scrollTo({
-  //       left: nodeLeft - 96,
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // }, [nodes]);
+  if (investment_stage) {
+    const idx = nodes.findIndex((el) => el.stage === investment_stage);
+    for (let i = 0; i <= idx; i++) {
+      nodes[i].success = true;
+    }
+  }
 
   return (
     <div className="bg-primary-light rounding-xl padding-3">
@@ -90,7 +83,7 @@ export default function InvestmentProgress() {
                   <div className="hidden md:block">
                     {el.display.map((el, k) => (
                       <p key={k}>{el}</p>
-                    ))}
+                    ))}{" "}
                   </div>
                   <div className="md:hidden">{el.label}</div>
                 </div>

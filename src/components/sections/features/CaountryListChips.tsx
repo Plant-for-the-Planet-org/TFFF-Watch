@@ -1,30 +1,36 @@
+import { InvesmentTrackerParams } from "@/utils/prop-types";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-const countryList = [
-  { label: "Germany", iso2: "DE", selected: true, emoji: "🇩🇪" },
-  { label: "UK", iso2: "GB", emoji: "🇬🇧" },
-  { label: "Norway", iso2: "NO", emoji: "🇳🇴" },
-  { label: "France", iso2: "FR", emoji: "🇫🇷" },
-  { label: "UAE", iso2: "AE", emoji: "🇦🇪" },
-  { label: "Netherlands", iso2: "NL", emoji: "🇳🇱" },
-  // { label: "🇪🇺 EU", iso2: "EU" },
-  { label: "Singapore", iso2: "SG", emoji: "🇸🇬 " },
-  { label: "Azerbaijan", iso2: "AZ", emoji: "🇦🇿 " },
-];
+type Props = InvesmentTrackerParams & {};
 
-export default function CountryListChips() {
+export default function CountryListChips({ country }: Props) {
+  const countryList = [
+    { label: "Germany", iso2: "DE", emoji: "🇩🇪", selected: false },
+    { label: "UK", iso2: "GB", emoji: "🇬🇧", selected: false },
+    { label: "Norway", iso2: "NO", emoji: "🇳🇴", selected: false },
+    { label: "France", iso2: "FR", emoji: "🇫🇷", selected: false },
+    { label: "UAE", iso2: "AE", emoji: "🇦🇪", selected: false },
+    { label: "Netherlands", iso2: "NL", emoji: "🇳🇱", selected: false },
+    // { label: "🇪🇺 EU", iso2: "EU" },
+    { label: "Singapore", iso2: "SG", emoji: "🇸🇬", selected: false },
+    { label: "Azerbaijan", iso2: "AZ", emoji: "🇦🇿", selected: false },
+  ];
+  countryList.find((el) => el.label === country)!.selected = true;
+
   return (
-    <div className="w-full relative">
+    <div className="w-full relative padding-x-3">
       {/* <div className="w-16 absolute inset-y-0 left-0 bg-white/30 backdrop-blur-sm"></div> */}
       <div className="w-full flex gap-3 pr-16 pb-4 overflow-x-scroll overscroll-x-auto scrollbar-transparent">
         {countryList.map((el, key) => (
-          <button
+          <Link
             className={twMerge(
               "border border-base-gray rounded-full px-5 py-1.5 text-nowrap",
               el?.selected ? "bg-base-text text-white" : "",
               "flex justify-center items-center gap-2"
             )}
             key={key}
+            href={el.label}
           >
             <img
               className="w-6 h-4 p-0.5"
@@ -33,7 +39,7 @@ export default function CountryListChips() {
             />
             {/* <span>{el.emoji}</span> */}
             {el.label}
-          </button>
+          </Link>
         ))}
       </div>
       <div className="w-16 absolute inset-y-0 right-0 pointer-events-none bg-gradient-to-r from-white/0 to-white/100"></div>

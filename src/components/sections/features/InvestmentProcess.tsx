@@ -1,8 +1,22 @@
 import Br from "@/components/ui/Br";
 import Hr from "@/components/ui/Hr";
+import { extractLists } from "@/utils/content-helper";
+import { InvestmentTrackerForCountry } from "@/utils/types";
 import Image from "next/image";
+import { Fragment } from "react";
 
-export default function InvestmentProcess() {
+type Props = Partial<InvestmentTrackerForCountry> & {
+  how_an_investment_could_work?: string;
+};
+
+export default function InvestmentProcess({
+  status,
+  background,
+  endorsements,
+  CSOs,
+  how_an_investment_could_work,
+  responsibile_government_office,
+}: Props) {
   return (
     <div className="border border-base-gray rounding-xl padding-3">
       <Br cn="hidden lg:block" />
@@ -21,10 +35,29 @@ export default function InvestmentProcess() {
           <Br />
           <div className="typo-p">
             <p>
-              Key leaders in Germany have participated in TFFF meetings and
+              {/* Key leaders in Germany have participated in TFFF meetings and
               expressed support for the project. However, no pledge has been
-              made and no pledge amount has been discussed publicly.
+              made and no pledge amount has been discussed publicly. */}
+              {status}
             </p>
+          </div>
+        </div>
+        <Br />
+        <Hr />
+        <Br />
+        <div>
+          <h2 className="font-bold typo-h2 flex items-center gap-2">
+            <Image
+              width={32}
+              height={32}
+              src="/assets/investment-responsible-government-office.svg"
+              alt="Responsible Government Office"
+            />
+            Responsible Government Office
+          </h2>
+          <Br />
+          <div className="typo-p">
+            <p>{responsibile_government_office}</p>
           </div>
         </div>
         <Br />
@@ -42,7 +75,14 @@ export default function InvestmentProcess() {
           </h2>
           <Br />
           <div className="typo-p">
-            <p>
+            {extractLists(how_an_investment_could_work!).map((el, key) => (
+              <Fragment key={key}>
+                <p>{el}</p>
+                <Br />
+              </Fragment>
+            ))}
+            {/* <p>{how_an_investment_could_work}</p> */}
+            {/* <p>
               Two mechanisms are available through with a German TFFF investment
               could be structured.
             </p>
@@ -69,7 +109,7 @@ export default function InvestmentProcess() {
               reprehenderit in voluptate velit esse cillum dolore eu fugiat
               nulla pariatur. Excepteur sint occaecat cupidatat non proident,
               sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            </p> */}
           </div>
         </div>
         <Br />
@@ -88,6 +128,9 @@ export default function InvestmentProcess() {
           <Br />
           <div className="typo-p">
             <div>
+              <p>{endorsements}</p>
+            </div>
+            {/* <div>
               <b>22 April 2025</b>
               <p>...</p>
               <p>
@@ -104,6 +147,46 @@ export default function InvestmentProcess() {
                 Svenja Schulze, Bundesministerin für wirtschaftliche
                 Zusammenarbeit und Entwicklung (BMZ)
               </p>
+            </div> */}
+          </div>
+        </div>
+        <Br />
+        <Hr />
+        <Br />
+        <div>
+          <h2 className="font-bold typo-h2 flex items-center gap-2">
+            <Image
+              width={32}
+              height={32}
+              src="/assets/investment-endorsement.svg"
+              alt="CSOs working on TFFF"
+            />
+            CSOs working on TFFF
+          </h2>
+          <Br />
+          <div className="typo-p">
+            <div>
+              <p>{CSOs}</p>
+            </div>
+          </div>
+        </div>
+        <Br />
+        <Hr />
+        <Br />
+        <div>
+          <h2 className="font-bold typo-h2 flex items-center gap-2">
+            <Image
+              width={32}
+              height={32}
+              src="/assets/investment-endorsement.svg"
+              alt="Background"
+            />
+            Background
+          </h2>
+          <Br />
+          <div className="typo-p">
+            <div>
+              <p>{background}</p>
             </div>
           </div>
         </div>

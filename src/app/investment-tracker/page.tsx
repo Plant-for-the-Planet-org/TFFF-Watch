@@ -1,5 +1,4 @@
 import CountryListChips from "@/components/sections/features/CaountryListChips";
-import InvestmentProcess from "@/components/sections/features/InvestmentProcess";
 import InvestmentProgress from "@/components/sections/features/InvestmentProgress";
 import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
 import Br from "@/components/ui/Br";
@@ -24,11 +23,11 @@ export default function Page() {
       <div>
         <InvestmentTracker />
         <Br />
-        <CountryListChips />
+        <CountryListChips country="Germany" />
         <Br />
         <InvestmentProgress />
         <Br />
-        <InvestmentProcess />
+        {/* <InvestmentProcess /> */}
         <Br />
       </div>
     </div>

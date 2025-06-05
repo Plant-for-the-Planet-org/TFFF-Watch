@@ -10,26 +10,6 @@ import { formatDateFromExcelToData } from "@/utils/datetime";
 import { News } from "@/utils/types";
 
 export default async function RecentNews() {
-  // const [newsList, setNewsList] = useState<any[]>([]);
-
-  // useEffect(() => {
-  //   const fetchNews = async () => {
-  //     try {
-  //       const data = await api({
-  //         url: urls.news,
-  //         method: "GET",
-  //         token: "", // Add token if required
-  //       });
-
-  //       setNewsList(data);
-  //     } catch (error) {
-  //       console.error("Error fetching news:", error);
-  //     }
-  //   };
-
-  //   fetchNews();
-  // }, []);
-
   let newsList: News[] = [];
 
   try {
@@ -40,7 +20,6 @@ export default async function RecentNews() {
     });
   } catch (error) {
     console.error("Error fetching news:", error);
-    // Optionally, handle the error by returning an empty list or a fallback UI
   }
 
   return (
