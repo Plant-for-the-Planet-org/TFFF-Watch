@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Br from "@/components/ui/Br";
-import { twMerge } from "tailwind-merge";
 import { Button } from "@/components/ui/Button";
 import { CountryDetails } from "@/utils/country-helper";
+import { forestChangeData } from "@/utils/forestChange.store";
 import { ForestChangeForCountry } from "@/utils/types";
-import { api, urls } from "@/utils/axios-helper";
+import Image from "next/image";
+import { twMerge } from "tailwind-merge";
 
 function formatTwoDecimal(n: number) {
   return n.toFixed(2);
@@ -20,19 +20,11 @@ export default async function CountryTFFFCard({
   flagImgUrl,
   CTA = false,
 }: { iso2?: string; year?: string } & Partial<CountryDetails> & Options) {
-  let _results: ForestChangeForCountry[] = [];
-  let _data: ForestChangeForCountry | null = null;
-  try {
-    _results = await api<ForestChangeForCountry[]>({
-      url: urls.forestChange,
-      query: { country: name },
-      method: "GET",
-      token: "",
-    });
-    _data = _results.find((el) => +el.year === +year)!;
-  } catch (error) {
-    console.error("Error fetching news:", error);
-  }
+  // console.log({ forestChangeData });
+
+  const _data: ForestChangeForCountry = forestChangeData.find(
+    (el) => +el.year === +year
+  )!;
 
   const rewardIfAlreadyExisted =
     (_data?.base_reward_usd ?? 0) -

@@ -3,6 +3,7 @@ import PotentialPayoutVsExistingConservationFunding from "@/components/sections/
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
 import { getCountryDetails } from "@/utils/country-helper";
+import { fetchForestChangeData } from "@/utils/forestChange.store";
 
 export type PageParams = {
   country: string;
@@ -10,7 +11,6 @@ export type PageParams = {
 };
 
 type Props = {
-  // params: Promise<Partial<ISO2Param & CountryParam>>;
   params: Promise<PageParams>;
 };
 
@@ -18,6 +18,8 @@ export default async function Page({ params }: Props) {
   const { country, year } = await params;
 
   const details = getCountryDetails(country);
+
+  await fetchForestChangeData(details.name);
 
   return (
     <div>
