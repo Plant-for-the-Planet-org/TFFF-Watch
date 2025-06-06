@@ -1,33 +1,25 @@
 "use client";
 
+import { getCountryDetails } from "@/utils/country-helper";
 import { useParams } from "next/navigation";
 
-export type ISO2Param = {
-  iso: string;
+export type PageParams = {
+  country: string;
+  year: string;
 };
 
 export default function HeaderCountry() {
-  const params: ISO2Param = useParams();
-  const { iso } = params;
+  const params: PageParams = useParams();
+  const { country } = params;
 
-  function getFlagEmoji(countryCode: string) {
-    const codePoints = countryCode
-      .toUpperCase()
-      .split("")
-      .map((char: string) => 127397 + char.charCodeAt(0));
-    return String.fromCodePoint(...codePoints);
-  }
+  const details = getCountryDetails(country);
 
-  if (!iso) return null;
+  if (!country) return null;
   return (
     <div>
       <p className="flex gap-2 items-center typo-h3">
-        <span className="text-2xl">{getFlagEmoji(iso)}</span>
-        <b>
-          {new Intl.DisplayNames(["en"], { type: "region" }).of(
-            iso.toUpperCase()
-          )}
-        </b>
+        <img className="w-6 h-4 p-0.5" alt="" src={details.flagImgUrl} />
+        <b>{details.name}</b>
       </p>
     </div>
   );

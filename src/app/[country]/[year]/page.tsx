@@ -1,20 +1,27 @@
-import { ISO2Param } from "@/components/HeaderCountry";
 import ForestCoverChange from "@/components/sections/features/ForestCoverChange";
 import PotentialPayoutVsExistingConservationFunding from "@/components/sections/features/PotentialPayoutVsExistingConservationFunding";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
+import { getCountryDetails } from "@/utils/country-helper";
+
+export type PageParams = {
+  country: string;
+  year: string;
+};
 
 type Props = {
-  params: Promise<ISO2Param>;
+  // params: Promise<Partial<ISO2Param & CountryParam>>;
+  params: Promise<PageParams>;
 };
 
 export default async function Page({ params }: Props) {
-  const { iso } = await params;
-  // console.log(new Intl.DisplayNames(["en"], { type: "region" }).of(iso));
+  const { country, year } = await params;
+
+  const details = getCountryDetails(country);
 
   return (
     <div>
-      <TFFFCountryMapView iso2={iso.toUpperCase()} />
+      <TFFFCountryMapView year={year} {...details} />
       <Br />
       <ForestCoverChange />
       <Br />

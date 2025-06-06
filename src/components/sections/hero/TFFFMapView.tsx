@@ -1,7 +1,10 @@
 import CountryMapView from "@/components/maps/CountryMapView";
 import WorldMapView from "@/components/maps/WorldMapView";
 import Br from "@/components/ui/Br";
-import { WorldMapHeaderContent } from "@/components/sections/hero/TFFFMapViewContent";
+import {
+  CountryMapHeaderContent,
+  WorldMapHeaderContent,
+} from "@/components/sections/hero/TFFFMapViewContent";
 import type { Props as CountryMapViewProps } from "@/components/maps/CountryMapView";
 import CountryTFFFCard from "@/components/maps/CountryTFFFCard";
 import CountryTFFFInvestmentCard from "@/components/maps/CountryTFFFInvestmentCard";
@@ -9,6 +12,7 @@ import {
   LegendForDegradedOrDeforested,
   LegendForSponsorCapitalProviders,
 } from "@/components/maps/MapLegends";
+import { CountryDetails } from "@/utils/country-helper";
 
 export function TFFFWorldMapView() {
   return (
@@ -39,16 +43,25 @@ export function TFFFWorldMapView() {
   );
 }
 
-type TFFFCountryMapViewProps = CountryMapViewProps & {};
+type TFFFCountryMapViewProps = CountryMapViewProps &
+  CountryDetails & {
+    year: string;
+  };
+
 export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
   return (
     <Container>
       <div className="h-full flex flex-col">
         <Br />
-        <WorldMapHeaderContent />
+        <CountryMapHeaderContent year={props.year} />
         <Br />
-        <div className="grow">
-          <CountryMapView {...props} />
+        <div className="grow grid md:grid-cols-2">
+          <div>
+            <CountryMapView iso2={props.iso2} />
+          </div>
+          <div className="flex justify-center items-center">
+            <CountryTFFFCard {...props} />
+          </div>
         </div>
       </div>
     </Container>

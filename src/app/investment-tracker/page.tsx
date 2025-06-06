@@ -10,19 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  // const investmentTrackerData =
-
-  // try {
-  //     newsList = await api<News[]>({
-  //       url: urls.news,
-  //       method: "GET",
-  //       token: "", // Add token if required
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching news:", error);
-  //     // Optionally, handle the error by returning an empty list or a fallback UI
-  //   }
-
   return (
     <div>
       {/* <div className="extra-padding-x-4"> */}

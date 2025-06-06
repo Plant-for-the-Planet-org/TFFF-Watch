@@ -5,62 +5,64 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { Map, MapRef } from "@vis.gl/react-maplibre";
 import type { FeatureCollection } from "geojson";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import countries from "./ne_50m_admin_0_countries.geojson.json";
 
 export type Props = {
   iso2: string;
 };
 
+function getCountryGeoJSON(iso2: string) {
+  return {
+    type: "FeatureCollection",
+    features: countries.features.filter((f) => f.properties?.iso_a2 === iso2),
+  } as FeatureCollection;
+}
+
 export default function CountryMapView({ iso2 }: Props) {
-  const mapRef = useRef<MapRef>(null);
-  const [countryFC, setCountrycountryFC] = useState<FeatureCollection | null>(
-    null
-  );
   const { width = 0 } = useWindowSize();
 
-  useEffect(() => {
-    fetch("/ne_50m_admin_0_countries.geojson")
-      .then((r) => r.json())
-      .then((data: FeatureCollection) => {
-        const single = {
-          type: "FeatureCollection",
-          features: data.features.filter((f) => f.properties?.iso_a2 === iso2),
-        } as FeatureCollection;
-        setCountrycountryFC(single);
-      })
-      .catch(console.error);
-  }, [iso2]);
+  const mapRef = useRef<MapRef>(null);
 
-  const onMapLoad = () => {
-    if (!countryFC) return;
+  const [countryFeatureCollection] = useState<FeatureCollection>(
+    getCountryGeoJSON(iso2)
+  );
+
+  function repositionMap() {
+    if (!countryFeatureCollection) return;
+    if (!width) return;
+
     const maplibre = mapRef.current!.getMap!();
-    const [minX, minY, maxX, maxY] = turfBbox(countryFC);
+    const [minX, minY, maxX, maxY] = turfBbox(countryFeatureCollection);
     const bounds: [[number, number], [number, number]] = [
       [minX, minY],
       [maxX, maxY],
     ];
 
-    if (!width) return;
+    // if (width > 768) {
+    //   // Desktop: pad the right heavily so geo sits in left half
+    //   maplibre.fitBounds(bounds, {
+    //     padding: {
+    //       top: 20,
+    //       bottom: 20,
+    //       left: 20,
+    //       right: width / 2 + 20,
+    //     },
+    //     maxZoom: 8,
+    //   });
+    // } else {
+    //   // Mobile: center it as before
+    //   maplibre.fitBounds(bounds, {
+    //     padding: 20,
+    //     maxZoom: 8,
+    //   });
+    // }
 
-    if (width > 768) {
-      // Desktop: pad the right heavily so geo sits in left half
-      maplibre.fitBounds(bounds, {
-        padding: {
-          top: 20,
-          bottom: 20,
-          left: 20,
-          right: width / 2 + 20,
-        },
-        maxZoom: 8,
-      });
-    } else {
-      // Mobile: center it as before
-      maplibre.fitBounds(bounds, {
-        padding: 20,
-        maxZoom: 8,
-      });
-    }
-  };
+    maplibre.fitBounds(bounds, {
+      padding: 24,
+      maxZoom: 8,
+    });
+  }
 
   return (
     <Map
@@ -68,15 +70,15 @@ export default function CountryMapView({ iso2 }: Props) {
       initialViewState={{ longitude: 0, latitude: 0, zoom: 1 }}
       style={{ width: "100%", height: "100%" }}
       onLoad={() => {
-        onMapLoad();
+        repositionMap();
       }}
       mapStyle={{
         version: 8,
         glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-        sources: countryFC
-          ? { country: { type: "geojson", data: countryFC } }
+        sources: countryFeatureCollection
+          ? { country: { type: "geojson", data: countryFeatureCollection } }
           : {},
-        layers: countryFC
+        layers: countryFeatureCollection
           ? [
               {
                 id: "background",
@@ -97,15 +99,14 @@ export default function CountryMapView({ iso2 }: Props) {
                 type: "line",
                 source: "country",
                 paint: { "line-color": "#FFFFFF", "line-width": 1.5 },
+                // paint: { "line-color": "#000000", "line-width": 1.5 },
               },
             ]
           : [],
       }}
       renderWorldCopies={false}
-      minZoom={0}
-      maxZoom={12}
-      // scrollZoom={false}
       interactive={false}
+      attributionControl={false}
     />
   );
 }

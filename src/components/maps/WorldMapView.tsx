@@ -79,6 +79,11 @@ export default function WorldMapView() {
       mapStyle={style}
       // renderWorldCopies={false}
       scrollZoom={false}
+      dragPan={false}
+      dragRotate={false}
+      touchPitch={false}
+      touchZoomRotate={false}
+      keyboard={false}
       // interactive={false}
       attributionControl={false}
       onLoad={() => {

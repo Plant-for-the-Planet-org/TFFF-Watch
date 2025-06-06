@@ -2,6 +2,10 @@ import Br from "@/components/ui/Br";
 import YearSelect from "@/components/ui/YearSelect";
 // import { YearSelect } from "@/components/ui/Select";
 
+type HeaderProps = {
+  year: string;
+};
+
 export function WorldMapHeaderContent() {
   return (
     <div className="flex flex-col items-center">
@@ -21,6 +25,18 @@ export function WorldMapHeaderContent() {
   );
 }
 
-export function CountryMapHeaderContent() {
-  return <div className="flex flex-col items-center"></div>;
+export function CountryMapHeaderContent({ year }: HeaderProps) {
+  return (
+    <div className="flex flex-col items-center">
+      <h3 className="flex gap-2 items-center flex-wrap typo-h3">
+        <span className="text-center font-bold">
+          Forest change in
+          <YearSelect initialValue={year} />
+        </span>
+      </h3>
+      <p className="text-center max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl typo-p">
+        compared to previous year and classified based on TFFF’s standards
+      </p>
+    </div>
+  );
 }

@@ -2,10 +2,14 @@
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-export default function YearSelect() {
+type Props = {
+  initialValue?: string;
+};
+
+export default function YearSelect({ initialValue }: Props) {
   const [selectedId, setSelectedId] = useState(0);
   const [options] = useState<
     { id: number; value: string; label: string; additionalLabels?: string[] }[]
@@ -24,6 +28,11 @@ export default function YearSelect() {
       additionalLabels: ["average"],
     },
   ]);
+
+  useEffect(() => {
+    if (!initialValue) return;
+    setSelectedId(options.find((el) => el.value === initialValue)!.id);
+  }, [initialValue]);
 
   return (
     <Menu>
