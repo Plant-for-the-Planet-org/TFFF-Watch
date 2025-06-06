@@ -22,8 +22,8 @@ export default function InvestmentProgress({ investment_stage }: Props) {
     },
     {
       stage: 3,
-      label: "Specific investment amount(s) named publicly",
-      display: ["Specific investment", "amount(s) named"],
+      label: "Specific investment amount named publicly",
+      display: ["Specific investment", "amount named publicly"],
       success: false,
     },
     {
@@ -76,7 +76,7 @@ export default function InvestmentProgress({ investment_stage }: Props) {
               <div className="absolute top-1 left-8 md:top-7 md:left-[50%] md:translate-x-[-50%]">
                 <div
                   className={twMerge(
-                    "w-3xs sm:w-sm md:w-[160px] md:text-center typo-p",
+                    "w-3xs sm:w-sm md:w-[180px] md:text-center typo-p",
                     el.success && "font-bold"
                   )}
                 >

@@ -6,6 +6,7 @@ import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import { Metadata } from "next";
+import { capitalize } from "underscore.string";
 
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 export async function generateStaticParams() {
@@ -25,7 +26,7 @@ export async function generateMetadata({
   const { country } = await params;
 
   return {
-    title: `${country} | Investment Tracker`,
+    title: `${capitalize(country)} | Investment Tracker`,
     description: `Investment Tracker for ${country}`,
   };
 }
@@ -38,7 +39,7 @@ export default async function Page({ params }: PageProps) {
   try {
     const results = await api<InvestmentTrackerForCountry[]>({
       url: urls.investmentTracker,
-      query: { country },
+      query: { country: capitalize(country) },
       method: "GET",
       token: "",
     });
@@ -54,7 +55,7 @@ export default async function Page({ params }: PageProps) {
       <div>
         <InvestmentTracker />
         <Br />
-        <CountryListChips country={country} />
+        <CountryListChips country={capitalize(country)} />
         <Br />
         <InvestmentProgress investment_stage={data.investment_stage} />
         <Br />

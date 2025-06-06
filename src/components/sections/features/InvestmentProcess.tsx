@@ -27,6 +27,26 @@ export default function InvestmentProcess({
             <Image
               width={32}
               height={32}
+              src="/assets/investment-background.svg"
+              alt="Background"
+            />
+            Background
+          </h2>
+          <Br />
+          <div className="typo-p">
+            <div>
+              <p>{background}</p>
+            </div>
+          </div>
+        </div>
+        <Br />
+        <Hr />
+        <Br />
+        <div>
+          <h2 className="font-bold typo-h2 flex items-center gap-2">
+            <Image
+              width={32}
+              height={32}
               src="/assets/investment-status.svg"
               alt="Status"
             />
@@ -158,7 +178,7 @@ export default function InvestmentProcess({
             <Image
               width={32}
               height={32}
-              src="/assets/investment-endorsement.svg"
+              src="/assets/investment-csos.svg"
               alt="CSOs working on TFFF"
             />
             CSOs working on TFFF
@@ -167,26 +187,6 @@ export default function InvestmentProcess({
           <div className="typo-p">
             <div>
               <p>{CSOs}</p>
-            </div>
-          </div>
-        </div>
-        <Br />
-        <Hr />
-        <Br />
-        <div>
-          <h2 className="font-bold typo-h2 flex items-center gap-2">
-            <Image
-              width={32}
-              height={32}
-              src="/assets/investment-endorsement.svg"
-              alt="Background"
-            />
-            Background
-          </h2>
-          <Br />
-          <div className="typo-p">
-            <div>
-              <p>{background}</p>
             </div>
           </div>
         </div>
