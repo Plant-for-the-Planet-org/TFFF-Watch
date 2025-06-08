@@ -89,8 +89,7 @@ const fills = {
 // const STARTING_YEAR = 2018;
 
 export default function ForestCoverChangeAreaChart() {
-  const params: PageParams = useParams();
-  const { country } = params;
+  const { country }: PageParams = useParams();
   const details = getCountryDetails(country);
 
   const [chartData, setChartData] = useState<ForestChangeForCountry[]>([]);
@@ -119,6 +118,11 @@ export default function ForestCoverChangeAreaChart() {
             strokeWidth={2}
             fill={fills.restoration}
             fillOpacity={1}
+            dot={{
+              stroke: strokes.restoration,
+              fill: fills.restoration,
+              r: 4,
+            }}
           />
           <Area
             dataKey="degradation"
@@ -126,6 +130,11 @@ export default function ForestCoverChangeAreaChart() {
             strokeWidth={2}
             fill={fills.degradation}
             fillOpacity={1}
+            dot={{
+              stroke: strokes.degradation,
+              fill: fills.degradation,
+              r: 4,
+            }}
           />
           <Area
             dataKey="deforestation"
@@ -133,6 +142,11 @@ export default function ForestCoverChangeAreaChart() {
             strokeWidth={2}
             fill={fills.deforestation}
             fillOpacity={1}
+            dot={{
+              stroke: strokes.deforestation,
+              fill: fills.deforestation,
+              r: 4,
+            }}
           />
           {/* <Tooltip /> */}
           <Legend />

@@ -6,7 +6,7 @@ export default function ForestCoverChange() {
     <div className="border border-base-gray rounding-xl padding-3">
       <Br />
       <div className="text-center">
-        <h2 className="type-h2">
+        <h2 className="typo-h2">
           <b>Forest Cover Change</b> (ha)
         </h2>
       </div>

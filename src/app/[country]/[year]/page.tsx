@@ -1,3 +1,4 @@
+import AnnualPayout from "@/components/sections/features/AnnualPayout";
 import ForestCoverChange from "@/components/sections/features/ForestCoverChange";
 import PotentialPayoutVsExistingConservationFunding from "@/components/sections/features/PotentialPayoutVsExistingConservationFunding";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
@@ -28,6 +29,8 @@ export default async function Page({ params }: Props) {
       <ForestCoverChange />
       <Br />
       <PotentialPayoutVsExistingConservationFunding />
+      <Br />
+      <AnnualPayout />
     </div>
   );
 }

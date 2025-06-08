@@ -6,7 +6,7 @@ export default function PotentialPayoutVsExistingConservationFunding() {
     <div className="bg-secondary-light rounding-xl padding-3">
       <Br />
       <div className="text-center">
-        <h2 className="type-h2">
+        <h2 className="typo-h2">
           <b>Potential TFFF Payout vs Existing Conservation Funding</b>
         </h2>
       </div>
