@@ -38,3 +38,16 @@ export type ForestChangeForCountry = {
   deforestation_deduction_usd: number;
   degradation_deduction_usd: number;
 };
+
+export type Spending = {
+  year: string;
+  country: string;
+  locale: string;
+  amount_usd: string;
+  amount_is_exact: boolean;
+  label: string;
+  help_text: string;
+  added_on: string;
+  source_url: string;
+  source_name: string;
+};

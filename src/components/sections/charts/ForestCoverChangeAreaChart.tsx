@@ -93,25 +93,25 @@ export default function ForestCoverChangeAreaChart() {
   const { country } = params;
   const details = getCountryDetails(country);
 
-  const [data, setData] = useState<ForestChangeForCountry[]>([]);
+  const [chartData, setChartData] = useState<ForestChangeForCountry[]>([]);
 
   useEffect(() => {
     (async () => {
       const _data = await fetchForestChangeData(details.name);
       if (!_data) return;
 
-      setData(_data);
-      console.log({ data });
+      setChartData(_data);
+      console.log({ data: chartData });
       // setData(fullMockData);
     })();
-  }, []);
+  }, [chartData, details.name]);
 
   return (
     <div>
       <ResponsiveContainer width="100%" height="100%" minHeight={400}>
         <AreaChart data={_data}>
-          <YAxis type="number" />
-          <XAxis dataKey="year" />
+          <YAxis type="number" fontSize={14} tickLine={false} />
+          <XAxis dataKey="year" fontSize={14} tickLine={false} />
 
           <Area
             dataKey="restoration"

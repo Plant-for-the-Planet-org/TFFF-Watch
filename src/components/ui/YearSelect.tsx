@@ -32,7 +32,7 @@ export default function YearSelect({ initialValue }: Props) {
   useEffect(() => {
     if (!initialValue) return;
     setSelectedId(options.find((el) => el.value === initialValue)!.id);
-  }, [initialValue]);
+  }, [initialValue, options]);
 
   return (
     <Menu>
