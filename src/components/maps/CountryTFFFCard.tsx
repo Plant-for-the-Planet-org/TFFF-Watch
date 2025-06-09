@@ -45,24 +45,38 @@ export default async function CountryTFFFCard({
           {_data!.eligible_for_reward ? (
             <>
               <Image
-                className="h-4 w-4 bg-primary rounded-full p-1"
-                width={8}
-                height={8}
-                src="/assets/check.png"
+                className="h-4 w-4 rounded-full"
+                width={12}
+                height={12}
+                src="/assets/check.svg"
                 alt="Meets minumum requirement"
               />
               Meets minimum requirements
             </>
           ) : (
             <>
-              <Image
-                className="h-4 w-4 bg-primary rounded-full p-1"
-                width={8}
-                height={8}
-                src="/assets/check.png"
-                alt="Meets minumum requirement"
-              />
-              Does not meets minimum requirements
+              <div className="relative group flex items-center gap-2">
+                <Image
+                  className="h-4 w-4 rounded-full"
+                  width={12}
+                  height={12}
+                  src="/assets/x.svg"
+                  alt="Fails minumum requirement"
+                />
+                <span className="underline underline-offset-4 decoration-dashed decoration">
+                  Fails minimum requirements
+                </span>
+
+                <div className="absolute bottom-full mb-2 w-72 hidden group-hover:block bg-white p-2 rounded shadow z-10 left-1/2 -translate-x-1/2">
+                  <div className="text-xs">
+                    <MinimumCriteria
+                      currentYear={year}
+                      lowDeforestation={true}
+                      lowerDeforestation={false}
+                    />
+                  </div>
+                </div>
+              </div>
             </>
           )}
         </p>
@@ -105,17 +119,27 @@ export default async function CountryTFFFCard({
         </div>
       </div>
       <Br />
-      <div className="p-2 px-4 sm:p-0 bg-primary-light md:-mx-3 lg:-mx-4 xl:-mx-5 md:p-3 lg:p-4 xl:p-5 xl:py-4">
+      <div
+        className={twMerge(
+          "p-2 px-4 sm:p-0 md:-mx-3 lg:-mx-4 xl:-mx-5 md:p-3 lg:p-4 xl:p-5 xl:py-4",
+          _data.eligible_for_reward ? "bg-primary-light" : "bg-danger-light"
+        )}
+      >
         <p className="flex justify-between items-center">
           <span>
             <span className="font-semibold">Estimated Reward</span>{" "}
             <i>if TFFF already existed</i>
           </span>
-          <span className="text-sm">
+          <span
+            className={twMerge(
+              "text-sm",
+              !_data.eligible_for_reward && "text-danger"
+            )}
+          >
             <b>
-              {/* {rewardIfAlreadyExisted < 0 && "-"}$
-              {Math.abs(rewardIfAlreadyExisted)}m */}
-              {toReadable(_data.reward_after_deductions_usd)}
+              {_data.eligible_for_reward
+                ? toReadable(_data.reward_after_deductions_usd)
+                : 0}
             </b>
           </span>
         </p>
@@ -125,16 +149,54 @@ export default async function CountryTFFFCard({
         </p>
       </div>
 
-      <Br cn="hidden md:block" />
       {CTA && (
-        <Button
-          cn="min-w-32 rounded-t-none md:rounded-xl w-full"
-          type="link"
-          external
-        >
-          All Data
-        </Button>
+        <>
+          <Br cn="hidden md:block" />
+          <Button
+            cn="min-w-32 rounded-t-none md:rounded-xl w-full"
+            type="link"
+            external
+          >
+            All Data
+          </Button>
+        </>
       )}
+    </div>
+  );
+}
+
+function MinimumCriteria({
+  currentYear,
+  lowDeforestation,
+  lowerDeforestation,
+}: {
+  currentYear: string;
+  lowDeforestation: boolean;
+  lowerDeforestation: boolean;
+}) {
+  return (
+    <div>
+      <p className="flex items-center gap-2">
+        <Image
+          className="h-4 w-4 rounded-full p-0.5"
+          width={12}
+          height={12}
+          src={lowDeforestation ? "/assets/check.svg" : "/assets/x.svg"}
+          alt="Deforestation in current year less than 0.5%"
+        />
+        Deforestation in {currentYear} less than 0.5%
+      </p>
+      <div className="my-1"></div>
+      <p className="flex items-center gap-2">
+        <Image
+          className="h-4 w-4 rounded-full p-0.5"
+          width={8}
+          height={8}
+          src={lowerDeforestation ? "/assets/check.svg" : "/assets/x.svg"}
+          alt="Deforestation lower than previous year"
+        />
+        Deforestation lower than previous year
+      </p>
     </div>
   );
 }

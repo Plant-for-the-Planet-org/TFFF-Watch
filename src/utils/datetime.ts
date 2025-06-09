@@ -28,5 +28,5 @@ export function formatDateFromExcelToData(dateString: string) {
 }
 
 export function formatDateAgo(date: string) {
-  return formatDistanceToNow(date, {});
+  return formatDistanceToNow(date, { addSuffix: true });
 }

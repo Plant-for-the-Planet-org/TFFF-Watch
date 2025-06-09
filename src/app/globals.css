@@ -16,6 +16,9 @@
   --secondary-light: rgba(246, 250, 255, 1);
   --secondary: rgba(47, 128, 237, 1);
 
+  --danger-light: rgba(255, 230, 230, 1);
+  --danger: rgba(235, 87, 87, 1);
+
   /* Theme colors as per favicon */
   --theme-base: rgba(8, 36, 71, 1);
   --theme-text: rgba(111, 207, 151, 1);
@@ -38,6 +41,9 @@
   --color-primary-medium-light: var(--primary-medium-light);
   --color-secondary-light: var(--secondary-light);
   --color-secondary: var(--secondary);
+
+  --color-danger-light: var(--danger-light);
+  --color-danger: var(--danger);
 
   /* Theme colors as per favicon */
   --color-theme-base: var(--theme-base);

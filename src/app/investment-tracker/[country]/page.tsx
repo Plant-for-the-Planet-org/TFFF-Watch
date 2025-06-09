@@ -1,5 +1,5 @@
 import CountryListChips from "@/components/sections/features/CaountryListChips";
-import InvestmentProcess from "@/components/sections/features/InvestmentProcess";
+import InvestmentTrackerContent from "@/components/sections/features/InvestmentTrackerContent";
 import InvestmentProgress from "@/components/sections/features/InvestmentProgress";
 import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
 import Br from "@/components/ui/Br";
@@ -40,6 +40,7 @@ export default async function Page({ params }: PageProps) {
     const results = await api<InvestmentTrackerForCountry[]>({
       url: urls.investmentTracker,
       query: { country: capitalize(country) },
+      // query: { country: "🇩🇪 Germany" },
       method: "GET",
       token: "",
     });
@@ -59,7 +60,7 @@ export default async function Page({ params }: PageProps) {
         <Br />
         <InvestmentProgress investment_stage={data.investment_stage} />
         <Br />
-        <InvestmentProcess
+        <InvestmentTrackerContent
           last_updated={data.last_updated}
           status={data.status}
           background={data.background}

@@ -57,20 +57,18 @@ export default function InvestmentProgress({ investment_stage }: Props) {
           <Fragment key={key}>
             <div
               className={twMerge(
-                "shrink-0 w-7 h-7 rounded-full border border-base-text relative",
-                el.success && "bg-primary border-primary-light"
+                "shrink-0 w-6 h-6 rounded-full border border-base-text relative",
+                // el.success && "bg-primary border-primary-light"
+                el.success && "border-primary-light"
                 // key === 0 && "ml-6",
                 // key === nodes.length - 1 && "mr-6"
               )}
             >
               <Image
-                className={twMerge(
-                  "p-1.5 pt-2 text-center",
-                  el.success ? "block" : "hidden"
-                )}
-                width={30}
-                height={26}
-                src="/assets/check.png"
+                className={twMerge(el.success ? "block" : "hidden")}
+                width={24}
+                height={24}
+                src="/assets/check.svg"
                 alt="Completed"
               />
               <div className="absolute top-1 left-8 md:top-7 md:left-[50%] md:translate-x-[-50%]">

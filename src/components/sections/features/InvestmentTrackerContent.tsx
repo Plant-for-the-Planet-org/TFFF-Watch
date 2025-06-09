@@ -10,7 +10,7 @@ type Props = Partial<InvestmentTrackerForCountry> & {
   how_an_investment_could_work?: string;
 };
 
-export default function InvestmentProcess({
+export default function InvestmentTrackerContent({
   last_updated,
   status,
   background,
@@ -21,11 +21,10 @@ export default function InvestmentProcess({
 }: Props) {
   return (
     <div className="border border-base-gray rounding-xl padding-3">
-      <Br cn="hidden lg:block" />
-
-      <div>
-        <p>Updated : {formatDateAgo(last_updated!)} ago</p>
+      <div className="text-end text-[#828282] italic">
+        <p>Updated {formatDateAgo(last_updated!)}</p>
       </div>
+      <Br cn="hidden lg:block" />
 
       <div className="extra-padding-x-4">
         <div>
