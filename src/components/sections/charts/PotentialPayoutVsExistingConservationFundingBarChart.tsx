@@ -4,6 +4,7 @@ import { PageParams } from "@/app/[country]/[year]/page";
 import { api, urls } from "@/utils/axios-helper";
 import { getCountryDetails } from "@/utils/country-helper";
 import { forestChangeData } from "@/utils/forestChange.store";
+import { toReadable } from "@/utils/number-helper";
 import { Spending } from "@/utils/types";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -180,7 +181,11 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
                 />
               )}
             />
-            <LabelList dataKey="value" position="right" />
+            <LabelList
+              dataKey={"value"}
+              position="right"
+              formatter={toReadable}
+            />
           </Bar>
         </BarChart>
       </ResponsiveContainer>

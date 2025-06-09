@@ -100,7 +100,7 @@ export default function ForestCoverChangeAreaChart() {
       if (!_data) return;
 
       setChartData(_data);
-      console.log({ data: chartData });
+      // console.log({ data: chartData });
       // setData(fullMockData);
     })();
   }, [chartData, details.name]);

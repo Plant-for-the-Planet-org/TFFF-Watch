@@ -2,13 +2,14 @@ import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
 import { CountryDetails } from "@/utils/country-helper";
 import { forestChangeData } from "@/utils/forestChange.store";
+import { toReadable } from "@/utils/number-helper";
 import { ForestChangeForCountry } from "@/utils/types";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
-function formatTwoDecimal(n: number) {
-  return n.toFixed(2);
-}
+// function formatTwoDecimal(n: number) {
+//   return n.toFixed(2);
+// }
 
 type Options = {
   CTA?: boolean;
@@ -26,10 +27,10 @@ export default async function CountryTFFFCard({
     (el) => +el.year === +year
   )!;
 
-  const rewardIfAlreadyExisted =
-    (_data?.base_reward_usd ?? 0) -
-    (_data?.deforestation_deduction_usd ?? 0) -
-    (_data?.degradation_deduction_usd ?? 0);
+  // const rewardIfAlreadyExisted =
+  //   (_data?.base_reward_usd ?? 0) -
+  //   (_data?.deforestation_deduction_usd ?? 0) -
+  //   (_data?.degradation_deduction_usd ?? 0);
 
   if (!_data) return null;
 
@@ -71,31 +72,35 @@ export default async function CountryTFFFCard({
         <div className="flex justify-between items-center">
           <span>
             {/* Reward for <b>{data.intactForest.area} ha</b> intact forest */}
-            Reward for <b>{_data.intact_forest_ha ?? "?"} ha</b> intact forest
+            Reward for <b>
+              {toReadable(_data.intact_forest_ha) ?? "?"} ha
+            </b>{" "}
+            intact forest
           </span>
           <span className={twMerge(`text-[#219653]`, "text-sm")}>
-            <b>${_data.base_reward_usd ?? "?"}</b>
+            <b>${toReadable(_data.base_reward_usd) ?? "?"}</b>
           </span>
         </div>
         <Br cn="md:hidden" />
         <div className="flex justify-between items-center">
           <span>
-            Discount for <b>{_data.deforested_ha ?? "?"} ha</b> deforestation in{" "}
-            {year} ({formatTwoDecimal(_data.percentage_deforested) ?? "?"})
+            Discount for <b>{toReadable(_data.deforested_ha) ?? "?"} ha</b>{" "}
+            deforestation in {year} (
+            {toReadable(_data.percentage_deforested) ?? "?"}%)
           </span>
           <span className={twMerge(`text-[#EB5757]`, "text-sm")}>
-            <b>-${_data.deforestation_deduction_usd ?? "?"}</b>
+            <b>-${toReadable(_data.deforestation_deduction_usd) ?? "?"}</b>
           </span>
         </div>
         <Br cn="md:hidden" />
         <div className="flex justify-between items-center">
           <span>
-            Discount for <b>{_data.degraded_forest_ha ?? "?"} ha</b>{" "}
+            Discount for <b>{toReadable(_data.degraded_forest_ha) ?? "?"} ha</b>{" "}
             deforestation in 2024 (
-            {formatTwoDecimal(_data.percentage_degraded) ?? "?"})
+            {toReadable(_data.percentage_degraded) ?? "?"}%)
           </span>
           <span className={twMerge(`text-[#F2994A]`, "text-sm")}>
-            <b>-${_data.degradation_deduction_usd}</b>
+            <b>-${toReadable(_data.degradation_deduction_usd)}</b>
           </span>
         </div>
       </div>
@@ -108,14 +113,15 @@ export default async function CountryTFFFCard({
           </span>
           <span className="text-sm">
             <b>
-              {rewardIfAlreadyExisted < 0 && "-"}$
-              {Math.abs(rewardIfAlreadyExisted)}m
+              {/* {rewardIfAlreadyExisted < 0 && "-"}$
+              {Math.abs(rewardIfAlreadyExisted)}m */}
+              {toReadable(_data.reward_after_deductions_usd)}
             </b>
           </span>
         </p>
         <p className="flex justify-between items-center font-thin">
           <span>Of which 20% is designated for Indigenous Peoples</span>
-          <span className="text-sm">$5.88m</span>
+          <span className="text-sm">{toReadable(_data.IPLC_reward_usd)}</span>
         </p>
       </div>
 
