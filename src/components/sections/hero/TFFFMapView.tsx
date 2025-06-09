@@ -9,6 +9,7 @@ import type { Props as CountryMapViewProps } from "@/components/maps/CountryMapV
 import CountryTFFFCard from "@/components/maps/CountryTFFFCard";
 import CountryTFFFInvestmentCard from "@/components/maps/CountryTFFFInvestmentCard";
 import {
+  CountryMapLegends,
   LegendForDegradedOrDeforested,
   LegendForSponsorCapitalProviders,
 } from "@/components/maps/MapLegends";
@@ -56,7 +57,10 @@ export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
         <CountryMapHeaderContent year={props.year} />
         <Br />
         <div className="grow grid md:grid-cols-2">
-          <div>
+          <div className="relative">
+            <div className="absolute bottom-0 z-20">
+              <CountryMapLegends />
+            </div>
             <CountryMapView iso2={props.iso2} />
           </div>
           <div className="flex justify-center items-center">

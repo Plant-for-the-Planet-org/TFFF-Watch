@@ -6,14 +6,8 @@ import { fetchForestChangeData } from "@/utils/forestChange.store";
 import { ForestChangeForCountry } from "@/utils/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  Area,
-  AreaChart,
-  Legend,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { twMerge } from "tailwind-merge";
 
 const _data = [
   { year: "2021", restoration: 25, deforestation: -25, degradation: -27 },
@@ -107,11 +101,26 @@ export default function ForestCoverChangeAreaChart() {
 
   return (
     <div>
+      <div className="flex justify-end">
+        <div className="font-thin">
+          <div className="flex gap-2 items-center">
+            <div className={twMerge("w-6 h-4", `bg-[#EB5756]`)}></div>
+            <p>Deforested</p>
+          </div>
+          <div className="flex gap-2 items-center">
+            <div className={twMerge("w-6 h-4", `bg-[#F1994A]`)}></div>
+            <p>Degraded</p>
+          </div>
+          <div className="flex gap-2 items-center">
+            <div className={twMerge("w-6 h-4", `bg-[#2C9CDB]`)}></div>
+            <p>Restored</p>
+          </div>
+        </div>
+      </div>
       <ResponsiveContainer width="100%" height="100%" minHeight={400}>
         <AreaChart data={_data}>
           <YAxis type="number" fontSize={14} tickLine={false} />
           <XAxis dataKey="year" fontSize={14} tickLine={false} />
-
           <Area
             dataKey="restoration"
             stroke={strokes.restoration}
@@ -149,7 +158,7 @@ export default function ForestCoverChangeAreaChart() {
             }}
           />
           {/* <Tooltip /> */}
-          <Legend />
+          {/* <Legend /> */}
         </AreaChart>
       </ResponsiveContainer>
     </div>

@@ -1,3 +1,4 @@
+import { twMerge } from "tailwind-merge";
 import Br from "../ui/Br";
 
 export function LegendForDegradedOrDeforested() {
@@ -19,6 +20,31 @@ export function LegendForSponsorCapitalProviders() {
       <p className="typo-p mb-2">Sponsor Capital Providers</p>
 
       <div className="rounded-full h-2 w-full bg-[#2F80ED]"></div>
+    </div>
+  );
+}
+
+export function CountryMapLegends() {
+  return (
+    <div className="flex">
+      <div className="font-thin">
+        <div className="flex gap-2 items-center">
+          <div className={twMerge("w-6 h-4", `bg-[#6FCF97]`)}></div>
+          <p>Intact Forest</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <div className={twMerge("w-6 h-4", `bg-[#EB5756]`)}></div>
+          <p>Deforested</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <div className={twMerge("w-6 h-4", `bg-[#F1994A]`)}></div>
+          <p>Degraded</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <div className={twMerge("w-6 h-4", `bg-[#2C9CDB]`)}></div>
+          <p>Restored</p>
+        </div>
+      </div>
     </div>
   );
 }
