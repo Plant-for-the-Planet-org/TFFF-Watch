@@ -1,6 +1,7 @@
 import Br from "@/components/ui/Br";
 import Hr from "@/components/ui/Hr";
 import { extractLists } from "@/utils/content-helper";
+import { formatDateAgo } from "@/utils/datetime";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import Image from "next/image";
 import { Fragment } from "react";
@@ -10,6 +11,7 @@ type Props = Partial<InvestmentTrackerForCountry> & {
 };
 
 export default function InvestmentProcess({
+  last_updated,
   status,
   background,
   endorsements,
@@ -20,6 +22,10 @@ export default function InvestmentProcess({
   return (
     <div className="border border-base-gray rounding-xl padding-3">
       <Br cn="hidden lg:block" />
+
+      <div>
+        <p>Updated : {formatDateAgo(last_updated!)} ago</p>
+      </div>
 
       <div className="extra-padding-x-4">
         <div>

@@ -18,7 +18,11 @@ export default function AboutTFFFWatch() {
               </p>
             </div>
           </div>
-          <Button type="link" external>
+          <Button
+            href="mailto:pakhi.das@plant-for-the-planet.org"
+            type="link"
+            external
+          >
             Contact Us
           </Button>
         </div>
@@ -37,7 +41,11 @@ export default function AboutTFFFWatch() {
               </p>
             </div>
           </div>
-          <Button type="link" external>
+          <Button
+            href="mailto:pakhi.das@plant-for-the-planet.org"
+            type="link"
+            external
+          >
             Contact Us
           </Button>
         </div>
@@ -69,6 +77,28 @@ export default function AboutTFFFWatch() {
               sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
           </div>
+        </div>
+        <Br />
+        <Hr />
+        <Br />
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="shrink">
+            <h2 className="font-bold typo-h2">Data Access</h2>
+            <Br />
+            <div className="typo-p">
+              <p>
+                Access all country investment tracker and rainforest country
+                financial data in a Google Sheet.
+              </p>
+            </div>
+          </div>
+          <Button
+            href="https://docs.google.com/spreadsheets/d/13MUmpCrbldgWTlNRIvq58N3O721_ufP7rTyNxX1V0Vk/edit?gid=1842175288#gid=1842175288"
+            type="link"
+            external
+          >
+            Access Data
+          </Button>
         </div>
       </div>
       <Br cn="hidden lg:block" />

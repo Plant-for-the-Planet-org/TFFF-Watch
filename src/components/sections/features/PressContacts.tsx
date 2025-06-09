@@ -50,45 +50,51 @@ export default function PressContacts() {
               <p className="text-sm">{el.role}</p>
             </div>
             <div className="flex gap-2 justify-center items-center">
-              <Link
-                className="rounded-full bg-[#219653] p-1.5"
-                href={el.linkedin ?? "#"}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Image
-                  width={16 * 1}
-                  height={16 * 1}
-                  src="/assets/press-contact-linkedin.svg"
-                  alt="linkedin"
-                />
-              </Link>
-              <Link
-                className="rounded-full bg-[#219653] p-1.5 py-2"
-                href={el.email ?? "#"}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Image
-                  width={16 * 1}
-                  height={16 * 1}
-                  src="/assets/press-contact-email.svg"
-                  alt="email"
-                />
-              </Link>
-              <Link
-                className="rounded-full bg-[#219653] p-1.5"
-                href={el.phone ?? "#"}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Image
-                  width={16 * 1}
-                  height={16 * 1}
-                  src="/assets/press-contact-phone.svg"
-                  alt="phone"
-                />
-              </Link>
+              {el.linkedin && (
+                <Link
+                  className="rounded-full bg-[#219653] p-1.5 transition-transform hover:-translate-y-1"
+                  href={el.linkedin ?? "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Image
+                    width={16 * 1}
+                    height={16 * 1}
+                    src="/assets/press-contact-linkedin.svg"
+                    alt="linkedin"
+                  />
+                </Link>
+              )}
+              {el.email && (
+                <Link
+                  className="rounded-full bg-[#219653] p-1.5 py-2 transition-transform hover:-translate-y-1"
+                  href={el.email ?? "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Image
+                    width={16 * 1}
+                    height={16 * 1}
+                    src="/assets/press-contact-email.svg"
+                    alt="email"
+                  />
+                </Link>
+              )}
+              {el.phone && (
+                <Link
+                  className="rounded-full bg-[#219653] p-1.5 transition-transform hover:-translate-y-1"
+                  href={el.phone ?? "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Image
+                    width={16 * 1}
+                    height={16 * 1}
+                    src="/assets/press-contact-phone.svg"
+                    alt="phone"
+                  />
+                </Link>
+              )}
             </div>
           </div>
         ))}

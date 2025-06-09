@@ -60,6 +60,7 @@ export default async function Page({ params }: PageProps) {
         <InvestmentProgress investment_stage={data.investment_stage} />
         <Br />
         <InvestmentProcess
+          last_updated={data.last_updated}
           status={data.status}
           background={data.background}
           endorsements={data.endorsements}

@@ -24,7 +24,7 @@ export default function SecondaryHero(props: Props) {
 
 export function OverlayTheTFFFIdea() {
   return (
-    <div className="position absolute inset-0 flex justify-center items-center">
+    <div className="absolute inset-0 flex justify-center items-center">
       <h2 className="font-bold text-white typo-h1">The TFFF, Explained</h2>
     </div>
   );
@@ -32,7 +32,7 @@ export function OverlayTheTFFFIdea() {
 
 export function OverlayFriendsOfTheTFFF() {
   return (
-    <div className="position absolute inset-0 flex justify-center items-center">
+    <div className="absolute inset-0 flex justify-center items-center">
       <h2 className="font-bold text-white typo-h1">Friends of the TFFF</h2>
     </div>
   );
@@ -40,7 +40,7 @@ export function OverlayFriendsOfTheTFFF() {
 
 export function OverlayAboutTFFFWatch() {
   return (
-    <div className="position absolute inset-0 flex justify-center items-center">
+    <div className="absolute inset-0 flex justify-center items-center">
       <h2 className="font-bold text-white typo-h1">About TFFF Watch</h2>
     </div>
   );
@@ -48,7 +48,7 @@ export function OverlayAboutTFFFWatch() {
 
 export function OverlayPressTFFFWatch() {
   return (
-    <div className="position absolute inset-0 flex justify-center items-center">
+    <div className="absolute inset-0 flex justify-center items-center">
       <h2 className="font-bold text-white typo-h1">Press</h2>
     </div>
   );

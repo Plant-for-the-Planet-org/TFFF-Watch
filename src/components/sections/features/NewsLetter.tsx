@@ -1,10 +1,20 @@
-import Br from "@/components/ui/Br";
-import Image from "next/image";
+// import Br from "@/components/ui/Br";
+// import Image from "next/image";
 
 export default function NewsLetter() {
   return (
-    <div className="bg-secondary-light outer-rounding outer-padding-3">
-      <Br />
+    <div className="border border-base-gray outer-rounding outer-padding-3">
+      <iframe
+        src="https://plansfortheplanet.substack.com/embed"
+        width="100%"
+        height="320"
+        // className="outer-rounding outer-padding-3"
+        // style={{"border:1px solid #EEE; background:white;"}}
+        // style={{ background: "transparent" }}
+        frameBorder="0"
+        scrolling="no"
+      ></iframe>
+      {/* <Br />
       <Br />
       <div className="flex flex-col items-center">
         <Image
@@ -36,7 +46,7 @@ export default function NewsLetter() {
       </div>
       <Br />
       <div className="text-end">Substack LOGO</div>
-      <Br />
+      <Br /> */}
     </div>
   );
 }
