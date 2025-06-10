@@ -1,13 +1,13 @@
 // "use client";
 
 import Br from "@/components/ui/Br";
-import NewsCard from "./NewsCard";
-import { Button } from "@/components/ui/Button";
 import { ResponsiveContainer } from "@/components/ui/Container";
-import { Fragment } from "react";
 import { api, urls } from "@/utils/axios-helper";
 import { formatDateFromExcelToData } from "@/utils/datetime";
 import { News } from "@/utils/types";
+import { compareDesc, parse as dateParse } from "date-fns";
+import { Fragment } from "react";
+import NewsCard from "./NewsCard";
 
 export default async function RecentNews() {
   let newsList: News[] = [];
@@ -18,6 +18,13 @@ export default async function RecentNews() {
       method: "GET",
       token: "", // Add token if required
     });
+
+    newsList.sort((a, b) =>
+      compareDesc(
+        dateParse(a.date, "dd.MM.yyyy", new Date()),
+        dateParse(b.date, "dd.MM.yyyy", new Date())
+      )
+    );
   } catch (error) {
     console.error("Error fetching news:", error);
   }
@@ -50,13 +57,13 @@ export default async function RecentNews() {
           </div>
         </div>
         <Br />
-        <Br />
+        {/* <Br />
         <div className="flex justify-center">
           <Button type="link" external>
             See All
           </Button>
         </div>
-        <Br />
+        <Br /> */}
       </div>
     </ResponsiveContainer>
   );

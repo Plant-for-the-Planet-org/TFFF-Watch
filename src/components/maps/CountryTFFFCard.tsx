@@ -7,25 +7,22 @@ import { ForestChangeForCountry } from "@/utils/types";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
-// function formatTwoDecimal(n: number) {
-//   return n.toFixed(2);
-// }
-
 type Options = {
+  countryData?: ForestChangeForCountry | null;
   CTA?: boolean;
 };
 
-export default async function CountryTFFFCard({
+export default function CountryTFFFCard({
   year = "2024",
   name = "",
   flagImgUrl,
   CTA = false,
+  countryData = null,
 }: { iso2?: string; year?: string } & Partial<CountryDetails> & Options) {
   // console.log({ forestChangeData });
 
-  const _data: ForestChangeForCountry = forestChangeData.find(
-    (el) => +el.year === +year
-  )!;
+  const _data: ForestChangeForCountry =
+    countryData || forestChangeData.find((el) => +el.year === +year)!;
 
   // const rewardIfAlreadyExisted =
   //   (_data?.base_reward_usd ?? 0) -
@@ -143,6 +140,7 @@ export default async function CountryTFFFCard({
           <Br cn="hidden md:block" />
           <Button
             cn="min-w-32 rounded-t-none md:rounded-xl w-full"
+            href={`/${name}/${year}`}
             type="link"
             external
           >

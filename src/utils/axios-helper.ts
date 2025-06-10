@@ -3,6 +3,10 @@ import { env } from "@/utils/env";
 
 export const urls = {
   news: "https://automate.plant-for-the-planet.org/webhook/cache/tfff-news",
+  policyBriefs:
+    "https://automate.plant-for-the-planet.org/webhook/cache/tfff-policy-briefs",
+  pressReleases:
+    "https://automate.plant-for-the-planet.org/webhook/cache/tfff-press-releases",
   forestChange:
     "https://automate.plant-for-the-planet.org/webhook/cache/tfff-forest-change-and-payouts",
   forestChangeAll:

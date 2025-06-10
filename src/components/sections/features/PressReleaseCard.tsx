@@ -6,7 +6,7 @@ type Props = {
   title: string;
   summary: string;
   image: string;
-  publisher: string;
+  publisher?: string;
   datetime: string;
   url: string;
 };
@@ -29,7 +29,10 @@ export default function PressReleaseCard(props: Props) {
         <div className="absolute bottom-0 inset-x-0 px-3 pb-3">
           <div className="flex justify-between items-end">
             <div className="bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs">
-              {props.publisher} · {formatForNewsCard(new Date(props.datetime))}
+              {[
+                props.publisher,
+                formatForNewsCard(new Date(props.datetime)),
+              ].join(" · ")}
             </div>
             <IconButton href={props.url} cn="hidden md:block" external />
             <IconButton href={props.url} cn="md:hidden" small external />

@@ -92,8 +92,10 @@ export default function WorldMapView() {
             colorKey = "#E1EBE5";
         }
 
-        // @ts-ignore
-        country.properties.colorKey = colorKey;
+        // country.properties.colorKey = colorKey;
+        (
+          country.properties as typeof country.properties & { colorKey: string }
+        ).colorKey = colorKey;
       });
 
       return countries;
@@ -150,7 +152,7 @@ export default function WorldMapView() {
         elem?.classList.remove("maplibregl-compact-show");
 
         const map = mapRef.current?.getMap();
-        console.log("onLoad", { map });
+        // console.log("onLoad", { map });
         map?.addControl(new maplibregl.AttributionControl({ compact: true }));
       }}
     >

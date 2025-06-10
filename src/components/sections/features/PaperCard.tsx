@@ -16,18 +16,20 @@ export default function PaperCard(props: Props) {
       <div className="flex flex-row gap-2 items-center md:block">
         <div className="flex-2/5">
           <div className="relative">
-            <div className="absolute bottom-0 inset-x-0 px-2 pb-2">
+            <div className="absolute z-10 bottom-0 inset-x-0 px-2 pb-2">
               <div className="flex justify-between items-center">
                 <div></div>
                 <IconButton href={props.url} cn="hidden md:block" external />
                 <IconButton href={props.url} cn="md:hidden" small external />
               </div>
             </div>
-            <img
-              className="aspect-4/3 p-4 md:py-6 md:px-8 object-contain transition-transform duration-300 ease-in-out group-hover:scale-110 rounding-lg"
-              src={props.image}
-              alt="policy paper"
-            />
+            <div className="flex justify-center items-center">
+              <img
+                className="aspect-4/3 p-4 md:py-6 md:px-8 object-contain transition-transform duration-300 ease-in-out group-hover:scale-110 rounding-lg"
+                src={props.image}
+                alt="policy paper"
+              />
+            </div>
           </div>
         </div>
         <div className="flex-3/5">

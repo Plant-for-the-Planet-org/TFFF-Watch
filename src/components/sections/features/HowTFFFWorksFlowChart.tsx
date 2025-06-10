@@ -9,7 +9,15 @@ export default function HowTFFFWorksFlowChart() {
         <div
           id="investors-from-tfif"
           className="absolute top-[50%] -right-[4px]"
-        ></div>
+        >
+          <Image
+            className="rotate-180 translate-x-1"
+            width={12}
+            height={12}
+            src={"/assets/flowchart-arrow-green.svg"}
+            alt=""
+          />
+        </div>
         <h3 className="font-bold typo-h3 text-center">Investors</h3>
         <Br />
         <div className="grid gap-3 grid-cols-1 md:grid-cols-2">

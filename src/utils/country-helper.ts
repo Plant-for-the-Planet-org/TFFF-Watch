@@ -17,7 +17,8 @@ export function getCountryDetails(country: string): CountryDetails {
 
   const iso2 = countries.getAlpha2Code(country, "en");
   const iso3 = countries.getAlpha3Code(country, "en");
-  const name = countries.getName(iso3!, "en", { select: "official" });
+  // const name = countries.getName(iso3!, "en", { select: "official" });
+  const name = countries.getName(iso3!, "en", { select: "alias" });
   const flagImgUrl = `http://purecatamphetamine.github.io/country-flag-icons/3x2/${iso2}.svg`;
 
   const details = {

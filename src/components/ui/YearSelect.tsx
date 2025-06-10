@@ -37,12 +37,13 @@ export default function YearSelect({ initialValue }: Props) {
     const selected = options.find((el) => el.value === initialValue)!;
     setSelectedId(selected.id);
     setYear(selected.value);
-  }, [initialValue, options]);
+  }, [initialValue, options, setYear]);
 
   return (
     <Menu>
       <MenuButton
         as="button"
+        // disabled
         className="mx-2 rounded-full font-bold bg-white px-5 py-1 border border-base-gray outline-none inline-flex gap-2 items-center justify-center"
       >
         {({ open }) => (

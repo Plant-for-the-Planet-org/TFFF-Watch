@@ -10,6 +10,28 @@ export type News = {
   url: string;
 };
 
+export type Policy = {
+  id: string;
+  date: string; // format: "dd.MM.yyyy"
+  publisher?: string;
+  title?: string;
+  summary?: string;
+  featured_image?: string;
+  locale: string;
+  author?: string;
+  url: string;
+};
+
+export type PressRelease = {
+  id: string;
+  date: string; // format: "dd.MM.yyyy"
+  title: string;
+  summary: string;
+  featured_image: string;
+  locale: string;
+  url: string;
+};
+
 export type InvestmentTrackerForCountry = {
   row_number: number;
   last_updated: string;

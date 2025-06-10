@@ -1,8 +1,9 @@
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
+// THIS LABEL IS REMOVED SINCE FOR NOW NO ONE IS CONTRIBUTING.
 const data = [
-  { name: "Invested Capital", actualValue: 2, value: 0 },
-  { name: "Pledged Capital", actualValue: 7.2, value: 0 },
+  { name: "", actualValue: 0, value: 0 },
+  { name: "Pledged Capital", actualValue: 0, value: 0 },
   { name: "Target", actualValue: 25, value: 0 },
 ];
 
@@ -53,7 +54,7 @@ const CustomLabel = (props: CustomLabelProps) => {
 
 const Legend = () => (
   <div className="flex flex-wrap justify-center gap-4 mt-4 px-4">
-    {data.map((entry, index) => (
+    {[data[1], data[2]].map((entry, index) => (
       <div key={entry.name} className="flex items-center gap-2">
         <div
           className="w-3 h-3 rounded-sm"
@@ -82,7 +83,7 @@ export default function InvestmentGaugeChart() {
             innerRadius="130%"
             outerRadius="150%"
             dataKey="value"
-            cy="85%"
+            cy="90%"
             labelLine={false}
             label={CustomLabel}
           >
@@ -95,7 +96,7 @@ export default function InvestmentGaugeChart() {
           </Pie>
           <text
             x="50%"
-            y="80%"
+            y="85%"
             textAnchor="middle"
             dominantBaseline="middle"
             className="typo-h2"

@@ -86,7 +86,7 @@ export default function ForestCoverChangeAreaChart() {
   const { country }: PageParams = useParams();
   const details = getCountryDetails(country);
 
-  const [chartData, setChartData] = useState<ForestChangeForCountry[]>([]);
+  const [, setChartData] = useState<ForestChangeForCountry[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -94,12 +94,12 @@ export default function ForestCoverChangeAreaChart() {
       if (!_data) return;
 
       setChartData(_data);
-      // console.log({ data: chartData });
+      // console.log({ chartData });
       // setData(fullMockData);
     })();
   }, [details.name]);
 
-  console.log(chartData);
+  // console.log(chartData);
   return (
     <div>
       <div className="flex justify-end">

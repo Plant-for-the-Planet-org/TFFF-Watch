@@ -19,12 +19,13 @@ export function TFFFWorldMapView() {
   return (
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
-        <Br />
+        {/* <Br /> */}
+        <BetaChip />
         <WorldMapHeaderContent />
         <Br />
         <div className="grow relative flex flex-col">
           {/* <div className="mx-auto h-3/4 w-full lg:h-full lg:w-auto aspect-[198/120] border border-black"> */}
-          <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full object-contain">
+          <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full object-contain relative">
             <WorldMapView />
             <WorldMapTFFFCard />
           </div>
@@ -87,6 +88,14 @@ function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
     <div className="bg-primary-light outer-rounding outer-padding-3 h-[90vh] md:h-[85vh] lg:h-[80vh] xl:h-[75vh] min-h-fit">
       {/* <div className="bg-primary-light outer-rounding outer-padding-3 max-h-full"> */}
       {children}
+    </div>
+  );
+}
+
+export function BetaChip() {
+  return (
+    <div className="self-start bg-white text-primary text-xs py-0.5 px-2 rounded-full shadow-xl">
+      BETA
     </div>
   );
 }

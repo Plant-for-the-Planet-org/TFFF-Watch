@@ -140,7 +140,6 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
 
   return (
     <div>
-      <pre>{JSON.stringify(bar, null, 2)}</pre>
       <ResponsiveContainer
         ref={containerRef}
         width="100%"

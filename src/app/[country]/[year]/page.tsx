@@ -24,7 +24,13 @@ export default async function Page({ params }: Props) {
 
   return (
     <div>
-      <TFFFCountryMapView year={year} {...details} />
+      <TFFFCountryMapView
+        year={year}
+        name={details.name}
+        iso2={details.iso2}
+        iso3={details.iso3}
+        flagImgUrl={details.flagImgUrl}
+      />
       <Br />
       <ForestCoverChange />
       <Br />
