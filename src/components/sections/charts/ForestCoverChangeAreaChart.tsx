@@ -97,8 +97,9 @@ export default function ForestCoverChangeAreaChart() {
       // console.log({ data: chartData });
       // setData(fullMockData);
     })();
-  }, [chartData, details.name]);
+  }, [details.name]);
 
+  console.log(chartData);
   return (
     <div>
       <div className="flex justify-end">
