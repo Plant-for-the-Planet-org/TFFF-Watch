@@ -33,10 +33,10 @@ interface LayerData {
   deforestationLayer2023?: LayerConfig;
 }
 
-interface Props {
+export type Props = {
   iso2: string;
   // layerData: LayerData;
-}
+};
 
 const layerData: LayerData = {
   // id: "5c49e9c0-3e29-4def-a523-a2b2b33d8ad8",
@@ -141,35 +141,6 @@ export default function CountryMapView({ iso2 }: Props) {
       mapStyle={{
         version: 8,
         glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-        //   sources: countryFeatureCollection
-        //     ? { country: { type: "geojson", data: countryFeatureCollection } }
-        //     : {},
-        //   layers: countryFeatureCollection
-        //     ? [
-        //         {
-        //           id: "background",
-        //           type: "background",
-        //           paint: { "background-color": "#F0FAF4" },
-        //         },
-        //         {
-        //           id: "fill",
-        //           type: "fill",
-        //           source: "country",
-        //           paint: {
-        //             "fill-color": "#FFFFFF",
-        //             "fill-outline-color": "#FFFFFF",
-        //           },
-        //         },
-        //         {
-        //           id: "line",
-        //           type: "line",
-        //           source: "country",
-        //           paint: { "line-color": "#FFFFFF", "line-width": 1.5 },
-        //           // paint: { "line-color": "#000000", "line-width": 1.5 },
-        //         },
-        //       ]
-        //     : [],
-        // }}
         sources: {},
         layers: [
           {
