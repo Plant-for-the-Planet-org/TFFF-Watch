@@ -7,8 +7,10 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 // import countries from "./ne_50m_admin_0_countries.geojson.json";
-import countries from "./100m_countries.geo.json";
+import countries from "./ne_110m_admin_0_countries.geo.json";
+// import countries from "./100m_countries.geo.json";
 import { useWorldMap } from "@/utils/store";
+import { transformAllForestCoverChangeData } from "@/utils/country-helper";
 
 export type MapCountryClickEvent = {
   features: maplibregl.MapLayerMouseEvent["features"];
@@ -41,9 +43,61 @@ export default function WorldMapView() {
     if (!forestCoverChangeData.length) {
       return { type: "FeatureCollection", features: [] };
     } else {
-      console.log("Modify");
+      // console.log({ forestCoverChangeData });
+      const forestCoverChangeAll = transformAllForestCoverChangeData(
+        forestCoverChangeData
+      );
+      // console.log("Modify", forestCoverChangeAll);
+      countries.features.forEach((country) => {
+        const countryName = country.properties.name;
+        const changeValue = forestCoverChangeAll[countryName];
+
+        let colorKey;
+
+        switch (true) {
+          case changeValue === undefined || isNaN(changeValue):
+            colorKey = "#E1EBE5";
+            break;
+          case changeValue > 0 && changeValue < 0.2:
+            colorKey = "#FEFCFB";
+            break;
+          case changeValue > 0.2 && changeValue < 0.4:
+            colorKey = "#FADABE";
+            break;
+          case changeValue > 0.4 && changeValue < 0.6:
+            colorKey = "#F7C08E";
+            break;
+          case changeValue > 0.6 && changeValue < 0.8:
+            colorKey = "#F4A45E";
+            break;
+          case changeValue > 0.8 && changeValue < 1.0:
+            colorKey = "#F08C4D";
+            break;
+          case changeValue > 1.0 && changeValue < 1.2:
+            colorKey = "#EE7453";
+            break;
+          case changeValue > 1.2 && changeValue < 1.4:
+            colorKey = "#EB5A57";
+            break;
+          case changeValue > 1.4 && changeValue < 1.6:
+            colorKey = "#E24444";
+            break;
+          case changeValue > 1.6 && changeValue < 1.8:
+            colorKey = "#D72E2E";
+            break;
+          case changeValue > 1.8:
+            colorKey = "#CB1313";
+            break;
+          default:
+            colorKey = "#E1EBE5";
+        }
+
+        // @ts-ignore
+        country.properties.colorKey = colorKey;
+      });
+
+      return countries;
     }
-    console.log({ forestCoverChangeData });
   }, [forestCoverChangeData]);
 
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
@@ -67,6 +121,7 @@ export default function WorldMapView() {
       ref={mapRef}
       zoom={zoom}
       latitude={latitude}
+      cursor="default"
       mapStyle={{
         version: 8,
         glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
@@ -108,7 +163,7 @@ export default function WorldMapView() {
           id="country-fill"
           type="fill"
           paint={{
-            "fill-color": "#E1EBE5",
+            "fill-color": ["get", "colorKey"],
             "fill-outline-color": "#FFFFFF",
           }}
         />

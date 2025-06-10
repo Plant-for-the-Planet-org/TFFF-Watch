@@ -1,4 +1,5 @@
 import countries from "i18n-iso-countries";
+import { ForestChangeForCountry } from "./types";
 // eslint-disable-next-line
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
@@ -28,4 +29,19 @@ export function getCountryDetails(country: string): CountryDetails {
 
   // console.log({ details });
   return details;
+}
+
+type CountryForestData = {
+  [countryName: string]: number;
+};
+export function transformAllForestCoverChangeData(
+  data: ForestChangeForCountry[]
+) {
+  return data.reduce((acc: CountryForestData, row) => {
+    const country = row.country;
+    const percDef = row.percentage_deforested || 0;
+    const percDeg = row.percentage_degraded || 0;
+    acc[country] = percDef + percDeg;
+    return acc;
+  }, {});
 }
