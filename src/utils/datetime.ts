@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from "date-fns";
+import { formatDate, formatDistanceToNow } from "date-fns";
 
 export function formatForNewsCard(date: Date) {
   const monthNames = [
@@ -28,5 +28,7 @@ export function formatDateFromExcelToData(dateString: string) {
 }
 
 export function formatDateAgo(date: string) {
-  return formatDistanceToNow(date, { addSuffix: true });
+  return formatDistanceToNow(formatDate(date, "dd.MM.yyyy"), {
+    addSuffix: true,
+  });
 }

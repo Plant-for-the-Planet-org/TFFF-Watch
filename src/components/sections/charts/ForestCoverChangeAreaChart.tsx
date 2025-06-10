@@ -112,17 +112,17 @@ export default function ForestCoverChangeAreaChart() {
             <div className={twMerge("w-6 h-4", `bg-[#F1994A]`)}></div>
             <p>Degraded</p>
           </div>
-          <div className="flex gap-2 items-center">
+          {/* <div className="flex gap-2 items-center">
             <div className={twMerge("w-6 h-4", `bg-[#2C9CDB]`)}></div>
             <p>Restored</p>
-          </div>
+          </div> */}
         </div>
       </div>
       <ResponsiveContainer width="100%" height="100%" minHeight={400}>
         <AreaChart data={_data}>
           <YAxis type="number" fontSize={14} tickLine={false} />
           <XAxis dataKey="year" fontSize={14} tickLine={false} />
-          <Area
+          {/* <Area
             dataKey="restoration"
             stroke={strokes.restoration}
             strokeWidth={2}
@@ -133,7 +133,7 @@ export default function ForestCoverChangeAreaChart() {
               fill: fills.restoration,
               r: 4,
             }}
-          />
+          /> */}
           <Area
             dataKey="degradation"
             stroke={strokes.degradation}

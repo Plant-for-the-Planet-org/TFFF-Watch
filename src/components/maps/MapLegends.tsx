@@ -26,7 +26,7 @@ export function LegendForSponsorCapitalProviders() {
 
 export function CountryMapLegends() {
   return (
-    <div className="flex">
+    <div className="flex typo-p">
       <div className="font-thin">
         <div className="flex gap-2 items-center">
           <div className={twMerge("w-6 h-4", `bg-[#6FCF97]`)}></div>
@@ -40,10 +40,10 @@ export function CountryMapLegends() {
           <div className={twMerge("w-6 h-4", `bg-[#F1994A]`)}></div>
           <p>Degraded</p>
         </div>
-        <div className="flex gap-2 items-center">
+        {/* <div className="flex gap-2 items-center">
           <div className={twMerge("w-6 h-4", `bg-[#2C9CDB]`)}></div>
           <p>Restored</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

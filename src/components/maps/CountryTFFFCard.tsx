@@ -41,44 +41,30 @@ export default async function CountryTFFFCard({
           <img className="w-3 h-2" alt={name} src={flagImgUrl} />
           {name} {year}
         </p>
-        <p className="flex items-center gap-2">
-          {_data!.eligible_for_reward ? (
-            <>
-              <Image
-                className="h-4 w-4 rounded-full"
-                width={12}
-                height={12}
-                src="/assets/check.svg"
-                alt="Meets minumum requirement"
-              />
-              Meets minimum requirements
-            </>
-          ) : (
-            <>
-              <div className="relative group flex items-center gap-2">
-                <Image
-                  className="h-4 w-4 rounded-full"
-                  width={12}
-                  height={12}
-                  src="/assets/x.svg"
-                  alt="Fails minumum requirement"
-                />
-                <span className="underline underline-offset-4 decoration-dashed decoration">
-                  Fails minimum requirements
-                </span>
+        <p className="flex items-center gap-2 relative group">
+          <Image
+            className="h-4 w-4 rounded-full"
+            width={12}
+            height={12}
+            src={
+              _data!.eligible_for_reward ? "/assets/check.svg" : "/assets/x.svg"
+            }
+            alt="Meets minumum requirement"
+          />
+          <span className="underline underline-offset-4 decoration-dashed decoration text-base-text/50">
+            {_data!.eligible_for_reward ? "Meets" : "Fails"} minimum
+            requirements
+          </span>
 
-                <div className="absolute bottom-full mb-2 w-72 hidden group-hover:block bg-white p-2 rounded shadow z-10 left-1/2 -translate-x-1/2">
-                  <div className="text-xs">
-                    <MinimumCriteria
-                      currentYear={year}
-                      lowDeforestation={true}
-                      lowerDeforestation={false}
-                    />
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
+          <div className="absolute bottom-full mb-2 w-72 hidden group-hover:block bg-white p-2 rounded shadow z-10 left-1/2 -translate-x-1/2">
+            <div className="text-xs">
+              <MinimumCriteria
+                currentYear={year}
+                lowDeforestation={true}
+                lowerDeforestation={false}
+              />
+            </div>
+          </div>
         </p>
       </div>
       <Br />
@@ -110,8 +96,8 @@ export default async function CountryTFFFCard({
         <div className="flex justify-between items-center">
           <span>
             Discount for <b>{toReadable(_data.degraded_forest_ha) ?? "?"} ha</b>{" "}
-            deforestation in 2024 (
-            {toReadable(_data.percentage_degraded) ?? "?"}%)
+            degradation in 2024 ({toReadable(_data.percentage_degraded) ?? "?"}
+            %)
           </span>
           <span className={twMerge(`text-[#F2994A]`, "text-sm")}>
             <b>-${toReadable(_data.degradation_deduction_usd)}</b>
@@ -137,6 +123,7 @@ export default async function CountryTFFFCard({
             )}
           >
             <b>
+              $
               {_data.eligible_for_reward
                 ? toReadable(_data.reward_after_deductions_usd)
                 : 0}
@@ -145,7 +132,9 @@ export default async function CountryTFFFCard({
         </p>
         <p className="flex justify-between items-center font-thin">
           <span>Of which 20% is designated for Indigenous Peoples</span>
-          <span className="text-sm">{toReadable(_data.IPLC_reward_usd)}</span>
+          <span className="text-sm">
+            ${_data.eligible_for_reward ? toReadable(_data.IPLC_reward_usd) : 0}
+          </span>
         </p>
       </div>
 

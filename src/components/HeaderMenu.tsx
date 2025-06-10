@@ -10,7 +10,8 @@ export default function HeaderMenu() {
   const [customOpen, setCustomOpen] = useState(false);
   const [options] = useState([
     { id: 1, href: "the-tfff-idea", label: "The TFFF Idea" },
-    { id: 2, href: "investment-tracker", label: "Investment Tracker" },
+    // { id: 2, href: "investment-tracker", label: "Investment Tracker" },
+    { id: 2, href: "investment-tracker/Germany", label: "Investment Tracker" },
     { id: 3, href: "friends-of-the-tfff", label: "Friends of the TFFF" },
     { id: 4, href: "about-tfff-watch", label: "About TFFF watch" },
     { id: 5, href: "press", label: "Press" },

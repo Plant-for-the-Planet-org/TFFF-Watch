@@ -6,6 +6,7 @@ import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
+import { bbox as turfBbox } from "@turf/turf";
 import countries from "./ne_50m_admin_0_countries.geojson.json";
 
 // const style: StyleSpecification = {
@@ -66,6 +67,11 @@ export default function WorldMapView() {
   useEffect(() => {
     if (!mapRef.current) return;
     const map = mapRef.current?.getMap();
+    const bounds = turfBbox(countries); // [minX, minY, maxX, maxY]
+    map.fitBounds(bounds, {
+      padding: 20,
+      duration: 0,
+    });
     // console.log(map);
     map?.addControl(new maplibregl.AttributionControl({ compact: true }));
   }, [mapRef]);
@@ -120,7 +126,7 @@ export default function WorldMapView() {
           id="country-fill"
           type="fill"
           paint={{
-            "fill-color": "#FFFFFF",
+            "fill-color": "#E1EBE5",
             "fill-outline-color": "#FFFFFF",
           }}
         />
@@ -129,7 +135,7 @@ export default function WorldMapView() {
           type="line"
           paint={{
             "line-color": "#FFFFFF",
-            "line-width": 1.5,
+            "line-width": 1,
           }}
         />
       </Source>

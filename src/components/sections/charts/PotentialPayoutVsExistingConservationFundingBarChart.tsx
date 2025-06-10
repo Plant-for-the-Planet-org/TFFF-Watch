@@ -4,7 +4,7 @@ import { PageParams } from "@/app/[country]/[year]/page";
 import { api, urls } from "@/utils/axios-helper";
 import { getCountryDetails } from "@/utils/country-helper";
 import { forestChangeData } from "@/utils/forestChange.store";
-import { toReadable } from "@/utils/number-helper";
+import { toReadableAmount } from "@/utils/number-helper";
 import { Spending } from "@/utils/types";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -40,10 +40,7 @@ const ChartColors = {
   gray: "#BDBDBD",
 };
 
-const bar = {
-  barSize: 42,
-  barGap: 42 + 14,
-};
+const BAR_SIZE = 42;
 
 export default function PotentialPayoutVsExistingConservationFundingBarChart() {
   const params: PageParams = useParams();
@@ -56,7 +53,10 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
     yAxisWidth: 0,
     chartWidth: 0,
   });
-
+  const [bar, setBar] = useState({
+    barSize: BAR_SIZE,
+    barGap: 42 + 14,
+  });
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
   useEffect(() => {
@@ -123,20 +123,24 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    if (width! < 768)
+    if (width! < 768) {
       setChartOptions({
         yAxisWidth: 0,
         chartWidth: containerRef.current.clientWidth,
       });
-    else
+      setBar({ barSize: BAR_SIZE, barGap: 42 + 14 });
+    } else {
       setChartOptions({
         yAxisWidth: containerRef.current.clientWidth * (1 / 3),
         chartWidth: containerRef.current.clientWidth * (2 / 3),
       });
+      setBar({ barSize: BAR_SIZE, barGap: 21 });
+    }
   }, [containerRef, width]);
 
   return (
     <div>
+      <pre>{JSON.stringify(bar, null, 2)}</pre>
       <ResponsiveContainer
         ref={containerRef}
         width="100%"
@@ -184,7 +188,7 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
             <LabelList
               dataKey={"value"}
               position="right"
-              formatter={toReadable}
+              formatter={toReadableAmount}
             />
           </Bar>
         </BarChart>
@@ -262,7 +266,7 @@ type CustomTickProps = LabelListProps<ChartData> & {
   data: ChartData[];
 };
 function CustomTick(props: CustomTickProps) {
-  const { y, width, height = bar.barSize, index, data } = props;
+  const { y, width, height = BAR_SIZE, index, data } = props;
   const calculatedY = (y as number) - (height as number) / 2;
   const tooltipData = data[index!].info;
 
