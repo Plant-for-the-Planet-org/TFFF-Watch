@@ -5,6 +5,8 @@ export const urls = {
   news: "https://automate.plant-for-the-planet.org/webhook/cache/tfff-news",
   forestChange:
     "https://automate.plant-for-the-planet.org/webhook/cache/tfff-forest-change-and-payouts",
+  forestChangeAll:
+    "https://automate.plant-for-the-planet.org/webhook/uncached/forest_change_and_payouts",
   spending:
     "https://automate.plant-for-the-planet.org/webhook/cache/tfff-spending",
   investmentTracker:

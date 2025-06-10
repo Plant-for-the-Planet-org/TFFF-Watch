@@ -5,88 +5,68 @@ import { Layer, Map, MapRef, Source } from "@vis.gl/react-maplibre";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useEffect, useRef, useState } from "react";
-import { bbox as turfBbox } from "@turf/turf";
-import countries from "./ne_50m_admin_0_countries.geojson.json";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+// import countries from "./ne_50m_admin_0_countries.geojson.json";
+import countries from "./100m_countries.geo.json";
+import { useWorldMap } from "@/utils/store";
 
-// const style: StyleSpecification = {
-//   version: 8,
-//   sources: {
-//     countries: {
-//       type: "vector",
-//       tiles: ["https://demotiles.maplibre.org/tiles/{z}/{x}/{y}.pbf"],
-//       maxzoom: 6,
-//     },
-//   },
-//   layers: [
-//     {
-//       id: "background",
-//       type: "background",
-//       paint: {
-//         "background-color": "#F0FAF4",
-//       },
-//     },
-//     {
-//       id: "countries-fill",
-//       type: "fill",
-//       source: "countries",
-//       "source-layer": "countries",
-//       paint: {
-//         "fill-color": "#E1EBE5",
-//         "fill-outline-color": "#FFFFFF",
-//       },
-//     },
-//     {
-//       id: "countries-stroke",
-//       type: "line",
-//       source: "countries",
-//       "source-layer": "countries",
-//       paint: {
-//         "line-color": "#FFFFFF",
-//         "line-width": 1.5,
-//       },
-//     },
-//   ],
-//   glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-// };
+export type MapCountryClickEvent = {
+  features: maplibregl.MapLayerMouseEvent["features"];
+  point: maplibregl.MapLayerMouseEvent["point"];
+  lngLat: maplibregl.MapLayerMouseEvent["lngLat"];
+  lng: maplibregl.MapLayerMouseEvent["lngLat"]["lng"];
+  lat: maplibregl.MapLayerMouseEvent["lngLat"]["lat"];
+  country: string;
+};
 
 export default function WorldMapView() {
+  const { width } = useWindowSize();
+  const { forestCoverChangeData } = useWorldMap();
+
   const mapRef = useRef<MapRef>(null);
 
-  const [zoom, setZoom] = useState(0.5);
-  const [latitude, setLatitude] = useState(50);
-  const { width } = useWindowSize();
+  const [zoom, setZoom] = useState(1);
+  const [latitude] = useState(42);
 
   useEffect(() => {
     if (!width) return;
-    setLatitude(50);
-    if (width > 768) setZoom(0.5);
-    else setZoom(0.3);
+    if (width > 768) {
+      setZoom(1);
+    } else {
+      setZoom(0.3);
+    }
   }, [width]);
 
-  useEffect(() => {
-    if (!mapRef.current) return;
+  const allCountries = useMemo(() => {
+    if (!forestCoverChangeData.length) {
+      return { type: "FeatureCollection", features: [] };
+    } else {
+      console.log("Modify");
+    }
+    console.log({ forestCoverChangeData });
+  }, [forestCoverChangeData]);
+
+  const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
-    const bounds = turfBbox(countries); // [minX, minY, maxX, maxY]
-    map.fitBounds(bounds, {
-      padding: 20,
-      duration: 0,
+    const features = map?.queryRenderedFeatures(event.point, {
+      layers: ["country-fill"],
     });
-    // console.log(map);
-    map?.addControl(new maplibregl.AttributionControl({ compact: true }));
-  }, [mapRef]);
+    const { point, lngLat } = event;
+    const country = features?.[0]?.properties?.name;
+    const data = { features, point, lngLat, ...lngLat, country };
+
+    window.dispatchEvent(
+      new CustomEvent("map-country-click", {
+        detail: data,
+      })
+    );
+  };
 
   return (
     <Map
-      initialViewState={{
-        longitude: 0,
-        latitude: latitude,
-        zoom: zoom,
-      }}
       ref={mapRef}
       zoom={zoom}
       latitude={latitude}
-      // mapStyle={style}
       mapStyle={{
         version: 8,
         glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
@@ -99,28 +79,30 @@ export default function WorldMapView() {
           },
         ],
       }}
-      renderWorldCopies={false}
+      keyboard={false}
       scrollZoom={false}
       dragPan={false}
       dragRotate={false}
       touchPitch={false}
       touchZoomRotate={false}
-      keyboard={false}
-      // interactive={false}
       attributionControl={false}
+      renderWorldCopies={false}
+      onClick={onClick}
       onLoad={() => {
-        // console.log("onLoad");
         const elem = document.querySelector(
           "details.maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact"
         );
         elem?.classList.remove("maplibregl-compact-show");
+
+        const map = mapRef.current?.getMap();
+        console.log("onLoad", { map });
+        map?.addControl(new maplibregl.AttributionControl({ compact: true }));
       }}
     >
-      {/* COUNTRY GEOMETRY */}
       <Source
         id="country"
         type="geojson"
-        data={countries as unknown as GeoJSON<Geometry, GeoJsonProperties>}
+        data={allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>}
       >
         <Layer
           id="country-fill"
@@ -139,7 +121,6 @@ export default function WorldMapView() {
           }}
         />
       </Source>
-
       {/* <AttributionControl compact={false} /> */}
     </Map>
   );

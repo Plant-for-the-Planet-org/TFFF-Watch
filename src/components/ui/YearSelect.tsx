@@ -1,5 +1,6 @@
 "use client";
 
+import { useWorldMap } from "@/utils/store";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -10,6 +11,8 @@ type Props = {
 };
 
 export default function YearSelect({ initialValue }: Props) {
+  const { setYear } = useWorldMap();
+
   const [selectedId, setSelectedId] = useState(0);
   const [options] = useState<
     { id: number; value: string; label: string; additionalLabels?: string[] }[]
@@ -31,7 +34,9 @@ export default function YearSelect({ initialValue }: Props) {
 
   useEffect(() => {
     if (!initialValue) return;
-    setSelectedId(options.find((el) => el.value === initialValue)!.id);
+    const selected = options.find((el) => el.value === initialValue)!;
+    setSelectedId(selected.id);
+    setYear(selected.value);
   }, [initialValue, options]);
 
   return (

@@ -6,6 +6,7 @@ import {
   LegendForDegradedOrDeforested,
   LegendForSponsorCapitalProviders,
 } from "@/components/maps/MapLegends";
+import WorldMapTFFFCard from "@/components/maps/WorldMapTFFFCard";
 import WorldMapView from "@/components/maps/WorldMapView";
 import {
   CountryMapHeaderContent,
@@ -13,6 +14,7 @@ import {
 } from "@/components/sections/hero/TFFFMapViewContent";
 import Br from "@/components/ui/Br";
 import { CountryDetails } from "@/utils/country-helper";
+
 export function TFFFWorldMapView() {
   return (
     <WorldMapViewContainer>
@@ -22,8 +24,9 @@ export function TFFFWorldMapView() {
         <Br />
         <div className="grow relative flex flex-col">
           {/* <div className="mx-auto h-3/4 w-full lg:h-full lg:w-auto aspect-[198/120] border border-black"> */}
-          <div className="mx-auto aspect-[1.65] w-full h-full max-w-full max-h-full object-contain">
+          <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full object-contain">
             <WorldMapView />
+            <WorldMapTFFFCard />
           </div>
           <div className="md:absolute left-3 bottom-6 min-w-48 max-w-fit mx-auto">
             <Br cn="md:hidden" />
@@ -54,8 +57,8 @@ export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
         <Br />
         <CountryMapHeaderContent year={props.year} />
         <Br />
-        <div className="grow grid md:grid-cols-2">
-          <div className="relative">
+        <div className="grow grid grid-cols-1 md:grid-cols-2">
+          <div className="relative h-60 md:h-full">
             <div className="absolute bottom-0 z-20">
               <CountryMapLegends />
             </div>

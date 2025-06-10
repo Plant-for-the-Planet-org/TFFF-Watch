@@ -35,7 +35,7 @@ export default async function CountryTFFFCard({
   if (!_data) return null;
 
   return (
-    <div className="w-3xs md:w-md p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5 rounding-xl shadow-custom bg-white text-xs sm:text-sm">
+    <div className="w-3xs md:w-md p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5 rounding-xl bg-white text-xs sm:text-sm">
       <div className="p-2 px-4 sm:p-0 flex gap-2 justify-between items-center flex-wrap rounded-t-lg bg-primary-light sm:bg-white">
         <p className="flex gap-3.25 items-center">
           <img className="w-3 h-2" alt={name} src={flagImgUrl} />
