@@ -44,12 +44,14 @@ export default function CountryTFFFCard({
             width={12}
             height={12}
             src={
-              _data!.eligible_for_reward ? "/assets/check.svg" : "/assets/x.svg"
+              _data!.eligibility_combined
+                ? "/assets/check.svg"
+                : "/assets/x.svg"
             }
             alt="Meets minumum requirement"
           />
           <span className="underline underline-offset-4 decoration-dashed decoration text-base-text/50">
-            {_data!.eligible_for_reward ? "Meets" : "Fails"} minimum
+            {_data!.eligibility_combined ? "Meets" : "Fails"} minimum
             requirements
           </span>
 
@@ -57,8 +59,12 @@ export default function CountryTFFFCard({
             <div className="text-xs">
               <MinimumCriteria
                 currentYear={year}
-                lowDeforestation={true}
-                lowerDeforestation={false}
+                eligibility_deforestation_rate_below_half_percent={
+                  _data!.eligibility_deforestation_rate_below_half_percent
+                }
+                eligibility_decreasing_trend_of_deforestation={
+                  _data!.eligibility_decreasing_trend_of_deforestation
+                }
               />
             </div>
           </div>
@@ -105,7 +111,7 @@ export default function CountryTFFFCard({
       <div
         className={twMerge(
           "p-2 px-4 sm:p-0 md:-mx-3 lg:-mx-4 xl:-mx-5 md:p-3 lg:p-4 xl:p-5 xl:py-4",
-          _data.eligible_for_reward ? "bg-primary-light" : "bg-danger-light"
+          _data.eligibility_combined ? "bg-primary-light" : "bg-danger-light"
         )}
       >
         <p className="flex justify-between items-center">
@@ -116,12 +122,12 @@ export default function CountryTFFFCard({
           <span
             className={twMerge(
               "text-sm",
-              !_data.eligible_for_reward && "text-danger"
+              !_data.eligibility_combined && "text-danger"
             )}
           >
             <b>
               $
-              {_data.eligible_for_reward
+              {_data.eligibility_combined
                 ? toReadable(_data.reward_after_deductions_usd)
                 : 0}
             </b>
@@ -130,7 +136,8 @@ export default function CountryTFFFCard({
         <p className="flex justify-between items-center font-thin">
           <span>Of which 20% is designated for Indigenous Peoples</span>
           <span className="text-sm">
-            ${_data.eligible_for_reward ? toReadable(_data.IPLC_reward_usd) : 0}
+            $
+            {_data.eligibility_combined ? toReadable(_data.iplc_reward_usd) : 0}
           </span>
         </p>
       </div>
@@ -154,12 +161,12 @@ export default function CountryTFFFCard({
 
 function MinimumCriteria({
   currentYear,
-  lowDeforestation,
-  lowerDeforestation,
+  eligibility_deforestation_rate_below_half_percent,
+  eligibility_decreasing_trend_of_deforestation,
 }: {
   currentYear: string;
-  lowDeforestation: boolean;
-  lowerDeforestation: boolean;
+  eligibility_deforestation_rate_below_half_percent: boolean;
+  eligibility_decreasing_trend_of_deforestation: boolean;
 }) {
   return (
     <div>
@@ -168,7 +175,11 @@ function MinimumCriteria({
           className="h-4 w-4 rounded-full p-0.5"
           width={12}
           height={12}
-          src={lowDeforestation ? "/assets/check.svg" : "/assets/x.svg"}
+          src={
+            eligibility_deforestation_rate_below_half_percent
+              ? "/assets/check.svg"
+              : "/assets/x.svg"
+          }
           alt="Deforestation in current year less than 0.5%"
         />
         Deforestation in {currentYear} less than 0.5%
@@ -179,7 +190,11 @@ function MinimumCriteria({
           className="h-4 w-4 rounded-full p-0.5"
           width={8}
           height={8}
-          src={lowerDeforestation ? "/assets/check.svg" : "/assets/x.svg"}
+          src={
+            eligibility_decreasing_trend_of_deforestation
+              ? "/assets/check.svg"
+              : "/assets/x.svg"
+          }
           alt="Deforestation lower than previous year"
         />
         Deforestation lower than previous year

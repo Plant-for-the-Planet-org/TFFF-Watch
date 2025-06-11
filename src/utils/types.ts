@@ -55,13 +55,16 @@ export type ForestChangeForCountry = {
   degraded_forest_ha: number;
   percentage_deforested: number;
   percentage_degraded: number;
-  eligible_for_reward: boolean;
+  // eligible_for_reward: boolean;
   passes_criteria: boolean;
   base_reward_usd: number;
   deforestation_deduction_usd: number;
   degradation_deduction_usd: number;
   reward_after_deductions_usd: number;
-  IPLC_reward_usd: number;
+  iplc_reward_usd: number;
+  eligibility_deforestation_rate_below_half_percent: boolean;
+  eligibility_decreasing_trend_of_deforestation: boolean;
+  eligibility_combined: boolean;
 };
 
 export type Spending = {

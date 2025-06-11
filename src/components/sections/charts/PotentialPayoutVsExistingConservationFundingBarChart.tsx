@@ -74,7 +74,7 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
         (el) => +el.year === +year
       )!;
       const {
-        eligible_for_reward,
+        eligibility_combined,
         base_reward_usd,
         deforestation_deduction_usd,
         degradation_deduction_usd,
@@ -93,7 +93,7 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
         (deforestation_deduction_usd + degradation_deduction_usd);
       const estimateRewardAtCurrentDeforestation: ChartData = {
         label: `Estimated TFFF Reward (${year})  at current deforestation levels`,
-        value: eligible_for_reward === false ? 0 : reward_after_deduction,
+        value: eligibility_combined === false ? 0 : reward_after_deduction,
         fill: ChartColors.blue,
         info: {
           details:
