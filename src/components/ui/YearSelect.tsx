@@ -33,6 +33,7 @@ export default function YearSelect({ initialValue }: Props) {
   ]);
 
   useEffect(() => {
+    setYear(options.find((el) => el.id === selectedId)!.value);
     if (!initialValue) return;
     const selected = options.find((el) => el.value === initialValue)!;
     setSelectedId(selected.id);

@@ -9,7 +9,7 @@ import { twMerge } from "tailwind-merge";
 export default function HeaderMenu() {
   const [customOpen, setCustomOpen] = useState(false);
   const [options] = useState([
-    // { id: 0, href: "/", label: "Home" },
+    { id: 0, href: "/", label: "Home" },
     { id: 1, href: "the-tfff-idea", label: "The TFFF Idea" },
     // { id: 2, href: "investment-tracker", label: "Investment Tracker" },
     { id: 2, href: "investment-tracker/Germany", label: "Investment Tracker" },
