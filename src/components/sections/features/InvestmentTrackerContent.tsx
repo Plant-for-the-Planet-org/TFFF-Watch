@@ -155,6 +155,12 @@ export default function InvestmentTrackerContent({
             <div>
               <p>{endorsements}</p>
             </div>
+            {/* {endorsements!.split("\n- ").map((el, key) => (
+              <Fragment key={key}>
+                <p>{el}</p>
+                <Br />
+              </Fragment>
+            ))} */}
             {/* <div>
               <b>22 April 2025</b>
               <p>...</p>

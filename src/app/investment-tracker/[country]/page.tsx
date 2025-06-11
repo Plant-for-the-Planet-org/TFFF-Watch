@@ -10,7 +10,17 @@ import { capitalize } from "underscore.string";
 
 // https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 export async function generateStaticParams() {
-  return [{ country: "Germany" }, { country: "Norway" }, { country: "France" }];
+  return [
+    { country: "Germany" },
+    { country: "Norway" },
+    { country: "France" },
+    { country: "UK" },
+    { country: "UAE" },
+    { country: "Netherlands" },
+    { country: "Singapore" },
+    { country: "EU" },
+    { country: "Others" },
+  ];
 }
 
 type PageProps = {

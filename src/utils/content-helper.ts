@@ -1,6 +1,8 @@
 export function extractLists(text: string) {
   if (!text) return [];
-  return text.split("- ");
+  const output = text.split("- ");
+  console.log({ output });
+  return output;
 }
 
 export function serialize(text: string) {

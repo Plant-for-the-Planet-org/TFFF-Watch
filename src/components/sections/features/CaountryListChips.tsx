@@ -7,14 +7,15 @@ type Props = InvesmentTrackerParams & {};
 export default function CountryListChips({ country }: Props) {
   const countryList = [
     { label: "Germany", iso2: "DE", emoji: "🇩🇪", selected: false },
-    { label: "UK", iso2: "GB", emoji: "🇬🇧", selected: false },
     { label: "Norway", iso2: "NO", emoji: "🇳🇴", selected: false },
     { label: "France", iso2: "FR", emoji: "🇫🇷", selected: false },
+    { label: "UK", iso2: "GB", emoji: "🇬🇧", selected: false },
     { label: "UAE", iso2: "AE", emoji: "🇦🇪", selected: false },
     { label: "Netherlands", iso2: "NL", emoji: "🇳🇱", selected: false },
-    // { label: "🇪🇺 EU", iso2: "EU" },
+    { label: "EU", iso2: "EU", emoji: "🇪🇺", noFlag: true, selected: false },
     { label: "Singapore", iso2: "SG", emoji: "🇸🇬", selected: false },
-    { label: "Azerbaijan", iso2: "AZ", emoji: "🇦🇿", selected: false },
+    // { label: "Azerbaijan", iso2: "AZ", emoji: "🇦🇿", selected: false },
+    { label: "Others", iso2: "OT", emoji: "🌍", noFlag: true, selected: false },
   ];
   countryList.find((el) => el.label === country)!.selected = true;
 
@@ -32,11 +33,15 @@ export default function CountryListChips({ country }: Props) {
             key={key}
             href={`/investment-tracker/${el.label}`}
           >
-            <img
-              className="w-6 h-4 p-0.5"
-              alt=""
-              src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${el.iso2}.svg`}
-            />
+            {el?.noFlag ? (
+              el.emoji
+            ) : (
+              <img
+                className="w-6 h-4 p-0.5"
+                alt=""
+                src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${el.iso2}.svg`}
+              />
+            )}
             {/* <span>{el.emoji}</span> */}
             {el.label}
           </Link>
