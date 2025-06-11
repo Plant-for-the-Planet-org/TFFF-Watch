@@ -3,6 +3,12 @@ import SecondaryHero, {
   OverlayAboutTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
 import Br from "@/components/ui/Br";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About TFFF Watch",
+  description: "About TFFF Watch",
+};
 
 export default function Page() {
   return (

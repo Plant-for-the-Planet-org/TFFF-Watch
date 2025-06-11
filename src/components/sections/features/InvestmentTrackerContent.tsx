@@ -1,6 +1,6 @@
 import Br from "@/components/ui/Br";
 import Hr from "@/components/ui/Hr";
-import { extractLists } from "@/utils/content-helper";
+import { extractLists, serializePersons } from "@/utils/content-helper";
 import { formatDateAgo } from "@/utils/datetime";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import Image from "next/image";
@@ -82,7 +82,18 @@ export default function InvestmentTrackerContent({
           </h2>
           <Br />
           <div className="typo-p">
-            <p>{responsibile_government_office}</p>
+            {/* <p>{responsibile_government_office}</p> */}
+            {serializePersons(responsibile_government_office!).map(
+              (el, key) => (
+                <div key={key}>
+                  <p>
+                    <b>{el.name}</b> · {el.organization}
+                  </p>
+                  <p>{el.email}</p>
+                  <Br />
+                </div>
+              )
+            )}
           </div>
         </div>
         <Br />
@@ -196,9 +207,18 @@ export default function InvestmentTrackerContent({
           </h2>
           <Br />
           <div className="typo-p">
-            <div>
+            {/* <div>
               <p>{CSOs}</p>
-            </div>
+            </div> */}
+            {serializePersons(CSOs!).map((el, key) => (
+              <div key={key}>
+                <p>
+                  <b>{el.name}</b> · {el.organization}
+                </p>
+                <p>{el.email}</p>
+                <Br />
+              </div>
+            ))}
           </div>
         </div>
       </div>

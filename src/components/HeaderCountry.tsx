@@ -1,7 +1,6 @@
 "use client";
 
 import { getCountryDetails } from "@/utils/country-helper";
-import { headers } from "next/headers";
 import { useParams, usePathname } from "next/navigation";
 
 export type PageParams = {
