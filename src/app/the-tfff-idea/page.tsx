@@ -7,8 +7,8 @@ import Br from "@/components/ui/Br";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "The TFFF Idea",
-  description: "The TFFF Idea",
+  title: "TFFF Explained · TFFF Watch",
+  description: "How does the Tropical Forest Forever Facility work?",
 };
 
 export default function Page() {

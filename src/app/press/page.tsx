@@ -7,8 +7,8 @@ import Br from "@/components/ui/Br";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Press",
-  description: "Press",
+  title: "Press · TFFF Watch",
+  description: "Access press releases and contact us for press inquiries.",
 };
 
 export default function Page() {

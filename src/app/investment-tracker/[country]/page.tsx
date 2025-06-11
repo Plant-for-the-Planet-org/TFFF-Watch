@@ -36,8 +36,10 @@ export async function generateMetadata({
   const { country } = await params;
 
   return {
-    title: `${capitalize(country)} | Investment Tracker`,
-    description: `Investment Tracker for ${country}`,
+    title: `${capitalize(country)} Investment Tracker · TFFF Watch`,
+    description: `Is ${capitalize(
+      country
+    )} contributing to the Tropical Forest Forever Facility?`,
   };
 }
 

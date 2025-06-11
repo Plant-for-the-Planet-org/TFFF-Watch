@@ -6,8 +6,9 @@ import Br from "@/components/ui/Br";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About TFFF Watch",
-  description: "About TFFF Watch",
+  title: "About TFFF Watch · Forever Starts Now",
+  description:
+    "How we use satellite data to model deforestation rates and estimate TFFF reward payments.",
 };
 
 export default function Page() {
