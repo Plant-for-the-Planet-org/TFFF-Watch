@@ -2,9 +2,9 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 // THIS LABEL IS REMOVED SINCE FOR NOW NO ONE IS CONTRIBUTING.
 const data = [
-  { name: "", actualValue: 0, value: 0 },
-  { name: "Pledged Capital", actualValue: 0, value: 0 },
-  { name: "Target", actualValue: 25, value: 0 },
+  { name: "", actualValue: 0, value: 0, anchor: "middle" },
+  { name: "Pledged Capital", actualValue: 0, value: 0, anchor: "middle" },
+  { name: "Target", actualValue: 25, value: 0, anchor: "end" },
 ];
 
 // Calculate percentage values
@@ -23,14 +23,23 @@ interface CustomLabelProps {
   index: number;
 }
 
-const CustomLabel = (props: CustomLabelProps) => {
-  const { cx, cy, midAngle, outerRadius, index } = props;
+const CustomLabel = (
+  props: CustomLabelProps & { startAngle: number; endAngle: number }
+) => {
+  const { cx, cy, outerRadius, index, startAngle, endAngle, midAngle } = props;
   const RADIAN = Math.PI / 180;
-  const radius = outerRadius + 10; // Position label 10px outside the outer radius
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  let angle = midAngle;
 
   const entry = data[index];
+
+  if (entry.anchor === "end") {
+    angle = startAngle > endAngle ? endAngle : startAngle;
+  }
+
+  const radius = outerRadius + 10; // Position label 10px outside the outer radius
+  const x = cx + radius * Math.cos(-angle * RADIAN);
+  const y = cy + radius * Math.sin(-angle * RADIAN);
 
   return (
     <text
@@ -38,7 +47,6 @@ const CustomLabel = (props: CustomLabelProps) => {
       x={x}
       y={y}
       textAnchor={x > cx ? "start" : "end"}
-      // dominantBaseline="central"
       fill="#333"
       fontSize="12"
     >

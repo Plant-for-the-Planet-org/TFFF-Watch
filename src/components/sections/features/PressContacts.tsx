@@ -26,6 +26,14 @@ export default function PressContacts() {
     <div className="bg-primary-light outer-rounding outer-padding-3">
       <Br />
       <h2 className="text-center font-bold typo-h2">Contact</h2>
+      <p className="text-center typo-p">
+        <a
+          className="hover:underline"
+          href="mailto:media@plant-for-the-planet.org"
+        >
+          media@plant-for-the-planet.org
+        </a>
+      </p>
       <Br />
       <Br />
       <div className="flex gap-4 justify-center flex-wrap">

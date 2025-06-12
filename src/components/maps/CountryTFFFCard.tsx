@@ -38,7 +38,7 @@ export default function CountryTFFFCard({
           <img className="w-3 h-2" alt={name} src={flagImgUrl} />
           {name} {year}
         </p>
-        <p className="flex items-center gap-2 relative group">
+        <p className="flex items-center gap-2 relative group cursor-default">
           <Image
             className="h-4 w-4 rounded-full"
             width={12}
@@ -50,7 +50,7 @@ export default function CountryTFFFCard({
             }
             alt="Meets minumum requirement"
           />
-          <span className="underline underline-offset-4 decoration-dashed decoration text-base-text/50">
+          <span className="underline underline-offset-4 decoration-dashed decoration decoration-base-gray">
             {_data!.eligibility_combined ? "Meets" : "Fails"} minimum
             requirements
           </span>

@@ -30,6 +30,7 @@
   background-repeat: no-repeat;
 }
 
-.outlines-none * {
+.outlines-none *,
+.maplibregl-canvas {
   outline: none;
 }
