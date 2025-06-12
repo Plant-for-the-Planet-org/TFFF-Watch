@@ -1,3 +1,5 @@
+"use client";
+
 import type { Props as CountryMapViewProps } from "@/components/maps/CountryMapView";
 import CountryMapView from "@/components/maps/CountryMapView";
 import CountryTFFFCard from "@/components/maps/CountryTFFFCard";
@@ -6,16 +8,36 @@ import {
   LegendForDegradedOrDeforested,
   LegendForSponsorCapitalProviders,
 } from "@/components/maps/MapLegends";
-import WorldMapTFFFCard from "@/components/maps/WorldMapTFFFCard";
 import WorldMapView from "@/components/maps/WorldMapView";
 import {
   CountryMapHeaderContent,
   WorldMapHeaderContent,
 } from "@/components/sections/hero/TFFFMapViewContent";
 import Br from "@/components/ui/Br";
+import { api, urls } from "@/utils/axios-helper";
 import { CountryDetails } from "@/utils/country-helper";
+import { useForestCoverChangeData } from "@/utils/store";
+import { ForestChangeForCountry } from "@/utils/types";
+import { useEffect } from "react";
 
 export function TFFFWorldMapView() {
+  const { setForestCoverChangeData } = useForestCoverChangeData();
+  useEffect(() => {
+    (async () => {
+      try {
+        const _results = await api<ForestChangeForCountry[]>({
+          url: urls.forestChangeAll,
+          method: "GET",
+          token: "",
+        });
+        // console.log(_results);
+        setForestCoverChangeData(_results);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    })();
+  }, [setForestCoverChangeData]);
+
   return (
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
@@ -27,7 +49,8 @@ export function TFFFWorldMapView() {
           {/* <div className="mx-auto h-3/4 w-full lg:h-full lg:w-auto aspect-[198/120] border border-black"> */}
           <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full object-contain relative">
             <WorldMapView />
-            <WorldMapTFFFCard />
+
+            {/* <WorldMapTFFFCard /> */}
           </div>
           <div className="md:absolute left-3 bottom-6 min-w-48 max-w-fit mx-auto">
             <Br cn="md:hidden" />
@@ -95,7 +118,8 @@ function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
 export function BetaChip() {
   return (
     <div className="self-start bg-white text-primary text-xs py-0.5 px-2 rounded-full shadow-xl">
-      BETA
+      {/* BETA */}
+      Version 0.9
     </div>
   );
 }

@@ -1,57 +1,57 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MapCountryClickEvent } from "./WorldMapView";
-import { useWorldMap } from "@/utils/store";
-import { api, urls } from "@/utils/axios-helper";
-import { ForestChangeForCountry } from "@/utils/types";
-import CountryTFFFCard from "./CountryTFFFCard";
+import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
+import { memo } from "react";
+// import { api, urls } from "@/utils/axios-helper";
+// import { ForestChangeForCountry } from "@/utils/types";
 import { getCountryDetails } from "@/utils/country-helper";
+import CountryTFFFCard from "./CountryTFFFCard";
 
-export default function WorldMapTFFFCard() {
-  const {
-    year,
-    country,
-    setCountry,
-    forestCoverChangeData,
-    setForestCoverChangeData,
-  } = useWorldMap();
+export function WorldMapTFFFCard_() {
+  const { year, country, point } = useWorldMap();
+  const forestCoverChangeData = useForestCoverChangeData(
+    (state) => state.forestCoverChangeData
+  );
 
-  const [point, setPoint] = useState<maplibregl.MapLayerMouseEvent["point"]>();
+  // const popup = usePopupStore((state) => state.popup);
+
   const details = getCountryDetails(country);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const _results = await api<ForestChangeForCountry[]>({
-          url: urls.forestChangeAll,
-          method: "GET",
-          token: "",
-        });
-        // console.log(_results);
-        setForestCoverChangeData(_results);
-      } catch (error) {
-        console.error("Error fetching news:", error);
-      }
-    })();
-  }, [setForestCoverChangeData]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const _results = await api<ForestChangeForCountry[]>({
+  //         url: urls.forestChangeAll,
+  //         method: "GET",
+  //         token: "",
+  //       });
+  //       // console.log(_results);
+  //       setForestCoverChangeData(_results);
+  //     } catch (error) {
+  //       console.error("Error fetching news:", error);
+  //     }
+  //   })();
+  // }, [setForestCoverChangeData]);
 
-  useEffect(() => {
-    if (!window) return;
-    window.addEventListener(
-      "map-country-click",
-      (event: CustomEventInit<MapCountryClickEvent>) => {
-        const e = event.detail!;
-        setCountry(e.country);
-        setPoint(e.point);
-      }
-    );
-  }, [setCountry]);
+  // useEffect(() => {
+  //   if (!window) return;
+  //   window.addEventListener(
+  //     "map-country-click",
+  //     (event: CustomEventInit<MapCountryClickEvent>) => {
+  //       const e = event.detail!;
+  //       setCountry(e.country);
+  //       setPoint(e.point);
+  //     }
+  //   );
+  // }, [setCountry]);
 
   return (
     <div
-      className="absolute"
+      className="absolute "
+      // className="fixed top-0 left-0  text-4xl z-50"
       style={{
+        // left: 0,
+        // top: 0,
         left: point?.x,
         top: point?.y,
         transform: `translate(-50%, -100%)`,
@@ -68,3 +68,6 @@ export default function WorldMapTFFFCard() {
     </div>
   );
 }
+
+const WorldMapTFFFCard = memo(WorldMapTFFFCard_);
+export default WorldMapTFFFCard;

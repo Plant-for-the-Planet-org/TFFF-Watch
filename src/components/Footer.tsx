@@ -19,7 +19,7 @@ export default function Footer() {
               alt="Plant for the Planet Foundation"
             />
           </Link>
-          <span>In partnership with</span>
+          {/* <span>In partnership with</span>
           <span>
             <Image
               width={36}
@@ -27,7 +27,7 @@ export default function Footer() {
               src="/assets/oroverde.png"
               alt="Plant for the Planet Foundation"
             />
-          </span>
+          </span> */}
           {/* <span>
             <Image
               width={36}

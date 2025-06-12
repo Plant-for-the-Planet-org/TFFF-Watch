@@ -15,8 +15,8 @@ export default function InfoGrid() {
           moist broadleaf forest.
         </p>
         <Br />
-        <div className="flex gap-4 justify-center items-center">
-          <Button type="link" href="https://tfff.earth" external>
+        <div className="flex flex-wrap gap-4 justify-center items-center">
+          <Button type="link" href="/the-tfff-explained" external>
             About the Fund
           </Button>
           <Button type="link" href="/about-tfff-watch" external>

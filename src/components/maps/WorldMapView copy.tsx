@@ -8,10 +8,11 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 // import countries from "./ne_50m_admin_0_countries.geojson.json";
 import countries from "./ne_110m_admin_0_countries.geo.json";
+// import countries from "./custom.geo.json";
 // import countries from "./100m_countries.geo.json";
+// import { useWorldMap } from "@/utils/store";
 import { transformAllForestCoverChangeData } from "@/utils/country-helper";
-import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
-import WorldMapTFFFCard from "./WorldMapTFFFCard";
+import { useForestCoverChangeData } from "@/utils/store";
 
 export type MapCountryClickEvent = {
   features: maplibregl.MapLayerMouseEvent["features"];
@@ -24,19 +25,12 @@ export type MapCountryClickEvent = {
 
 export default function WorldMapView() {
   const { width } = useWindowSize();
-  const forestCoverChangeData = useForestCoverChangeData(
-    (state) => state.forestCoverChangeData
-  );
-  const setPoint = useWorldMap((state) => state.setPoint);
-  const setCountry = useWorldMap((state) => state.setCountry);
-  // const setPopup = usePopupStore((state) => state.setPopup);
+  const { forestCoverChangeData } = useForestCoverChangeData();
 
   const mapRef = useRef<MapRef>(null);
 
   const [zoom, setZoom] = useState(1);
   const [latitude] = useState(42);
-
-  // const [popup, setPopup] = useState(0);
 
   useEffect(() => {
     if (!width) return;
@@ -110,92 +104,90 @@ export default function WorldMapView() {
     }
   }, [forestCoverChangeData]);
 
+  // console.log("Start Point", JSON.stringify(allCountries, null, 2));
+
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
     const features = map?.queryRenderedFeatures(event.point, {
       layers: ["country-fill"],
     });
-    const { point } = event;
+    const { point, lngLat } = event;
     const country = features?.[0]?.properties?.name;
-    // const data = { features, point, lngLat, ...lngLat, country };
-    // console.log(data);
-    // setPopup();
-    setPoint(point);
-    setCountry(country);
-    // setCoordinates(lngLat);
+    const data = { features, point, lngLat, ...lngLat, country };
+    console.log(data);
 
-    // window.dispatchEvent(
-    //   new CustomEvent("map-country-click", {
-    //     detail: data,
-    //   })
-    // );
+    window.dispatchEvent(
+      new CustomEvent("map-country-click", {
+        detail: data,
+      })
+    );
   };
 
   return (
-    <>
-      <Map
-        ref={mapRef}
-        zoom={zoom}
-        latitude={latitude}
-        cursor="default"
-        mapStyle={{
-          version: 8,
-          glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-          sources: {},
-          layers: [
-            {
-              id: "background",
-              type: "background",
-              paint: { "background-color": "#F0FAF4" },
-            },
-          ],
-        }}
-        keyboard={false}
-        scrollZoom={false}
-        dragPan={false}
-        dragRotate={false}
-        touchPitch={false}
-        touchZoomRotate={false}
-        attributionControl={false}
-        renderWorldCopies={false}
-        // onClick={onClick}
-        onMouseMove={onClick}
-        onLoad={() => {
-          const elem = document.querySelector(
-            "details.maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact"
-          );
-          elem?.classList.remove("maplibregl-compact-show");
+    <Map
+      ref={mapRef}
+      zoom={zoom}
+      latitude={latitude}
+      cursor="default"
+      mapStyle={{
+        version: 8,
+        glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+        sources: {},
+        layers: [
+          {
+            id: "background",
+            type: "background",
+            paint: { "background-color": "#F0FAF4" },
+          },
+        ],
+      }}
+      keyboard={false}
+      scrollZoom={false}
+      dragPan={false}
+      dragRotate={false}
+      touchPitch={false}
+      touchZoomRotate={false}
+      attributionControl={false}
+      renderWorldCopies={false}
+      onClick={onClick}
+      onMouseMove={onClick}
+      onLoad={() => {
+        const elem = document.querySelector(
+          "details.maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact"
+        );
+        elem?.classList.remove("maplibregl-compact-show");
 
-          const map = mapRef.current?.getMap();
-          // console.log("onLoad", { map });
-          map?.addControl(new maplibregl.AttributionControl({ compact: true }));
-        }}
+        const map = mapRef.current?.getMap();
+        // console.log("onLoad", { map });
+        map?.addControl(new maplibregl.AttributionControl({ compact: true }));
+      }}
+    >
+      <Source
+        id="country"
+        type="geojson"
+        data={allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>}
       >
-        <Source
-          id="country"
-          type="geojson"
-          data={allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>}
-        >
-          <Layer
-            id="country-fill"
-            type="fill"
-            paint={{
-              "fill-color": ["get", "colorKey"],
-              "fill-outline-color": "#FFFFFF",
-            }}
-          />
-          <Layer
-            id="country-line"
-            type="line"
-            paint={{
-              "line-color": "#FFFFFF",
-              "line-width": 1,
-            }}
-          />
-        </Source>
-        {/* <AttributionControl compact={false} /> */}
-      </Map>
-      <WorldMapTFFFCard />
-    </>
+        <Layer
+          id="country-fill"
+          type="fill"
+          paint={{
+            "fill-color": ["get", "colorKey"],
+            "fill-outline-color": "#FFFFFF",
+          }}
+        />
+        <Layer
+          id="country-line"
+          type="line"
+          paint={{
+            "line-color": "#FFFFFF",
+            "line-width": 1,
+          }}
+        />
+      </Source>
+      {/* <AttributionControl compact={false} /> */}
+    </Map>
   );
 }
+
+// const WorldMapView = React.memo(WorldMapView_);
+// export default WorldMapView;
