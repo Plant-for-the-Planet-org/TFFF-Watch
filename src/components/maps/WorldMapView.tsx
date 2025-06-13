@@ -6,9 +6,7 @@ import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useMemo, useRef, useState } from "react";
-// import countries from "./ne_50m_admin_0_countries.geojson.json";
 import countries from "./ne_110m_admin_0_countries.geo.json";
-// import countries from "./100m_countries.geo.json";
 import { transformAllForestCoverChangeData } from "@/utils/country-helper";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import WorldMapTFFFCard from "./WorldMapTFFFCard";
@@ -33,17 +31,19 @@ export default function WorldMapView() {
 
   const mapRef = useRef<MapRef>(null);
 
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(0.5);
   const [latitude] = useState(42);
 
   // const [popup, setPopup] = useState(0);
 
   useEffect(() => {
     if (!width) return;
-    if (width > 768) {
-      setZoom(1);
+    if (width > 1024) {
+      setZoom(0.5);
+    } else if (width > 768) {
+      setZoom(0);
     } else {
-      setZoom(0.3);
+      setZoom(-1);
     }
   }, [width]);
 

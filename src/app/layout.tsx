@@ -29,12 +29,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${openSans.variable} antialiased website-container`}>
+      <body className={`${openSans.variable} antialiased`}>
         <Header />
-        <Br />
-        {children}
-        <Br />
-        <Footer />
+        <div className="website-container">
+          <Br />
+          {children}
+          <Br />
+          <Footer />
+        </div>
       </body>
       <Br />
     </html>

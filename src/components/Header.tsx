@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-30 bg-white/75 backdrop-blur-lg">
       <Br />
-      <div className="padding-x-3">
+      <div className="website-container padding-x-3">
         <div className="flex justify-between items-center ">
           <Logo />
           {/* <HeaderCountry /> */}

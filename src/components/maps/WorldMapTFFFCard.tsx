@@ -17,44 +17,15 @@ export function WorldMapTFFFCard_() {
 
   const details = getCountryDetails(country);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const _results = await api<ForestChangeForCountry[]>({
-  //         url: urls.forestChangeAll,
-  //         method: "GET",
-  //         token: "",
-  //       });
-  //       // console.log(_results);
-  //       setForestCoverChangeData(_results);
-  //     } catch (error) {
-  //       console.error("Error fetching news:", error);
-  //     }
-  //   })();
-  // }, [setForestCoverChangeData]);
-
-  // useEffect(() => {
-  //   if (!window) return;
-  //   window.addEventListener(
-  //     "map-country-click",
-  //     (event: CustomEventInit<MapCountryClickEvent>) => {
-  //       const e = event.detail!;
-  //       setCountry(e.country);
-  //       setPoint(e.point);
-  //     }
-  //   );
-  // }, [setCountry]);
-
   return (
     <div
-      className="absolute "
-      // className="fixed top-0 left-0  text-4xl z-50"
+      className="absolute"
       style={{
         // left: 0,
         // top: 0,
         left: point?.x,
         top: point?.y,
-        transform: `translate(-50%, -100%)`,
+        transform: `translate(-50%, -105%)`,
       }}
     >
       <CountryTFFFCard

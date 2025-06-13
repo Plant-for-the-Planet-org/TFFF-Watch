@@ -47,9 +47,9 @@ export function TFFFWorldMapView() {
         <Br />
         <div className="grow relative flex flex-col">
           {/* <div className="mx-auto h-3/4 w-full lg:h-full lg:w-auto aspect-[198/120] border border-black"> */}
-          <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full object-contain relative">
+          {/* <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full object-contain relative"> */}
+          <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain relative">
             <WorldMapView />
-
             {/* <WorldMapTFFFCard /> */}
           </div>
           <div className="md:absolute left-3 bottom-6 min-w-48 max-w-fit mx-auto">
