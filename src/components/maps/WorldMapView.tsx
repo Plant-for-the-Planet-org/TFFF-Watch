@@ -57,7 +57,7 @@ export default function WorldMapView() {
       );
       // console.log("Modify", forestCoverChangeAll);
       countries.features.forEach((country) => {
-        const countryName = country.properties.name;
+        const countryName = country.properties.name_long;
         const changeValue = forestCoverChangeAll[countryName];
 
         let colorKey;

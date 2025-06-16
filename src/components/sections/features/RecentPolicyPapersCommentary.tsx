@@ -1,6 +1,7 @@
 import PaperCard from "@/components/sections/features/PaperCard";
 import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
+import { formatDateFromExcelToData } from "@/utils/datetime";
 import { Policy } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
@@ -45,8 +46,7 @@ export default async function RecentPolicyPapersComentary() {
                 summary={el.summary!}
                 image={el.featured_image!}
                 publisher={el.publisher!}
-                // publisher={el.author}
-                // datetime={formatDateFromExcelToData(el.date)}
+                datetime={formatDateFromExcelToData(el.date)}
                 url={el.url}
               />
             </Fragment>
