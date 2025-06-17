@@ -75,7 +75,7 @@ export function IconButton({
       target={external ? "_blank" : "_self"}
       rel={external ? "noopener noreferrer" : ""}
       className={twMerge(
-        "bg-primary text-white h-10 w-10 rounded-full cursor-pointer",
+        "block bg-primary text-white h-10 w-10 rounded-full cursor-pointer",
         small && "h-8 w-8",
         cn
       )}

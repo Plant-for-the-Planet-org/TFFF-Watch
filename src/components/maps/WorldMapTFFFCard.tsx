@@ -17,6 +17,8 @@ export function WorldMapTFFFCard_() {
 
   const details = getCountryDetails(country);
 
+  if (!country) return null;
+
   return (
     <div
       className="absolute"
@@ -25,7 +27,7 @@ export function WorldMapTFFFCard_() {
         // top: 0,
         left: point?.x,
         top: point?.y,
-        transform: `translate(-50%, -105%)`,
+        transform: `translate(-50%, -102%)`,
       }}
     >
       <CountryTFFFCard

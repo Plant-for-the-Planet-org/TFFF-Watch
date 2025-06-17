@@ -116,7 +116,7 @@ export default function WorldMapView() {
       layers: ["country-fill"],
     });
     const { point } = event;
-    const country = features?.[0]?.properties?.name;
+    const country = features?.[0]?.properties?.name_long;
     // const data = { features, point, lngLat, ...lngLat, country };
     // console.log(data);
     // setPopup();
@@ -158,7 +158,7 @@ export default function WorldMapView() {
         touchZoomRotate={false}
         attributionControl={false}
         renderWorldCopies={false}
-        // onClick={onClick}
+        onClick={onClick}
         onMouseMove={onClick}
         onLoad={() => {
           const elem = document.querySelector(

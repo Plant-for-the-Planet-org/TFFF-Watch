@@ -3,6 +3,7 @@
 import type { Props as CountryMapViewProps } from "@/components/maps/CountryMapView";
 import CountryMapView from "@/components/maps/CountryMapView";
 import CountryTFFFCard from "@/components/maps/CountryTFFFCard";
+import { DownloadWorldMap } from "@/components/maps/DownloadMap";
 import {
   CountryMapLegends,
   LegendForDegradedOrDeforested,
@@ -58,6 +59,9 @@ export function TFFFWorldMapView() {
             <Br />
             <LegendForSponsorCapitalProviders />
             <Br cn="md:hidden" />
+          </div>
+          <div className="absolute right-3 bottom-3">
+            <DownloadWorldMap />
           </div>
           {/* <div className="absolute left-0 top-0 z-20">
             <CountryTFFFCard />
