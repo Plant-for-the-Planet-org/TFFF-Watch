@@ -1,5 +1,5 @@
 import countries from "i18n-iso-countries";
-import { ForestChangeForCountry } from "./types";
+import { ForestCoverChange } from "./types";
 // eslint-disable-next-line
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
@@ -35,9 +35,7 @@ export function getCountryDetails(country: string): CountryDetails {
 type CountryForestData = {
   [countryName: string]: number;
 };
-export function transformAllForestCoverChangeData(
-  data: ForestChangeForCountry[]
-) {
+export function transformAllForestCoverChangeData(data: ForestCoverChange[]) {
   return data.reduce((acc: CountryForestData, row) => {
     const country = row.country;
     const percDef = row.percentage_deforested || 0;

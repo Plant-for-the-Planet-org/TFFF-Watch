@@ -13,8 +13,6 @@ export function WorldMapTFFFCard_() {
     (state) => state.forestCoverChangeData
   );
 
-  // const popup = usePopupStore((state) => state.popup);
-
   const details = getCountryDetails(country);
 
   if (!country) return null;

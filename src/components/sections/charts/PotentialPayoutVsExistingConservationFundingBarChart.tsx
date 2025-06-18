@@ -3,8 +3,8 @@
 import { PageParams } from "@/app/[country]/[year]/page";
 import { api, urls } from "@/utils/axios-helper";
 import { getCountryDetails } from "@/utils/country-helper";
-import { forestChangeData } from "@/utils/forestChange.store";
 import { toReadableAmount } from "@/utils/number-helper";
+import { useForestCoverChangeData } from "@/utils/store";
 import { Spending } from "@/utils/types";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -47,6 +47,9 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
   const { country, year } = params;
   const details = getCountryDetails(country);
   const { width } = useWindowSize();
+  const forestCiverChangeDataByCountry = useForestCoverChangeData(
+    (state) => state.forestCiverChangeDataByCountry
+  );
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [chartOptions, setChartOptions] = useState({
@@ -60,7 +63,6 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
   useEffect(() => {
-    if (!forestChangeData) return;
     (async () => {
       const _data = await api<Spending[]>({
         url: urls.spending,
@@ -70,7 +72,7 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
       });
       if (!_data) return;
 
-      const forestChangeOfYear = forestChangeData.find(
+      const forestChangeOfYear = forestCiverChangeDataByCountry.find(
         (el) => +el.year === +year
       )!;
       const {
@@ -118,7 +120,7 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
         ..._spendings,
       ]);
     })();
-  }, [details.name, year]);
+  }, [details.name, year, forestCiverChangeDataByCountry]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -137,18 +139,32 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
       setBar({ barSize: BAR_SIZE, barGap: 21 });
     }
   }, [containerRef, width]);
+  const computedHeight = (bar.barSize + bar.barGap) * chartData.length;
 
   return (
     <div>
+      {/* <pre>
+        {JSON.stringify(
+          {
+            bar,
+            chartOptions,
+            chartData,
+            height: (bar.barSize + bar.barGap) * chartData.length,
+          },
+          null,
+          2
+        )}
+      </pre> */}
       <ResponsiveContainer
         ref={containerRef}
         width="100%"
-        height={(bar.barSize + bar.barGap) * chartData.length}
+        height={computedHeight}
       >
         <BarChart
+          height={computedHeight}
           data={chartData}
           layout="vertical"
-          barSize={bar.barSize}
+          // barSize={bar.barSize}
           barGap={bar.barGap}
           margin={{ top: 48, right: 48 }}
         >
@@ -169,7 +185,12 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
             }}
           ></YAxis>
           <XAxis type="number" dataKey="value" opacity={0} tickLine={false} />
-          <Bar dataKey="value">
+          <Bar
+            dataKey="value"
+            barSize={bar.barSize}
+            height={bar.barSize}
+            xHeight={bar.barSize}
+          >
             <LabelList
               className={twMerge("float-left text-left")}
               dataKey="label"

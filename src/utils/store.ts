@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ForestChangeForCountry } from "./types";
+import { ForestCoverChange } from "./types";
 
 type WorldMapStore = {
   year: string;
@@ -14,14 +14,19 @@ type WorldMapStore = {
 };
 
 type ForestCoverChangeStore = {
-  forestCoverChangeData: ForestChangeForCountry[];
-  setForestCoverChangeData: (data: ForestChangeForCountry[]) => void;
+  forestCoverChangeData: ForestCoverChange[];
+  forestCiverChangeDataByCountry: ForestCoverChange[];
+  setForestCoverChangeData: (data: ForestCoverChange[]) => void;
+  setForestCoverChangeDataByCountry: (data: ForestCoverChange[]) => void;
 };
 
 export const useForestCoverChangeData = create<ForestCoverChangeStore>(
   (set) => ({
     forestCoverChangeData: [],
+    forestCiverChangeDataByCountry: [],
     setForestCoverChangeData: (data) => set({ forestCoverChangeData: data }),
+    setForestCoverChangeDataByCountry: (data) =>
+      set({ forestCiverChangeDataByCountry: data }),
   })
 );
 
@@ -35,9 +40,4 @@ export const useWorldMap = create<WorldMapStore>((set) => ({
   setCountry: (country) => set({ country }),
   setCoordinates: ({ lat, lng }) => set({ latitude: lat, longitude: lng }),
   setPoint: (point) => set({ point }),
-}));
-
-export const usePopupStore = create((set) => ({
-  popup: Date.now(),
-  setPopup: () => set({ popup: Date.now() }),
 }));

@@ -20,8 +20,8 @@ import { useRef, useState } from "react";
 import countries from "./ne_110m_admin_0_countries.geo.json";
 
 interface LayerConfig {
-  name: string;
   tileUrl: string;
+  name?: string;
   visParams?: {
     palette?: string; // optional
   };
@@ -39,32 +39,47 @@ export type Props = {
 };
 
 const layerData: LayerData = {
-  // id: "5c49e9c0-3e29-4def-a523-a2b2b33d8ad8",
-  // country: "Ghana",
+  // forestLayer: {
+  //   name: "2024 Forest",
+  //   tileUrl:
+  //     "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/cad01ba56905869087ca3d1dfa83e209-37937f4b5e200aa6bd8e5e5431227b03/tiles/{z}/{x}/{y}",
+  //   visParams: {
+  //     palette: "green",
+  //   },
+  // },
+  // degradationLayer: {
+  //   name: "Only 2023 Deforestation JRC",
+  //   tileUrl:
+  //     "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/1c5588ea214fefd7db3e7f292f5f34e9-524b2f93dbe4fc6e9ee85cc1d9a2ec32/tiles/{z}/{x}/{y}",
+  //   visParams: {
+  //     palette: "orange",
+  //   },
+  // },
+  // deforestationLayer2023: {
+  //   name: "Deforestation 2023",
+  //   tileUrl:
+  //     "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/9665c8add89ac23373aca2b6b9439c30-80db89e02df4217c26f6ed0e78f05156/tiles/{z}/{x}/{y}",
+  //   visParams: {
+  //     palette: "red",
+  //   },
   forestLayer: {
-    name: "2024 Forest",
     tileUrl:
-      "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/cad01ba56905869087ca3d1dfa83e209-37937f4b5e200aa6bd8e5e5431227b03/tiles/{z}/{x}/{y}",
-    visParams: {
-      palette: "green",
-    },
+      "https://storage.googleapis.com/planet-layers/tttf-data/cd12f4c6-8a6e-4d2f-bcb4-a9a9941ab6bd/forestLayer/{z}/{x}/{y}.png",
   },
   degradationLayer: {
-    name: "Only 2023 Deforestation JRC",
     tileUrl:
-      "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/1c5588ea214fefd7db3e7f292f5f34e9-524b2f93dbe4fc6e9ee85cc1d9a2ec32/tiles/{z}/{x}/{y}",
-    visParams: {
-      palette: "orange",
-    },
+      "https://storage.googleapis.com/planet-layers/tttf-data/cd12f4c6-8a6e-4d2f-bcb4-a9a9941ab6bd/degradationLayer/{z}/{x}/{y}.png",
   },
   deforestationLayer2023: {
-    name: "Deforestation 2023",
     tileUrl:
-      "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/9665c8add89ac23373aca2b6b9439c30-80db89e02df4217c26f6ed0e78f05156/tiles/{z}/{x}/{y}",
-    visParams: {
-      palette: "red",
-    },
+      "https://storage.googleapis.com/planet-layers/tttf-data/cd12f4c6-8a6e-4d2f-bcb4-a9a9941ab6bd/deforestationLayer2023/{z}/{x}/{y}.png",
   },
+  // "deforestationHaJrc": 5624.826188522884,
+  // "deforestationHaHansen": 32279.813910386565,
+  // "task": null,
+  // "createdAt": "2025-06-09T18:44:12.889Z",
+  // "updatedAt": "2025-06-17T18:48:03.603Z"
+
   // deforestationHaJrc: 5624.826188522884,
   // deforestationHaHansen: 32279.813910386565,
   // task: null,

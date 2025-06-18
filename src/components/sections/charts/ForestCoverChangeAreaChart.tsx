@@ -3,7 +3,7 @@
 import { PageParams } from "@/app/[country]/[year]/page";
 import { getCountryDetails } from "@/utils/country-helper";
 import { fetchForestChangeData } from "@/utils/forestChange.store";
-import { ForestChangeForCountry } from "@/utils/types";
+import { ForestCoverChange } from "@/utils/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
@@ -86,7 +86,7 @@ export default function ForestCoverChangeAreaChart() {
   const { country }: PageParams = useParams();
   const details = getCountryDetails(country);
 
-  const [, setChartData] = useState<ForestChangeForCountry[]>([]);
+  const [, setChartData] = useState<ForestCoverChange[]>([]);
 
   useEffect(() => {
     (async () => {

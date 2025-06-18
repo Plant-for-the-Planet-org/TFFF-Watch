@@ -1,14 +1,17 @@
+"use client";
+
 import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
 import { CountryDetails } from "@/utils/country-helper";
-import { forestChangeData } from "@/utils/forestChange.store";
 import { toReadable } from "@/utils/number-helper";
-import { ForestChangeForCountry } from "@/utils/types";
+import { useForestCoverChangeData } from "@/utils/store";
+import { ForestCoverChange } from "@/utils/types";
 import Image from "next/image";
+import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Options = {
-  countryData?: ForestChangeForCountry | null;
+  countryData?: ForestCoverChange | null;
   CTA?: boolean;
 };
 
@@ -19,15 +22,16 @@ export default function CountryTFFFCard({
   CTA = false,
   countryData = null,
 }: { iso2?: string; year?: string } & Partial<CountryDetails> & Options) {
-  // console.log({ forestChangeData });
+  const forestCiverChangeDataByCountry = useForestCoverChangeData(
+    (state) => state.forestCiverChangeDataByCountry
+  );
 
-  const _data: ForestChangeForCountry =
-    countryData || forestChangeData.find((el) => +el.year === +year)!;
-
-  // const rewardIfAlreadyExisted =
-  //   (_data?.base_reward_usd ?? 0) -
-  //   (_data?.deforestation_deduction_usd ?? 0) -
-  //   (_data?.degradation_deduction_usd ?? 0);
+  const _data: ForestCoverChange = useMemo(
+    () =>
+      countryData ||
+      forestCiverChangeDataByCountry.find((el) => +el.year === +year)!,
+    [countryData, year, forestCiverChangeDataByCountry]
+  );
 
   if (!_data) return null;
 

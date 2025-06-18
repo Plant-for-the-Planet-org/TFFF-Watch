@@ -1,14 +1,17 @@
 "use client";
 
+import { transformAllForestCoverChangeData } from "@/utils/country-helper";
+import { downloadGeoJsonAsSvg } from "@/utils/download-map";
+import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
+import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { Layer, Map, MapRef, Source } from "@vis.gl/react-maplibre";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import countries from "./ne_110m_admin_0_countries.geo.json";
-import { transformAllForestCoverChangeData } from "@/utils/country-helper";
-import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import WorldMapTFFFCard from "./WorldMapTFFFCard";
 
 export type MapCountryClickEvent = {
@@ -27,7 +30,6 @@ export default function WorldMapView() {
   );
   const setPoint = useWorldMap((state) => state.setPoint);
   const setCountry = useWorldMap((state) => state.setCountry);
-  // const setPopup = usePopupStore((state) => state.setPopup);
 
   const mapRef = useRef<MapRef>(null);
 
@@ -117,85 +119,96 @@ export default function WorldMapView() {
     });
     const { point } = event;
     const country = features?.[0]?.properties?.name_long;
-    // const data = { features, point, lngLat, ...lngLat, country };
-    // console.log(data);
-    // setPopup();
     setPoint(point);
     setCountry(country);
-    // setCoordinates(lngLat);
-
-    // window.dispatchEvent(
-    //   new CustomEvent("map-country-click", {
-    //     detail: data,
-    //   })
-    // );
   };
 
   return (
     <>
-      <Map
-        ref={mapRef}
-        zoom={zoom}
-        latitude={latitude}
-        cursor="default"
-        mapStyle={{
-          version: 8,
-          glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-          sources: {},
-          layers: [
-            {
-              id: "background",
-              type: "background",
-              paint: { "background-color": "#F0FAF4" },
-            },
-          ],
-        }}
-        keyboard={false}
-        scrollZoom={false}
-        dragPan={false}
-        dragRotate={false}
-        touchPitch={false}
-        touchZoomRotate={false}
-        attributionControl={false}
-        renderWorldCopies={false}
-        onClick={onClick}
-        onMouseMove={onClick}
-        onLoad={() => {
-          const elem = document.querySelector(
-            "details.maplibregl-ctrl.maplibregl-ctrl-attrib.maplibregl-compact"
-          );
-          elem?.classList.remove("maplibregl-compact-show");
+      <div className="h-full w-full relative">
+        <Map
+          ref={mapRef}
+          zoom={zoom}
+          latitude={latitude}
+          cursor="default"
+          mapStyle={{
+            version: 8,
+            glyphs:
+              "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+            sources: {},
+            layers: [
+              {
+                id: "background",
+                type: "background",
+                paint: { "background-color": "#F0FAF4" },
+              },
+            ],
+          }}
+          keyboard={false}
+          scrollZoom={false}
+          dragPan={false}
+          dragRotate={false}
+          touchPitch={false}
+          touchZoomRotate={false}
+          attributionControl={false}
+          renderWorldCopies={false}
+          onClick={onClick}
+          onMouseMove={onClick}
+          onLoad={() => {
+            const map = mapRef.current?.getMap();
 
-          const map = mapRef.current?.getMap();
-          // console.log("onLoad", { map });
-          map?.addControl(new maplibregl.AttributionControl({ compact: true }));
-        }}
-      >
-        <Source
-          id="country"
-          type="geojson"
-          data={allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>}
+            map?.addControl(
+              new maplibregl.AttributionControl({ compact: true })
+            );
+          }}
         >
-          <Layer
-            id="country-fill"
-            type="fill"
-            paint={{
-              "fill-color": ["get", "colorKey"],
-              "fill-outline-color": "#FFFFFF",
-            }}
-          />
-          <Layer
-            id="country-line"
-            type="line"
-            paint={{
-              "line-color": "#FFFFFF",
-              "line-width": 1,
-            }}
-          />
-        </Source>
-        {/* <AttributionControl compact={false} /> */}
-      </Map>
-      <WorldMapTFFFCard />
+          <Source
+            id="country"
+            type="geojson"
+            data={
+              allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
+            }
+          >
+            <Layer
+              id="country-fill"
+              type="fill"
+              paint={{
+                "fill-color": ["get", "colorKey"],
+                "fill-outline-color": "#FFFFFF",
+              }}
+            />
+            <Layer
+              id="country-line"
+              type="line"
+              paint={{
+                "line-color": "#FFFFFF",
+                "line-width": 1,
+              }}
+            />
+          </Source>
+          {/* <AttributionControl compact={false} /> */}
+        </Map>
+        <WorldMapTFFFCard />
+      </div>
+      <div className="absolute right-3 bottom-3">
+        <button
+          className="bg-white p-2 rounded-lg cursor-pointer"
+          onClick={() => {
+            downloadGeoJsonAsSvg(
+              allCountries as NaturalEarthCountryFeatureCollection,
+              {
+                width: 800,
+                height: 800,
+                filename: "tfff-world-map.svg",
+                backgroundColor: "#F0FAF4",
+                strokeWidth: 1,
+              }
+            );
+          }}
+        >
+          <Image width={24} height={24} src="/assets/download-map.svg" alt="" />
+        </button>
+      </div>
     </>
   );
 }

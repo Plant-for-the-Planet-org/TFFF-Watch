@@ -3,7 +3,6 @@
 import type { Props as CountryMapViewProps } from "@/components/maps/CountryMapView";
 import CountryMapView from "@/components/maps/CountryMapView";
 import CountryTFFFCard from "@/components/maps/CountryTFFFCard";
-import { DownloadWorldMap } from "@/components/maps/DownloadMap";
 import {
   CountryMapLegends,
   LegendForDegradedOrDeforested,
@@ -18,7 +17,7 @@ import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
 import { CountryDetails } from "@/utils/country-helper";
 import { useForestCoverChangeData } from "@/utils/store";
-import { ForestChangeForCountry } from "@/utils/types";
+import { ForestCoverChange } from "@/utils/types";
 import { useEffect } from "react";
 
 export function TFFFWorldMapView() {
@@ -26,7 +25,7 @@ export function TFFFWorldMapView() {
   useEffect(() => {
     (async () => {
       try {
-        const _results = await api<ForestChangeForCountry[]>({
+        const _results = await api<ForestCoverChange[]>({
           url: urls.forestChangeAll,
           method: "GET",
           token: "",
@@ -42,16 +41,12 @@ export function TFFFWorldMapView() {
   return (
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
-        {/* <Br /> */}
         <BetaChip />
         <WorldMapHeaderContent />
         <Br />
         <div className="grow relative flex flex-col">
-          {/* <div className="mx-auto h-3/4 w-full lg:h-full lg:w-auto aspect-[198/120] border border-black"> */}
-          {/* <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full object-contain relative"> */}
-          <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain relative">
+          <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
             <WorldMapView />
-            {/* <WorldMapTFFFCard /> */}
           </div>
           <div className="md:absolute left-3 bottom-6 min-w-48 max-w-fit mx-auto">
             <Br cn="md:hidden" />
@@ -60,13 +55,6 @@ export function TFFFWorldMapView() {
             <LegendForSponsorCapitalProviders />
             <Br cn="md:hidden" />
           </div>
-          <div className="absolute right-3 bottom-3">
-            <DownloadWorldMap />
-          </div>
-          {/* <div className="absolute left-0 top-0 z-20">
-            <CountryTFFFCard />
-            <CountryTFFFInvestmentCard />
-          </div> */}
         </div>
       </div>
     </WorldMapViewContainer>
