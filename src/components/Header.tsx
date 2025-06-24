@@ -8,11 +8,13 @@ import Br from "./ui/Br";
 export default function Header() {
   return (
     <header className="sticky top-0 z-30 bg-white/75 backdrop-blur-lg">
-      <Br />
+      <Br cn="h-3 md:h-1 lg:h-2 xl:h-3" />
       <div className="website-container padding-x-3">
         <div className="flex justify-between items-center ">
           <Logo />
-          {/* <HeaderCountry /> */}
+          {/* <div className="hidden md:block">
+            <HeaderCountry />
+          </div> */}
           <div className="-mr-2 md:-mr-4">
             <HeaderMenu />
           </div>
@@ -21,7 +23,7 @@ export default function Header() {
           <HeaderCountry />
         </div>
       </div>
-      <Br />
+      <Br cn="h-3 md:h-1 lg:h-2 xl:h-3" />
       <Hr />
     </header>
   );
@@ -33,14 +35,14 @@ export function Logo() {
       <Link href="/">
         <h1>
           <Image
-            className="w-[160px] h-[24px] lg:w-[256px] lg:h-[32px]"
+            className="w-[160px] h-[24px] lg:w-[192px] lg:h-[24px]"
             width={256}
             height={32}
             src="/assets/tfffwatch.svg"
             alt="TFFF Watch"
           />
         </h1>
-        <p className="text-xs tracking-[0.14em] lg:text-base lg:tracking-[0.32em] font-light">
+        <p className="text-xs tracking-[0.14em] lg:text-sm lg:tracking-[0.20em] font-light">
           FOREVER STARTS NOW
         </p>
       </Link>

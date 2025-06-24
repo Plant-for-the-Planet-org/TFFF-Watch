@@ -17,7 +17,7 @@ import type {
 } from "geojson";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useRef, useState } from "react";
-import countries from "./ne_110m_admin_0_countries.geo.json";
+import countries from "./ne_50m_admin_0_countries.geo.json";
 
 interface LayerConfig {
   tileUrl: string;

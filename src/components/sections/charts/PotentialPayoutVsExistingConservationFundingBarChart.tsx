@@ -7,7 +7,6 @@ import { toReadableAmount } from "@/utils/number-helper";
 import { useForestCoverChangeData } from "@/utils/store";
 import { Spending } from "@/utils/types";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import { useWindowSize } from "@uidotdev/usehooks";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -21,7 +20,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { twMerge } from "tailwind-merge";
 
 type ChartData = {
   label: string;
@@ -40,26 +38,18 @@ const ChartColors = {
   gray: "#BDBDBD",
 };
 
-const BAR_SIZE = 42;
+const BAR_SIZE = 32;
+const BAR_GAP_OFFSET = 16;
+const BAR_GAP = BAR_SIZE + BAR_GAP_OFFSET;
 
 export default function PotentialPayoutVsExistingConservationFundingBarChart() {
   const params: PageParams = useParams();
   const { country, year } = params;
   const details = getCountryDetails(country);
-  const { width } = useWindowSize();
   const forestCiverChangeDataByCountry = useForestCoverChangeData(
-    (state) => state.forestCiverChangeDataByCountry
+    (state) => state.forestCoverChangeDataByCountry
   );
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [chartOptions, setChartOptions] = useState({
-    yAxisWidth: 0,
-    chartWidth: 0,
-  });
-  const [bar, setBar] = useState({
-    barSize: BAR_SIZE,
-    barGap: 42 + 14,
-  });
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
   useEffect(() => {
@@ -122,122 +112,38 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
     })();
   }, [details.name, year, forestCiverChangeDataByCountry]);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    if (width! < 768) {
-      setChartOptions({
-        yAxisWidth: 0,
-        chartWidth: containerRef.current.clientWidth,
-      });
-      setBar({ barSize: BAR_SIZE, barGap: 42 + 14 });
-    } else {
-      setChartOptions({
-        yAxisWidth: containerRef.current.clientWidth * (1 / 3),
-        chartWidth: containerRef.current.clientWidth * (2 / 3),
-      });
-      setBar({ barSize: BAR_SIZE, barGap: 21 });
-    }
-  }, [containerRef, width]);
-  const computedHeight = (bar.barSize + bar.barGap) * chartData.length;
-
   return (
     <div>
-      {/* <pre>
-        {JSON.stringify(
-          {
-            bar,
-            chartOptions,
-            chartData,
-            height: (bar.barSize + bar.barGap) * chartData.length,
-          },
-          null,
-          2
-        )}
-      </pre> */}
-      <ResponsiveContainer
-        ref={containerRef}
-        width="100%"
-        height={computedHeight}
-      >
-        <BarChart
-          height={computedHeight}
-          data={chartData}
-          layout="vertical"
-          // barSize={bar.barSize}
-          barGap={bar.barGap}
-          margin={{ top: 48, right: 48 }}
-        >
-          <YAxis
-            width={chartOptions.yAxisWidth}
-            tickLine={false}
-            dataKey="label"
-            type="category"
-            tick={({ y, width, index }) => {
-              return (
-                <CustomTick
-                  y={y}
-                  width={width}
-                  data={chartData}
-                  index={index}
-                />
-              );
-            }}
-          ></YAxis>
-          <XAxis type="number" dataKey="value" opacity={0} tickLine={false} />
-          <Bar
-            dataKey="value"
-            barSize={bar.barSize}
-            height={bar.barSize}
-            xHeight={bar.barSize}
-          >
-            <LabelList
-              className={twMerge("float-left text-left")}
-              dataKey="label"
-              content={({ x, y, height, index }) => (
-                <CustomLabel
-                  x={x}
-                  y={y}
-                  height={height}
-                  containerWidth={chartOptions.chartWidth}
-                  data={chartData}
-                  index={index}
-                />
-              )}
-            />
-            <LabelList
-              dataKey={"value"}
-              position="right"
-              formatter={toReadableAmount}
-            />
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+      <div className="md:hidden">
+        <BarChartMobile
+          chartHeight={(BAR_SIZE + BAR_GAP) * chartData.length}
+          chartData={chartData}
+        />
+      </div>
+      <div className="hidden md:block">
+        <BarChartDesktop
+          // chartHeight={(BAR_SIZE + BAR_GAP_OFFSET) * chartData.length}
+          chartHeight={(BAR_SIZE + BAR_GAP / 3) * chartData.length}
+          chartData={chartData}
+        />
+      </div>
     </div>
   );
 }
 
 type CustomLabelProps = LabelListProps<ChartData> & {
-  containerWidth: number;
+  // containerWidth: number;
   index?: number;
   data: ChartData[];
 };
 function CustomLabel(props: CustomLabelProps) {
-  const { x, y, height, index, data } = props;
-  const calculatedY = (y as number) - (height as number);
+  const { x, y, height, width, index, data } = props;
+  const _y = (y as number) - (height as number) - BAR_GAP_OFFSET / 2;
   const tooltipData = data[index!].info;
   return (
-    <g className="md:hidden">
-      <foreignObject
-        x={x}
-        y={calculatedY}
-        width={props.containerWidth}
-        height={height}
-      >
-        <div
-          // xmlns="http://www.w3.org/1999/xhtml"
-          className="text-xs sm:text-sm h-full flex items-end-safe"
-        >
+    <g>
+      <foreignObject x={x} y={_y} width={width} height={height}>
+        <div className="text-xs sm:text-sm h-full flex items-end-safe">
           <div className="flex items-center gap-2">
             <div className="shrink-0">
               <InfoTooltip>
@@ -287,16 +193,13 @@ type CustomTickProps = LabelListProps<ChartData> & {
 };
 function CustomTick(props: CustomTickProps) {
   const { y, width, height = BAR_SIZE, index, data } = props;
-  const calculatedY = (y as number) - (height as number) / 2;
+  const _y = (y as number) - (height as number) / 2;
   const tooltipData = data[index!].info;
 
   return (
     <g className="hidden md:block">
-      <foreignObject x={0} y={calculatedY} width={width} height={height}>
-        <div
-          // xmlns="http://www.w3.org/1999/xhtml"
-          className="text-xs sm:text-sm h-full pr-2"
-        >
+      <foreignObject x={0} y={_y} width={width} height={height}>
+        <div className="text-xs sm:text-sm h-full pr-2">
           <div className="flex justify-end items-center gap-2">
             <p className="text-end">{data[index!].label}</p>
             <div className="shrink-0">
@@ -358,5 +261,89 @@ function InfoTooltip({ children }: { children: ReactNode }) {
         {children}
       </PopoverPanel>
     </Popover>
+  );
+}
+
+type ChartComponentProps = {
+  chartHeight: number;
+  chartData: ChartData[];
+};
+
+function BarChartMobile({ chartHeight, chartData }: ChartComponentProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  return (
+    <ResponsiveContainer ref={containerRef} width="100%" height={chartHeight}>
+      <BarChart
+        data={chartData}
+        layout="vertical"
+        barSize={BAR_SIZE}
+        barGap={BAR_GAP}
+        margin={{ top: 48, right: 48 }}
+      >
+        <XAxis type="number" dataKey="value" opacity={0} tickLine={false} />
+        <Bar
+          dataKey="value"
+          barSize={BAR_SIZE}
+          height={BAR_SIZE}
+          xHeight={BAR_SIZE}
+        >
+          <LabelList
+            dataKey="label"
+            content={({ x, y, index }) => (
+              <CustomLabel
+                x={x}
+                y={y}
+                height={BAR_SIZE}
+                width={containerRef?.current?.clientWidth}
+                data={chartData}
+                index={index}
+              />
+            )}
+          />
+          <LabelList
+            dataKey={"value"}
+            position="right"
+            formatter={toReadableAmount}
+          />
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  );
+}
+
+function BarChartDesktop({ chartHeight, chartData }: ChartComponentProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  return (
+    <ResponsiveContainer ref={containerRef} width="100%" height={chartHeight}>
+      <BarChart
+        data={chartData}
+        layout="vertical"
+        barSize={BAR_SIZE}
+        barGap={BAR_GAP_OFFSET}
+        margin={{ top: 48, right: 48 }}
+      >
+        <YAxis
+          width={(containerRef?.current?.clientWidth ?? 768) * (1 / 3)}
+          tickLine={false}
+          dataKey="label"
+          type="category"
+          tick={({ y, width, index }) => {
+            return (
+              <CustomTick y={y} width={width} data={chartData} index={index} />
+            );
+          }}
+        ></YAxis>
+        <XAxis type="number" dataKey="value" opacity={0} tickLine={false} />
+        <Bar dataKey="value">
+          <LabelList
+            dataKey={"value"}
+            position="right"
+            formatter={toReadableAmount}
+          />
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
   );
 }

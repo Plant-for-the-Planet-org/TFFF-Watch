@@ -16,12 +16,21 @@ import {
 import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
 import { CountryDetails } from "@/utils/country-helper";
-import { useForestCoverChangeData } from "@/utils/store";
+import { env } from "@/utils/env";
+import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
+// import { forestChangeData } from "@/utils/forestChange.store";
+import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import { ForestCoverChange } from "@/utils/types";
 import { useEffect } from "react";
 
 export function TFFFWorldMapView() {
-  const { setForestCoverChangeData } = useForestCoverChangeData();
+  const {
+    setForestCoverChangeData,
+    forestCoverChangeData,
+    setForestCoverChangeDataByYear,
+  } = useForestCoverChangeData();
+  const year = useWorldMap((stste) => stste.year);
+
   useEffect(() => {
     (async () => {
       try {
@@ -31,12 +40,20 @@ export function TFFFWorldMapView() {
           token: "",
         });
         // console.log(_results);
+        // _results = _results.filter((el) => el.year === year);
         setForestCoverChangeData(_results);
       } catch (error) {
         console.error("Error fetching news:", error);
       }
     })();
   }, [setForestCoverChangeData]);
+
+  useEffect(() => {
+    console.log(forestCoverChangeData);
+    const _yearWise = forestCoverChangeData.filter((el) => el.year == year);
+    console.log(_yearWise);
+    setForestCoverChangeDataByYear(_yearWise);
+  }, [forestCoverChangeData, year, setForestCoverChangeDataByYear]);
 
   return (
     <WorldMapViewContainer>
@@ -67,6 +84,10 @@ type TFFFCountryMapViewProps = CountryMapViewProps &
   };
 
 export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
+  useEffect(() => {
+    if (props.name) fetchForestCoverChangeDataV2({ country: props.name });
+  }, [props.name]);
+
   return (
     <CountryMapViewContainer>
       <div className="h-full flex flex-col">
@@ -108,10 +129,11 @@ function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
 }
 
 export function BetaChip() {
+  const mapVersion = env.mapVersion;
   return (
     <div className="self-start bg-white text-primary text-xs py-0.5 px-2 rounded-full shadow-xl">
       {/* BETA */}
-      Version 0.9
+      Version {mapVersion}
     </div>
   );
 }

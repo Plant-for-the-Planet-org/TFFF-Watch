@@ -11,7 +11,7 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
-import countries from "./ne_110m_admin_0_countries.geo.json";
+import countries from "./ne_50m_admin_0_countries.geo.json";
 import WorldMapTFFFCard from "./WorldMapTFFFCard";
 
 export type MapCountryClickEvent = {
@@ -25,8 +25,9 @@ export type MapCountryClickEvent = {
 
 export default function WorldMapView() {
   const { width } = useWindowSize();
-  const forestCoverChangeData = useForestCoverChangeData(
-    (state) => state.forestCoverChangeData
+  // const { forestCoverChangeData } = useForestCoverChangeData();
+  const forestCoverChangeDataByYear = useForestCoverChangeData(
+    (state) => state.forestCoverChangeDataByYear
   );
   const setPoint = useWorldMap((state) => state.setPoint);
   const setCountry = useWorldMap((state) => state.setCountry);
@@ -50,12 +51,12 @@ export default function WorldMapView() {
   }, [width]);
 
   const allCountries = useMemo(() => {
-    if (!forestCoverChangeData.length) {
+    if (!forestCoverChangeDataByYear.length) {
       return { type: "FeatureCollection", features: [] };
     } else {
       // console.log({ forestCoverChangeData });
       const forestCoverChangeAll = transformAllForestCoverChangeData(
-        forestCoverChangeData
+        forestCoverChangeDataByYear
       );
       // console.log("Modify", forestCoverChangeAll);
       countries.features.forEach((country) => {
@@ -110,7 +111,8 @@ export default function WorldMapView() {
 
       return countries;
     }
-  }, [forestCoverChangeData]);
+    // }, [forestCoverChangeData]);
+  }, [forestCoverChangeDataByYear]);
 
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
@@ -121,6 +123,12 @@ export default function WorldMapView() {
     const country = features?.[0]?.properties?.name_long;
     setPoint(point);
     setCountry(country);
+
+    // const _countryWise = forestCoverChangeData.filter(
+    //   (el) => el.country === country
+    // );
+    // setForestCoverChangeDataByCountry(_countryWise);
+    // // console.log(_countryWise);)
   };
 
   return (
@@ -150,6 +158,8 @@ export default function WorldMapView() {
           dragRotate={false}
           touchPitch={false}
           touchZoomRotate={false}
+          doubleClickZoom={false}
+          interactive={false}
           attributionControl={false}
           renderWorldCopies={false}
           onClick={onClick}
@@ -195,7 +205,7 @@ export default function WorldMapView() {
           className="bg-white p-2 rounded-lg cursor-pointer"
           onClick={() => {
             downloadGeoJsonAsSvg(
-              allCountries as NaturalEarthCountryFeatureCollection,
+              allCountries as unknown as NaturalEarthCountryFeatureCollection,
               {
                 width: 800,
                 height: 800,

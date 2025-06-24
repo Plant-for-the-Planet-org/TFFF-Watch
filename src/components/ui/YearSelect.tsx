@@ -8,9 +8,10 @@ import { twMerge } from "tailwind-merge";
 
 type Props = {
   initialValue?: string;
+  onChange?: (value: string) => void;
 };
 
-export default function YearSelect({ initialValue }: Props) {
+export default function YearSelect({ initialValue, onChange }: Props) {
   const { setYear } = useWorldMap();
 
   const [selectedId, setSelectedId] = useState(0);
@@ -38,7 +39,7 @@ export default function YearSelect({ initialValue }: Props) {
     const selected = options.find((el) => el.value === initialValue)!;
     setSelectedId(selected.id);
     setYear(selected.value);
-  }, [initialValue, options, setYear]);
+  }, [initialValue, options, setYear, selectedId]);
 
   return (
     <Menu>
@@ -70,6 +71,8 @@ export default function YearSelect({ initialValue }: Props) {
               className="block w-full py-2 px-2 hover:font-bold cursor-default text-center"
               onClick={() => {
                 setSelectedId(el.id);
+                setYear(el.value);
+                if (onChange) onChange(el.value);
               }}
             >
               <span

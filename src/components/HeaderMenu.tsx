@@ -19,18 +19,18 @@ export default function HeaderMenu() {
   ]);
 
   return (
-    <Menu>
+    <Menu as={"div"} className={"p-2 lg:p-4 flex items-center"}>
       {({ close }) => (
         <>
           <MenuButton
             as="button"
-            className="p-2 lg:p-4 cursor-pointer outline-none"
+            className="cursor-pointer outline-none"
             onClick={() => {
               setCustomOpen(!customOpen);
             }}
           >
             <Image
-              className="w-[24px] h-[24px] lg:w-[32px] lg:h-[32px]"
+              className="w-[24px] h-[24px]"
               width={32}
               height={32}
               src="/assets/menu.svg"

@@ -4,6 +4,8 @@ import Br from "@/components/ui/Br";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import { env } from "@/utils/env";
+import Script from "next/script";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -29,7 +31,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${openSans.variable} antialiased`}>
+      {env.enableUmami && (
+        <Script
+          defer
+          src="https://umami-xgos4ssg4g4cg00k0cgo48cw.gopher.startplanting.org/script.js"
+          data-website-id="1ab96188-beb9-4bea-91c8-e0733d35018d"
+        ></Script>
+      )}
+      <body className={`${openSans.variable} antialiased overflow-x-hidden`}>
         <Header />
         <div className="website-container">
           <Br />

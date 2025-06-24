@@ -22,15 +22,15 @@ export default function CountryTFFFCard({
   CTA = false,
   countryData = null,
 }: { iso2?: string; year?: string } & Partial<CountryDetails> & Options) {
-  const forestCiverChangeDataByCountry = useForestCoverChangeData(
-    (state) => state.forestCiverChangeDataByCountry
+  const forestCoverChangeDataByCountry = useForestCoverChangeData(
+    (state) => state.forestCoverChangeDataByCountry
   );
 
   const _data: ForestCoverChange = useMemo(
     () =>
       countryData ||
-      forestCiverChangeDataByCountry.find((el) => +el.year === +year)!,
-    [countryData, year, forestCiverChangeDataByCountry]
+      forestCoverChangeDataByCountry.find((el) => +el.year === +year)!,
+    [countryData, year, forestCoverChangeDataByCountry]
   );
 
   if (!_data) return null;
@@ -114,7 +114,7 @@ export default function CountryTFFFCard({
       <Br />
       <div
         className={twMerge(
-          "p-2 px-4 sm:p-0 md:-mx-3 lg:-mx-4 xl:-mx-5 md:p-3 lg:p-4 xl:p-5 xl:py-4",
+          "rounded-b-lg p-2 px-4 sm:p-0 md:-mx-3 lg:-mx-4 xl:-mx-5 md:p-3 lg:p-4 xl:p-5 xl:py-4",
           _data.eligibility_combined ? "bg-primary-light" : "bg-danger-light"
         )}
       >

@@ -4,7 +4,7 @@ import PotentialPayoutVsExistingConservationFunding from "@/components/sections/
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
 import { getCountryDetails } from "@/utils/country-helper";
-import { fetchForestChangeData } from "@/utils/forestChange.store";
+import { fetchForestCoverChangeData } from "@/utils/forestChange.store";
 import { Metadata } from "next";
 import { capitalize } from "underscore.string";
 
@@ -33,7 +33,7 @@ export default async function Page({ params }: PageProps) {
 
   const details = getCountryDetails(country);
 
-  await fetchForestChangeData(details.name);
+  await fetchForestCoverChangeData(details.name);
 
   return (
     <div>

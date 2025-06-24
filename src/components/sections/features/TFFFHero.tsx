@@ -54,6 +54,7 @@ export default function TFFFHero() {
 
       {/* <div className="absolute md:relative z-10 inset-0 left-1/2 right-1/2 lg:ml-[-50vw] lg:mr-[-50vw] lg:w-full lg:max-w-screen "> */}
       {/* <div className="absolute z-10 inset-0 md:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw] lg:w-screen lg:max-w-screen box-border"> */}
+      {/* <div className="absolute inset-0 z-10 md:relative md:inset-auto md:w-screen md:left-1/2 md:right-1/2 md:-ml-[50vw] md:-mr-[40vw] md:box-border"> */}
       <div className="absolute inset-0 z-10 md:relative md:inset-auto md:w-screen md:left-1/2 md:right-1/2 md:-ml-[50vw] md:-mr-[50vw] md:box-border">
         <Image
           height="700"

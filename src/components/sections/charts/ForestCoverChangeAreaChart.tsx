@@ -1,72 +1,10 @@
 "use client";
 
-import { PageParams } from "@/app/[country]/[year]/page";
-import { getCountryDetails } from "@/utils/country-helper";
-import { fetchForestChangeData } from "@/utils/forestChange.store";
-import { ForestCoverChange } from "@/utils/types";
-import { useParams } from "next/navigation";
+import { toReadable } from "@/utils/number-helper";
+import { useForestCoverChangeData } from "@/utils/store";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { twMerge } from "tailwind-merge";
-
-const _data = [
-  { year: "2021", restoration: 25, deforestation: -25, degradation: -27 },
-  { year: "2022", restoration: 23, deforestation: -23, degradation: -28 },
-  { year: "2023", restoration: 27, deforestation: -24, degradation: -30 },
-  { year: "2024", restoration: 30, deforestation: -20, degradation: -35 },
-];
-
-// const fullMockData = [
-//   {
-//     year: "2018",
-//     country: "Angola",
-//     intact_forest_ha: 2700000,
-//     degraded_forest_ha: 10000,
-//     deforested_ha: 10000,
-//   },
-//   {
-//     year: "2019",
-//     country: "Angola",
-//     intact_forest_ha: 2665000,
-//     degraded_forest_ha: 12000,
-//     deforested_ha: 13500,
-//   },
-//   {
-//     year: "2020",
-//     country: "Angola",
-//     intact_forest_ha: 2630000,
-//     degraded_forest_ha: 14000,
-//     deforested_ha: 15000,
-//   },
-//   {
-//     year: "2021",
-//     country: "Angola",
-//     intact_forest_ha: 2600000,
-//     degraded_forest_ha: 15500,
-//     deforested_ha: 17000,
-//   },
-//   {
-//     year: "2022",
-//     country: "Angola",
-//     intact_forest_ha: 2577000,
-//     degraded_forest_ha: 16500,
-//     deforested_ha: 18000,
-//   },
-//   {
-//     year: "2023",
-//     country: "Angola",
-//     intact_forest_ha: 2573000,
-//     degraded_forest_ha: 17200,
-//     deforested_ha: 18500,
-//   },
-//   {
-//     year: "2024",
-//     country: "Angola",
-//     intact_forest_ha: 2570807.687,
-//     degraded_forest_ha: 17567.16,
-//     deforested_ha: 17567.16,
-//   },
-// ];
 
 const strokes = {
   restoration: "#2C9CDB",
@@ -80,26 +18,32 @@ const fills = {
   degradation: "#FFF0E3",
 };
 
+type ChartData = {
+  year: string;
+  // restoration: number;
+  deforestation: number;
+  degradation: number;
+};
+
 // const STARTING_YEAR = 2018;
 
 export default function ForestCoverChangeAreaChart() {
-  const { country }: PageParams = useParams();
-  const details = getCountryDetails(country);
+  const { forestCoverChangeDataByCountry } = useForestCoverChangeData();
 
-  const [, setChartData] = useState<ForestCoverChange[]>([]);
+  const [chartData, setChartData] = useState<ChartData[]>([]);
 
   useEffect(() => {
-    (async () => {
-      const _data = await fetchForestChangeData(details.name);
-      if (!_data) return;
+    if (!forestCoverChangeDataByCountry?.length) return;
 
-      setChartData(_data);
-      // console.log({ chartData });
-      // setData(fullMockData);
-    })();
-  }, [details.name]);
+    const _chartData = forestCoverChangeDataByCountry.map((el) => ({
+      year: el.year,
+      deforestation: -el.deforested_ha,
+      degradation: -el.degraded_forest_ha,
+    }));
 
-  // console.log(chartData);
+    setChartData(_chartData);
+  }, [forestCoverChangeDataByCountry]);
+
   return (
     <div>
       <div className="flex justify-end">
@@ -119,8 +63,20 @@ export default function ForestCoverChangeAreaChart() {
         </div>
       </div>
       <ResponsiveContainer width="100%" height="100%" minHeight={400}>
-        <AreaChart data={_data}>
-          <YAxis type="number" fontSize={14} tickLine={false} />
+        <AreaChart data={chartData}>
+          <YAxis
+            type="number"
+            fontSize={14}
+            tickLine={false}
+            tickFormatter={(value) => `${toReadable(value)} ha`}
+            domain={[
+              (dataMin: number) => {
+                const newDataMin = dataMin + dataMin * (15 / 100);
+                return newDataMin;
+              },
+              "dataMax",
+            ]}
+          />
           <XAxis dataKey="year" fontSize={14} tickLine={false} />
           {/* <Area
             dataKey="restoration"
@@ -134,18 +90,7 @@ export default function ForestCoverChangeAreaChart() {
               r: 4,
             }}
           /> */}
-          <Area
-            dataKey="degradation"
-            stroke={strokes.degradation}
-            strokeWidth={2}
-            fill={fills.degradation}
-            fillOpacity={1}
-            dot={{
-              stroke: strokes.degradation,
-              fill: fills.degradation,
-              r: 4,
-            }}
-          />
+
           <Area
             dataKey="deforestation"
             stroke={strokes.deforestation}
@@ -158,8 +103,18 @@ export default function ForestCoverChangeAreaChart() {
               r: 4,
             }}
           />
-          {/* <Tooltip /> */}
-          {/* <Legend /> */}
+          <Area
+            dataKey="degradation"
+            stroke={strokes.degradation}
+            strokeWidth={2}
+            fill={fills.degradation}
+            fillOpacity={1}
+            dot={{
+              stroke: strokes.degradation,
+              fill: fills.degradation,
+              r: 4,
+            }}
+          />
         </AreaChart>
       </ResponsiveContainer>
     </div>

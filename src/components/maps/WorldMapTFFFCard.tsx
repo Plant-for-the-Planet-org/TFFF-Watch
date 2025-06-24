@@ -9,14 +9,16 @@ import CountryTFFFCard from "./CountryTFFFCard";
 
 export function WorldMapTFFFCard_() {
   const { year, country, point } = useWorldMap();
-  const forestCoverChangeData = useForestCoverChangeData(
-    (state) => state.forestCoverChangeData
+  // const forestCoverChangeData = useForestCoverChangeData(
+  //   (state) => state.forestCoverChangeData
+  // );
+  const forestCoverChangeDataByYear = useForestCoverChangeData(
+    (state) => state.forestCoverChangeDataByYear
   );
 
   const details = getCountryDetails(country);
 
   if (!country) return null;
-
   return (
     <div
       className="absolute"
@@ -34,8 +36,17 @@ export function WorldMapTFFFCard_() {
         name={details.name}
         flagImgUrl={details.flagImgUrl}
         CTA={true}
-        countryData={forestCoverChangeData.find((el) => el.country === country)}
+        countryData={forestCoverChangeDataByYear.find(
+          (el) => el.country === country
+        )}
       />
+      {/* <pre>
+        {JSON.stringify(
+          forestCoverChangeData.find((el) => el.country === country),
+          null,
+          2
+        )}
+      </pre> */}
     </div>
   );
 }
