@@ -47,8 +47,7 @@ export default function WorldMapView() {
   const forestCoverChangeDataByYear = useForestCoverChangeData(
     (state) => state.forestCoverChangeDataByYear
   );
-  const setPoint = useWorldMap((state) => state.setPoint);
-  const setCountry = useWorldMap((state) => state.setCountry);
+  const { setPoint, setCountry, setIsTFFF } = useWorldMap();
 
   const mapRef = useRef<MapRef>(null);
 
@@ -152,6 +151,13 @@ export default function WorldMapView() {
     const country = features?.[0]?.properties?.name_long;
     setPoint(point);
     setCountry(country);
+
+    const isTFFF = forestCoverChangeDataByYear.find(
+      (el) => el.country === country
+    );
+    console.log({ isTFFF });
+    if (isTFFF) setIsTFFF(true);
+    else setIsTFFF(false);
 
     // const _countryWise = forestCoverChangeData.filter(
     //   (el) => el.country === country

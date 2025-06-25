@@ -8,7 +8,7 @@ import { getCountryDetails } from "@/utils/country-helper";
 import CountryTFFFCard from "./CountryTFFFCard";
 
 export function WorldMapTFFFCard_() {
-  const { year, country, point } = useWorldMap();
+  const { isTFFF, year, country, point } = useWorldMap();
   // const forestCoverChangeData = useForestCoverChangeData(
   //   (state) => state.forestCoverChangeData
   // );
@@ -19,6 +19,7 @@ export function WorldMapTFFFCard_() {
   const details = getCountryDetails(country);
 
   if (!country) return null;
+  if (!isTFFF) return null;
   return (
     <div
       className="absolute z-50"

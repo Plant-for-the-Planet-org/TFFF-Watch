@@ -2,11 +2,13 @@ import { create } from "zustand";
 import { ForestCoverChange } from "./types";
 
 type WorldMapStore = {
+  isTFFF: boolean;
   year: string;
   country: string;
   latitude: number;
   longitude: number;
   point: { x: number; y: number };
+  setIsTFFF: (isTFFF: boolean) => void;
   setYear: (year: string) => void;
   setCountry: (country: string) => void;
   setCoordinates: (coords: { lat: number; lng: number }) => void;
@@ -14,11 +16,13 @@ type WorldMapStore = {
 };
 
 export const useWorldMap = create<WorldMapStore>((set) => ({
+  isTFFF: false,
   year: "",
   country: "",
   latitude: 0,
   longitude: 0,
   point: { x: 0, y: 0 },
+  setIsTFFF: (isTFFF) => set({ isTFFF }),
   setYear: (year) => set({ year }),
   setCountry: (country) => set({ country }),
   setCoordinates: ({ lat, lng }) => set({ latitude: lat, longitude: lng }),
