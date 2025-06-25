@@ -21,7 +21,7 @@ export function WorldMapTFFFCard_() {
   if (!country) return null;
   return (
     <div
-      className="absolute"
+      className="absolute z-50"
       style={{
         // left: 0,
         // top: 0,

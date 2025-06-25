@@ -5,14 +5,32 @@ import { downloadGeoJsonAsSvg } from "@/utils/download-map";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Layer, Map, MapRef, Source } from "@vis.gl/react-maplibre";
+import {
+  Layer,
+  Map,
+  MapRef,
+  NavigationControl,
+  Source,
+  ViewStateChangeEvent,
+} from "@vis.gl/react-maplibre";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import countries from "./ne_50m_admin_0_countries.geo.json";
 import WorldMapTFFFCard from "./WorldMapTFFFCard";
+import * as turf from "@turf/turf";
+
+export const GEOFENCE = turf.polygon([
+  [
+    [-180, 83.667],
+    [180, 83.667],
+    [180, -55.98],
+    [-180, -55.98],
+    [-180, 83.667],
+  ],
+]);
 
 export type MapCountryClickEvent = {
   features: maplibregl.MapLayerMouseEvent["features"];
@@ -34,19 +52,20 @@ export default function WorldMapView() {
 
   const mapRef = useRef<MapRef>(null);
 
-  const [zoom, setZoom] = useState(0.5);
-  const [latitude] = useState(42);
-
-  // const [popup, setPopup] = useState(0);
+  const [viewState, setViewState] = useState({
+    latitude: 42,
+    longitude: 0,
+    zoom: 0.5,
+  });
 
   useEffect(() => {
     if (!width) return;
     if (width > 1024) {
-      setZoom(0.5);
+      setViewState((prev) => ({ ...prev, zoom: 0.5 }));
     } else if (width > 768) {
-      setZoom(0);
+      setViewState((prev) => ({ ...prev, zoom: 0 }));
     } else {
-      setZoom(-1);
+      setViewState((prev) => ({ ...prev, zoom: -1 }));
     }
   }, [width]);
 
@@ -111,8 +130,18 @@ export default function WorldMapView() {
 
       return countries;
     }
-    // }, [forestCoverChangeData]);
   }, [forestCoverChangeDataByYear]);
+
+  const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
+    const newCenter = [viewState.longitude, viewState.latitude];
+    if (turf.booleanPointInPolygon(newCenter, GEOFENCE)) {
+      setViewState({
+        zoom: viewState.zoom,
+        longitude: newCenter[0],
+        latitude: newCenter[1],
+      });
+    }
+  }, []);
 
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
@@ -136,32 +165,36 @@ export default function WorldMapView() {
       <div className="h-full w-full relative">
         <Map
           ref={mapRef}
-          zoom={zoom}
-          latitude={latitude}
+          {...viewState}
+          // zoom={zoom}
+          // latitude={latitude}
           cursor="default"
-          mapStyle={{
-            version: 8,
-            glyphs:
-              "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-            sources: {},
-            layers: [
-              {
-                id: "background",
-                type: "background",
-                paint: { "background-color": "#F0FAF4" },
-              },
-            ],
-          }}
+          // These mapStyles were the Optimization Problem all along
+          // mapStyle={{
+          //   version: 8,
+          //   glyphs:
+          //     "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+          //   sources: {},
+          //   layers: [
+          //     {
+          //       id: "background",
+          //       type: "background",
+          //       paint: { "background-color": "#F0FAF4" },
+          //     },
+          //   ],
+          // }}
+          // mapStyle="https://demotiles.maplibre.org/style.json"
           keyboard={false}
           scrollZoom={false}
-          dragPan={false}
+          dragPan={true}
           dragRotate={false}
           touchPitch={false}
           touchZoomRotate={false}
           doubleClickZoom={false}
-          interactive={false}
+          interactive={true}
           attributionControl={false}
           renderWorldCopies={false}
+          onMove={onMove}
           onClick={onClick}
           onMouseMove={onClick}
           onLoad={() => {
@@ -196,6 +229,7 @@ export default function WorldMapView() {
               }}
             />
           </Source>
+          <NavigationControl position="top-right" showCompass={false} />
           {/* <AttributionControl compact={false} /> */}
         </Map>
         <WorldMapTFFFCard />

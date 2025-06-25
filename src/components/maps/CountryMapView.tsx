@@ -153,18 +153,18 @@ export default function CountryMapView({ iso2 }: Props) {
       onLoad={() => {
         repositionMap();
       }}
-      mapStyle={{
-        version: 8,
-        glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-        sources: {},
-        layers: [
-          {
-            id: "background",
-            type: "background",
-            paint: { "background-color": "#F0FAF4" },
-          },
-        ],
-      }}
+      // mapStyle={{
+      //   version: 8,
+      //   glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+      //   sources: {},
+      //   layers: [
+      //     {
+      //       id: "background",
+      //       type: "background",
+      //       paint: { "background-color": "#F0FAF4" },
+      //     },
+      //   ],
+      // }}
       renderWorldCopies={false}
       interactive={false}
       attributionControl={false}
