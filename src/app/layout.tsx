@@ -38,7 +38,7 @@ export default function RootLayout({
           data-website-id="1ab96188-beb9-4bea-91c8-e0733d35018d"
         ></Script>
       )}
-      <body className={`${openSans.variable} antialiased overflow-x-hidden`}>
+      <body className={`${openSans.variable} antialiased`}>
         <Header />
         <div className="website-container">
           <Br />

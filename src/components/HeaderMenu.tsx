@@ -3,7 +3,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 export default function HeaderMenu() {
