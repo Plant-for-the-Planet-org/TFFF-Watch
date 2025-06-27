@@ -14,13 +14,11 @@ import {
   WorldMapHeaderContent,
 } from "@/components/sections/hero/TFFFMapViewContent";
 import Br from "@/components/ui/Br";
-import { api, urls } from "@/utils/axios-helper";
 import { CountryDetails } from "@/utils/country-helper";
 import { env } from "@/utils/env";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
 // import { forestChangeData } from "@/utils/forestChange.store";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
-import { ForestCoverChange } from "@/utils/types";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
