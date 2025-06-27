@@ -1,6 +1,6 @@
 import Br from "@/components/ui/Br";
 import { IconButton } from "@/components/ui/Button";
-import { formatForNewsCard } from "@/utils/datetime";
+import { formatDateForCardBadge } from "@/utils/datetime-helper";
 
 type Props = {
   title: string;
@@ -31,7 +31,7 @@ export default function PressReleaseCard(props: Props) {
             <div className="bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs">
               {[
                 props.publisher,
-                formatForNewsCard(new Date(props.datetime)),
+                formatDateForCardBadge(new Date(props.datetime)),
               ].join(" · ")}
             </div>
             <IconButton href={props.url} cn="hidden md:block" external />

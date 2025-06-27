@@ -1,6 +1,6 @@
 import { parse as parseDate, formatDistanceToNow } from "date-fns";
 
-export function formatForNewsCard(date: Date) {
+export function formatDateForCardBadge(date: Date) {
   const monthNames = [
     "Jan",
     "Feb",

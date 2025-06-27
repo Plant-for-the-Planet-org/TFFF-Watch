@@ -69,6 +69,8 @@ export default function WorldMapView() {
   }, [width]);
 
   const allCountries = useMemo(() => {
+    console.log("Regenerate Colors.");
+
     if (!forestCoverChangeDataByYear.length) {
       return { type: "FeatureCollection", features: [] };
     } else {
@@ -155,15 +157,8 @@ export default function WorldMapView() {
     const isTFFF = forestCoverChangeDataByYear.find(
       (el) => el.country === country
     );
-    console.log({ isTFFF });
     if (isTFFF) setIsTFFF(true);
     else setIsTFFF(false);
-
-    // const _countryWise = forestCoverChangeData.filter(
-    //   (el) => el.country === country
-    // );
-    // setForestCoverChangeDataByCountry(_countryWise);
-    // // console.log(_countryWise);)
   };
 
   return (
@@ -205,7 +200,6 @@ export default function WorldMapView() {
           onMouseMove={onClick}
           onLoad={() => {
             const map = mapRef.current?.getMap();
-
             map?.addControl(
               new maplibregl.AttributionControl({ compact: true })
             );

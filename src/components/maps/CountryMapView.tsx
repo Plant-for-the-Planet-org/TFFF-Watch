@@ -74,17 +74,6 @@ const layerData: LayerData = {
     tileUrl:
       "https://storage.googleapis.com/planet-layers/tttf-data/cd12f4c6-8a6e-4d2f-bcb4-a9a9941ab6bd/deforestationLayer2023/{z}/{x}/{y}.png",
   },
-  // "deforestationHaJrc": 5624.826188522884,
-  // "deforestationHaHansen": 32279.813910386565,
-  // "task": null,
-  // "createdAt": "2025-06-09T18:44:12.889Z",
-  // "updatedAt": "2025-06-17T18:48:03.603Z"
-
-  // deforestationHaJrc: 5624.826188522884,
-  // deforestationHaHansen: 32279.813910386565,
-  // task: null,
-  // createdAt: "2025-06-08T15:25:17.212Z",
-  // updatedAt: "2025-06-08T15:25:17.212Z",
 };
 
 function getCountryGeoJSON(iso2: string) {

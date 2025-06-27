@@ -34,12 +34,30 @@ export default function YearSelect({ initialValue, onChange }: Props) {
   ]);
 
   useEffect(() => {
-    setYear(options.find((el) => el.id === selectedId)!.value);
-    if (!initialValue) return;
+    if (!initialValue) {
+      const selected = options[0];
+      setSelectedId(selected.id);
+      setYear(selected.value);
+      return;
+    }
+
     const selected = options.find((el) => el.value === initialValue)!;
     setSelectedId(selected.id);
     setYear(selected.value);
-  }, [initialValue, options, setYear, selectedId]);
+  }, [initialValue, options, setYear]);
+
+  // useEffect(() => {
+  //   // wil come back later
+  //   // setYear(options.find((el) => el.id === selectedId)!.value);
+  //   // if (!initialValue) return;
+
+  //   console.log("change back?");
+  //   const selected = options.find((el) => el.value === initialValue)!;
+
+  //   console.log(selected);
+  //   setSelectedId(selected.id);
+  //   setYear(selected.value);
+  // }, [initialValue, options, setYear, selectedId]);
 
   return (
     <Menu>

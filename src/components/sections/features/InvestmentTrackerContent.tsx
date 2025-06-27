@@ -1,7 +1,7 @@
 import Br from "@/components/ui/Br";
 import Hr from "@/components/ui/Hr";
 import { extractLists, serializePersons } from "@/utils/content-helper";
-import { formatDateAgo } from "@/utils/datetime";
+import { formatDateAgo } from "@/utils/datetime-helper";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import Image from "next/image";
 import { Fragment } from "react";

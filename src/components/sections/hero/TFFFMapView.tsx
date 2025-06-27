@@ -21,32 +21,17 @@ import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
 // import { forestChangeData } from "@/utils/forestChange.store";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import { ForestCoverChange } from "@/utils/types";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export function TFFFWorldMapView() {
-  const {
-    setForestCoverChangeData,
-    forestCoverChangeData,
-    setForestCoverChangeDataByYear,
-  } = useForestCoverChangeData();
-  const year = useWorldMap((stste) => stste.year);
+  const { forestCoverChangeData, setForestCoverChangeDataByYear } =
+    useForestCoverChangeData();
+  const { year } = useWorldMap();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const _results = await api<ForestCoverChange[]>({
-          url: urls.forestChangeAll,
-          method: "GET",
-          token: "",
-        });
-        // console.log(_results);
-        // _results = _results.filter((el) => el.year === year);
-        setForestCoverChangeData(_results);
-      } catch (error) {
-        console.error("Error fetching news:", error);
-      }
-    })();
-  }, [setForestCoverChangeData]);
+    fetchForestCoverChangeDataV2({});
+  }, []);
 
   useEffect(() => {
     const _yearWise = forestCoverChangeData.filter((el) => el.year == year);
@@ -82,9 +67,17 @@ type TFFFCountryMapViewProps = CountryMapViewProps &
   };
 
 export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
+  const { push } = useRouter();
+  const { country } = useParams();
+  const { year } = useWorldMap();
+
   useEffect(() => {
     if (props.name) fetchForestCoverChangeDataV2({ country: props.name });
   }, [props.name]);
+
+  useEffect(() => {
+    push(`/${country}/${year}`);
+  }, [country, year, push]);
 
   return (
     <CountryMapViewContainer>

@@ -20,3 +20,10 @@ export function serializePersons(text: string) {
   });
   return persons;
 }
+
+export function formatPublisherForCardBadge(text: string) {
+  if (text.length > 32) {
+    return text.slice(0, 32) + "...";
+  }
+  return text;
+}
