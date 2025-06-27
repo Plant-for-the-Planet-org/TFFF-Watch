@@ -6,6 +6,8 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { env } from "@/utils/env";
 import Script from "next/script";
+import CookieConsentBanner from "@/components/CookieConsentBanner";
+import ThirdPartyScripts from "@/components/ThirdPartyScripts";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -38,7 +40,10 @@ export default function RootLayout({
           data-website-id="1ab96188-beb9-4bea-91c8-e0733d35018d"
         ></Script>
       )}
+
       <body className={`${openSans.variable} antialiased`}>
+        <CookieConsentBanner />
+        <ThirdPartyScripts />
         <Header />
         <div className="website-container">
           <Br />

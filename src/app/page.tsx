@@ -6,8 +6,11 @@ import RecentPolicyPapersComentary from "@/components/sections/features/RecentPo
 import TFFFHero from "@/components/sections/features/TFFFHero";
 import { TFFFWorldMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
+// import { getConsent } from "@/utils/cookies";
 
 export default function Home() {
+  // const consent = getConsent();
+
   return (
     <div>
       <TFFFHero />
