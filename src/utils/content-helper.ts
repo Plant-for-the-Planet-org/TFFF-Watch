@@ -21,9 +21,13 @@ export function serializePersons(text: string) {
   return persons;
 }
 
-export function formatPublisherForCardBadge(text: string) {
-  if (text.length > 32) {
-    return text.slice(0, 32) + "...";
+export function formatPublisherForCardBadge(
+  text: string,
+  maxLength: number = 32
+) {
+  if (!text) return "";
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + "...";
   }
   return text;
 }

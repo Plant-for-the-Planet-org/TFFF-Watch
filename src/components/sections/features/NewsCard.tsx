@@ -1,5 +1,6 @@
 import Br from "@/components/ui/Br";
 import { IconButton } from "@/components/ui/Button";
+import { formatPublisherForCardBadge } from "@/utils/content-helper";
 import { formatDateForCardBadge } from "@/utils/datetime-helper";
 
 type Props = {
@@ -23,9 +24,21 @@ export default function NewsCard(props: Props) {
         />
         <div className="absolute bottom-0 inset-x-0 px-3 pb-3">
           <div className="flex justify-between items-end">
-            <div className="bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs">
-              {props.publisher} ·{" "}
-              {formatDateForCardBadge(new Date(props.datetime))}
+            <div className="bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs max-h-10 flex gap-x-1 flex-wrap">
+              <p className="max-h-4 max-w-fit overflow-hidden">
+                <span>
+                  <span className="hidden md:inline-block xl:hidden">
+                    {formatPublisherForCardBadge(props.publisher!, 16)}
+                  </span>
+                  <span className="md:hidden xl:inline-block">
+                    {formatPublisherForCardBadge(props.publisher!)}
+                  </span>
+                </span>
+              </p>
+              <span> · </span>
+              <p className="whitespace-nowrap">
+                {formatDateForCardBadge(new Date(props.datetime))}
+              </p>
             </div>
             <IconButton href={props.url} cn="hidden md:block" external />
             <IconButton href={props.url} cn="md:hidden" small external />

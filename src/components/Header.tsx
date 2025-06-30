@@ -8,7 +8,7 @@ import Br from "./ui/Br";
 export default function Header() {
   return (
     <header className="sticky top-0 z-30 bg-white/75 backdrop-blur-lg">
-      <Br cn="h-3 md:h-1 lg:h-2 xl:h-3" />
+      <Br cn="h-3 md:h-2 xl:h-3" />
       <div className="website-container padding-x-3">
         <div className="flex justify-between items-center ">
           <Logo />
@@ -23,7 +23,7 @@ export default function Header() {
           <HeaderCountry />
         </div>
       </div>
-      <Br cn="h-3 md:h-1 lg:h-2 xl:h-3" />
+      <Br cn="h-3 md:h-2 xl:h-3" />
       <Hr />
     </header>
   );

@@ -39,7 +39,16 @@ export default function Footer() {
         </div>
         <div></div>
         <div className="flex gap-1 justify-center flex-wrap md:flex-nowrap">
-          <a href="">Imprint</a> · <a href="">Terms & Conditions</a> ·
+          <a href="">Imprint</a>·
+          <Link
+            className="hover:underline"
+            href="https://www.plant-for-the-planet.org/terms-and-conditions"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Terms & Conditions
+          </Link>
+          ·
           <Link
             className="hover:underline"
             href="https://www.plant-for-the-planet.org"

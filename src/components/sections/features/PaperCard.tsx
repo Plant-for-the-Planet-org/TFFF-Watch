@@ -30,7 +30,14 @@ export default function PaperCard(props: Props) {
             <div className="flex justify-between items-end">
               <div className="bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs max-h-10 flex gap-x-1 flex-wrap">
                 <p className="max-h-4 max-w-fit overflow-hidden">
-                  {formatPublisherForCardBadge(props.publisher!)}
+                  <span>
+                    <span className="hidden md:inline-block xl:hidden">
+                      {formatPublisherForCardBadge(props.publisher!, 16)}
+                    </span>
+                    <span className="md:hidden xl:inline-block">
+                      {formatPublisherForCardBadge(props.publisher!)}
+                    </span>
+                  </span>
                 </p>
                 <span> · </span>
                 <p className="whitespace-nowrap">

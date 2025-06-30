@@ -52,7 +52,6 @@ export default async function Page({ params }: PageProps) {
   if (
     !investingCountries.find((el) => el.toLowerCase() === country.toLowerCase())
   ) {
-    // notFound();
     const err = `We do not have investment data for ${country}. The data might not be available yet, or the country hasn’t been included in
 the current analysis.`;
     throw new PageError("Country data not found", {
