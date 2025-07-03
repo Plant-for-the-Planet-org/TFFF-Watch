@@ -24,8 +24,6 @@ export function WorldMapTFFFCard_() {
     <div
       className="absolute z-50"
       style={{
-        // left: 0,
-        // top: 0,
         left: point?.x,
         top: point?.y,
         transform: `translate(-50%, -102%)`,

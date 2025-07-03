@@ -59,7 +59,7 @@ export default function TFFFHero() {
         <Image
           height="700"
           width="1440"
-          className="w-full h-full md:max-h-[50vh] object-cover object-center"
+          className="w-full h-full h-100vh max-h-[64vh] object-cover object-center"
           src="/assets/tropical-rainforest.jpg"
           alt="Tropical Rainforest with Big Trees"
         />

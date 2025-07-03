@@ -40,13 +40,22 @@ export function TFFFWorldMapView() {
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
         <BetaChip />
-        <WorldMapHeaderContent />
         <Br />
+        <div className="relative z-10">
+          <div className="bg-primary-light">
+            <WorldMapHeaderContent />
+          </div>
+          <div className="bg-gradient-to-b from-primary-light to-transparent">
+            <Br />
+            <Br />
+          </div>
+        </div>
         <div className="grow relative flex flex-col">
-          <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
+          {/* <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain"> */}
+          <div className="mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
             <WorldMapView />
           </div>
-          <div className="md:absolute left-3 bottom-6 min-w-48 max-w-fit mx-auto">
+          <div className="md:absolute left-0 bottom-0 min-w-48 max-w-fit mx-auto">
             <Br cn="md:hidden" />
             <LegendForDegradedOrDeforested />
             <Br />

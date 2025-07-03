@@ -24,11 +24,11 @@ import * as turf from "@turf/turf";
 
 export const GEOFENCE = turf.polygon([
   [
-    [-180, 83.667],
-    [180, 83.667],
-    [180, -55.98],
-    [-180, -55.98],
-    [-180, 83.667],
+    [-180, 64],
+    [180, 64],
+    [180, -48],
+    [-180, -48],
+    [-180, 64],
   ],
 ]);
 
@@ -52,7 +52,7 @@ export default function WorldMapView() {
   const mapRef = useRef<MapRef>(null);
 
   const [viewState, setViewState] = useState({
-    latitude: 42,
+    latitude: 24,
     longitude: 0,
     zoom: 0.5,
   });
@@ -69,8 +69,6 @@ export default function WorldMapView() {
   }, [width]);
 
   const allCountries = useMemo(() => {
-    console.log("Regenerate Colors.");
-
     if (!forestCoverChangeDataByYear.length) {
       return { type: "FeatureCollection", features: [] };
     } else {
@@ -163,78 +161,63 @@ export default function WorldMapView() {
 
   return (
     <>
-      <div className="h-full w-full relative">
-        <Map
-          ref={mapRef}
-          {...viewState}
-          // zoom={zoom}
-          // latitude={latitude}
-          cursor="default"
-          // These mapStyles were the Optimization Problem all along
-          // mapStyle={{
-          //   version: 8,
-          //   glyphs:
-          //     "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-          //   sources: {},
-          //   layers: [
-          //     {
-          //       id: "background",
-          //       type: "background",
-          //       paint: { "background-color": "#F0FAF4" },
-          //     },
-          //   ],
-          // }}
-          // mapStyle="https://demotiles.maplibre.org/style.json"
-          keyboard={false}
-          scrollZoom={false}
-          dragPan={true}
-          dragRotate={false}
-          touchPitch={false}
-          touchZoomRotate={false}
-          doubleClickZoom={false}
-          interactive={true}
-          attributionControl={false}
-          renderWorldCopies={false}
-          onMove={onMove}
-          onClick={onClick}
-          onMouseMove={onClick}
-          onLoad={() => {
-            const map = mapRef.current?.getMap();
-            map?.addControl(
-              new maplibregl.AttributionControl({ compact: true })
-            );
-          }}
-        >
-          <Source
-            id="country"
-            type="geojson"
-            data={
-              allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
-            }
+      <div className="h-full w-full relative z-0">
+        <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
+          <Map
+            ref={mapRef}
+            {...viewState}
+            cursor="default"
+            keyboard={false}
+            scrollZoom={false}
+            dragPan={true}
+            dragRotate={false}
+            touchPitch={false}
+            touchZoomRotate={false}
+            doubleClickZoom={false}
+            interactive={true}
+            attributionControl={false}
+            renderWorldCopies={false}
+            onMove={onMove}
+            onClick={onClick}
+            onMouseMove={onClick}
+            onLoad={() => {
+              const map = mapRef.current?.getMap();
+              map?.addControl(
+                new maplibregl.AttributionControl({ compact: true })
+              );
+            }}
           >
-            <Layer
-              id="country-fill"
-              type="fill"
-              paint={{
-                "fill-color": ["get", "colorKey"],
-                "fill-outline-color": "#FFFFFF",
-              }}
-            />
-            <Layer
-              id="country-line"
-              type="line"
-              paint={{
-                "line-color": "#FFFFFF",
-                "line-width": 1,
-              }}
-            />
-          </Source>
-          <NavigationControl position="top-right" showCompass={false} />
-          {/* <AttributionControl compact={false} /> */}
-        </Map>
+            <Source
+              id="country"
+              type="geojson"
+              data={
+                allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
+              }
+            >
+              <Layer
+                id="country-fill"
+                type="fill"
+                paint={{
+                  "fill-color": ["get", "colorKey"],
+                  "fill-outline-color": "#FFFFFF",
+                }}
+              />
+              <Layer
+                id="country-line"
+                type="line"
+                paint={{
+                  "line-color": "#FFFFFF",
+                  "line-width": 1,
+                }}
+              />
+            </Source>
+            <NavigationControl position="bottom-right" showCompass={false} />
+            {/* <AttributionControl compact={false} /> */}
+          </Map>
+        </div>
         <WorldMapTFFFCard />
       </div>
-      <div className="absolute right-3 bottom-3">
+      <div className="absolute right-0 bottom-0">
         <button
           className="bg-white p-2 rounded-lg cursor-pointer"
           onClick={() => {

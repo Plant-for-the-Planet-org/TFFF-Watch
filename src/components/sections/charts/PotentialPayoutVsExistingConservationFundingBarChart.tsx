@@ -38,7 +38,7 @@ const ChartColors = {
   gray: "#BDBDBD",
 };
 
-const BAR_SIZE = 32;
+const BAR_SIZE = 48;
 const BAR_GAP_OFFSET = 16;
 const BAR_GAP = BAR_SIZE + BAR_GAP_OFFSET;
 
@@ -122,8 +122,7 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
       </div>
       <div className="hidden md:block">
         <BarChartDesktop
-          // chartHeight={(BAR_SIZE + BAR_GAP_OFFSET) * chartData.length}
-          chartHeight={(BAR_SIZE + BAR_GAP / 3) * chartData.length}
+          chartHeight={(BAR_SIZE + BAR_GAP_OFFSET) * chartData.length}
           chartData={chartData}
         />
       </div>
@@ -199,7 +198,7 @@ function CustomTick(props: CustomTickProps) {
   return (
     <g className="hidden md:block">
       <foreignObject x={0} y={_y} width={width} height={height}>
-        <div className="text-xs sm:text-sm h-full pr-2">
+        <div className="text-xs sm:text-sm h-full pr-2 flex flex-col justify-center">
           <div className="flex justify-end items-center gap-2">
             <p className="text-end">{data[index!].label}</p>
             <div className="shrink-0">
@@ -317,12 +316,16 @@ function BarChartDesktop({ chartHeight, chartData }: ChartComponentProps) {
 
   return (
     <ResponsiveContainer ref={containerRef} width="100%" height={chartHeight}>
+      {/* <pre>{JSON.stringify({ chartHeight }, null, 2)}</pre> */}
+
       <BarChart
         data={chartData}
         layout="vertical"
         barSize={BAR_SIZE}
         barGap={BAR_GAP_OFFSET}
-        margin={{ top: 48, right: 48 }}
+        // barSize={48}
+        // barGap={16}
+        // margin={{ top: 48, right: 48 }}
       >
         <YAxis
           width={(containerRef?.current?.clientWidth ?? 768) * (1 / 3)}

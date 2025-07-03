@@ -36,10 +36,16 @@ export default function CountryTFFFCard({
   if (!_data) return null;
 
   return (
-    <div className="w-3xs md:w-md p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5 rounding-xl bg-white text-xs sm:text-sm">
-      <div className="p-2 px-4 sm:p-0 flex gap-2 justify-between items-center flex-wrap rounded-t-lg bg-primary-light sm:bg-white">
-        <p className="flex gap-3.25 items-center">
-          <img className="w-3 h-2" alt={name} src={flagImgUrl} />
+    <div
+      className={twMerge(
+        "w-3xs md:w-md p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5 rounding-xl bg-white text-xs sm:text-sm",
+        CTA === false && "md:pb-0 lg:pb-0 xl:pb-0",
+        "z-20 shadow-custom"
+      )}
+    >
+      <div className="p-2 px-4 sm:px-2 md:p-0 flex gap-2 justify-between items-center flex-wrap rounded-t-lg bg-primary-light md:bg-white">
+        <p className="flex gap-2 items-center font-semibold">
+          <img className="w-4 h-3" alt={name} src={flagImgUrl} />
           {name} {year}
         </p>
         <p className="flex items-center gap-2 relative group cursor-default">
@@ -59,7 +65,7 @@ export default function CountryTFFFCard({
             requirements
           </span>
 
-          <div className="absolute bottom-full mb-2 w-72 hidden group-hover:block bg-white p-2 rounded shadow z-10 left-1/2 -translate-x-1/2">
+          <div className="absolute z-10 bottom-full mb-2 w-72 hidden group-hover:block bg-white p-2 rounded shadow left-1/2 -translate-x-1/2">
             <div className="text-xs">
               <MinimumCriteria
                 currentYear={year}
@@ -75,7 +81,7 @@ export default function CountryTFFFCard({
         </p>
       </div>
       <Br />
-      <div className="p-2 px-4 sm:p-0">
+      <div className="p-2 px-4 sm:px-2 md:p-0">
         <div className="flex justify-between items-center">
           <span>
             {/* Reward for <b>{data.intactForest.area} ha</b> intact forest */}
@@ -114,8 +120,11 @@ export default function CountryTFFFCard({
       <Br />
       <div
         className={twMerge(
-          "rounded-b-lg p-2 px-4 sm:p-0 md:-mx-3 lg:-mx-4 xl:-mx-5 md:p-3 lg:p-4 xl:p-5 xl:py-4",
-          _data.eligibility_combined ? "bg-primary-light" : "bg-danger-light"
+          "p-2 px-4 sm:px-2 md:p-3 md:-mx-3 lg:-mx-4 xl:-mx-5 lg:p-4 xl:p-5 xl:py-4",
+          _data.eligibility_combined ? "bg-primary-light" : "bg-danger-light",
+          CTA
+            ? "rounded-none"
+            : "rounded-b-xl md:rounded-b-2xl lg:rounded-b-3xl"
         )}
       >
         <p className="flex justify-between items-center">
