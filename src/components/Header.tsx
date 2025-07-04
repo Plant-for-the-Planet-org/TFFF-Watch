@@ -12,14 +12,16 @@ export default function Header() {
       <div className="website-container padding-x-3">
         <div className="flex justify-between items-center ">
           <Logo />
-          {/* <div className="hidden md:block">
+          <div className="hidden md:flex justify-center">
             <HeaderCountry />
-          </div> */}
+            <div className="w-[160px] lg:w-[192px]"></div>
+          </div>
           <div className="-mr-2 md:-mr-4">
             <HeaderMenu />
           </div>
         </div>
-        <div className="flex justify-center">
+        <Br />
+        <div className="flex justify-center md:hidden">
           <HeaderCountry />
         </div>
       </div>

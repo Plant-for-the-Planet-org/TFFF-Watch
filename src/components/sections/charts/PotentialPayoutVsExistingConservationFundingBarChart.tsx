@@ -278,7 +278,7 @@ function BarChartMobile({ chartHeight, chartData }: ChartComponentProps) {
         layout="vertical"
         barSize={BAR_SIZE}
         barGap={BAR_GAP}
-        margin={{ top: 48, right: 48 }}
+        margin={{ right: 48 }}
       >
         <XAxis type="number" dataKey="value" opacity={0} tickLine={false} />
         <Bar
@@ -325,7 +325,7 @@ function BarChartDesktop({ chartHeight, chartData }: ChartComponentProps) {
         barGap={BAR_GAP_OFFSET}
         // barSize={48}
         // barGap={16}
-        // margin={{ top: 48, right: 48 }}
+        margin={{ right: 48 }}
       >
         <YAxis
           width={(containerRef?.current?.clientWidth ?? 768) * (1 / 3)}

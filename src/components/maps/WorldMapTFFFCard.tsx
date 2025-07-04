@@ -26,7 +26,7 @@ export function WorldMapTFFFCard_() {
       style={{
         left: point?.x,
         top: point?.y,
-        transform: `translate(-50%, -102%)`,
+        transform: `translate(-20%, -120%)`,
       }}
     >
       <CountryTFFFCard

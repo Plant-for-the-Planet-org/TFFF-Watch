@@ -161,62 +161,61 @@ export default function WorldMapView() {
 
   return (
     <>
-      <div className="h-full w-full relative z-0">
-        <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
-          <Map
-            ref={mapRef}
-            {...viewState}
-            cursor="default"
-            keyboard={false}
-            scrollZoom={false}
-            dragPan={true}
-            dragRotate={false}
-            touchPitch={false}
-            touchZoomRotate={false}
-            doubleClickZoom={false}
-            interactive={true}
-            attributionControl={false}
-            renderWorldCopies={false}
-            onMove={onMove}
-            onClick={onClick}
-            onMouseMove={onClick}
-            onLoad={() => {
-              const map = mapRef.current?.getMap();
-              map?.addControl(
-                new maplibregl.AttributionControl({ compact: true })
-              );
-            }}
+      <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
+        <Map
+          ref={mapRef}
+          {...viewState}
+          cursor="default"
+          keyboard={false}
+          scrollZoom={false}
+          dragPan={true}
+          dragRotate={false}
+          touchPitch={false}
+          touchZoomRotate={false}
+          doubleClickZoom={false}
+          interactive={true}
+          attributionControl={false}
+          renderWorldCopies={false}
+          onMove={onMove}
+          onClick={onClick}
+          onMouseMove={onClick}
+          onLoad={() => {
+            const map = mapRef.current?.getMap();
+            map?.addControl(
+              new maplibregl.AttributionControl({ compact: true })
+            );
+          }}
+        >
+          <Source
+            id="country"
+            type="geojson"
+            data={
+              allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
+            }
           >
-            <Source
-              id="country"
-              type="geojson"
-              data={
-                allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
-              }
-            >
-              <Layer
-                id="country-fill"
-                type="fill"
-                paint={{
-                  "fill-color": ["get", "colorKey"],
-                  "fill-outline-color": "#FFFFFF",
-                }}
-              />
-              <Layer
-                id="country-line"
-                type="line"
-                paint={{
-                  "line-color": "#FFFFFF",
-                  "line-width": 1,
-                }}
-              />
-            </Source>
-            <NavigationControl position="bottom-right" showCompass={false} />
-            {/* <AttributionControl compact={false} /> */}
-          </Map>
-        </div>
-        <WorldMapTFFFCard />
+            <Layer
+              id="country-fill"
+              type="fill"
+              paint={{
+                "fill-color": ["get", "colorKey"],
+                "fill-outline-color": "#FFFFFF",
+              }}
+            />
+            <Layer
+              id="country-line"
+              type="line"
+              paint={{
+                "line-color": "#FFFFFF",
+                "line-width": 1,
+              }}
+            />
+          </Source>
+          <NavigationControl position="bottom-right" showCompass={false} />
+          {/* <AttributionControl compact={false} /> */}
+        </Map>
       </div>
+      <WorldMapTFFFCard />
+
       <div className="absolute right-0 bottom-0">
         <button
           className="bg-white p-2 rounded-lg cursor-pointer"

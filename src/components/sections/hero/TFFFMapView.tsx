@@ -129,7 +129,7 @@ function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
 export function BetaChip() {
   const mapVersion = env.mapVersion;
   return (
-    <div className="self-start bg-white text-primary text-xs py-0.5 px-2 rounded-full shadow-xl">
+    <div className="z-20 self-start bg-white text-primary text-xs py-0.5 px-2 rounded-full shadow-xl">
       {/* BETA */}
       Version {mapVersion}
     </div>
