@@ -12,11 +12,13 @@ import { twMerge } from "tailwind-merge";
 
 type Options = {
   countryData?: ForestCoverChange | null;
+  countrySlug?: string;
   CTA?: boolean;
 };
 
 export default function CountryTFFFCard({
   year = "2024",
+  countrySlug = "",
   name = "",
   flagImgUrl,
   CTA = false,
@@ -160,7 +162,8 @@ export default function CountryTFFFCard({
           <Br cn="hidden md:block" />
           <Button
             cn="min-w-32 rounded-t-none md:rounded-xl w-full"
-            href={`/${name}/${year}`}
+            // href={`/${name}/${year}`}
+            href={`/${countrySlug}/${year}`}
             type="link"
             external
           >

@@ -3,10 +3,10 @@ import ForestCoverChange from "@/components/sections/features/ForestCoverChange"
 import PotentialPayoutVsExistingConservationFunding from "@/components/sections/features/PotentialPayoutVsExistingConservationFunding";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
-import { getCountryDetailsBySlug } from "@/utils/country-helper";
+import { getCountryDetails } from "@/utils/country-helper";
 import { fetchForestCoverChangeData } from "@/utils/forestChange.store";
 import { Metadata } from "next";
-import { humanize } from "underscore.string";
+import { capitalize } from "underscore.string";
 
 export type PageParams = {
   country: string;
@@ -23,15 +23,15 @@ export async function generateMetadata({
   const { country } = await params;
 
   return {
-    title: `${humanize(country)} · TFFF Watch`,
-    description: `How much would ${humanize(country)} receive from the TFFF?`,
+    title: `${capitalize(country)} · TFFF Watch`,
+    description: `How much would ${capitalize(country)} receive from the TFFF?`,
   };
 }
 
 export default async function Page({ params }: PageProps) {
   const { country, year } = await params;
 
-  const details = getCountryDetailsBySlug(country);
+  const details = getCountryDetails(country);
 
   await fetchForestCoverChangeData(details.name);
 

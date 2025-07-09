@@ -52,6 +52,8 @@ export type InvestmentTrackerForCountry = {
 export type ForestCoverChange = {
   year: string;
   country: string;
+  "country-iso2": string;
+  "country-slug": string;
   intact_forest_ha: number;
   deforested_ha: number;
   degraded_forest_ha: number;

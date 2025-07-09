@@ -47,7 +47,7 @@ export default function WorldMapView() {
   const forestCoverChangeDataByYear = useForestCoverChangeData(
     (state) => state.forestCoverChangeDataByYear
   );
-  const { setPoint, setCountry, setIsTFFF } = useWorldMap();
+  const { setPoint, setCountry, setCountrySlug, setIsTFFF } = useWorldMap();
 
   const mapRef = useRef<MapRef>(null);
 
@@ -72,14 +72,19 @@ export default function WorldMapView() {
     if (!forestCoverChangeDataByYear.length) {
       return { type: "FeatureCollection", features: [] };
     } else {
-      // console.log({ forestCoverChangeData });
-      const forestCoverChangeAll = transformAllForestCoverChangeData(
+      const transformedForestCoverChangeAll = transformAllForestCoverChangeData(
         forestCoverChangeDataByYear
       );
-      // console.log("Modify", forestCoverChangeAll);
+      // console.log(transformedForestCoverChangeAll);
+
       countries.features.forEach((country) => {
-        const countryName = country.properties.name_long;
-        const changeValue = forestCoverChangeAll[countryName];
+        // const countryName = country.properties.name_long;
+        // const changeValue = forestCoverChangeAll[countryName];
+        const countyISO2 = country.properties.iso_a2;
+        const countySlug =
+          transformedForestCoverChangeAll[countyISO2]?.countrySlug ?? "";
+        const changeValue =
+          transformedForestCoverChangeAll[countyISO2]?.forestChange ?? 0;
 
         let colorKey;
 
@@ -125,6 +130,11 @@ export default function WorldMapView() {
         (
           country.properties as typeof country.properties & { colorKey: string }
         ).colorKey = colorKey;
+        (
+          country.properties as typeof country.properties & {
+            countrySlug: string;
+          }
+        ).countrySlug = countySlug;
       });
 
       return countries;
@@ -149,8 +159,10 @@ export default function WorldMapView() {
     });
     const { point } = event;
     const country = features?.[0]?.properties?.name_long;
+    const countrySlug = features?.[0]?.properties?.countrySlug;
     setPoint(point);
     setCountry(country);
+    setCountrySlug(countrySlug);
 
     const isTFFF = forestCoverChangeDataByYear.find(
       (el) => el.country === country

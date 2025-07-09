@@ -23,7 +23,7 @@ export default function CookieConsentBanner() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 padding-3">
-      <div className="max-w-sm bg-background rounding-xl outer-padding-3">
+      <div className="max-w-sm bg-background rounding-xl outer-padding-3 shadow-custom">
         <div className="text-center">
           <div className="flex justify-center">
             <Image

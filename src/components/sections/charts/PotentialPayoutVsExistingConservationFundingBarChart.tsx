@@ -41,6 +41,7 @@ const ChartColors = {
 const BAR_SIZE = 48;
 const BAR_GAP_OFFSET = 16;
 const BAR_GAP = BAR_SIZE + BAR_GAP_OFFSET;
+const CHART_MARGIN = 16;
 
 export default function PotentialPayoutVsExistingConservationFundingBarChart() {
   const params: PageParams = useParams();
@@ -122,7 +123,9 @@ export default function PotentialPayoutVsExistingConservationFundingBarChart() {
       </div>
       <div className="hidden md:block">
         <BarChartDesktop
-          chartHeight={(BAR_SIZE + BAR_GAP_OFFSET) * chartData.length}
+          chartHeight={
+            CHART_MARGIN + (BAR_SIZE + BAR_GAP_OFFSET) * chartData.length
+          }
           chartData={chartData}
         />
       </div>
@@ -198,7 +201,7 @@ function CustomTick(props: CustomTickProps) {
   return (
     <g className="hidden md:block">
       <foreignObject x={0} y={_y} width={width} height={height}>
-        <div className="text-xs sm:text-sm h-full pr-2 flex flex-col justify-center">
+        <div className="text-xs h-full pr-2 flex flex-col justify-center">
           <div className="flex justify-end items-center gap-2">
             <p className="text-end">{data[index!].label}</p>
             <div className="shrink-0">
@@ -278,7 +281,7 @@ function BarChartMobile({ chartHeight, chartData }: ChartComponentProps) {
         layout="vertical"
         barSize={BAR_SIZE}
         barGap={BAR_GAP}
-        margin={{ right: 48 }}
+        margin={{ top: 48, right: 48 }}
       >
         <XAxis type="number" dataKey="value" opacity={0} tickLine={false} />
         <Bar
@@ -301,6 +304,7 @@ function BarChartMobile({ chartHeight, chartData }: ChartComponentProps) {
             )}
           />
           <LabelList
+            fontSize={14}
             dataKey={"value"}
             position="right"
             formatter={toReadableAmount}
@@ -323,8 +327,6 @@ function BarChartDesktop({ chartHeight, chartData }: ChartComponentProps) {
         layout="vertical"
         barSize={BAR_SIZE}
         barGap={BAR_GAP_OFFSET}
-        // barSize={48}
-        // barGap={16}
         margin={{ right: 48 }}
       >
         <YAxis
@@ -341,6 +343,7 @@ function BarChartDesktop({ chartHeight, chartData }: ChartComponentProps) {
         <XAxis type="number" dataKey="value" opacity={0} tickLine={false} />
         <Bar dataKey="value">
           <LabelList
+            fontSize={14}
             dataKey={"value"}
             position="right"
             formatter={toReadableAmount}

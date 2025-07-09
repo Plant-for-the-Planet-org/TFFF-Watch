@@ -5,12 +5,14 @@ type WorldMapStore = {
   isTFFF: boolean;
   year: string;
   country: string;
+  countrySlug: string;
   latitude: number;
   longitude: number;
   point: { x: number; y: number };
   setIsTFFF: (isTFFF: boolean) => void;
   setYear: (year: string) => void;
   setCountry: (country: string) => void;
+  setCountrySlug: (countrySlug: string) => void;
   setCoordinates: (coords: { lat: number; lng: number }) => void;
   setPoint: (point: { x: number; y: number }) => void;
 };
@@ -19,12 +21,14 @@ export const useWorldMap = create<WorldMapStore>((set) => ({
   isTFFF: false,
   year: "",
   country: "",
+  countrySlug: "",
   latitude: 0,
   longitude: 0,
   point: { x: 0, y: 0 },
   setIsTFFF: (isTFFF) => set({ isTFFF }),
   setYear: (year) => set({ year }),
   setCountry: (country) => set({ country }),
+  setCountrySlug: (countrySlug) => set({ countrySlug }),
   setCoordinates: ({ lat, lng }) => set({ latitude: lat, longitude: lng }),
   setPoint: (point) => set({ point }),
 }));

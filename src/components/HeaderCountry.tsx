@@ -1,6 +1,6 @@
 "use client";
 
-import { getCountryDetails } from "@/utils/country-helper";
+import { getCountryDetailsBySlug } from "@/utils/country-helper";
 import { useParams, usePathname } from "next/navigation";
 
 export type PageParams = {
@@ -13,7 +13,7 @@ export default function HeaderCountry() {
   const params: PageParams = useParams();
   const { country } = params;
 
-  const details = getCountryDetails(country);
+  const details = getCountryDetailsBySlug(country);
 
   if (pathname.includes("/investment-tracker")) return null;
   if (!country) return null;

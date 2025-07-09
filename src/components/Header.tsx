@@ -20,8 +20,8 @@ export default function Header() {
             <HeaderMenu />
           </div>
         </div>
-        <Br />
-        <div className="flex justify-center md:hidden">
+        <div className="flex flex-col justify-center items-center md:hidden">
+          <Br />
           <HeaderCountry />
         </div>
       </div>

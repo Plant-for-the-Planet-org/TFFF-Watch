@@ -8,7 +8,8 @@ import { getCountryDetails } from "@/utils/country-helper";
 import CountryTFFFCard from "./CountryTFFFCard";
 
 export function WorldMapTFFFCard_() {
-  const { isTFFF, year, country, point } = useWorldMap();
+  const { isTFFF, year, country, countrySlug, point } = useWorldMap();
+
   // const forestCoverChangeData = useForestCoverChangeData(
   //   (state) => state.forestCoverChangeData
   // );
@@ -31,6 +32,7 @@ export function WorldMapTFFFCard_() {
     >
       <CountryTFFFCard
         year={year}
+        countrySlug={countrySlug}
         iso2={details.iso2}
         name={details.name}
         flagImgUrl={details.flagImgUrl}
