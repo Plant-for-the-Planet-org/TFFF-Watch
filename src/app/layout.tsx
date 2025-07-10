@@ -1,13 +1,12 @@
+import CookieConsentBanner from "@/components/CookieConsentBanner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Br from "@/components/ui/Br";
+import { env } from "@/utils/env";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
-import "./globals.css";
-import { env } from "@/utils/env";
 import Script from "next/script";
-import CookieConsentBanner from "@/components/CookieConsentBanner";
-import ThirdPartyScripts from "@/components/ThirdPartyScripts";
+import "./globals.css";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -42,8 +41,12 @@ export default function RootLayout({
       )}
 
       <body className={`${openSans.variable} antialiased`}>
+        <Script
+          defer
+          src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.9.1/dist/cookieconsent.js"
+        ></Script>
         <CookieConsentBanner />
-        <ThirdPartyScripts />
+        {/* <ThirdPartyScripts /> */}
         <Header />
         <div className="website-container">
           <Br />
