@@ -59,6 +59,9 @@
 @import "../styles/dynamics.css";
 @import "../styles/overwrites.css";
 
+/* 3rd pary overwrites */
+/* @import "../styles/cookieconsent.css"; */
+
 body {
   font-family: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",

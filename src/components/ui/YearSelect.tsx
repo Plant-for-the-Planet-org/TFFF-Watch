@@ -81,7 +81,7 @@ export default function YearSelect({ initialValue, onChange }: Props) {
       </MenuButton>
       <MenuItems
         anchor="bottom"
-        className="my-2 z-[11] bg-white px-2 border border-base-gray divide-base-gray divide-y outline-none rounding-lg shadow-custom"
+        className="my-2 z-30 bg-white px-2 border border-base-gray divide-base-gray divide-y outline-none rounding-lg shadow-custom"
       >
         {options.map((el) => (
           <MenuItem key={el.id} as="div">

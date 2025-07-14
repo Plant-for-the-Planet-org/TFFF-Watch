@@ -8,9 +8,6 @@ export default function NewsLetter() {
         src="https://plansfortheplanet.substack.com/embed"
         width="100%"
         height="320"
-        // className="outer-rounding outer-padding-3"
-        // style={{"border:1px solid #EEE; background:white;"}}
-        // style={{ background: "transparent" }}
         frameBorder="0"
         scrolling="no"
       ></iframe>
