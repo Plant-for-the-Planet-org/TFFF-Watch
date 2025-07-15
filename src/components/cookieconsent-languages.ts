@@ -196,10 +196,33 @@ export const en = {
               description:
                 "Helps Cloudflare distinguish between bots and humans to protect our site from automated abuse. Does not store personal data.",
             },
+            {
+              service: "Plans for the Planet Substack",
+              name: "cookie_storage_key",
+              domain: ".substack.com / .cloudflare.com",
+              description:
+                "Used by Substack to maintain internal session/context for the embed.",
+            },
+            {
+              service:
+                "Maintain technical performance - Plans for the Planet Substack",
+              name: "AWSALBTG",
+              domain: ".substack.com",
+              description:
+                "AWS Application Load Balancer cookies for session stickiness across servers.",
+            },
+            {
+              service:
+                "Maintain technical performance - Plans for the Planet Substack",
+              name: "AWSALBTGCORS",
+              domain: ".substack.com",
+              description:
+                "AWS Application Load Balancer cookies for session stickiness across servers.",
+            },
           ],
         },
       },
-      /* {
+      {
         title: "Analytics cookies",
         description:
           "Analytics cookies help us track how users visit our website and bugs in the website, so we can make sure you get the best experience. We use services like google analytics and Microsoft Clarity for this purpose.",
@@ -212,7 +235,7 @@ export const en = {
             service: "Service",
           },
           body: [
-            {
+            /*  {
               service: "Google",
               name: "_ga",
               domain: ".plant-for-the-planet.org",
@@ -245,10 +268,31 @@ export const en = {
               domain: ".plant-for-the-planet.org",
               description:
                 "Only set when a user arrives at the website from an Ad, and the destination URL includes the click identifier fbclid.",
+            }, */
+            {
+              service: "Drive A/B testing",
+              name: "ab_experiment_sampled",
+              domain: ".substack.com",
+              description:
+                "Flags whether the user is included in an experiment/sample group for content variations.",
+            },
+            {
+              service: "Drive A/B testing",
+              name: "ab_testing_id",
+              domain: ".substack.com",
+              description:
+                "Unique ID for A/B tests to track which variant a user saw.",
+            },
+            {
+              service: "Collect anonymous interaction analytics",
+              name: "ajs_anonymous_id",
+              domain: ".substack.com",
+              description:
+                "Segment.io analytics ID to anonymously identify sessions.",
             },
           ],
         },
-      }, */
+      },
       /*  {
         title: "Marketing cookies",
         description:

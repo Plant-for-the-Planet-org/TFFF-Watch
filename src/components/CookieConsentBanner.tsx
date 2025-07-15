@@ -91,7 +91,7 @@ export default function CookieConsentBanner() {
     CookieConsent.run({
       revision: 1,
       cookie: {
-        name: "cc_cookie",
+        name: "cookie-consent",
         domain: ".plant-for-the-planet.org",
         path: "/",
         sameSite: "Lax",
