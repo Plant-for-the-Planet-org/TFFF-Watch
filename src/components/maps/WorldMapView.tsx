@@ -43,7 +43,6 @@ export type MapCountryClickEvent = {
 
 export default function WorldMapView() {
   const { width } = useWindowSize();
-  // const { forestCoverChangeData } = useForestCoverChangeData();
   const forestCoverChangeDataByYear = useForestCoverChangeData(
     (state) => state.forestCoverChangeDataByYear
   );
@@ -75,11 +74,9 @@ export default function WorldMapView() {
       const transformedForestCoverChangeAll = transformAllForestCoverChangeData(
         forestCoverChangeDataByYear
       );
-      // console.log(transformedForestCoverChangeAll);
 
-      countries.features.forEach((country) => {
-        // const countryName = country.properties.name_long;
-        // const changeValue = forestCoverChangeAll[countryName];
+      // Create a new array of features with updated properties
+      const updatedFeatures = countries.features.map((country) => {
         const countyISO2 = country.properties.iso_a2;
         const countySlug =
           transformedForestCoverChangeAll[countyISO2]?.countrySlug ?? "";
@@ -87,7 +84,6 @@ export default function WorldMapView() {
           transformedForestCoverChangeAll[countyISO2]?.forestChange ?? 0;
 
         let colorKey;
-
         switch (true) {
           case changeValue === undefined || isNaN(changeValue):
             colorKey = "#E1EBE5";
@@ -126,18 +122,21 @@ export default function WorldMapView() {
             colorKey = "#E1EBE5";
         }
 
-        // country.properties.colorKey = colorKey;
-        (
-          country.properties as typeof country.properties & { colorKey: string }
-        ).colorKey = colorKey;
-        (
-          country.properties as typeof country.properties & {
-            countrySlug: string;
-          }
-        ).countrySlug = countySlug;
+        // Return a new feature object with updated properties
+        return {
+          ...country,
+          properties: {
+            ...country.properties,
+            colorKey,
+            countrySlug: countySlug,
+          },
+        };
       });
 
-      return countries;
+      return {
+        ...countries,
+        features: updatedFeatures,
+      };
     }
   }, [forestCoverChangeDataByYear]);
 
@@ -201,16 +200,13 @@ export default function WorldMapView() {
           <Source
             id="country"
             type="geojson"
-            data={
-              allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
-            }
+            data={allCountries as GeoJSON<Geometry, GeoJsonProperties>}
           >
             <Layer
               id="country-fill"
               type="fill"
               paint={{
                 "fill-color": ["get", "colorKey"],
-                "fill-outline-color": "#FFFFFF",
               }}
             />
             <Layer
