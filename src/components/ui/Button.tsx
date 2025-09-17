@@ -25,8 +25,8 @@ export function Button({
       <span>
         {external && (
           <Image
-            width={16}
-            height={16}
+            width={12}
+            height={12}
             src="/assets/ui/Arrow.svg"
             alt="External Arror"
           />

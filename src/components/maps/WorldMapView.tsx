@@ -46,7 +46,8 @@ export default function WorldMapView() {
   const forestCoverChangeDataByYear = useForestCoverChangeData(
     (state) => state.forestCoverChangeDataByYear
   );
-  const { setPoint, setCountry, setCountrySlug, setIsTFFF } = useWorldMap();
+  const { setPoint, setCountry, setCountrySlug, setCountryISO2, setIsTFFF } =
+    useWorldMap();
 
   const mapRef = useRef<MapRef>(null);
 
@@ -74,6 +75,7 @@ export default function WorldMapView() {
       const transformedForestCoverChangeAll = transformAllForestCoverChangeData(
         forestCoverChangeDataByYear
       );
+      // console.log({ transformedForestCoverChangeAll });
 
       // Create a new array of features with updated properties
       const updatedFeatures = countries.features.map((country) => {
@@ -159,13 +161,17 @@ export default function WorldMapView() {
     const { point } = event;
     const country = features?.[0]?.properties?.name_long;
     const countrySlug = features?.[0]?.properties?.countrySlug;
+    const countryISO2 = features?.[0]?.properties?.["iso_a2"];
+
     setPoint(point);
     setCountry(country);
     setCountrySlug(countrySlug);
+    setCountryISO2(countryISO2);
 
     const isTFFF = forestCoverChangeDataByYear.find(
-      (el) => el.country === country
+      (el) => el["country-iso2"] === countryISO2 || el.country === country
     );
+    console.log({ isTFFF });
     if (isTFFF) setIsTFFF(true);
     else setIsTFFF(false);
   };
@@ -189,7 +195,7 @@ export default function WorldMapView() {
           renderWorldCopies={false}
           onMove={onMove}
           onClick={onClick}
-          onMouseMove={onClick}
+          // onMouseMove={onClick}
           onLoad={() => {
             const map = mapRef.current?.getMap();
             map?.addControl(

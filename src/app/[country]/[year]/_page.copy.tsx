@@ -31,7 +31,7 @@ export async function generateMetadata({
 export default async function Page({ params }: PageProps) {
   const { country, year } = await params;
 
-  const details = getCountryDetails(country);
+  const details = getCountryDetails({ country });
 
   await fetchForestCoverChangeData(details.name);
 

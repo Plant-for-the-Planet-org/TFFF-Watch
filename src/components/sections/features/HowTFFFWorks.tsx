@@ -6,8 +6,9 @@ import HowTFFFWorksContent from "./HowTFFFWorksContent";
 export default function HowTFFFWorks() {
   return (
     <div className="bg-primary-light rounding-xl padding-3">
-      <Br />
-      <div className="text-center">
+      <Br cn="hidden lg:block" />
+
+      <div className="text-center extra-padding-x-4">
         <h2 className="font-bold typo-h2">
           How the{" "}
           <span className="text-primary">Tropical Forest Forever Facility</span>{" "}
@@ -29,8 +30,8 @@ export default function HowTFFFWorks() {
           annual payments for forest conservation.
         </p>
       </div>
-
       <Br />
+
       <HowTFFFWorksFlowChart />
       <div id="recipients-from-tfff"></div>
       <Br />
@@ -143,8 +144,8 @@ export default function HowTFFFWorks() {
           </div>
         </div>
       </div>
-
       <Br />
+
       <Br />
       <Br />
       <HowTFFFWorksContent />

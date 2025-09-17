@@ -32,6 +32,7 @@ export default function CountryTFFFCard({
     () =>
       countryData ||
       forestCoverChangeDataByCountry.find((el) => +el.year === +year)!,
+
     [countryData, year, forestCoverChangeDataByCountry]
   );
 

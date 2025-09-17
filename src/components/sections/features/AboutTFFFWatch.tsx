@@ -52,6 +52,26 @@ export default function AboutTFFFWatch() {
         <Br />
         <Hr />
         <Br />
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="shrink">
+            <h2 className="font-bold typo-h2">Cautionary Note</h2>
+            <Br />
+            <div className="typo-p">
+              <p>
+                Deforestation and degradation areas are highly sensitive to
+                small changes in methodology. Since the monitoring rules as set
+                out in Concept Note 2.0 do not specify data sources or lack key
+                details, we needed to make certain assumptions (see methodology
+                section) for this model. The methodology has not (yet) been
+                peer-reviewed. We intend to update our model as more information
+                becomes available.
+              </p>
+            </div>
+          </div>
+        </div>
+        <Br />
+        <Hr />
+        <Br />
         <div>
           <h2 className="font-bold typo-h2">Analysis Methodology</h2>
           <Br />
@@ -77,6 +97,14 @@ export default function AboutTFFFWatch() {
               sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
           </div>
+          <Br />
+          <Button
+            href="mailto:pakhi.das@plant-for-the-planet.org"
+            type="link"
+            external
+          >
+            Detailed Methodology
+          </Button>
         </div>
         <Br />
         <Hr />

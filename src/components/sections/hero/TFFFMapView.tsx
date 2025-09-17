@@ -32,9 +32,7 @@ export function TFFFWorldMapView() {
   }, []);
 
   useEffect(() => {
-    console.log(year);
     const _yearWise = forestCoverChangeData.filter((el) => el.year == year);
-    console.log(_yearWise);
     setForestCoverChangeDataByYear(_yearWise);
   }, [forestCoverChangeData, year, setForestCoverChangeDataByYear]);
 

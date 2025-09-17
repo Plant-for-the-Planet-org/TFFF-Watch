@@ -46,7 +46,7 @@ const CHART_MARGIN = 16;
 export default function PotentialPayoutVsExistingConservationFundingBarChart() {
   const params: PageParams = useParams();
   const { country, year } = params;
-  const details = getCountryDetails(country);
+  const details = getCountryDetails({ country });
   const forestCiverChangeDataByCountry = useForestCoverChangeData(
     (state) => state.forestCoverChangeDataByCountry
   );

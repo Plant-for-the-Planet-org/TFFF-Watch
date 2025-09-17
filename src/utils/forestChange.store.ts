@@ -35,7 +35,7 @@ export async function fetchForestCoverChangeDataV2({
   const query: { [key: string]: string } = {};
 
   if (country) {
-    const { iso2 } = getCountryDetails(country);
+    const { iso2 } = getCountryDetails({ country });
     query["country-iso2"] = iso2;
   }
 
@@ -48,7 +48,6 @@ export async function fetchForestCoverChangeDataV2({
     });
 
     if (country && year) {
-      console.log("Impl .setForestCoverChangeDataByCountryByYear required.");
     } else if (country) {
       _results.sort((a, b) => +a.year - +b.year);
       useForestCoverChangeData

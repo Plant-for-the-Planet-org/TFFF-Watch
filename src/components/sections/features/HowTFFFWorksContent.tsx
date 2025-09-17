@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function HowTFFFWorksContent() {
   return (
-    <div className="">
+    <div className="extra-padding-x-4">
       <div>
         <h2 className="font-bold typo-h2 flex items-center gap-2">
           <Image

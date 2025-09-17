@@ -8,7 +8,7 @@ import AnnualPayoutAreaChart from "../charts/AnnualPayoutAreaChart";
 
 export default function AnnualPayout() {
   const { country }: PageParams = useParams();
-  const details = getCountryDetails(country);
+  const details = getCountryDetails({ country });
 
   return (
     <div className="border border-base-gray rounding-xl padding-3">

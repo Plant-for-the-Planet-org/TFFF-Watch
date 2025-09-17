@@ -17,7 +17,8 @@ export function WorldMapTFFFCard_() {
     (state) => state.forestCoverChangeDataByYear
   );
 
-  const details = getCountryDetails(country);
+  const details = getCountryDetails({ country: country, slug: countrySlug });
+  // console.log({ details });
 
   if (!country) return null;
   if (!isTFFF) return null;
@@ -38,7 +39,7 @@ export function WorldMapTFFFCard_() {
         flagImgUrl={details.flagImgUrl}
         CTA={true}
         countryData={forestCoverChangeDataByYear.find(
-          (el) => el.country === country
+          (el) => el["country-iso2"] === details.iso2
         )}
       />
       {/* <pre>
