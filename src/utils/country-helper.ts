@@ -80,7 +80,8 @@ export function transformAllForestCoverChangeData(data: ForestCoverChange[]) {
     const countrySlug = row["country-slug"];
     const percDef = row.percentage_deforested || 0;
     const percDeg = row.percentage_degraded || 0;
-    acc[countryISO2] = { countrySlug, forestChange: (percDef + percDeg) * 100 };
+    // acc[countryISO2] = { countrySlug, forestChange: (percDef + percDeg) * 100 };
+    acc[countryISO2] = { countrySlug, forestChange: percDef + percDeg };
     return acc;
   }, {});
 }

@@ -48,10 +48,10 @@ export default function RootLayout({
         <CookieConsentBanner />
         {/* <ThirdPartyScripts /> */}
         <Header />
+        <Br />
+        {children}
+        <Br />
         <div className="website-container">
-          <Br />
-          {children}
-          <Br />
           <Footer />
         </div>
       </body>

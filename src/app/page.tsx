@@ -14,18 +14,20 @@ export default function Home() {
   return (
     <div>
       <TFFFHero />
-      <Br />
-      <TFFFWorldMapView />
-      <Br />
-      <InvestmentTracker />
-      <Br />
-      <InfoGrid />
-      <Br />
-      <RecentNews />
-      <Br />
-      <RecentPolicyPapersComentary />
-      <Br />
-      <NewsLetter />
+      <div className="website-container">
+        <Br />
+        <TFFFWorldMapView />
+        <Br />
+        <InvestmentTracker />
+        <Br />
+        <InfoGrid />
+        <Br />
+        <RecentNews />
+        <Br />
+        <RecentPolicyPapersComentary />
+        <Br />
+        <NewsLetter />
+      </div>
     </div>
   );
 }
