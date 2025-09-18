@@ -15,9 +15,11 @@ const investingCountries = [
   "France",
   "UK",
   "UAE",
-  "Netherlands",
-  "Singapore",
+  // "Netherlands",
+  // "Singapore",
   "EU",
+  "Brazil",
+  "China",
   "Others",
 ];
 

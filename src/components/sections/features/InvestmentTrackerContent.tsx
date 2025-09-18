@@ -1,6 +1,10 @@
 import Br from "@/components/ui/Br";
 import Hr from "@/components/ui/Hr";
-import { extractLists, serializePersons } from "@/utils/content-helper";
+import {
+  extractLists,
+  serializeEndorsements,
+  serializePersons,
+} from "@/utils/content-helper";
 import { formatDateAgo } from "@/utils/datetime-helper";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import Image from "next/image";
@@ -59,12 +63,7 @@ export default function InvestmentTrackerContent({
           </h2>
           <Br />
           <div className="typo-p">
-            <p>
-              {/* Key leaders in Germany have participated in TFFF meetings and
-              expressed support for the project. However, no pledge has been
-              made and no pledge amount has been discussed publicly. */}
-              {status}
-            </p>
+            <p>{status}</p>
           </div>
         </div>
         <Br />
@@ -82,7 +81,6 @@ export default function InvestmentTrackerContent({
           </h2>
           <Br />
           <div className="typo-p">
-            {/* <p>{responsibile_government_office}</p> */}
             {serializePersons(responsibile_government_office!).map(
               (el, key) => (
                 <div key={key}>
@@ -117,35 +115,6 @@ export default function InvestmentTrackerContent({
                 <Br />
               </Fragment>
             ))}
-            {/* <p>{how_an_investment_could_work}</p> */}
-            {/* <p>
-              Two mechanisms are available through with a German TFFF investment
-              could be structured.
-            </p>
-            <Br />
-            <b>Option 1</b>
-            <Br />
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <Br />
-            <b>Option 2</b>
-            <Br />
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p> */}
           </div>
         </div>
         <Br />
@@ -164,32 +133,18 @@ export default function InvestmentTrackerContent({
           <Br />
           <div className="typo-p">
             <div>
-              <p>{endorsements}</p>
+              {serializeEndorsements(endorsements!).map((el, key) => (
+                <div key={key}>
+                  <p>{el.statement}</p>
+                  {el?.name && (
+                    <p>
+                      <b>- {el.name}</b>,{el.position}
+                    </p>
+                  )}
+                  <Br />
+                </div>
+              ))}
             </div>
-            {/* {endorsements!.split("\n- ").map((el, key) => (
-              <Fragment key={key}>
-                <p>{el}</p>
-                <Br />
-              </Fragment>
-            ))} */}
-            {/* <div>
-              <b>22 April 2025</b>
-              <p>...</p>
-              <p>
-                <b>Dirk Meyer</b>, Abteilungsleiter Globale Gesundheit,
-                Wirtschaft, Handel und ländliche Entwicklung im
-                Bundesministerium für wirtschaftliche Zusammenarbeit und
-                Entwicklung (BMZ)
-              </p>
-            </div>
-            <div>
-              <b>10 Nov 2024</b>
-              <p>...</p>
-              <p>
-                Svenja Schulze, Bundesministerin für wirtschaftliche
-                Zusammenarbeit und Entwicklung (BMZ)
-              </p>
-            </div> */}
           </div>
         </div>
         <Br />
@@ -207,15 +162,12 @@ export default function InvestmentTrackerContent({
           </h2>
           <Br />
           <div className="typo-p">
-            {/* <div>
-              <p>{CSOs}</p>
-            </div> */}
             {serializePersons(CSOs!).map((el, key) => (
               <div key={key}>
                 <p>
-                  <b>{el.name}</b> · {el.organization}
+                  <b>{el?.name}</b> · {el?.organization}
                 </p>
-                <p>{el.email}</p>
+                <p>{el?.email}</p>
                 <Br />
               </div>
             ))}
