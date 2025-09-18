@@ -19,25 +19,25 @@ export default function HowTFFFWorksContent() {
         <div className="typo-p">
           <p>
             First introduced at COP28, the TFFF proposes raising $125 billion in
-            capital. The fund’s core objective is to reward countries that are
-            already maintaining or reducing deforestation rates but require
-            ongoing financial support to continue doing so. Although more than
-            140 countries pledged at COP26 in Glasgow to end deforestation by
-            2030, current deforestation rates show that we are not on track to
-            meet this goal. The TFFF seeks to address this shortfall by offering
-            a long-term, performance-based funding model that rewards forest
-            conservation.
+            capital. The fund’s core objective is to reward tropical forest
+            countries that are already maintaining or reducing deforestation
+            rates but require ongoing financial support to continue doing so.
+            Although more than 140 countries pledged at COP26 in Glasgow to end
+            deforestation by 2030, current deforestation rates show that we are
+            not on track to meet this goal. The TFFF seeks to address this
+            shortfall by offering a long-term, performance-based funding model
+            that rewards forest conservation.
           </p>
           <Br />
           <p>
             Under the proposed model, tropical forest countries can receive
             annual payments of $4 per hectare of preserved forest. However,
-            payments are subject to deductions: 
+            payments are subject to deductions:
           </p>
           <Br />
           <ul className="text-xs list-disc ml-4.5">
-            <li>$400-$800 are deducted per hectare deforested</li>
-            <li>$100 per hectare degraded.</li>
+            <li>$400-$800 are deducted per hectare deforested.</li>
+            <li>$140 per hectare degraded.</li>
           </ul>
         </div>
       </div>
@@ -151,16 +151,13 @@ export default function HowTFFFWorksContent() {
         <Br />
         <div className="typo-p">
           <p>
-            The TFFF will focus on climate and sustainability-linked investments
-            in countries that qualify for Official Development Assistance (ODA),
-            such as green, blue, and sustainability bonds.. This supports
-            alignment with global climate finance goals like the New Collective
-            Quantified Goal (NCQG). If sufficient ODA-eligible investments are
-            not available, the TFIF will invest in other sovereign and corporate
-            debt, excluding those on a pre-agreed exclusion list. Up to 25% of
-            the fund may be allocated to fixed-income instruments issued by
-            non-ODA-eligible countries, ensuring some flexibility in portfolio
-            construction while retaining its developmental focus.
+            TFIF proposes to adopt an investment strategy that primarily seeks
+            climate and sustainability-related investments in ODA-eligible
+            countries (e.g., green, blue, or sustainable bonds) to qualify under
+            NCQG criteria, secondarily prioritizes ODA-eligible vanilla
+            sovereign debt excluding items on a negative exclusion list, and may
+            also invest in instruments issued by non-ODA eligible countries and
+            developed market economies.
           </p>
         </div>
       </div>

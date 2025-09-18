@@ -8,6 +8,7 @@ export default function Footer() {
         <div className="flex justify-center gap-2 items-center">
           <span>Built by</span>
           <Link
+            className="flex items-center gap-2 group"
             href="https://www.plant-for-the-planet.org"
             target="_blank"
             rel="noreferrer"
@@ -18,6 +19,7 @@ export default function Footer() {
               src="/assets/pftp.png"
               alt="Plant for the Planet Foundation"
             />
+            <span className="group-hover:underline">Plant for the Planet</span>
           </Link>
           {/* <span>In partnership with</span>
           <span>

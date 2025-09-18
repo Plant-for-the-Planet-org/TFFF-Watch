@@ -60,7 +60,7 @@ export default function AboutTFFFWatch() {
               <p>
                 Deforestation and degradation areas are highly sensitive to
                 small changes in methodology. Since the monitoring rules as set
-                out in Concept Note 2.0 do not specify data sources or lack key
+                out in Concept Note 3.0 do not specify data sources or lack key
                 details, we needed to make certain assumptions (see methodology
                 section) for this model. The methodology has not (yet) been
                 peer-reviewed. We intend to update our model as more information

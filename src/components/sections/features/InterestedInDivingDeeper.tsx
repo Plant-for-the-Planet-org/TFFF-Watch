@@ -12,11 +12,11 @@ export default function InterestedInDivingDeeper() {
           <div className="flex flex-col md:flex-row gap-3 flex-wrap items-center">
             <Button
               cn="bg-theme-text"
-              href="https://tfff.earth/wp-content/uploads/2025/04/2025-02-24-TFFF-Full-Concept-Note-2.0-Public.pdf"
+              href="https://tfff.earth/wp-content/uploads/2025/08/TFFF-Concept-Note-3.0-202508-FINAL.pdf"
               type="link"
               external
             >
-              TFFF Concept Note 2.0
+              TFFF Concept Note 3.0
             </Button>
             <Button
               cn="bg-theme-base hover:bg-theme-base/75"
