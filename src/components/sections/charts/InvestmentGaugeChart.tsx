@@ -1,91 +1,106 @@
+import { toReadableAmountLong } from "@/utils/number-helper";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
-// THIS LABEL IS REMOVED SINCE FOR NOW NO ONE IS CONTRIBUTING.
-const data = [
-  { name: "", actualValue: 0, value: 0, anchor: "middle" },
-  { name: "Pledged Capital", actualValue: 0, value: 0, anchor: "middle" },
-  { name: "Target", actualValue: 25, value: 0, anchor: "end" },
-];
-
-// Calculate percentage values
-data[0].value = (data[0].actualValue / data[2].actualValue) * 100;
-data[1].value = (data[1].actualValue / data[2].actualValue) * 100;
-data[2].value = 100 - data[0].value - data[1].value;
-
-const COLORS = ["#082447", "#6fcf97", "#DFE5ED"];
-
-interface CustomLabelProps {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  innerRadius: number;
-  outerRadius: number;
-  index: number;
+interface GaugeSegment {
+  name: string;
+  actualValue: number;
+  value: number; // For visual representation
+  labelPosition: number; // For label placement
+  anchor: "start" | "middle" | "end";
+  color: string;
 }
 
-const CustomLabel = (
-  props: CustomLabelProps & { startAngle: number; endAngle: number }
-) => {
-  const { cx, cy, outerRadius, index, startAngle, endAngle, midAngle } = props;
-  const RADIAN = Math.PI / 180;
+interface InvestmentGaugeChartProps {
+  invested?: number;
+  pledged?: number;
+  target?: number;
+}
 
-  let angle = midAngle;
+export default function InvestmentGaugeChart({
+  invested = 0,
+  pledged = 0,
+  target = 25,
+}: InvestmentGaugeChartProps) {
+  // Calculate initial data
+  const calculatePercentage = (value: number) => (value / target) * 100;
 
-  const entry = data[index];
+  const data: GaugeSegment[] = [
+    {
+      name: "Invested Capital",
+      actualValue: invested,
+      value: calculatePercentage(invested),
+      labelPosition: calculatePercentage(invested), // Initial position same as value
+      anchor: "middle",
+      color: "#082447",
+    },
+    {
+      name: "Pledged Capital",
+      actualValue: pledged,
+      value: calculatePercentage(pledged),
+      labelPosition: calculatePercentage(pledged), // Initial position same as value
+      anchor: "middle",
+      color: "#6fcf97",
+    },
+    {
+      name: "Target",
+      actualValue: target,
+      value: Math.max(
+        0,
+        100 - calculatePercentage(invested) - calculatePercentage(pledged)
+      ),
+      labelPosition: 100, // Always at the end
+      anchor: "end",
+      color: "#DFE5ED",
+    },
+  ];
 
-  if (entry.anchor === "end") {
-    angle = startAngle > endAngle ? endAngle : startAngle;
-  }
+  // Adjust label positions if they're too close
+  const adjustLabelPositions = (segments: GaugeSegment[]): GaugeSegment[] => {
+    const adjusted = [...segments];
+    const MIN_SPACING = 12; // Minimum spacing between labels in percentage
 
-  const radius = outerRadius + 10; // Position label 10px outside the outer radius
-  const x = cx + radius * Math.cos(-angle * RADIAN);
-  const y = cy + radius * Math.sin(-angle * RADIAN);
+    // Get invested and pledged segments
+    const invested = segments[0]; // First segment is invested
+    const pledged = segments[1]; // Second segment is pledged
 
-  return (
-    <text
-      className="hidden sm:block"
-      x={x}
-      y={y}
-      textAnchor={x > cx ? "start" : "end"}
-      fill="#333"
-      fontSize="12"
-    >
-      <tspan x={x} dy="-0.6em" className="font-bold">
-        ${entry.actualValue} billion
-      </tspan>
-      <tspan x={x} dy="1.2em">
-        {entry.name}
-      </tspan>
-    </text>
-  );
-};
+    // Check if pledged value is close to invested value
+    if (Math.abs(invested.value - pledged.value) < MIN_SPACING) {
+      // Only adjust the pledged label position by moving it up
+      adjusted[1].labelPosition = pledged.value - MIN_SPACING;
 
-const Legend = () => (
-  <div className="flex flex-wrap justify-center gap-4 mt-4 px-4">
-    {[data[1], data[2]].map((entry, index) => (
-      <div key={entry.name} className="flex items-center gap-2">
-        <div
-          className="w-3 h-3 rounded-sm"
-          style={{ backgroundColor: COLORS[index] }}
-        />
-        <div className="text-center">
-          <div className="text-sm font-semibold text-gray-800">
-            ${entry.actualValue} billion
-          </div>
-          <div className="text-xs text-gray-600">{entry.name}</div>
-        </div>
-      </div>
-    ))}
-  </div>
-);
+      // Ensure we don't exceed 100%
+      adjusted[1].labelPosition = Math.min(100, adjusted[1].labelPosition);
+    }
 
-export default function InvestmentGaugeChart() {
+    return adjusted;
+  };
+
+  const adjustedData = adjustLabelPositions(data);
+
   return (
     <div className="outlines-none">
       <ResponsiveContainer width="100%" height="100%" minHeight={200}>
         <PieChart>
+          {/* Background pie chart for labels */}
           <Pie
-            data={data}
+            data={adjustedData}
+            startAngle={180}
+            endAngle={0}
+            innerRadius="130%"
+            outerRadius="150%"
+            dataKey="labelPosition"
+            cy="90%"
+            labelLine={false}
+            label={CustomLabel}
+          >
+            {adjustedData.map((entry, index) => (
+              <Cell key={`label-cell-${index}`} fill="transparent" />
+            ))}
+          </Pie>
+
+          {/* Foreground pie chart for actual values */}
+          <Pie
+            data={adjustedData}
             startAngle={180}
             endAngle={0}
             innerRadius="130%"
@@ -93,15 +108,12 @@ export default function InvestmentGaugeChart() {
             dataKey="value"
             cy="90%"
             labelLine={false}
-            label={CustomLabel}
           >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
+            {adjustedData.map((entry, index) => (
+              <Cell key={`value-cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
+
           <text
             x="50%"
             y="85%"
@@ -114,8 +126,68 @@ export default function InvestmentGaugeChart() {
         </PieChart>
       </ResponsiveContainer>
       <div className="sm:hidden">
-        <Legend />
+        <Legend data={adjustedData} />
       </div>
     </div>
   );
 }
+
+interface CustomLabelProps {
+  cx: number;
+  cy: number;
+  midAngle: number;
+  innerRadius: number;
+  outerRadius: number;
+  index: number;
+  startAngle: number;
+  endAngle: number;
+  payload: GaugeSegment;
+}
+
+const CustomLabel = (props: CustomLabelProps) => {
+  const { cx, cy, outerRadius, payload } = props;
+  const RADIAN = Math.PI / 180;
+
+  // Use labelPosition instead of value for positioning
+  const angle = -((payload.labelPosition / 100) * 180 - 180);
+  const radius = outerRadius + 10;
+  const x = cx + radius * Math.cos(angle * RADIAN);
+  const y = cy + radius * Math.sin(angle * RADIAN);
+
+  return (
+    <text
+      className="hidden sm:block"
+      x={x}
+      y={y}
+      textAnchor={x > cx ? "start" : "end"}
+      fill="#333"
+      fontSize="12"
+    >
+      <tspan x={x} dy="-0.6em" className="font-bold">
+        {toReadableAmountLong(payload.actualValue)}
+      </tspan>
+      <tspan x={x} dy="1.2em">
+        {payload.name}
+      </tspan>
+    </text>
+  );
+};
+
+const Legend = ({ data }: { data: GaugeSegment[] }) => (
+  <div className="flex flex-wrap justify-center gap-4 mt-4 px-4">
+    {data.slice(0, 2).map((entry) => (
+      <div key={entry.name} className="flex items-center gap-2">
+        <div
+          className="w-3 h-3 rounded-sm"
+          style={{ backgroundColor: entry.color }}
+        />
+        <div className="text-center">
+          <div className="text-sm font-semibold text-gray-800">
+            {toReadableAmountLong(entry.actualValue)}
+          </div>
+          <div className="text-xs text-gray-600">{entry.name}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+);

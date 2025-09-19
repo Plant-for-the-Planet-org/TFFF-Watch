@@ -3,10 +3,7 @@ import ForestCoverChange from "@/components/sections/features/ForestCoverChange"
 import PotentialPayoutVsExistingConservationFunding from "@/components/sections/features/PotentialPayoutVsExistingConservationFunding";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
-import {
-  getCountryDetails,
-  getCountryDetailsBySlug,
-} from "@/utils/country-helper";
+import { getCountryDetails } from "@/utils/country-helper";
 import { fetchForestCoverChangeData } from "@/utils/forestChange.store";
 import { Metadata } from "next";
 import { humanize } from "underscore.string";

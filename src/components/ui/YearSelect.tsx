@@ -25,12 +25,12 @@ export default function YearSelect({ initialValue, onChange }: Props) {
     { id: 4, value: "2020", label: "2020" },
     { id: 5, value: "2019", label: "2019" },
     { id: 6, value: "2018", label: "2018" },
-    {
-      id: 7,
-      value: "2018-2024",
-      label: "2018-2024",
-      additionalLabels: ["average"],
-    },
+    // {
+    //   id: 7,
+    //   value: "2018-2024",
+    //   label: "2018-2024",
+    //   additionalLabels: ["average"],
+    // },
   ]);
 
   useEffect(() => {

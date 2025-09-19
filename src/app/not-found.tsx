@@ -26,7 +26,7 @@ export default function NotFound() {
             <h1 className="typo-h2 font-bold">Page Not Found</h1>
             <Br />
             <p className="typo-p">
-              The page you are looking for does not exisit or moved permanently.
+              The page you are looking for does not exist or moved permanently.
             </p>
           </div>
         </div>

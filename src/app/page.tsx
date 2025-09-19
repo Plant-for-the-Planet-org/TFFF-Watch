@@ -18,7 +18,7 @@ export default function Home() {
         <Br />
         <TFFFWorldMapView />
         <Br />
-        <InvestmentTrackerHome />
+        <InvestmentTrackerHome invested={0} pledged={0} target={25000000000} />
         <Br />
         <InfoGrid />
         <Br />

@@ -16,7 +16,7 @@ import type {
   Polygon,
 } from "geojson";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import countries from "./ne_50m_admin_0_countries.geo.json";
 import { api, urls } from "@/utils/axios-helper";
 // import countries from "./worldboundrycorrected.geo.json";
@@ -36,7 +36,8 @@ interface LayerData {
   country: string;
   analysisYear: number;
   currentForestLayer: LayerConfig;
-  lossTillLayer: LayerConfig;
+  // lossTillLayer: LayerConfig;
+  fireLossLayer: LayerConfig;
   lossInYearLayer: LayerConfig;
   createdAt: string;
   updatedAt: string;
@@ -108,22 +109,20 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
     };
   }
 
-  async function getMapLayersData() {
-    try {
-      const result = await api<LayerData>({
-        url: urls.layersProxyAPI,
-        method: "POST",
-        token: "",
-        body: { name, year, iso2 },
-      });
-      setLayersData(result);
-    } catch (error) {
-      console.error("Error fetching news:", error);
-    }
-  }
-
   useEffect(() => {
-    getMapLayersData();
+    (async () => {
+      try {
+        const result = await api<LayerData>({
+          url: urls.layersProxyAPI,
+          method: "POST",
+          token: "",
+          body: { name, year, iso2 },
+        });
+        setLayersData(result);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    })();
   }, [name, year, iso2]);
 
   // const memoizedLayersData = useMemo(() => {
@@ -179,6 +178,7 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
             >
               <Layer
                 id="current-forest-layer"
+                beforeId="loss-till-layer"
                 type="raster"
                 paint={{
                   "raster-opacity": 0.8,
@@ -186,16 +186,17 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
               />
             </Source>
 
-            {/* Loss Till Layer */}
+            {/* Fire Loss Layer */}
             <Source
               key="loss-till"
               id="loss-till-source"
               type="raster"
-              tiles={[layersData.lossTillLayer.tileUrl]}
+              tiles={[layersData.fireLossLayer.tileUrl]}
               tileSize={256}
             >
               <Layer
                 id="loss-till-layer"
+                beforeId="loss-in-year-layer"
                 type="raster"
                 paint={{
                   "raster-opacity": 0.8,
@@ -213,6 +214,7 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
             >
               <Layer
                 id="loss-in-year-layer"
+                // beforeId="loss-till-layer"
                 type="raster"
                 paint={{
                   "raster-opacity": 0.8,

@@ -13,12 +13,16 @@ export async function POST(request: Request) {
   // const url = layersAPIParams(iso2, year)
 
   try {
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+    if (process.env.LAYERS_API_KEY) {
+      headers["x-api-key"] = process.env.LAYERS_API_KEY;
+    }
+
     const response = await fetch(url, {
       method: "GET",
-      headers: {
-        "x-api-key": process.env.LAYERS_API_KEY,
-        "Content-Type": "application/json",
-      },
+      headers,
     });
 
     const responseData = await response.json();

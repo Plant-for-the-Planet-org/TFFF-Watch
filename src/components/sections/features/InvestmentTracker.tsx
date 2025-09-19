@@ -3,22 +3,33 @@
 import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeChart";
 import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
+import { toReadableAmountLong } from "@/utils/number-helper";
 import { usePathname } from "next/navigation";
 
-export default function InvestmentTracker() {
+interface InvestmentTrackerProps {
+  invested?: number;
+  pledged?: number;
+  target?: number;
+}
+
+export default function InvestmentTracker({
+  invested,
+  pledged,
+  target,
+}: InvestmentTrackerProps) {
   return (
     <div className="bg-secondary-light outer-rounding outer-padding-3">
       <Br />
       <div className="grid lg:grid-cols-2">
-        {/* <div className="lg:max-w-[33vw] mx-auto flex flex-col items-center lg:block"> */}
         <div className="mx-auto flex flex-col items-center lg:block extra-padding-x-4">
           <h2 className="font-bold typo-h2">Investment Tracker</h2>
           <Br />
           <p className="typo-p">
-            The TFFF requires $25 billion in sponsor capital. It is to serve as
-            the core of the TFFF’s investments and as junior debt in the case of
-            losses. The TFFF aims to collect the funds from development banks
-            and similar institutions.
+            The TFFF requires {toReadableAmountLong(target!, true, false)} in
+            sponsor capital. It is to serve as the core of the TFFF`&apos;`s
+            investments and as junior debt in the case of losses. The TFFF aims
+            to collect the funds from development banks and similar
+            institutions.
           </p>
           <Br />
           <div className="hidden lg:block">
@@ -26,7 +37,11 @@ export default function InvestmentTracker() {
           </div>
         </div>
         <div>
-          <InvestmentGaugeChart />
+          <InvestmentGaugeChart
+            invested={invested}
+            pledged={pledged}
+            target={target}
+          />
         </div>
       </div>
       <Br />
