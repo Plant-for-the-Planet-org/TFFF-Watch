@@ -79,9 +79,12 @@ the current analysis.`;
   if (!data) return null;
   return (
     <div>
-      {/* <div className="extra-padding-x-4"> */}
       <div>
-        <InvestmentTracker />
+        <InvestmentTracker
+          invested={data.invested_capital}
+          pledged={data.pledged_capital}
+          target={25000000000}
+        />
         <Br />
         <CountryListChips country={capitalize(country)} />
         <Br />

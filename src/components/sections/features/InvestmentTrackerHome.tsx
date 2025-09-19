@@ -12,7 +12,7 @@ interface InvestmentTrackerProps {
   target?: number;
 }
 
-export default function InvestmentTracker({
+export default function InvestmentTrackerHome({
   invested,
   pledged,
   target,
