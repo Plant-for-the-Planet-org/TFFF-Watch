@@ -26,7 +26,7 @@ export default function InvestmentTracker({
           <Br />
           <p className="typo-p">
             The TFFF requires {toReadableAmountLong(target!, true, false)} in
-            sponsor capital. It is to serve as the core of the TFFF`&apos;`s
+            sponsor capital. It is to serve as the core of the TFFF&apos;s
             investments and as junior debt in the case of losses. The TFFF aims
             to collect the funds from development banks and similar
             institutions.

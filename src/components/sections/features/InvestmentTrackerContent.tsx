@@ -1,14 +1,13 @@
 import Br from "@/components/ui/Br";
 import Hr from "@/components/ui/Hr";
 import {
-  extractLists,
+  // extractLists,
   serializeEndorsements,
   serializePersons,
 } from "@/utils/content-helper";
 import { formatDateAgo } from "@/utils/datetime-helper";
 import { InvestmentTrackerForCountry } from "@/utils/types";
 import Image from "next/image";
-import { Fragment } from "react";
 
 type Props = Partial<InvestmentTrackerForCountry> & {
   how_an_investment_could_work?: string;
@@ -20,7 +19,7 @@ export default function InvestmentTrackerContent({
   background,
   endorsements,
   CSOs,
-  how_an_investment_could_work,
+  // how_an_investment_could_work,
   responsibile_government_office,
 }: Props) {
   return (
@@ -97,7 +96,7 @@ export default function InvestmentTrackerContent({
         <Br />
         <Hr />
         <Br />
-        <div>
+        {/* <div>
           <h2 className="font-bold typo-h2 flex items-center gap-2">
             <Image
               width={32}
@@ -110,16 +109,16 @@ export default function InvestmentTrackerContent({
           <Br />
           <div className="typo-p">
             {extractLists(how_an_investment_could_work!).map((el, key) => (
-              <Fragment key={key}>
+              <div key={key}>
                 <p>{el}</p>
                 <Br />
-              </Fragment>
+              </div>
             ))}
           </div>
-        </div>
+        </div> 
         <Br />
         <Hr />
-        <Br />
+        <Br /> */}
         <div>
           <h2 className="font-bold typo-h2 flex items-center gap-2">
             <Image

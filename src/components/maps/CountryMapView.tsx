@@ -178,7 +178,7 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
             >
               <Layer
                 id="current-forest-layer"
-                beforeId="loss-till-layer"
+                beforeId="fire-loss-layer"
                 type="raster"
                 paint={{
                   "raster-opacity": 0.8,
@@ -188,14 +188,14 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
 
             {/* Fire Loss Layer */}
             <Source
-              key="loss-till"
-              id="loss-till-source"
+              key="fire-loss"
+              id="fire-loss-source"
               type="raster"
               tiles={[layersData.fireLossLayer.tileUrl]}
               tileSize={256}
             >
               <Layer
-                id="loss-till-layer"
+                id="fire-loss-layer"
                 beforeId="loss-in-year-layer"
                 type="raster"
                 paint={{
@@ -214,7 +214,6 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
             >
               <Layer
                 id="loss-in-year-layer"
-                // beforeId="loss-till-layer"
                 type="raster"
                 paint={{
                   "raster-opacity": 0.8,
