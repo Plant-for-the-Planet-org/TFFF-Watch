@@ -15,6 +15,7 @@ export const urls = {
     "https://automate.plant-for-the-planet.org/webhook/cache/tfff-spending",
   investmentTracker:
     "https://automate.plant-for-the-planet.org/webhook/cache/tfff-investment-tracker",
+  layersProxyAPI: "/api/layers",
 };
 
 export type APIOptions = {

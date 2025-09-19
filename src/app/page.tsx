@@ -1,5 +1,5 @@
 import InfoGrid from "@/components/sections/features/InfoGrid";
-import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
+import InvestmentTrackerHome from "@/components/sections/features/InvestmentTrackerHome";
 import NewsLetter from "@/components/sections/features/NewsLetter";
 import RecentNews from "@/components/sections/features/RecentNews";
 import RecentPolicyPapersComentary from "@/components/sections/features/RecentPolicyPapersCommentary";
@@ -18,7 +18,7 @@ export default function Home() {
         <Br />
         <TFFFWorldMapView />
         <Br />
-        <InvestmentTracker />
+        <InvestmentTrackerHome />
         <Br />
         <InfoGrid />
         <Br />

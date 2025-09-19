@@ -97,7 +97,11 @@ export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
             <div className="absolute bottom-0 z-20">
               <CountryMapLegends />
             </div>
-            <CountryMapView iso2={props.iso2} />
+            <CountryMapView
+              name={props.name}
+              year={props.year}
+              iso2={props.iso2}
+            />
           </div>
           <div className="flex justify-center items-center">
             <CountryTFFFCard {...props} />

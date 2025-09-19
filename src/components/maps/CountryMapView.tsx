@@ -16,64 +16,37 @@ import type {
   Polygon,
 } from "geojson";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import countries from "./ne_50m_admin_0_countries.geo.json";
+import { api, urls } from "@/utils/axios-helper";
+// import countries from "./worldboundrycorrected.geo.json";
+
+interface VisParams {
+  palette: string;
+}
 
 interface LayerConfig {
+  name: string;
   tileUrl: string;
-  name?: string;
-  visParams?: {
-    palette?: string; // optional
-  };
+  visParams: VisParams;
 }
 
 interface LayerData {
-  forestLayer?: LayerConfig;
-  degradationLayer?: LayerConfig;
-  deforestationLayer2023?: LayerConfig;
+  id: string;
+  country: string;
+  analysisYear: number;
+  currentForestLayer: LayerConfig;
+  lossTillLayer: LayerConfig;
+  lossInYearLayer: LayerConfig;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type Props = {
   iso2: string;
+  name: string;
+  year: string;
   // layerData: LayerData;
-};
-
-const layerData: LayerData = {
-  // forestLayer: {
-  //   name: "2024 Forest",
-  //   tileUrl:
-  //     "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/cad01ba56905869087ca3d1dfa83e209-37937f4b5e200aa6bd8e5e5431227b03/tiles/{z}/{x}/{y}",
-  //   visParams: {
-  //     palette: "green",
-  //   },
-  // },
-  // degradationLayer: {
-  //   name: "Only 2023 Deforestation JRC",
-  //   tileUrl:
-  //     "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/1c5588ea214fefd7db3e7f292f5f34e9-524b2f93dbe4fc6e9ee85cc1d9a2ec32/tiles/{z}/{x}/{y}",
-  //   visParams: {
-  //     palette: "orange",
-  //   },
-  // },
-  // deforestationLayer2023: {
-  //   name: "Deforestation 2023",
-  //   tileUrl:
-  //     "https://earthengine.googleapis.com/v1/projects/earthengine-legacy/maps/9665c8add89ac23373aca2b6b9439c30-80db89e02df4217c26f6ed0e78f05156/tiles/{z}/{x}/{y}",
-  //   visParams: {
-  //     palette: "red",
-  //   },
-  forestLayer: {
-    tileUrl:
-      "https://storage.googleapis.com/planet-layers/tttf-data/cd12f4c6-8a6e-4d2f-bcb4-a9a9941ab6bd/forestLayer/{z}/{x}/{y}.png",
-  },
-  degradationLayer: {
-    tileUrl:
-      "https://storage.googleapis.com/planet-layers/tttf-data/cd12f4c6-8a6e-4d2f-bcb4-a9a9941ab6bd/degradationLayer/{z}/{x}/{y}.png",
-  },
-  deforestationLayer2023: {
-    tileUrl:
-      "https://storage.googleapis.com/planet-layers/tttf-data/cd12f4c6-8a6e-4d2f-bcb4-a9a9941ab6bd/deforestationLayer2023/{z}/{x}/{y}.png",
-  },
 };
 
 function getCountryGeoJSON(iso2: string) {
@@ -83,8 +56,9 @@ function getCountryGeoJSON(iso2: string) {
   } as FeatureCollection;
 }
 
-export default function CountryMapView({ iso2 }: Props) {
+export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
   const { width = 0 } = useWindowSize();
+  const [layersData, setLayersData] = useState<LayerData>();
 
   const mapRef = useRef<MapRef>(null);
 
@@ -134,87 +108,135 @@ export default function CountryMapView({ iso2 }: Props) {
     };
   }
 
-  return (
-    <Map
-      ref={mapRef}
-      initialViewState={{ longitude: 0, latitude: 0, zoom: 1 }}
-      style={{ width: "100%", height: "100%" }}
-      onLoad={() => {
-        repositionMap();
-      }}
-      // mapStyle={{
-      //   version: 8,
-      //   glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
-      //   sources: {},
-      //   layers: [
-      //     {
-      //       id: "background",
-      //       type: "background",
-      //       paint: { "background-color": "#F0FAF4" },
-      //     },
-      //   ],
-      // }}
-      renderWorldCopies={false}
-      interactive={false}
-      attributionControl={false}
-    >
-      {/* COUNTRY GEOMETRY */}
-      {countryFeatureCollection && (
-        <Source id="country" type="geojson" data={countryFeatureCollection}>
-          <Layer
-            id="country-fill"
-            type="fill"
-            paint={{
-              "fill-color": "#FFFFFF",
-              "fill-outline-color": "#FFFFFF",
-            }}
-          />
-          <Layer
-            id="country-line"
-            type="line"
-            paint={{
-              "line-color": "#FFFFFF",
-              "line-width": 1.5,
-            }}
-          />
-        </Source>
-      )}
+  async function getMapLayersData() {
+    try {
+      const result = await api<LayerData>({
+        url: urls.layersProxyAPI,
+        method: "POST",
+        token: "",
+        body: { name, year, iso2 },
+      });
+      setLayersData(result);
+    } catch (error) {
+      console.error("Error fetching news:", error);
+    }
+  }
 
-      {/* XYZ TILE LAYERS */}
-      {Object.entries(layerData).map(([key, layer]) =>
-        layer ? (
-          <Source
-            key={key}
-            id={`${key}-source`}
-            type="raster"
-            tiles={[layer.tileUrl]}
-            tileSize={256}
-          >
+  useEffect(() => {
+    getMapLayersData();
+  }, [name, year, iso2]);
+
+  // const memoizedLayersData = useMemo(() => {
+  //   return (async () => await getMapLayersData)();
+  // }, [name, year, iso2]);
+  // console.log({ memoizedLayersData });
+
+  return (
+    <>
+      <Map
+        ref={mapRef}
+        initialViewState={{ longitude: 0, latitude: 0, zoom: 1 }}
+        style={{ width: "100%", height: "100%" }}
+        onLoad={() => {
+          repositionMap();
+        }}
+        renderWorldCopies={false}
+        interactive={false}
+        attributionControl={false}
+      >
+        {/* COUNTRY GEOMETRY */}
+        {countryFeatureCollection && (
+          <Source id="country" type="geojson" data={countryFeatureCollection}>
             <Layer
-              id={`${key}-layer`}
-              type="raster"
+              id="country-fill"
+              type="fill"
               paint={{
-                "raster-opacity": 0.8,
+                "fill-color": "#FFFFFF",
+                "fill-outline-color": "#FFFFFF",
+              }}
+            />
+            <Layer
+              id="country-line"
+              type="line"
+              paint={{
+                "line-color": "#FFFFFF",
+                "line-width": 1.5,
               }}
             />
           </Source>
-        ) : null
-      )}
+        )}
 
-      <Source
-        id="mask"
-        type="geojson"
-        data={getInvertedCountryMask(countryFeatureCollection)}
-      >
-        <Layer
-          id="mask-layer"
-          type="fill"
-          paint={{
-            "fill-color": "#F0FAF4", // Match your background
-            "fill-opacity": 1,
-          }}
-        />
-      </Source>
-    </Map>
+        {/* XYZ TILE LAYERS */}
+        {layersData && (
+          <>
+            {/* Current Forest Layer */}
+            <Source
+              key="current-forest"
+              id="current-forest-source"
+              type="raster"
+              tiles={[layersData.currentForestLayer.tileUrl]}
+              tileSize={256}
+            >
+              <Layer
+                id="current-forest-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+
+            {/* Loss Till Layer */}
+            <Source
+              key="loss-till"
+              id="loss-till-source"
+              type="raster"
+              tiles={[layersData.lossTillLayer.tileUrl]}
+              tileSize={256}
+            >
+              <Layer
+                id="loss-till-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+
+            {/* Loss In Year Layer */}
+            <Source
+              key="loss-in-year"
+              id="loss-in-year-source"
+              type="raster"
+              tiles={[layersData.lossInYearLayer.tileUrl]}
+              tileSize={256}
+            >
+              <Layer
+                id="loss-in-year-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+          </>
+        )}
+
+        <Source
+          id="mask"
+          type="geojson"
+          data={getInvertedCountryMask(countryFeatureCollection)}
+        >
+          <Layer
+            id="mask-layer"
+            type="fill"
+            paint={{
+              "fill-color": "#F0FAF4", // Match your background
+              "fill-opacity": 1,
+            }}
+          />
+        </Source>
+      </Map>
+    </>
   );
 }
