@@ -12,7 +12,7 @@ export default function CountryListChips({ country }: Props) {
     { label: "UK", iso2: "GB", emoji: "🇬🇧", selected: false },
     { label: "UAE", iso2: "AE", emoji: "🇦🇪", selected: false },
     // { label: "Netherlands", iso2: "NL", emoji: "🇳🇱", selected: false },
-    { label: "EU", iso2: "EU", emoji: "🇪🇺", noFlag: true, selected: false },
+    // { label: "EU", iso2: "EU", emoji: "🇪🇺", noFlag: true, selected: false },
     // { label: "Singapore", iso2: "SG", emoji: "🇸🇬", selected: false },
     { label: "Brazil", iso2: "BR", emoji: "🇧🇷", selected: false },
     { label: "China", iso2: "CN", emoji: "🇨🇳", selected: false },
