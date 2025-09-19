@@ -1,6 +1,6 @@
 "use client";
 
-import { PageParams } from "@/app/(group-ContainerWidth)/[year]/page";
+import { PageParams } from "@/app/(group-ContainerWidth)/[country]/[year]/page";
 import { api, urls } from "@/utils/axios-helper";
 import { getCountryDetails } from "@/utils/country-helper";
 import { toReadableAmount } from "@/utils/number-helper";
