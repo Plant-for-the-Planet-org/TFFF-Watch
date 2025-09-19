@@ -1,4 +1,5 @@
 import { toReadableAmountLong } from "@/utils/number-helper";
+import { useEffect, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 interface GaugeSegment {
@@ -16,43 +17,43 @@ interface InvestmentGaugeChartProps {
   target?: number;
 }
 
+function calculatePercentage(value: number, target: number) {
+  return (value / target) * 100;
+}
+
+const initialData: GaugeSegment[] = [
+  {
+    name: "Invested Capital",
+    actualValue: 0,
+    value: 0,
+    labelPosition: 0, // Initial position same as value
+    anchor: "middle",
+    color: "#082447",
+  },
+  {
+    name: "Pledged Capital",
+    actualValue: 0,
+    value: 0,
+    labelPosition: 0, // Initial position same as value
+    anchor: "middle",
+    color: "#6fcf97",
+  },
+  {
+    name: "Target",
+    actualValue: 0,
+    value: 0,
+    labelPosition: 100, // Always at the end
+    anchor: "end",
+    color: "#DFE5ED",
+  },
+];
+
 export default function InvestmentGaugeChart({
   invested = 0,
   pledged = 0,
-  target = 25,
+  target = 25000000000,
 }: InvestmentGaugeChartProps) {
-  // Calculate initial data
-  const calculatePercentage = (value: number) => (value / target) * 100;
-
-  const data: GaugeSegment[] = [
-    {
-      name: "Invested Capital",
-      actualValue: invested,
-      value: calculatePercentage(invested),
-      labelPosition: calculatePercentage(invested), // Initial position same as value
-      anchor: "middle",
-      color: "#082447",
-    },
-    {
-      name: "Pledged Capital",
-      actualValue: pledged,
-      value: calculatePercentage(pledged),
-      labelPosition: calculatePercentage(pledged), // Initial position same as value
-      anchor: "middle",
-      color: "#6fcf97",
-    },
-    {
-      name: "Target",
-      actualValue: target,
-      value: Math.max(
-        0,
-        100 - calculatePercentage(invested) - calculatePercentage(pledged)
-      ),
-      labelPosition: 100, // Always at the end
-      anchor: "end",
-      color: "#DFE5ED",
-    },
-  ];
+  const [chartData, setChartData] = useState<GaugeSegment[]>(initialData);
 
   // Adjust label positions if they're too close
   const adjustLabelPositions = (segments: GaugeSegment[]): GaugeSegment[] => {
@@ -75,7 +76,19 @@ export default function InvestmentGaugeChart({
     return adjusted;
   };
 
-  const adjustedData = adjustLabelPositions(data);
+  useEffect(() => {
+    const _data = structuredClone(initialData);
+    _data[0].actualValue = invested;
+    _data[1].actualValue = pledged;
+    _data[2].actualValue = target;
+    _data[0].value = calculatePercentage(invested, target);
+    _data[1].value = calculatePercentage(pledged, target);
+    _data[2].value = 100 - _data[0].value - _data[1].value;
+    _data[0].labelPosition = calculatePercentage(invested, target);
+    _data[1].labelPosition = calculatePercentage(pledged, target);
+    _data[2].labelPosition = 100 - _data[0].value - _data[1].value;
+    setChartData(adjustLabelPositions(_data));
+  }, [invested, pledged, target]);
 
   return (
     <div className="outlines-none">
@@ -83,7 +96,7 @@ export default function InvestmentGaugeChart({
         <PieChart>
           {/* Background pie chart for labels */}
           <Pie
-            data={adjustedData}
+            data={chartData}
             startAngle={180}
             endAngle={0}
             innerRadius="130%"
@@ -93,14 +106,14 @@ export default function InvestmentGaugeChart({
             labelLine={false}
             label={CustomLabel}
           >
-            {adjustedData.map((entry, index) => (
+            {chartData?.map((entry, index) => (
               <Cell key={`label-cell-${index}`} fill="transparent" />
             ))}
           </Pie>
 
           {/* Foreground pie chart for actual values */}
           <Pie
-            data={adjustedData}
+            data={chartData}
             startAngle={180}
             endAngle={0}
             innerRadius="130%"
@@ -109,7 +122,7 @@ export default function InvestmentGaugeChart({
             cy="90%"
             labelLine={false}
           >
-            {adjustedData.map((entry, index) => (
+            {chartData.map((entry, index) => (
               <Cell key={`value-cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
@@ -126,7 +139,7 @@ export default function InvestmentGaugeChart({
         </PieChart>
       </ResponsiveContainer>
       <div className="sm:hidden">
-        <Legend data={adjustedData} />
+        <Legend data={chartData} />
       </div>
     </div>
   );

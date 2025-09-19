@@ -49,6 +49,11 @@ export type InvestmentTrackerForCountry = {
   How_an_investment_could_work: string;
 };
 
+export type InvestmentTrackerSum = {
+  sum_pledged_capital: number;
+  sum_invested_capital: number;
+};
+
 export type ForestCoverChange = {
   year: string;
   country: string;

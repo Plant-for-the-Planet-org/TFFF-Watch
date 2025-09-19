@@ -96,7 +96,7 @@ export default function ForestCoverChangeAreaChart() {
             stroke={strokes.deforestation}
             strokeWidth={2}
             fill={fills.deforestation}
-            fillOpacity={1}
+            fillOpacity={0.5}
             dot={{
               stroke: strokes.deforestation,
               fill: fills.deforestation,
@@ -108,7 +108,7 @@ export default function ForestCoverChangeAreaChart() {
             stroke={strokes.degradation}
             strokeWidth={2}
             fill={fills.degradation}
-            fillOpacity={1}
+            fillOpacity={0.5}
             dot={{
               stroke: strokes.degradation,
               fill: fills.degradation,

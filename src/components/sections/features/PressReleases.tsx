@@ -23,7 +23,7 @@ export default async function PressReleases() {
       )
     );
   } catch (error) {
-    console.error("Error fetching news:", error);
+    console.error("Error fetching press releases:", error);
   }
 
   return (

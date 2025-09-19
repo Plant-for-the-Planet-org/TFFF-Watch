@@ -79,8 +79,9 @@ export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
   const { year } = useWorldMap();
 
   useEffect(() => {
-    if (props.name) fetchForestCoverChangeDataV2({ country: props.name });
-  }, [props.name]);
+    if (props.name)
+      fetchForestCoverChangeDataV2({ country: props.name, iso2: props.iso2 });
+  }, [props.name, props.iso2]);
 
   useEffect(() => {
     push(`/${country}/${year}`);

@@ -173,7 +173,7 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
               key="current-forest"
               id="current-forest-source"
               type="raster"
-              tiles={[layersData.currentForestLayer.tileUrl]}
+              tiles={[layersData.currentForestLayer?.tileUrl]}
               tileSize={256}
             >
               <Layer
@@ -191,7 +191,7 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
               key="fire-loss"
               id="fire-loss-source"
               type="raster"
-              tiles={[layersData.fireLossLayer.tileUrl]}
+              tiles={[layersData.fireLossLayer?.tileUrl]}
               tileSize={256}
             >
               <Layer
@@ -209,7 +209,7 @@ export default function CountryMapView({ name = "", year = "", iso2 }: Props) {
               key="loss-in-year"
               id="loss-in-year-source"
               type="raster"
-              tiles={[layersData.lossInYearLayer.tileUrl]}
+              tiles={[layersData.lossInYearLayer?.tileUrl]}
               tileSize={256}
             >
               <Layer

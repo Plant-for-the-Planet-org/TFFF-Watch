@@ -80,11 +80,7 @@ the current analysis.`;
   return (
     <div>
       <div>
-        <InvestmentTracker
-          invested={data.invested_capital}
-          pledged={data.pledged_capital}
-          target={25000000000}
-        />
+        <InvestmentTracker />
         <Br />
         <CountryListChips country={capitalize(country)} />
         <Br />

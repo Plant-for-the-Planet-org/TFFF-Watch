@@ -28,14 +28,19 @@ export async function fetchForestCoverChangeData(country?: string) {
 export async function fetchForestCoverChangeDataV2({
   country,
   year,
+  iso2 = "",
 }: {
   country?: string;
   year?: string;
+  iso2?: string;
 }) {
   const query: { [key: string]: string } = {};
 
-  if (country) {
-    const { iso2 } = getCountryDetails({ country });
+  console.log(country, year);
+  if (iso2) {
+    query["country-iso2"] = iso2;
+  } else if (country) {
+    const { iso2 } = getCountryDetails({ country, slug: country });
     query["country-iso2"] = iso2;
   }
 

@@ -3,8 +3,11 @@
 import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeChart";
 import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
+import { api, urls } from "@/utils/axios-helper";
 import { toReadableAmountLong } from "@/utils/number-helper";
+import { InvestmentTrackerSum } from "@/utils/types";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface InvestmentTrackerProps {
   invested?: number;
@@ -13,10 +16,34 @@ interface InvestmentTrackerProps {
 }
 
 export default function InvestmentTracker({
-  invested,
-  pledged,
-  target,
+  target = 25000000000,
 }: InvestmentTrackerProps) {
+  const [capitals, setCapitals] = useState({
+    invested: 0,
+    pledged: 0,
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await api<InvestmentTrackerSum[]>({
+          url: urls.investmentTrackerSum,
+          method: "GET",
+          token: "",
+        });
+
+        if (result[0]) {
+          setCapitals({
+            invested: result[0].sum_invested_capital,
+            pledged: result[0].sum_pledged_capital,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching investment sums:", error);
+      }
+    })();
+  }, []);
+
   return (
     <div className="bg-secondary-light outer-rounding outer-padding-3">
       <Br />
@@ -38,8 +65,8 @@ export default function InvestmentTracker({
         </div>
         <div>
           <InvestmentGaugeChart
-            invested={invested}
-            pledged={pledged}
+            invested={capitals?.invested ?? 0}
+            pledged={capitals?.pledged ?? 0}
             target={target}
           />
         </div>

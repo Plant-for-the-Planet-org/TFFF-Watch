@@ -23,7 +23,7 @@ export default async function RecentPolicyPapersComentary() {
       )
     );
   } catch (error) {
-    console.error("Error fetching news:", error);
+    console.error("Error fetching policy papers:", error);
   }
 
   return (
