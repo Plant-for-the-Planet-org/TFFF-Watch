@@ -68,6 +68,7 @@ export default function ForestCoverChangeAreaChart() {
           <YAxis
             type="number"
             fontSize={14}
+            width={80}
             tickLine={false}
             tickFormatter={(value) => `${toReadable(value)} ha`}
             domain={[
