@@ -37,8 +37,9 @@ export default function ForestCoverChangeAreaChart() {
 
     const _chartData = forestCoverChangeDataByCountry.map((el) => ({
       year: el.year,
-      deforestation: -el.deforested_ha,
       degradation: -el.degraded_forest_ha,
+      deforestation: -(el.degraded_forest_ha + el.deforested_ha),
+      // degradation: -(el.deforested_ha + el.degraded_forest_ha),
     }));
 
     setChartData(_chartData);
@@ -74,7 +75,7 @@ export default function ForestCoverChangeAreaChart() {
                 const newDataMin = dataMin + dataMin * (15 / 100);
                 return newDataMin;
               },
-              "dataMax",
+              0, // set dataMax to 0
             ]}
           />
           <XAxis dataKey="year" fontSize={14} tickLine={false} />

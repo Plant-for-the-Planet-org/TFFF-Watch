@@ -21,7 +21,6 @@ export default function Header() {
           </div>
         </div>
         <div className="flex flex-col justify-center items-center md:hidden">
-          <Br />
           <HeaderCountry />
         </div>
       </div>

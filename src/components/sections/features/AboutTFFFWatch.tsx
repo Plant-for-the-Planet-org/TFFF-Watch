@@ -167,13 +167,15 @@ export default function AboutTFFFWatch() {
             </p>
           </div>
           <Br />
-          <Button
-            href="https://docs.google.com/document/d/1-WlaepOLsm4P6F603NSfyc_ffaoWTeLTfG1hvJayfp4/edit?usp=sharing"
-            type="link"
-            external
-          >
-            Detailed Methodology
-          </Button>
+          <div className="text-center md:text-left">
+            <Button
+              href="https://docs.google.com/document/d/1-WlaepOLsm4P6F603NSfyc_ffaoWTeLTfG1hvJayfp4/edit?usp=sharing"
+              type="link"
+              external
+            >
+              Detailed Methodology
+            </Button>
+          </div>
         </div>
         <Br />
         <Hr />

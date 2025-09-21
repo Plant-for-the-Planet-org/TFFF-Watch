@@ -2,6 +2,7 @@
 
 import { getCountryDetails } from "@/utils/country-helper";
 import { useParams, usePathname } from "next/navigation";
+import Br from "./ui/Br";
 
 export type PageParams = {
   country: string;
@@ -19,6 +20,7 @@ export default function HeaderCountry() {
   if (!country) return null;
   return (
     <div>
+      <Br />
       <p className="flex gap-2 items-center typo-h3">
         <img className="w-6 h-4 p-0.5" alt="" src={details.flagImgUrl} />
         <b>{details.name}</b>
