@@ -84,8 +84,12 @@ the current analysis.`;
         <Br />
         <CountryListChips country={capitalize(country)} />
         <Br />
-        <InvestmentProgress investment_stage={data.investment_stage} />
-        <Br />
+        {country !== investingCountries.at(-1) && (
+          <>
+            <InvestmentProgress investment_stage={data.investment_stage} />
+            <Br />
+          </>
+        )}
         <InvestmentTrackerContent
           last_updated={data.last_updated}
           status={data.status}

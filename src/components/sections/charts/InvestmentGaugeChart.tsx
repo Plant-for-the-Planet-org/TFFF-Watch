@@ -96,6 +96,7 @@ export default function InvestmentGaugeChart({
         <PieChart>
           {/* Background pie chart for labels */}
           <Pie
+            isAnimationActive={false}
             data={chartData}
             startAngle={180}
             endAngle={0}
@@ -105,6 +106,8 @@ export default function InvestmentGaugeChart({
             cy="90%"
             labelLine={false}
             label={CustomLabel}
+            stroke="transparent"
+            fill="transparent"
           >
             {chartData?.map((entry, index) => (
               <Cell key={`label-cell-${index}`} fill="transparent" />
@@ -113,6 +116,7 @@ export default function InvestmentGaugeChart({
 
           {/* Foreground pie chart for actual values */}
           <Pie
+            isAnimationActive={false}
             data={chartData}
             startAngle={180}
             endAngle={0}

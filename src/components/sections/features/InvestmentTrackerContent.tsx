@@ -137,7 +137,7 @@ export default function InvestmentTrackerContent({
                   <p>{el.statement}</p>
                   {el?.name && (
                     <p>
-                      <b>- {el.name}</b>,{el.position}
+                      <b>- {el.name}</b>, {el.position}
                     </p>
                   )}
                   <Br />

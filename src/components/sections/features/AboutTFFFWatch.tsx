@@ -36,9 +36,8 @@ export default function AboutTFFFWatch() {
             <Br />
             <div className="typo-p">
               <p>
-                TFFF Watch is a joint project by Oro Verde, Rainforest
-                Foundation Norway and Plant-for-the-Planet. Please contact us if
-                you’re interested in contributing.
+                TFFF Watch is a project by Plant-for-the-Planet. Please contact
+                us if you’re interested in contributing.
               </p>
             </div>
           </div>

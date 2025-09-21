@@ -41,7 +41,7 @@ export default function CountryTFFFCard({
   return (
     <div
       className={twMerge(
-        "w-3xs md:w-md p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5 rounding-xl bg-white text-xs sm:text-sm",
+        "w-3xs md:w-[29rem] p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5 rounding-xl bg-white text-xs sm:text-sm",
         CTA === false && "md:pb-0 lg:pb-0 xl:pb-0",
         "z-20 shadow-custom"
       )}
@@ -132,7 +132,7 @@ export default function CountryTFFFCard({
       >
         <p className="flex justify-between items-center">
           <span>
-            <span className="font-semibold">Estimated Reward</span>{" "}
+            <span className="font-semibold">Estimated reward</span>{" "}
             <i>if TFFF already existed</i>
           </span>
           <span
