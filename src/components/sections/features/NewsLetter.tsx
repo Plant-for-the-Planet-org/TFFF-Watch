@@ -9,17 +9,20 @@ export default function NewsLetter() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Check initial consent
-    setShowNewsletter(CookieConsent.acceptedCategory("functionality"));
-
-    // Listen for consent changes
-    const handleConsentChange = () => {
+    const updateNewsletter = () => {
       setShowNewsletter(CookieConsent.acceptedCategory("functionality"));
     };
-    window.addEventListener("cc:onChange", handleConsentChange);
+
+    // Check initial consent
+    updateNewsletter();
+
+    // Listen for consent changes
+    window.addEventListener("cc:onChange", updateNewsletter);
+    document.addEventListener("cookieConsentUpdate", updateNewsletter);
 
     return () => {
-      window.removeEventListener("cc:onChange", handleConsentChange);
+      window.removeEventListener("cc:onChange", updateNewsletter);
+      document.removeEventListener("cookieConsentUpdate", updateNewsletter);
     };
   }, []);
 
