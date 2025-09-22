@@ -36,7 +36,7 @@ export function Logo() {
       <Link href="/">
         <h1>
           <Image
-            className="w-[160px] h-[24px] lg:w-[256px] lg:h-[48px]"
+            className=" h-[24px] w-[160px] lg:h-[48px] lg:w-[256px]"
             width={256}
             height={32}
             src="/assets/tfffwatch-header-logo.svg"
