@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function TFFFHero() {
   return (
@@ -44,6 +45,18 @@ export default function TFFFHero() {
                     tracks the investment negotiations and uses satellite
                     analysis to show how much countries would receive if the
                     TFFF already existed.
+                  </p>
+                  <p className="typo-p">
+                    Please cite data as{" "}
+                    <i>
+                      <Link
+                        className="underline"
+                        href={"https://tfffwatch.org/"}
+                      >
+                        tfffwatch.org
+                      </Link>{" "}
+                      by Plant-for-the-Planet
+                    </i>
                   </p>
                 </div>
               </div>
