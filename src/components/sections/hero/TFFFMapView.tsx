@@ -19,6 +19,7 @@ import { env } from "@/utils/env";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
 // import { forestChangeData } from "@/utils/forestChange.store";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -62,6 +63,15 @@ export function TFFFWorldMapView() {
             <LegendForSponsorCapitalProviders />
             <Br cn="md:hidden" />
           </div>
+          <p className="text-xs text-center flex justify-center items-center gap-2">
+            <Image
+              width={12}
+              height={12}
+              src="/assets/cursor.svg"
+              alt="Click on a country for more data"
+            />
+            Click on a country for more data
+          </p>
         </div>
       </div>
     </WorldMapViewContainer>

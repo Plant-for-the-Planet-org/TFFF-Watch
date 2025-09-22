@@ -4,6 +4,7 @@ import { transformAllForestCoverChangeData } from "@/utils/country-helper";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
+import * as turf from "@turf/turf";
 import { useWindowSize } from "@uidotdev/usehooks";
 import {
   Layer,
@@ -11,16 +12,14 @@ import {
   MapRef,
   NavigationControl,
   Source,
-  ViewStateChangeEvent,
 } from "@vis.gl/react-maplibre";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import WorldMapTFFFCard from "./WorldMapTFFFCard";
-import * as turf from "@turf/turf";
+import { useEffect, useMemo, useRef, useState } from "react";
 import countries from "./ne_50m_admin_0_countries.geo.json";
+import WorldMapTFFFCard from "./WorldMapTFFFCard";
 // import countries from "./worldboundrycorrected.geo.json";
 
 export const GEOFENCE = turf.polygon([
@@ -143,16 +142,16 @@ export default function WorldMapView() {
     }
   }, [forestCoverChangeDataByYear]);
 
-  const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
-    const newCenter = [viewState.longitude, viewState.latitude];
-    if (turf.booleanPointInPolygon(newCenter, GEOFENCE)) {
-      setViewState({
-        zoom: viewState.zoom,
-        longitude: newCenter[0],
-        latitude: newCenter[1],
-      });
-    }
-  }, []);
+  // const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
+  //   const newCenter = [viewState.longitude, viewState.latitude];
+  //   if (turf.booleanPointInPolygon(newCenter, GEOFENCE)) {
+  //     setViewState({
+  //       zoom: viewState.zoom,
+  //       longitude: newCenter[0],
+  //       latitude: newCenter[1],
+  //     });
+  //   }
+  // }, []);
 
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
@@ -172,7 +171,7 @@ export default function WorldMapView() {
     const isTFFF = forestCoverChangeDataByYear.find(
       (el) => el["country-iso2"] === countryISO2 || el.country === country
     );
-    console.log({ isTFFF });
+    // console.log({ isTFFF });
     if (isTFFF) setIsTFFF(true);
     else setIsTFFF(false);
   };
@@ -194,9 +193,8 @@ export default function WorldMapView() {
           interactive={true}
           attributionControl={false}
           renderWorldCopies={false}
-          onMove={onMove}
+          // onMove={onMove}
           onClick={onClick}
-          // onMouseMove={onClick}
           onLoad={() => {
             const map = mapRef.current?.getMap();
             map?.addControl(

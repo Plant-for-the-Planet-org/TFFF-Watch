@@ -14,8 +14,10 @@ export default function AboutTFFFWatch() {
             <Br />
             <div className="typo-p">
               <p>
-                Have you noticed errors in our results or methodology? Or do you
-                have an idea how we could improve upon TFFF Watch?
+                TFFF Watch is currently in its public Beta phase. We welcome all
+                feedback before we release the full version. Have you noticed
+                errors in our results or methodology? Or do you have an idea how
+                we could improve upon TFFF Watch?
               </p>
             </div>
           </div>
@@ -112,11 +114,10 @@ export default function AboutTFFFWatch() {
               ) is used to calculate the remaining forest cover as of the
               previous year. The baseline is established by subtracting areas of
               tree cover loss recorded annually from 2000 onwards and adding
-              areas of forest gain observed between 2000 and 2012. Newer forest
-              gain data is not currently available. This results in a dynamic,
-              annually updated map of remaining forest cover, which serves as
-              the reference area for the base payouts and subsequent
-              deforestation and degradation assessments.
+              areas of forest gain observed between 2000 and 2012. This results
+              in a dynamic, annually updated map of remaining forest cover,
+              which serves as the reference area for the base payouts and
+              subsequent deforestation and degradation assessments.
             </p>
             <Br></Br>
             <b>Deforestation Monitoring</b>
@@ -133,21 +134,22 @@ export default function AboutTFFFWatch() {
             <Br></Br>
             <b>Degradation Assessment</b>
             <p>
-              Forest degradation is assessed through monthly fire severity
-              analysis using Sentinel-2 satellite imagery. The system calculates
-              the difference in Normalized Burn Ratio (dNBR) values before and
-              after fire events for each month. These monthly fire severity maps
-              are then merged into a single, comprehensive annual degradation
-              map. Double counting is prevented by counting a pixel only once,
-              even if fires are detected in multiple months.
+              Forest degradation is assessed using the Global Forest Watch
+              fire-related forest loss dataset (Tyukavina et al., 2022). This
+              dataset builds on the Hansen et al. (2013) global 30m forest cover
+              loss map for 2001–2019, extended through 2024. The data
+              disaggregate annual forest loss into fire-related and non-fire
+              drivers, with uncertainty accounted for through confidence codes.
             </p>
             <Br></Br>
             <p>
-              The degradation analysis is restricted to the remaining forest
-              areas defined in the baseline calculation. The final outputs are
-              country-level statistics on moderate to high severity fire
-              impacts, which contribute to TFFF payment discounts for the
-              current and subsequent years.
+              For degradation monitoring, the system overlays this dataset with
+              the annually updated forest baseline to ensure that only remaining
+              forest areas are considered. Annual country-level statistics on
+              fire-related forest loss are then derived, providing the basis for
+              calculating degradation impacts. These results feed directly into
+              TFFF’s performance assessments and contribute to payment
+              adjustments for the reporting year.
             </p>
             <Br></Br>
             <b>Feedback</b>
