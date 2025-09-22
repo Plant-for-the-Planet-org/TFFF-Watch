@@ -1,7 +1,6 @@
 import PressReleaseCard from "@/components/sections/features/PressReleaseCard";
 import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
-import { formatDateFromExcelToData } from "@/utils/datetime-helper";
 import { PressRelease } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
@@ -18,8 +17,8 @@ export default async function PressReleases() {
 
     pressReleaseList.sort((a, b) =>
       compareDesc(
-        dateParse(a.date, "dd.MM.yyyy", new Date()),
-        dateParse(b.date, "dd.MM.yyyy", new Date())
+        dateParse(a.date, "dd/MM/yyyy", new Date()),
+        dateParse(b.date, "dd/MM/yyyy", new Date())
       )
     );
   } catch (error) {
@@ -45,7 +44,11 @@ export default async function PressReleases() {
                 image={el.featured_image!}
                 // publisher={el.publisher!}
                 // publisher={el.author}
-                datetime={formatDateFromExcelToData(el.date)}
+                datetime={dateParse(
+                  el.date,
+                  "dd/MM/yyyy",
+                  new Date()
+                ).toISOString()}
                 url={el.url}
               />
             </Fragment>
