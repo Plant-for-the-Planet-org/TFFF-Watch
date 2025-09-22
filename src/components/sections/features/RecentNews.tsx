@@ -3,7 +3,6 @@
 import Br from "@/components/ui/Br";
 import { ResponsiveContainer } from "@/components/ui/Container";
 import { api, urls } from "@/utils/axios-helper";
-import { formatDateFromExcelToData } from "@/utils/datetime-helper";
 import { News } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
@@ -21,8 +20,8 @@ export default async function RecentNews() {
 
     newsList.sort((a, b) =>
       compareDesc(
-        dateParse(a.date, "dd.MM.yyyy", new Date()),
-        dateParse(b.date, "dd.MM.yyyy", new Date())
+        dateParse(a.date, "dd/MM/yyyy", new Date()),
+        dateParse(b.date, "dd/MM/yyyy", new Date())
       )
     );
   } catch (error) {
@@ -49,7 +48,11 @@ export default async function RecentNews() {
                   image={el.featured_image!}
                   publisher={el.publisher!}
                   // publisher={el.author}
-                  datetime={formatDateFromExcelToData(el.date)}
+                  datetime={dateParse(
+                    el.date,
+                    "dd/MM/yyyy",
+                    new Date()
+                  ).toISOString()}
                   url={el.url}
                 />
               </Fragment>
