@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-import Script from "next/script";
 import * as CookieConsent from "vanilla-cookieconsent";
 import "vanilla-cookieconsent/dist/cookieconsent.css";
 import { en } from "./cookieconsent-languages";
@@ -79,23 +78,38 @@ const listenForConsent = (state: ListenForConsentState) => {
   });
 };
 
+const getDomain = () => {
+  const hostname = window.location.hostname;
+  if (hostname === "localhost") return "";
+  if (hostname === "tfff-watch.vercel.app") return "vercel.app";
+  return hostname.includes("tfffwatch.org") ? ".tfffwatch.org" : hostname;
+};
+
 export default function CookieConsentBanner() {
-  const [loadScript, setLoadScript] = useState(false);
+  const [, setLoadScript] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    // Prevent multiple initializations
+    if (window._ccRun) return;
+
     /**
      * All config. options available here:
      * https://cookieconsent.orestbida.com/reference/configuration-reference.html
      */
     listenForConsent({ setLoadScript });
     CookieConsent.run({
-      revision: 1,
+      revision: 0.1, // Increment this when you make changes to cookie policy
+      autoShow: true,
+      hideFromBots: true,
       cookie: {
         name: "cookie-consent",
-        domain: ".plant-for-the-planet.org",
+        domain: getDomain(),
         path: "/",
         sameSite: "Lax",
         secure: true,
+        expiresAfterDays: 365,
       },
       guiOptions: {
         consentModal: {
@@ -105,157 +119,88 @@ export default function CookieConsentBanner() {
           flipButtons: true,
         },
         preferencesModal: {
-          layout: "bar",
-          position: "left",
+          layout: "box",
+          position: "right",
           equalWeightButtons: false,
           flipButtons: true,
         },
       },
       categories: {
         necessary: {
+          enabled: true,
           readOnly: true,
         },
         functionality: {
+          enabled: false,
+          readOnly: false,
+          autoClear: {
+            cookies: [
+              {
+                name: /^(__cf_*|cf_*|substack.*|AWSALBTG.*)/,
+              },
+            ],
+          },
           services: {
-            youtube: {
-              label: "YouTube Videos & (Google)",
-              // onAccept: () => im.acceptService("youtube"),
-              // onReject: () => im.rejectService("youtube"),
+            "substack-newsletter": {
+              label: "Substack Newsletter",
+              // List all Substack related cookies
+              cookies: [
+                {
+                  name: "cf_clearance",
+                  domain: ".substack.com",
+                },
+                {
+                  name: "__cf_bm",
+                  domain: ".substack.com",
+                },
+                {
+                  name: "cookie_storage_key",
+                  domain: ".substack.com",
+                },
+                {
+                  name: "substack.lli",
+                  domain: ".substack.com",
+                },
+                {
+                  name: "AWSALBTG",
+                  domain: ".substack.com",
+                },
+                {
+                  name: "AWSALBTGCORS",
+                  domain: ".substack.com",
+                },
+              ],
             },
           },
         },
-        analytics: {
-          services: {
-            "google-analytics": {
-              label: "Google Analytics",
-              onAccept: () => {
-                // gtag("consent", "update", {
-                //   analytics_storage: "granted",
-                // });
-              },
-              onReject: () => {
-                // gtag("consent", "update", {
-                //   analytics_storage: "denied",
-                // });
-              },
-            },
-            "microsoft-clarity": {
-              label: "Microsoft Clarity",
-              onAccept: () => {
-                // if (typeof clarity === "function") {
-                //   clarity("consent");
-                // }
-              },
-              onReject: () => {
-                // if (typeof clarity === "function") {
-                //   clarity("stop");
-                // }
-              },
-            },
-          },
-        },
-        marketing: {},
-        ads: {},
       },
       language: {
         default: "en",
-
-        autoDetect: "browser",
         translations: {
           en,
         },
-        // translations: {
-        //   en: {
-        //     consentModal: {
-        //       // title: "We use cookies",
-        //       // description:
-        //       //   "Hello, this website uses essential cookies to ensure its proper functioning and tracking cookies to understand how you interact with it. The latter is only set after permission.",
-        //       // acceptAllBtn: "Accept all",
-        //       // acceptNecessaryBtn: "Reject all",
-        //       // showPreferencesBtn: "Manage Individual preferences",
-        //       label: "Cookie Consent",
-        //       title: "Hello there, it's cookie time!",
-        //       description:
-        //         "We use cookies on our website. With your consent we also use analytics cookies. You can manage your consent any time.",
-        //       acceptAllBtn: "Accept all",
-        //       closeIconLabel: "Reject all and close",
-        //       acceptNecessaryBtn: "Reject optional",
-        //       showPreferencesBtn: "Manage preferences",
-        //       footer:
-        //         '<a href="https://www.plant-for-the-planet.org/imprint">Imprint</a><a href="https://www.plant-for-the-planet.org/privacy/terms">Privacy Policy</a><a href="https://www.plant-for-the-planet.org/terms-and-conditions">Terms and conditions</a>',
-        //     },
-        //     preferencesModal: {
-        //       // title: "Manage cookie preferences",
-        //       // acceptAllBtn: "Accept all",
-        //       // acceptNecessaryBtn: "Reject all",
-        //       // savePreferencesBtn: "Accept current selection",
-        //       // closeIconLabel: "Close modal",
-        //       // serviceCounterLabel: "Service|Services",
-        //       title: "Consent preferences center",
-        //       acceptAllBtn: "Accept all",
-        //       acceptNecessaryBtn: "Reject optional",
-        //       savePreferencesBtn: "Save preferences",
-        //       closeIconLabel: "Close modal",
-        //       serviceCounterLabel: "Service|Services",
-        //       sections: [
-        //         {
-        //           title: "Your Privacy Choices",
-        //           description: `We use cookies to ensure basic website functionality and to improve your online experience. You can choose to opt in or out of each category whenever you want.`,
-        //         },
-        //         {
-        //           title: "Necessary",
-        //           description:
-        //             "Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.",
-        //           linkedCategory: "necessary",
-        //         },
-        //         {
-        //           title: "Functional",
-        //           description:
-        //             "Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.",
-        //           linkedCategory: "functional",
-        //         },
-        //         {
-        //           title: "Analytics",
-        //           description:
-        //             "Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.",
-        //           linkedCategory: "analytics",
-        //         },
-        //         // {
-        //         //   title: 'Performance',
-        //         //   description: 'Performance cookies are used to understand and analyze the key performance indexes of the website which helps in delivering a better user experience for the visitors.',
-        //         //   linkedCategory: 'performance',
-        //         // },
-        //         {
-        //           title: "Advertisement",
-        //           description:
-        //             "Advertisement cookies are used to provide visitors with customized advertisements based on the pages you visited previously and to analyze the effectiveness of the ad campaigns.",
-        //           linkedCategory: "advertisement",
-        //         },
-        //         {
-        //           title: "More information",
-        //           // description: 'For any queries in relation to our policy on cookies and your choices, please <a href="/contact">contact us</a>.',
-        //           description:
-        //             "For any queries in relation to our policy on cookies and your choices, please contact us.",
-        //         },
-        //       ],
-        //     },
-        //   },
-        // },
+      },
+      onFirstConsent: () => {
+        // Store consent status to prevent re-prompting
+        localStorage.setItem("ccConsentGiven", "true");
+      },
+      onConsent: () => {
+        // Handle Substack iframe visibility based on consent
+        const newsletterIframe = document.querySelector(
+          'iframe[src*="substack.com"]'
+        ) as HTMLIFrameElement | null;
+        if (newsletterIframe) {
+          if (CookieConsent.acceptedCategory("functionality")) {
+            newsletterIframe.style.display = "block";
+          } else {
+            newsletterIframe.style.display = "none";
+          }
+        }
       },
     });
   }, []);
 
-  return (
-    <>
-      {loadScript && (
-        <Script
-          async
-          strategy="lazyOnload"
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-        />
-      )}
-    </>
-  );
+  return null;
 }
 
 export { resetCookieConsent, updateCookieConsent };

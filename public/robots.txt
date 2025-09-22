@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tfffwatch.org/sitemap.xml
+
+# Disallow potential sensitive paths
+Disallow: /api/
