@@ -36,16 +36,13 @@ export function Logo() {
       <Link href="/">
         <h1>
           <Image
-            className="w-[160px] h-[24px] lg:w-[192px] lg:h-[24px]"
+            className="w-[160px] h-[24px] lg:w-[256px] lg:h-[48px]"
             width={256}
             height={32}
-            src="/assets/tfffwatch.svg"
+            src="/assets/tfffwatch-header-logo.svg"
             alt="TFFF Watch"
           />
         </h1>
-        <p className="text-xs tracking-[0.14em] lg:text-sm lg:tracking-[0.20em] font-light">
-          FOREVER STARTS NOW
-        </p>
       </Link>
     </div>
   );
