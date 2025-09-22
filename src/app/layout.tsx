@@ -40,8 +40,8 @@ export default function RootLayout({
         <Script
           defer
           type="javascript/blocked" // Initially blocked
-          src="https://umami-xgos4ssg4g4cg00k0cwo48cw.gopher.startplanting.org/script.js"
-          data-website-id="1ab96188-beb9-4bea-91c8-e0733d35018d"
+          src="https://umami-xgos4ssg4g4cg00k0cgo48cw.gopher.startplanting.org/script.js"
+          data-website-id="8faac63b-1749-4ffc-8752-63beb881f643"
           data-domains="tfffwatch.org,www.tfffwatch.org,tfff-watch.vercel.app"
         />
       )}
