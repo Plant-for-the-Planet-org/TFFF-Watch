@@ -1,5 +1,4 @@
 import Br from "@/components/ui/Br";
-import Hr from "@/components/ui/Hr";
 import {
   // extractLists,
   serializeEndorsements,
@@ -29,73 +28,87 @@ export default function InvestmentTrackerContent({
       </div>
       <Br cn="hidden lg:block" />
 
-      <div className="extra-padding-x-4">
-        <div>
-          <h2 className="font-bold typo-h2 flex items-center gap-2">
-            <Image
-              width={32}
-              height={32}
-              src="/assets/investment-background.svg"
-              alt="Background"
-            />
-            Background
-          </h2>
-          <Br />
-          <div className="typo-p">
+      <div className="extra-padding-x-4 flex flex-col divide-y divide-base-gray">
+        {background && (
+          <div>
             <div>
-              <p>{background}</p>
-            </div>
-          </div>
-        </div>
-        <Br />
-        <Hr />
-        <Br />
-        <div>
-          <h2 className="font-bold typo-h2 flex items-center gap-2">
-            <Image
-              width={32}
-              height={32}
-              src="/assets/investment-status.svg"
-              alt="Status"
-            />
-            Status
-          </h2>
-          <Br />
-          <div className="typo-p">
-            <p>{status}</p>
-          </div>
-        </div>
-        <Br />
-        <Hr />
-        <Br />
-        <div>
-          <h2 className="font-bold typo-h2 flex items-center gap-2">
-            <Image
-              width={32}
-              height={32}
-              src="/assets/investment-responsible-government-office.svg"
-              alt="Responsible Government Office"
-            />
-            Responsible Government Office
-          </h2>
-          <Br />
-          <div className="typo-p">
-            {serializePersons(responsibile_government_office!).map(
-              (el, key) => (
-                <div key={key}>
-                  <p>
-                    <b>{el.name}</b> · {el.organization}
-                  </p>
-                  <p>{el.email}</p>
-                  <Br />
+              <h2 className="font-bold typo-h2 flex items-center gap-2">
+                <Image
+                  width={32}
+                  height={32}
+                  src="/assets/investment-background.svg"
+                  alt="Background"
+                />
+                Background
+              </h2>
+              <Br />
+              <div className="typo-p">
+                <div>
+                  <p>{background}</p>
                 </div>
-              )
-            )}
+              </div>
+            </div>
+            <Br />
+            {/* <Hr /> */}
           </div>
-        </div>
-        <Br />
-        <Hr />
-        <Br />
+        )}
+
+        {status && (
+          <div>
+            <Br />
+            <div>
+              <h2 className="font-bold typo-h2 flex items-center gap-2">
+                <Image
+                  width={32}
+                  height={32}
+                  src="/assets/investment-status.svg"
+                  alt="Status"
+                />
+                Status
+              </h2>
+              <Br />
+              <div className="typo-p">
+                <p>{status}</p>
+              </div>
+            </div>
+            <Br />
+            {/* <Hr /> */}
+          </div>
+        )}
+
+        {responsibile_government_office && (
+          <div>
+            <Br />
+            <div>
+              <h2 className="font-bold typo-h2 flex items-center gap-2">
+                <Image
+                  width={32}
+                  height={32}
+                  src="/assets/investment-responsible-government-office.svg"
+                  alt="Responsible Government Office"
+                />
+                Responsible Government Office
+              </h2>
+              <Br />
+              <div className="typo-p">
+                {serializePersons(responsibile_government_office!).map(
+                  (el, key) => (
+                    <div key={key}>
+                      <p>
+                        <b>{el.name}</b> · {el.organization}
+                      </p>
+                      <p>{el.email}</p>
+                      <Br />
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+            <Br />
+            {/* <Hr /> */}
+          </div>
+        )}
+
         {/* <div>
           <h2 className="font-bold typo-h2 flex items-center gap-2">
             <Image
@@ -119,59 +132,70 @@ export default function InvestmentTrackerContent({
         <Br />
         <Hr />
         <Br /> */}
-        <div>
-          <h2 className="font-bold typo-h2 flex items-center gap-2">
-            <Image
-              width={32}
-              height={32}
-              src="/assets/investment-endorsement.svg"
-              alt="Endorsements"
-            />
-            Endorsements
-          </h2>
-          <Br />
-          <div className="typo-p">
+
+        {endorsements && (
+          <div>
+            <Br />
             <div>
-              {serializeEndorsements(endorsements!).map((el, key) => (
-                <div key={key}>
-                  <p>{el.statement}</p>
-                  {el?.name && (
-                    <p>
-                      <b>- {el.name}</b>, {el.position}
-                    </p>
-                  )}
-                  <Br />
+              <h2 className="font-bold typo-h2 flex items-center gap-2">
+                <Image
+                  width={32}
+                  height={32}
+                  src="/assets/investment-endorsement.svg"
+                  alt="Endorsements"
+                />
+                Endorsements
+              </h2>
+              <Br />
+              <div className="typo-p">
+                <div>
+                  {serializeEndorsements(endorsements!).map((el, key) => (
+                    <div key={key}>
+                      <p>{el.statement}</p>
+                      {el?.name && (
+                        <p>
+                          <b>- {el.name}</b>, {el.position}
+                        </p>
+                      )}
+                      <Br />
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+            </div>
+            <Br />
+            {/* <Hr /> */}
+          </div>
+        )}
+
+        {CSOs && (
+          <div>
+            <Br />
+            <div>
+              <h2 className="font-bold typo-h2 flex items-center gap-2">
+                <Image
+                  width={32}
+                  height={32}
+                  src="/assets/investment-csos.svg"
+                  alt="CSOs working on TFFF"
+                />
+                CSOs working on TFFF
+              </h2>
+              <Br />
+              <div className="typo-p">
+                {serializePersons(CSOs!).map((el, key) => (
+                  <div key={key}>
+                    <p>
+                      <b>{el?.name}</b> · {el?.organization}
+                    </p>
+                    <p>{el?.email}</p>
+                    <Br />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-        <Br />
-        <Hr />
-        <Br />
-        <div>
-          <h2 className="font-bold typo-h2 flex items-center gap-2">
-            <Image
-              width={32}
-              height={32}
-              src="/assets/investment-csos.svg"
-              alt="CSOs working on TFFF"
-            />
-            CSOs working on TFFF
-          </h2>
-          <Br />
-          <div className="typo-p">
-            {serializePersons(CSOs!).map((el, key) => (
-              <div key={key}>
-                <p>
-                  <b>{el?.name}</b> · {el?.organization}
-                </p>
-                <p>{el?.email}</p>
-                <Br />
-              </div>
-            ))}
-          </div>
-        </div>
+        )}
       </div>
       <Br cn="hidden lg:block" />
     </div>

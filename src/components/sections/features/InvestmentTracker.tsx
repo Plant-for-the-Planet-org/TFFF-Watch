@@ -4,7 +4,6 @@ import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeCh
 import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
 import { api, urls } from "@/utils/axios-helper";
-import { toReadableAmountLong } from "@/utils/number-helper";
 import { InvestmentTrackerSum } from "@/utils/types";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -52,11 +51,10 @@ export default function InvestmentTracker({
           <h2 className="font-bold typo-h2">Investment Tracker</h2>
           <Br />
           <p className="typo-p">
-            The TFFF requires {toReadableAmountLong(target!, true, false)} in
-            sponsor capital. It is to serve as the core of the TFFF&apos;s
-            investments and as junior debt in the case of losses. The TFFF aims
-            to collect the funds from development banks and similar
-            institutions.
+            The TFFF requires $25 billion in sponsor capital from governments
+            and foundations. It is to serve as the core of the TFFF’s
+            investments and as junior debt in the case of losses. The sponsor
+            capital is intended to leverage $100 billion in private investments.
           </p>
           <Br />
           <div className="hidden lg:block">
