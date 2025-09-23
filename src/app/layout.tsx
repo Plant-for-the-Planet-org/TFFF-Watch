@@ -37,13 +37,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       {env.enableUmami && (
-        <Script
+        <script
           defer
-          type="javascript/blocked" // Initially blocked
           src="https://umami-xgos4ssg4g4cg00k0cgo48cw.gopher.startplanting.org/script.js"
           data-website-id="8faac63b-1749-4ffc-8752-63beb881f643"
-          data-domains="tfffwatch.org,www.tfffwatch.org,tfff-watch.vercel.app"
-        />
+        ></script>
       )}
 
       <body className={`${openSans.variable} antialiased`}>
