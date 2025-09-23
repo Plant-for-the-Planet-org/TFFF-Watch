@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import * as CookieConsent from "vanilla-cookieconsent";
+import { updateCookieConsent } from "@/components/CookieConsentBanner";
 
 export default function NewsLetter() {
   const [showNewsletter, setShowNewsletter] = useState(false);
@@ -39,8 +40,14 @@ export default function NewsLetter() {
       ) : (
         <div className="text-center p-4">
           <p>
-            Please accept functionality cookies to view the newsletter
-            subscription form.
+            Please{" "}
+            <button
+              onClick={updateCookieConsent}
+              className="text-primary hover:underline hover:cursor-pointer focus:outline-none"
+            >
+              accept functionality cookies
+            </button>{" "}
+            to view the newsletter subscription form.
           </p>
         </div>
       )}
