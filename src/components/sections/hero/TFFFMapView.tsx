@@ -6,7 +6,6 @@ import CountryTFFFCard from "@/components/maps/CountryTFFFCard";
 import {
   CountryMapLegends,
   LegendForDegradedOrDeforested,
-  LegendForSponsorCapitalProviders,
 } from "@/components/maps/MapLegends";
 import WorldMapView from "@/components/maps/WorldMapView";
 import {
@@ -60,8 +59,8 @@ export function TFFFWorldMapView() {
             <Br cn="md:hidden" />
             <LegendForDegradedOrDeforested />
             <Br />
-            <LegendForSponsorCapitalProviders />
-            <Br cn="md:hidden" />
+            {/* <LegendForSponsorCapitalProviders /> */}
+            {/* <Br cn="md:hidden" /> */}
           </div>
           <p className="text-xs text-center flex justify-center items-center gap-2">
             <Image
