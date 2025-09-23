@@ -22,7 +22,7 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   title: "TFFF Watch · Forever Starts Now",
   description:
-    "We track investment negotiations and uses satellite analysis to show how much rainforest countries would receive from the TFFF.",
+    "We track investment negotiations and use satellite analysis to show how much rainforest countries would receive from the TFFF.",
   other: {
     "cookie-policy":
       "We use necessary cookies and optional functionality cookies for newsletter features",
