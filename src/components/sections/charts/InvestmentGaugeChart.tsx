@@ -86,7 +86,7 @@ export default function InvestmentGaugeChart({
     _data[2].value = 100 - _data[0].value - _data[1].value;
     _data[0].labelPosition = calculatePercentage(invested, target);
     _data[1].labelPosition = calculatePercentage(pledged, target);
-    _data[2].labelPosition = 100 - _data[0].value - _data[1].value;
+    // _data[2].labelPosition = 100 - _data[0].value - _data[1].value; // TODO: Better value calculation is needed.
     setChartData(adjustLabelPositions(_data));
   }, [invested, pledged, target]);
 
