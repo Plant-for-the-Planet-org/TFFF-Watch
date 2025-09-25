@@ -60,6 +60,27 @@ export default function AboutTFFFWatch() {
             <Br />
             <div className="typo-p">
               <p>
+                <b>A conservative assessment</b>
+              </p>
+              <Br />
+              <p>
+                The WRI’s Global Forest Watch forest classification tends to
+                come to higher deforestation and degradation assessments than
+                its main alternative EU’s Joint Research Center classification.
+                By using the former as the basis for our model, we have choosen
+                to opt for the stricter option which disqualifies more countries
+                and results in lower payouts: Better to underestimate than
+                overestimate payouts.
+              </p>
+              <Br />
+              <p>
+                Under the TFFF rules, countries will publish their own
+                assessments based on which their payouts are calculated. While
+                these will have to follow certain TFFF standards, countries will
+                likely choose more permissive models and lead to higher payouts.
+              </p>
+              <Br />
+              <p>
                 Deforestation and degradation areas are highly sensitive to
                 small changes in methodology. Since the monitoring rules as set
                 out in Concept Note 3.0 do not specify data sources or lack key
