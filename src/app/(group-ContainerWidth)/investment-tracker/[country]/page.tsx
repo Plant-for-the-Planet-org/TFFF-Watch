@@ -63,6 +63,7 @@ the current analysis.`;
   }
 
   let data: InvestmentTrackerForCountry | null = null;
+  let richData: InvestmentTrackerForCountry | null = null;
 
   try {
     const results = await api<InvestmentTrackerForCountry[]>({
@@ -72,6 +73,14 @@ the current analysis.`;
       token: "",
     });
     data = results[0];
+
+    const res = await api<InvestmentTrackerForCountry[]>({
+      url: urls.investmentTrackerRich,
+      query: { country: capitalize(country) },
+      method: "GET",
+      token: "",
+    });
+    richData = res[0];
   } catch (error) {
     console.error("Error fetching news:", error);
   }
@@ -91,13 +100,17 @@ the current analysis.`;
           </>
         )}
         <InvestmentTrackerContent
-          last_updated={data.last_updated}
-          status={data.status}
-          background={data.background}
-          endorsements={data.endorsements}
-          CSOs={data.CSOs}
-          how_an_investment_could_work={data.How_an_investment_could_work}
-          responsibile_government_office={data.responsibile_government_office}
+          last_updated={richData?.last_updated}
+          status={richData?.status ?? ""}
+          background={richData?.background ?? ""}
+          endorsements={richData?.endorsements ?? ""}
+          CSOs={richData?.CSOs ?? ""}
+          how_an_investment_could_work={
+            richData?.How_an_investment_could_work ?? ""
+          }
+          responsibile_government_office={
+            richData?.responsibile_government_office ?? ""
+          }
         />
         <Br />
       </div>

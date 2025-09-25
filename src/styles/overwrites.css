@@ -34,3 +34,5 @@
 .maplibregl-canvas {
   outline: none;
 }
+
+@import "./tiptap-overwrite.css";

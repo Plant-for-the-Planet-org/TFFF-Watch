@@ -1,3 +1,5 @@
+import { JSONContent } from "@tiptap/react";
+
 export function extractLists(text: string) {
   if (!text) return [];
   const output = text.split("- ");
@@ -81,3 +83,29 @@ export function formatPublisherForCardBadge(
   }
   return text;
 }
+
+export const hasContent = (
+  content: string | JSONContent | null | undefined
+): boolean => {
+  if (!content) return false;
+
+  // If content is JSON
+  if (typeof content === "object") {
+    // Check if content has any text nodes
+    const hasText = (node: JSONContent): boolean => {
+      if (node.type === "text" && node.text?.trim()) {
+        return true;
+      }
+
+      if (node.content) {
+        return node.content.some(hasText);
+      }
+
+      return false;
+    };
+
+    return hasText(content);
+  }
+
+  return false;
+};
