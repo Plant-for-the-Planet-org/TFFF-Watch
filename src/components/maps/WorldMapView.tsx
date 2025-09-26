@@ -223,7 +223,7 @@ export default function WorldMapView() {
               }}
             />
           </Source>
-          <NavigationControl position="bottom-right" showCompass={false} />
+          {/* <NavigationControl position="bottom-right" showCompass={false} /> */}
           {/* <AttributionControl compact={false} /> */}
         </Map>
       </div>
