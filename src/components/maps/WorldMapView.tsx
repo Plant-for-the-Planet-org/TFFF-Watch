@@ -6,13 +6,7 @@ import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import * as turf from "@turf/turf";
 import { useWindowSize } from "@uidotdev/usehooks";
-import {
-  Layer,
-  Map,
-  MapRef,
-  NavigationControl,
-  Source,
-} from "@vis.gl/react-maplibre";
+import { Layer, Map, MapRef, Source } from "@vis.gl/react-maplibre";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
