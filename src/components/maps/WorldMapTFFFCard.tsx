@@ -65,7 +65,8 @@ export function WorldMapTFFFCard_() {
       ref={wrapperRef}
       className="absolute z-50"
       style={{
-        left: windowWidth && windowWidth < 1024 ? position.left : point?.x ?? 0,
+        left:
+          windowWidth && windowWidth < 1024 ? position.left - 8 : point?.x ?? 0,
         top: windowWidth && windowWidth < 1024 ? position.top : point?.y ?? 0,
         transform:
           windowWidth && windowWidth < 1024

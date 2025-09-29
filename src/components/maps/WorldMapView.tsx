@@ -6,12 +6,19 @@ import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import * as turf from "@turf/turf";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Layer, Map, MapRef, Source } from "@vis.gl/react-maplibre";
+import {
+  Layer,
+  Map,
+  MapRef,
+  NavigationControl,
+  Source,
+  ViewStateChangeEvent,
+} from "@vis.gl/react-maplibre";
 import type { GeoJSON, GeoJsonProperties, Geometry } from "geojson";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import countries from "./ne_50m_admin_0_countries.geo.json";
 import WorldMapTFFFCard from "./WorldMapTFFFCard";
 // import countries from "./worldboundrycorrected.geo.json";
@@ -136,16 +143,16 @@ export default function WorldMapView() {
     }
   }, [forestCoverChangeDataByYear]);
 
-  // const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
-  //   const newCenter = [viewState.longitude, viewState.latitude];
-  //   if (turf.booleanPointInPolygon(newCenter, GEOFENCE)) {
-  //     setViewState({
-  //       zoom: viewState.zoom,
-  //       longitude: newCenter[0],
-  //       latitude: newCenter[1],
-  //     });
-  //   }
-  // }, []);
+  const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
+    const newCenter = [viewState.longitude, viewState.latitude];
+    if (turf.booleanPointInPolygon(newCenter, GEOFENCE)) {
+      setViewState({
+        zoom: viewState.zoom,
+        longitude: newCenter[0],
+        latitude: newCenter[1],
+      });
+    }
+  }, []);
 
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
@@ -173,6 +180,7 @@ export default function WorldMapView() {
   return (
     <>
       <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
+        {/* <pre>{JSON.stringify(viewState, null, 2)}</pre> */}
         <Map
           ref={mapRef}
           {...viewState}
@@ -187,7 +195,7 @@ export default function WorldMapView() {
           interactive={true}
           attributionControl={false}
           renderWorldCopies={false}
-          // onMove={onMove}
+          onMove={onMove}
           onClick={onClick}
           onLoad={() => {
             const map = mapRef.current?.getMap();
@@ -217,7 +225,7 @@ export default function WorldMapView() {
               }}
             />
           </Source>
-          {/* <NavigationControl position="bottom-right" showCompass={false} /> */}
+          <NavigationControl position="bottom-right" showCompass={false} />
           {/* <AttributionControl compact={false} /> */}
         </Map>
       </div>
