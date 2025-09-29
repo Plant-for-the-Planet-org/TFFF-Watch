@@ -34,6 +34,7 @@ export default function CountryListChips({ country }: Props) {
             )}
             key={key}
             href={`/investment-tracker/${el.label}`}
+            scroll={false}
           >
             {el?.noFlag ? (
               <p className="mr-1">{el.emoji}</p>

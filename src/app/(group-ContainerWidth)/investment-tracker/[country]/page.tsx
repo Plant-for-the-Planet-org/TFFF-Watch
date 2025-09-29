@@ -1,4 +1,4 @@
-import CountryListChips from "@/components/sections/features/CaountryListChips";
+import CountryListChips from "@/components/sections/features/CountryListChips";
 import InvestmentProgress from "@/components/sections/features/InvestmentProgress";
 import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
 import InvestmentTrackerContent from "@/components/sections/features/InvestmentTrackerContent";
