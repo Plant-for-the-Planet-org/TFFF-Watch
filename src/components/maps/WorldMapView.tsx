@@ -19,9 +19,9 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import countries from "./ne_50m_admin_0_countries.geo.json";
+// import countries from "./ne_50m_admin_0_countries.geo.json";
+import countries from "./countries-optimized.geo.json";
 import WorldMapTFFFCard from "./WorldMapTFFFCard";
-// import countries from "./worldboundrycorrected.geo.json";
 
 export const GEOFENCE = turf.polygon([
   [

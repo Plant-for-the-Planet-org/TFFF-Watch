@@ -17,9 +17,9 @@ import type {
 } from "geojson";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
-import countries from "./ne_50m_admin_0_countries.geo.json";
+// import countries from "./ne_50m_admin_0_countries.geo.json";
+import countries from "./countries-optimized.geo.json";
 import { api, urls } from "@/utils/axios-helper";
-// import countries from "./worldboundrycorrected.geo.json";
 
 interface VisParams {
   palette: string;
