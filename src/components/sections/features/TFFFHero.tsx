@@ -69,7 +69,9 @@ export default function TFFFHero() {
         <Image
           height="700"
           width="1440"
-          priority
+          loading="lazy"
+          decoding="async"
+          // priority
           // fetchPriority="high"
           className="w-full h-full h-100vh max-h-[64vh] object-cover object-center"
           src="/assets/tropical-rainforest.webp"

@@ -1,5 +1,3 @@
-// "use client";
-
 import Br from "@/components/ui/Br";
 import { ResponsiveContainer } from "@/components/ui/Container";
 import { api, urls } from "@/utils/axios-helper";
