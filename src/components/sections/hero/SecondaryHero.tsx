@@ -14,8 +14,7 @@ export default function SecondaryHero(props: Props) {
           className="w-full aspect-[3.5] lg:aspect-[4.5] object-bottom object-cover"
           width={1320}
           height={277}
-          fetchPriority="high"
-          src="/assets/secondary-hero.jpg"
+          src="/assets/secondary-hero.webp"
           alt="The TFFF Idea"
         />
       </div>
