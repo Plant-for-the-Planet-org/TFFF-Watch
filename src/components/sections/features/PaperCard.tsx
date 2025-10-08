@@ -21,7 +21,9 @@ export default function PaperCard(props: Props) {
           <img
             className="w-full aspect-[4/3] p-4 object-contain object-center transition-transform duration-300 ease-in-out group-hover:scale-110"
             src={props.image}
-            alt="news"
+            alt={props.title}
+            loading="lazy"
+            decoding="async"
           />
           <div className="md:hidden absolute bottom-0 right-0 m-1">
             <IconButton href={props.url} small external />

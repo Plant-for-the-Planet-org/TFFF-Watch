@@ -20,7 +20,9 @@ export default function NewsCard(props: Props) {
         <img
           className="aspect-[2.42] md:aspect-[4/3] object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
           src={props.image}
-          alt="news"
+          alt={props.title}
+          loading="lazy"
+          decoding="async"
         />
         <div className="absolute bottom-0 inset-x-0 px-3 pb-3">
           <div className="flex justify-between items-end">
