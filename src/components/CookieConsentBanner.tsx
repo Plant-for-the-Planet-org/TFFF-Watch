@@ -58,26 +58,34 @@ export default function CookieConsentBanner() {
           enabled: true,
           readOnly: true,
         },
+
+        // Umami analytics: always enabled (user cannot toggle). Preferences section removed below.
         analytics: {
-          enabled: false,
-          readOnly: false,
-          autoClear: {
-            cookies: [
-              {
-                name: /_umami.*/,
-                domain: ".startplanting.org",
-              },
-            ],
-          },
+          enabled: true,
+          readOnly: true,
         },
+
         functionality: {
           enabled: false,
           readOnly: false,
           autoClear: {
             cookies: [
-              {
-                name: /^(__cf_*|cf_*|substack.*|AWSALBTG.*)/,
-              },
+              // Keep application functionality cookies here (but move heavy third-party patterns out)
+              // cookie_storage_key is presented to user in the preferences table below so they can opt-in to it.
+            ],
+          },
+        },
+
+        // Optional third-party cookies that the app can run without.
+        thirdParty: {
+          enabled: false,
+          readOnly: false,
+          autoClear: {
+            cookies: [
+              // Cloudflare & AWS and similar third-party cookies
+              { name: "cf_clearance" },
+              { name: "__cf_bm" },
+              { name: /^(__cf_.*|cf_.*|substack.*|AWSALBTG.*|AWSALBTGCORS.*)/ },
             ],
           },
         },
@@ -104,17 +112,32 @@ export default function CookieConsentBanner() {
                       service: "Service",
                     },
                     body: [
-                      // Filter only non-commented cookies from the original file
+                      // Filter only truly necessary cookies from the original file
                       ...(en.preferencesModal.sections[1].cookieTable?.body?.filter(
-                        (cookie) =>
-                          cookie.service.includes("Plans for the Planet") ||
-                          cookie.service.includes("CONSENT")
+                        (cookie) => {
+                          const name = String(cookie.name ?? "");
+                          const service = String(cookie.service ?? "");
+
+                          // Exclude optional third-party cookies by name or service
+                          const isOptionalThirdParty =
+                            /^(cf_clearance|__cf_bm|__cf_.*|cf_.*|substack.*|AWSALBTG.*|AWSALBTGCORS.*)/i.test(
+                              name
+                            ) || /cloudflare|aws|substack/i.test(service);
+
+                          // Keep only cookies that are clearly part of the site's necessary set
+                          return (
+                            !isOptionalThirdParty &&
+                            (service.includes("Plans for the Planet") ||
+                              service.includes("CONSENT"))
+                          );
+                        }
                       ) ?? []),
                     ],
                   },
                 },
 
                 // Third section - analytics
+                /* Disabled analytics preferences section on purpose: Umami is always enabled and does not need to be allowed by the user.
                 {
                   title: "Analytics Cookies",
                   description:
@@ -133,13 +156,70 @@ export default function CookieConsentBanner() {
                     ],
                   },
                 },
+                */
 
-                // Fourth section - functionality
+                // Fourth section - functionality (now includes cookie_storage_key as a separate optional cookie)
                 {
                   title: "Functionality Cookies",
                   description:
                     "Enable enhanced functionality like newsletter subscriptions.",
                   linkedCategory: "functionality",
+                  cookieTable: {
+                    headers: {
+                      name: "Cookie",
+                      description: "Description",
+                    },
+                    body: [
+                      // existing rows (if any) from original functionality section - try to preserve them
+                      ...(en.preferencesModal.sections.find(
+                        (s) =>
+                          s.title?.includes("Functionality") ||
+                          s.linkedCategory === "functionality"
+                      )?.cookieTable?.body ?? []),
+                      // Add cookie_storage_key as an optional functionality cookie
+                      {
+                        name: "cookie_storage_key",
+                        description:
+                          "Stores temporary state for client-side features (optional). Enable to persist specific functionality.",
+                        service: "App",
+                      },
+                    ],
+                  },
+                },
+
+                // Optional third-party cookies section (new)
+                {
+                  title: "Optional third-party Cookies",
+                  description:
+                    "Cookies used by third-party services (Cloudflare, AWS load balancers, Substack). The application can run without these.",
+                  linkedCategory: "thirdParty",
+                  cookieTable: {
+                    headers: {
+                      name: "Cookie",
+                      description: "Description",
+                    },
+                    body: [
+                      {
+                        name: "cf_clearance",
+                        description:
+                          "Cloudflare clearance cookie for CDN routing",
+                      },
+                      {
+                        name: "__cf_bm",
+                        description:
+                          "Cloudflare bot management cookie used for bot mitigation.",
+                      },
+                      {
+                        name: "AWSALBTG* / AWSALBTGCORS*",
+                        description:
+                          "AWS load balancer cookies for session stickiness.",
+                      },
+                      {
+                        name: "substack.*",
+                        description: "Substack integration cookies.",
+                      },
+                    ],
+                  },
                 },
 
                 // Last section - more information
@@ -155,15 +235,14 @@ export default function CookieConsentBanner() {
         localStorage.setItem("ccConsentGiven", "true");
       },
       onConsent: ({}) => {
-        // Handle newsletter visibility
+        // Notify app components about consent changes
         document.dispatchEvent(new Event("cookieConsentUpdate"));
 
-        // Handle Umami analytics
+        // Ensure Umami script is always enabled regardless of consent preferences.
+        // Look for a script tag that has data-website-id and remove any blocking type attribute.
         const script = document.querySelector("script[data-website-id]");
-        if (CookieConsent.acceptedCategory("analytics")) {
-          script?.removeAttribute("type"); // Enable script
-        } else {
-          script?.setAttribute("type", "javascript/blocked"); // Disable script
+        if (script) {
+          script.removeAttribute("type");
         }
       },
     });
