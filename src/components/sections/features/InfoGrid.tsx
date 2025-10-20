@@ -17,7 +17,7 @@ export default function InfoGrid() {
         <Br />
         <div className="flex flex-wrap gap-4 justify-center items-center">
           <Button type="link" href="/the-tfff-explained" external>
-            About the Fund
+            About the Facility
           </Button>
           <Button type="link" href="/about-tfff-watch" external>
             Our Methodology

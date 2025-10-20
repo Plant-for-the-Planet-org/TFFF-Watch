@@ -38,7 +38,7 @@ export default function HowTFFFWorks() {
       <div className="bg-[#E7F8EE] border-2 border-dashed border-[#6FCE97] rounding-lg padding-3">
         <div className="text-center">
           <h2 className="font-bold typo-h2">Example recipient country </h2>
-          <p className="typo-p">73 countries are potentially eligible </p>
+          <p className="typo-p">74 countries are potentially eligible </p>
         </div>
         <Br />
         <div className="flex gap-2 sm:gap-4 md:gap-8 xl:gap-16 justify-between overflow-auto">

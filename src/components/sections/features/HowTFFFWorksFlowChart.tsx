@@ -136,8 +136,7 @@ export default function HowTFFFWorksFlowChart() {
           </h2>
           <Br />
           <p className="text-xs">
-            The fund will primarily invest in climate and sustainability-linked
-            instruments (e.g., green, blue, or sustainable bonds) in
+            The fund will primarily invest in fixed-income instruments in
             ODA-eligible countries.
           </p>
           <Br />
@@ -186,7 +185,7 @@ export default function HowTFFFWorksFlowChart() {
           <h3 className="text-white font-bold typo-h3">
             Tropical Forest Forever Facility (TFFF)
           </h3>
-          <p className="text-white typo-p">also managed by the World Bank</p>
+          <p className="text-white typo-p">hosted by the World Bank</p>
           <Br />
         </div>
       </div>
