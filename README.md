@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TFFF Watch
 
-## Getting Started
+TFFF Watch — tracks proposed Tropical Forest Forever Facility payouts and visualises forest loss in eligible countries.
 
-First, run the development server:
+## Introduction
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+TFFF Watch is a web application that surfaces estimated payouts and forest-loss indicators to improve transparency and public oversight of tropical forest finance commitments.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What is TFFF Watch?
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+A lightweight Next.js app that combines geospatial maps, summary tables and charts to show where payouts are proposed and how forest loss trends relate to those proposals. It helps stakeholders explore spatial and temporal patterns without requiring specialist tools.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
 
-## Learn More
+- Interactive map visualising forest loss and project areas.
+- Payout estimates and simple summaries for quick comparison.
+- Filter and search by country, region and project attributes.
+- Exportable tables and links to source datasets for verification.
 
-To learn more about Next.js, take a look at the following resources:
+## Data & Methodology
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Data are combined from public datasets and project disclosures, processed into map tiles and aggregated summaries. Processing emphasises reproducibility and transparency: sources, transformation steps and assumptions are documented alongside derived results so users can review and validate findings.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Screenshot
 
-## Deploy on Vercel
+![TFFF Watch Screenshot](#file:tfffwatch.org_.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See the included LICENSE file for license text and attribution requirements.
