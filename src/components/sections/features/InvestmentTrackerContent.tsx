@@ -1,12 +1,9 @@
 import Br from "@/components/ui/Br";
-import {
-  // extractLists,
-  serializeEndorsements,
-  serializePersons,
-} from "@/utils/content-helper";
+import ContentSection from "@/components/ui/ContentSection";
 import { formatDateAgo } from "@/utils/datetime-helper";
 import { InvestmentTrackerForCountry } from "@/utils/types";
-import Image from "next/image";
+import RichToHTML from "./RichToHTML";
+import { hasContent } from "@/utils/content-helper";
 
 type Props = Partial<InvestmentTrackerForCountry> & {
   how_an_investment_could_work?: string;
@@ -18,183 +15,56 @@ export default function InvestmentTrackerContent({
   background,
   endorsements,
   CSOs,
-  // how_an_investment_could_work,
   responsibile_government_office,
 }: Props) {
   return (
-    <div className="border border-base-gray rounding-xl padding-3">
+    <div className="border border-base-gray rounded-xl padding-3">
       <div className="text-end text-[#828282] italic">
         <p>Updated {formatDateAgo(last_updated!)}</p>
       </div>
       <Br cn="hidden lg:block" />
 
       <div className="extra-padding-x-4 flex flex-col divide-y divide-base-gray">
-        {background && (
-          <div>
-            <div>
-              <h2 className="font-bold typo-h2 flex items-center gap-2">
-                <Image
-                  width={32}
-                  height={32}
-                  src="/assets/investment-background.svg"
-                  alt="Background"
-                />
-                Background
-              </h2>
-              <Br />
-              <div className="typo-p">
-                <div>
-                  <p>{background}</p>
-                </div>
-              </div>
-            </div>
-            <Br />
-            {/* <Hr /> */}
-          </div>
+        {hasContent(background) && (
+          <ContentSection
+            icon="/assets/investment-background.svg"
+            title="Background"
+          >
+            <RichToHTML content={background!} />
+          </ContentSection>
         )}
 
-        {status && (
-          <div>
-            <Br />
-            <div>
-              <h2 className="font-bold typo-h2 flex items-center gap-2">
-                <Image
-                  width={32}
-                  height={32}
-                  src="/assets/investment-status.svg"
-                  alt="Status"
-                />
-                Status
-              </h2>
-              <Br />
-              <div className="typo-p">
-                <p>{status}</p>
-              </div>
-            </div>
-            <Br />
-            {/* <Hr /> */}
-          </div>
+        {hasContent(status) && (
+          <ContentSection icon="/assets/investment-status.svg" title="Status">
+            <RichToHTML content={status!} />
+          </ContentSection>
         )}
 
-        {responsibile_government_office && (
-          <div>
-            <Br />
-            <div>
-              <h2 className="font-bold typo-h2 flex items-center gap-2">
-                <Image
-                  width={32}
-                  height={32}
-                  src="/assets/investment-responsible-government-office.svg"
-                  alt="Responsible Government Office"
-                />
-                Responsible Government Office
-              </h2>
-              <Br />
-              <div className="typo-p">
-                {serializePersons(responsibile_government_office!).map(
-                  (el, key) => (
-                    <div key={key}>
-                      <p>
-                        <b>{el.name}</b> · {el.organization}
-                      </p>
-                      <p>{el.email}</p>
-                      <Br />
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
-            <Br />
-            {/* <Hr /> */}
-          </div>
+        {hasContent(responsibile_government_office) && (
+          <ContentSection
+            icon="/assets/investment-responsible-government-office.svg"
+            title="Responsible Government Office"
+          >
+            <RichToHTML content={responsibile_government_office!} />
+          </ContentSection>
         )}
 
-        {/* <div>
-          <h2 className="font-bold typo-h2 flex items-center gap-2">
-            <Image
-              width={32}
-              height={32}
-              src="/assets/investment-how.svg"
-              alt="How an investment could work"
-            />
-            How an investment could work
-          </h2>
-          <Br />
-          <div className="typo-p">
-            {extractLists(how_an_investment_could_work!).map((el, key) => (
-              <div key={key}>
-                <p>{el}</p>
-                <Br />
-              </div>
-            ))}
-          </div>
-        </div> 
-        <Br />
-        <Hr />
-        <Br /> */}
-
-        {endorsements && (
-          <div>
-            <Br />
-            <div>
-              <h2 className="font-bold typo-h2 flex items-center gap-2">
-                <Image
-                  width={32}
-                  height={32}
-                  src="/assets/investment-endorsement.svg"
-                  alt="Endorsements"
-                />
-                Endorsements
-              </h2>
-              <Br />
-              <div className="typo-p">
-                <div>
-                  {serializeEndorsements(endorsements!).map((el, key) => (
-                    <div key={key}>
-                      <p>{el.statement}</p>
-                      {el?.name && (
-                        <p>
-                          <b>- {el.name}</b>, {el.position}
-                        </p>
-                      )}
-                      <Br />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <Br />
-            {/* <Hr /> */}
-          </div>
+        {hasContent(endorsements) && (
+          <ContentSection
+            icon="/assets/investment-endorsement.svg"
+            title="Endorsements"
+          >
+            <RichToHTML content={endorsements!} />
+          </ContentSection>
         )}
 
-        {CSOs && (
-          <div>
-            <Br />
-            <div>
-              <h2 className="font-bold typo-h2 flex items-center gap-2">
-                <Image
-                  width={32}
-                  height={32}
-                  src="/assets/investment-csos.svg"
-                  alt="CSOs working on TFFF"
-                />
-                CSOs working on TFFF
-              </h2>
-              <Br />
-              <div className="typo-p">
-                {serializePersons(CSOs!).map((el, key) => (
-                  <div key={key}>
-                    <p>
-                      <b>{el?.name}</b> · {el?.organization}
-                    </p>
-                    <p>{el?.email}</p>
-                    <Br />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+        {hasContent(CSOs) && (
+          <ContentSection
+            icon="/assets/investment-csos.svg"
+            title="CSOs working on TFFF"
+          >
+            <RichToHTML content={CSOs!} />
+          </ContentSection>
         )}
       </div>
       <Br cn="hidden lg:block" />
