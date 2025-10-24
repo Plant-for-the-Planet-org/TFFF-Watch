@@ -20,7 +20,7 @@ const investingCountries = [
   // "EU",
   "Brazil",
   "China",
-  // "Indonesia",
+  "Indonesia",
   "Others",
 ];
 
