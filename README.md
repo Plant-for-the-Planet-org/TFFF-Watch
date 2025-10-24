@@ -8,14 +8,12 @@ TFFF Watch is a web application that surfaces estimated payouts and forest-loss 
 
 ## What is TFFF Watch?
 
-A lightweight Next.js app that combines geospatial maps, summary tables and charts to show where payouts are proposed and how forest loss trends relate to those proposals. It helps stakeholders explore spatial and temporal patterns without requiring specialist tools.
+A lightweight app that combines geospatial maps, summary tables and charts to show where payouts are proposed and how forest loss trends relate to those proposals. It helps stakeholders explore spatial and temporal patterns without requiring specialist tools.
 
 ## Features
 
 - Interactive map visualising forest loss and project areas.
 - Payout estimates and simple summaries for quick comparison.
-- Filter and search by country, region and project attributes.
-- Exportable tables and links to source datasets for verification.
 
 ## Data & Methodology
 
