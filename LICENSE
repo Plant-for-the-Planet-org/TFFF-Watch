@@ -1,27 +1,17 @@
-Attribution & License
+PolyForm Noncommercial License 1.0.0 — TFFF Watch
 
 Copyright (c) 2025 Plant-for-the-Planet / TFFF Watch
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This project is licensed under the PolyForm Noncommercial License 1.0.0.
+Full license text: https://polyformproject.org/licenses/noncommercial/1.0.0/
 
-Attribution
+Summary:
 
-- Derivative works or redistributed copies must include a visible attribution
-  to "Plant-for-the-Planet — TFFF Watch" and a link to the original repository
-  where practicable.
+- Permitted: use, inspect, and modify for non-commercial purposes only.
+- Prohibited: commercial use or distribution without separate commercial license.
+- Attribution: derivative works or redistributed copies must include a visible attribution
+  to "Plant-for-the-Planet — TFFF Watch" and a link to the original repository where practicable.
+- Warranty & Liability: provided "AS IS" without warranty; authors not liable for damages.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+For full legal terms, see the official PolyForm Noncommercial 1.0.0 text at the link above.
+If you want to allow commercial use and receive a patent grant, replace this with Apache License 2.0.
