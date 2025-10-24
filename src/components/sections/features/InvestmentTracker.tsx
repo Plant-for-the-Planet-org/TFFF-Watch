@@ -15,11 +15,13 @@ interface InvestmentTrackerProps {
 }
 
 export default function InvestmentTracker({
+  invested = 0,
+  pledged = 0,
   target = 25000000000,
 }: InvestmentTrackerProps) {
   const [capitals, setCapitals] = useState({
-    invested: 0,
-    pledged: 0,
+    invested,
+    pledged,
   });
 
   useEffect(() => {

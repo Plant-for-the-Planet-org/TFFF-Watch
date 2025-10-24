@@ -5,7 +5,10 @@ import InvestmentTrackerContent from "@/components/sections/features/InvestmentT
 import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
 import { PageError } from "@/utils/errors";
-import { InvestmentTrackerForCountry } from "@/utils/types";
+import {
+  InvestmentTrackerForCountry,
+  InvestmentTrackerSum,
+} from "@/utils/types";
 import { Metadata } from "next";
 import { capitalize } from "underscore.string";
 
@@ -66,6 +69,11 @@ the current analysis.`;
   let data: InvestmentTrackerForCountry | null = null;
   let richData: InvestmentTrackerForCountry | null = null;
 
+  let chartData: null | {
+    invested: number;
+    pledged: number;
+  } = null;
+
   try {
     const results = await api<InvestmentTrackerForCountry[]>({
       url: urls.investmentTracker,
@@ -82,6 +90,17 @@ the current analysis.`;
       token: "",
     });
     richData = res[0];
+
+    const chartDataresult = await api<InvestmentTrackerSum[]>({
+      url: urls.investmentTrackerSum,
+      method: "GET",
+      token: "",
+    });
+
+    chartData = {
+      invested: chartDataresult[0].sum_invested_capital,
+      pledged: chartDataresult[0].sum_pledged_capital,
+    };
   } catch (error) {
     console.error("Error fetching news:", error);
   }
@@ -90,7 +109,12 @@ the current analysis.`;
   return (
     <div>
       <div>
-        <InvestmentTracker />
+        {chartData && (
+          <InvestmentTracker
+            invested={chartData.invested}
+            pledged={chartData.pledged}
+          />
+        )}
         <Br />
         <CountryListChips country={capitalize(country)} />
         <Br />
