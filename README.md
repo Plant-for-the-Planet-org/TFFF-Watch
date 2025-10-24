@@ -23,7 +23,7 @@ Data are combined from public datasets and project disclosures, processed into m
 
 ## Screenshot
 
-![TFFF Watch Screenshot](#file:tfffwatch.org_.png)
+![TFFF Watch Screenshot](https://github.com/Plant-for-the-Planet-org/TFFF-Watch/blob/a2182946a484b38a4ba7192122447b9331c3505f/tfffwatch.org_.png)
 
 ## License
 
