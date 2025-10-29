@@ -1,16 +1,31 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 import { twMerge } from "tailwind-merge";
-import { DatasetTabsProps, DatasetType } from "./types";
+import { DatasetType } from "./types";
+
+interface DatasetTabsProps {
+  tabsClassName?: string;
+  activeTabClassName?: string;
+  inactiveTabClassName?: string;
+  disabled?: boolean;
+  defaultDataset?: DatasetType;
+}
 
 export default function DatasetTabs({
-  selectedDataset,
-  onDatasetChange,
   tabsClassName,
   activeTabClassName,
   inactiveTabClassName,
   disabled = false,
+  defaultDataset = "JRC",
 }: DatasetTabsProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Get current dataset from URL or use default
+  const selectedDataset =
+    (searchParams.get("dataset") as DatasetType) || defaultDataset;
   const datasets: { key: DatasetType; label: string; description: string }[] = [
     { key: "GFW", label: "GFW", description: "Global Forest Watch data" },
     { key: "JRC", label: "JRC", description: "Joint Research Centre data" },
@@ -23,11 +38,16 @@ export default function DatasetTabs({
     "bg-transparent text-primary-dark hover:bg-white/50";
   const disabledClasses = "opacity-50 cursor-not-allowed";
 
-  const handleTabClick = (dataset: DatasetType) => {
-    if (!disabled) {
-      onDatasetChange(dataset);
-    }
-  };
+  const handleTabClick = useCallback(
+    (dataset: DatasetType) => {
+      if (!disabled) {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("dataset", dataset);
+        router.push(`?${params.toString()}`, { scroll: false });
+      }
+    },
+    [disabled, router, searchParams]
+  );
 
   return (
     <div

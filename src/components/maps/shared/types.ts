@@ -155,14 +155,13 @@ export interface MapContainerProps {
   padding?: "none" | "small" | "medium" | "large";
 }
 
-// DatasetTabs component props
+// DatasetTabs component props (now URL-driven)
 export interface DatasetTabsProps {
-  selectedDataset: DatasetType;
-  onDatasetChange: (dataset: DatasetType) => void;
   tabsClassName?: string;
   activeTabClassName?: string;
   inactiveTabClassName?: string;
   disabled?: boolean;
+  defaultDataset?: DatasetType;
 }
 
 // Map click event interface
