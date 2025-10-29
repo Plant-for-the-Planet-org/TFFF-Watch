@@ -177,7 +177,7 @@ export default function CountryTFFFCard({
 }
 
 function MinimumCriteria({
-  currentYear,
+  // currentYear,
   eligibility_deforestation_rate_below_half_percent,
   eligibility_decreasing_trend_of_deforestation,
 }: {
@@ -197,9 +197,10 @@ function MinimumCriteria({
               ? "/assets/check.svg"
               : "/assets/x.svg"
           }
-          alt="Deforestation in current year less than 0.5%"
+          alt="Three-year average deforestation rate less than 0.5%"
         />
-        Deforestation in {currentYear} less than 0.5%
+        {/* Deforestation in {currentYear} less than 0.5% */}
+        Three-year average deforestation rate less than 0.5%
       </p>
       <div className="my-1"></div>
       <p className="flex items-center gap-2">

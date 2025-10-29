@@ -35,7 +35,7 @@ export default function HowTFFFWorksContent() {
             payments are subject to deductions:
           </p>
           <Br />
-          <ul className="text-xs list-disc ml-4.5">
+          <ul className="typo-p list-disc ml-4.5">
             <li>$400-$800 are deducted per hectare deforested.</li>
             <li>$140 per hectare degraded.</li>
           </ul>
@@ -109,7 +109,7 @@ export default function HowTFFFWorksContent() {
         <div className="typo-p">
           <p>
             The TFFF is intended to operate as a blended finance model, with two
-            parts:a <b>$25 billion sponsor tranche</b> and a{" "}
+            parts: a <b>$25 billion sponsor tranche</b> and a{" "}
             <b>$100 billion senior debt tranche</b>.
           </p>
           <Br />

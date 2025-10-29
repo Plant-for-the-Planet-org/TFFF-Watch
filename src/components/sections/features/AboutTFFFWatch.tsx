@@ -60,6 +60,58 @@ export default function AboutTFFFWatch() {
             <Br />
             <div className="typo-p">
               <p>
+                <b>Global models</b>
+              </p>
+              <Br />
+              <p>
+                Under TFFF rules, participating rainforest countries will
+                calculate the deforestation rates in their country themselves –
+                based on models approved by the TFFF – and submit those as part
+                of their payout claims. Since no such models are currently
+                available, TFFF Watch is based on global models created by
+                Plant-for-the-Planet, using data from Hansen/Global Forest Watch
+                and the JRC’s Tropical Moist Forest.
+              </p>
+              <Br />
+              <p>
+                <b>A conservative assessment</b>
+              </p>
+              <Br />
+              <p>
+                The WRI’s Global Forest Watch forest classification tends to
+                come to higher deforestation and degradation assessments than
+                its main alternative EU’s Joint Research Center classification.
+                By using the former as the basis for our model, we have choosen
+                to opt for the stricter option which disqualifies more countries
+                and results in lower payouts: Better to underestimate than
+                overestimate payouts.
+              </p>
+              <Br />
+              <p>
+                Under the TFFF rules, countries will publish their own
+                assessments based on which their payouts are calculated. While
+                these will have to follow certain TFFF standards, countries will
+                likely choose more permissive models and lead to higher payouts.
+              </p>
+              <Br />
+              <p>
+                Deforestation and degradation areas are highly sensitive to
+                small changes in methodology. Since the monitoring rules as set
+                out in Concept Note 3.0 do not specify data sources or lack key
+                details, we needed to make certain assumptions (see methodology
+                section) for this model. The methodology has not (yet) been
+                peer-reviewed. We intend to update our model as more information
+                becomes available.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="shrink">
+            <h2 className="font-bold typo-h2">Cautionary Note</h2>
+            <Br />
+            <div className="typo-p">
+              <p>
                 <b>A conservative assessment</b>
               </p>
               <Br />
