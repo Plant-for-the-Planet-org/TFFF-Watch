@@ -1,6 +1,7 @@
 import InfoGrid from "@/components/sections/features/InfoGrid";
 import InvestmentTracker from "@/components/sections/features/InvestmentTracker";
 import NewsLetter from "@/components/sections/features/NewsLetter";
+import PlansforthePlanetAnalysis from "@/components/sections/features/PlansforthePlanetAnalysis";
 import RecentNews from "@/components/sections/features/RecentNews";
 import RecentPolicyPapersComentary from "@/components/sections/features/RecentPolicyPapersCommentary";
 import TFFFHero from "@/components/sections/features/TFFFHero";
@@ -23,7 +24,7 @@ export default function Home() {
         <Br />
         <RecentPolicyPapersComentary />
         <Br />
-        <NewsLetter />
+        <PlansforthePlanetAnalysis />
       </div>
     </div>
   );

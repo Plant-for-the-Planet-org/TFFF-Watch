@@ -28,14 +28,12 @@ export default function NewsLetter() {
   }, []);
 
   return (
-    <div className="border border-base-gray outer-rounding outer-padding-3">
+    <div className="outer-rounding">
       {showNewsletter ? (
         <iframe
           src="https://plansfortheplanet.substack.com/embed"
           width="100%"
           height="320"
-          frameBorder="0"
-          scrolling="no"
         />
       ) : (
         <div className="text-center p-4">
