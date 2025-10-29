@@ -1,8 +1,10 @@
 // World Map Components
 export { default as WorldMap } from "./world/WorldMap";
+export { default as WorldMapCard } from "./world/WorldMapCard";
 
 // Country Map Components
 export { default as CountryMap } from "./country/CountryMap";
+export { default as CountryMapCard } from "./country/CountryMapCard";
 
 // Shared Components
 export { default as TFFFCard } from "./shared/TFFFCard";

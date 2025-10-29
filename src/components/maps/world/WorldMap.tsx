@@ -20,7 +20,9 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import countries from "../countries-optimized.geo.json";
-import WorldMapTFFFCard from "../WorldMapTFFFCard";
+import { useWorldMapStore, BRAZIL_DEFAULT_COUNTRY } from "@/stores/mapStore";
+import { WorldMapProps } from "../shared/types";
+import WorldMapCard from "./WorldMapCard";
 
 export const GEOFENCE = turf.polygon([
   [
@@ -32,13 +34,26 @@ export const GEOFENCE = turf.polygon([
   ],
 ]);
 
-export default function WorldMap() {
+export default function WorldMap({
+  defaultSelectedCountry,
+  onCountryClick,
+}: WorldMapProps = {}) {
   const { width } = useWindowSize();
   const forestCoverChangeDataByYear = useForestCoverChangeData(
     (state) => state.forestCoverChangeDataByYear
   );
   const { setPoint, setCountry, setCountrySlug, setCountryISO2, setIsTFFF } =
     useWorldMap();
+
+  // New store integration
+  const {
+    selectedCountry,
+    getCurrentForestData,
+    setSelectedCountry,
+    setClickPosition,
+    defaultCountryLoaded,
+    setDefaultCountryLoaded,
+  } = useWorldMapStore();
 
   const mapRef = useRef<MapRef>(null);
 
@@ -59,13 +74,35 @@ export default function WorldMap() {
     }
   }, [width]);
 
+  // Initialize Brazil default selection
+  useEffect(() => {
+    if (
+      defaultSelectedCountry === "BR" &&
+      !defaultCountryLoaded &&
+      !selectedCountry
+    ) {
+      setSelectedCountry(BRAZIL_DEFAULT_COUNTRY);
+      setDefaultCountryLoaded(true);
+    }
+  }, [
+    defaultSelectedCountry,
+    defaultCountryLoaded,
+    selectedCountry,
+    setSelectedCountry,
+    setDefaultCountryLoaded,
+  ]);
+
   const allCountries = useMemo(() => {
-    if (!forestCoverChangeDataByYear.length) {
+    // Use current forest data from store, fallback to old data
+    const currentData = getCurrentForestData();
+    const dataToUse =
+      currentData.length > 0 ? currentData : forestCoverChangeDataByYear;
+
+    if (!dataToUse.length) {
       return { type: "FeatureCollection", features: [] };
     } else {
-      const transformedForestCoverChangeAll = transformAllForestCoverChangeData(
-        forestCoverChangeDataByYear
-      );
+      const transformedForestCoverChangeAll =
+        transformAllForestCoverChangeData(dataToUse);
 
       const countriesData = countries as unknown as {
         features: Array<{
@@ -134,7 +171,7 @@ export default function WorldMap() {
         features: updatedFeatures,
       };
     }
-  }, [forestCoverChangeDataByYear]);
+  }, [forestCoverChangeDataByYear, getCurrentForestData]);
 
   const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
     const newCenter = [viewState.longitude, viewState.latitude];
@@ -157,16 +194,39 @@ export default function WorldMap() {
     const countrySlug = features?.[0]?.properties?.countrySlug;
     const countryISO2 = features?.[0]?.properties?.["iso_a2"];
 
+    // Update old store (for backward compatibility)
     setPoint(point);
     setCountry(country);
     setCountrySlug(countrySlug);
     setCountryISO2(countryISO2);
 
-    const isTFFF = forestCoverChangeDataByYear.find(
+    const currentData = getCurrentForestData();
+    const dataToUse =
+      currentData.length > 0 ? currentData : forestCoverChangeDataByYear;
+    const isTFFF = dataToUse.find(
       (el) => el["country-iso2"] === countryISO2 || el.country === country
     );
     if (isTFFF) setIsTFFF(true);
     else setIsTFFF(false);
+
+    // Update new store
+    if (country && countryISO2) {
+      const countryData = {
+        iso2: countryISO2,
+        iso3: "", // We don't have ISO3 in the current data
+        name: country,
+        slug: countrySlug || "",
+        flagImgUrl: `http://purecatamphetamine.github.io/country-flag-icons/3x2/${countryISO2}.svg`,
+      };
+
+      setSelectedCountry(countryData);
+      setClickPosition({ x: point.x, y: point.y });
+
+      // Call external callback if provided
+      if (onCountryClick) {
+        onCountryClick(countryData);
+      }
+    }
   };
 
   return (
@@ -221,7 +281,7 @@ export default function WorldMap() {
           <NavigationControl position="bottom-right" showCompass={false} />
         </Map>
       </div>
-      <WorldMapTFFFCard />
+      <WorldMapCard />
 
       <div className="absolute right-0 bottom-0">
         <button
