@@ -19,33 +19,10 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import countries from "../countries-optimized.geo.json";
 import { api, urls } from "@/utils/axios-helper";
+import { useCountryMapStore } from "@/stores/mapStore";
+import { CountryMapProps, LayerData } from "../shared/types";
 
-interface VisParams {
-  palette: string;
-}
-
-interface LayerConfig {
-  name: string;
-  tileUrl: string;
-  visParams: VisParams;
-}
-
-interface LayerData {
-  id: string;
-  country: string;
-  analysisYear: number;
-  currentForestLayer: LayerConfig;
-  fireLossLayer: LayerConfig;
-  lossInYearLayer: LayerConfig;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export type Props = {
-  iso2: string;
-  name: string;
-  year: string;
-};
+// Moved interfaces to shared/types.ts
 
 function getCountryGeoJSON(iso2: string): FeatureCollection {
   const countriesData = countries as unknown as FeatureCollection;
@@ -57,14 +34,21 @@ function getCountryGeoJSON(iso2: string): FeatureCollection {
   } as FeatureCollection;
 }
 
-export default function CountryMap({ name = "", year = "", iso2 }: Props) {
+export default function CountryMap({
+  country,
+  year,
+  dataset = "GFW",
+  showLayers = true,
+}: CountryMapProps) {
   const { width = 0 } = useWindowSize();
-  const [layersData, setLayersData] = useState<LayerData>();
+
+  // Use local state only to avoid store loops
+  const [layersData, setLayersData] = useState<LayerData | null>(null);
 
   const mapRef = useRef<MapRef>(null);
 
   const [countryFeatureCollection] = useState<FeatureCollection>(
-    getCountryGeoJSON(iso2)
+    getCountryGeoJSON(country.iso2)
   );
 
   function repositionMap() {
@@ -116,14 +100,19 @@ export default function CountryMap({ name = "", year = "", iso2 }: Props) {
           url: urls.layersProxyAPI,
           method: "POST",
           token: "",
-          body: { name, year, iso2 },
+          body: {
+            name: country.name,
+            year,
+            iso2: country.iso2,
+            dataset, // Include dataset in API call
+          },
         });
         setLayersData(result);
       } catch (error) {
-        console.error("Error fetching news:", error);
+        console.error("Error fetching layers:", error);
       }
     })();
-  }, [name, year, iso2]);
+  }, [country.name, year, country.iso2, dataset]);
 
   return (
     <>
@@ -159,10 +148,10 @@ export default function CountryMap({ name = "", year = "", iso2 }: Props) {
           </Source>
         )}
 
-        {layersData && (
+        {showLayers && layersData && (
           <>
             <Source
-              key="current-forest"
+              key={`current-forest-${dataset}`}
               id="current-forest-source"
               type="raster"
               tiles={[layersData.currentForestLayer?.tileUrl]}
@@ -179,7 +168,7 @@ export default function CountryMap({ name = "", year = "", iso2 }: Props) {
             </Source>
 
             <Source
-              key="fire-loss"
+              key={`fire-loss-${dataset}`}
               id="fire-loss-source"
               type="raster"
               tiles={[layersData.fireLossLayer?.tileUrl]}
@@ -196,7 +185,7 @@ export default function CountryMap({ name = "", year = "", iso2 }: Props) {
             </Source>
 
             <Source
-              key="loss-in-year"
+              key={`loss-in-year-${dataset}`}
               id="loss-in-year-source"
               type="raster"
               tiles={[layersData.lossInYearLayer?.tileUrl]}
