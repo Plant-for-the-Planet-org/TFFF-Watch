@@ -2,6 +2,7 @@
 
 import { transformAllForestCoverChangeData } from "@/utils/country-helper";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
+import { updateFeaturesWithColorKeys } from "@/utils/map-colors";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import * as turf from "@turf/turf";
@@ -48,6 +49,7 @@ export default function WorldMap({
   // New store integration
   const {
     selectedCountry,
+    selectedDataset,
     getCurrentForestData,
     setSelectedCountry,
     setClickPosition,
@@ -110,68 +112,19 @@ export default function WorldMap({
           [key: string]: unknown;
         }>;
       };
-      const updatedFeatures = countriesData.features.map((country) => {
-        const countyISO2 = country.properties.iso_a2;
-        const countySlug =
-          transformedForestCoverChangeAll[countyISO2]?.countrySlug ?? "";
-        const changeValue =
-          transformedForestCoverChangeAll[countyISO2]?.forestChange ?? 0;
 
-        let colorKey;
-        switch (true) {
-          case changeValue === undefined || isNaN(changeValue):
-            colorKey = "#E1EBE5";
-            break;
-          case changeValue > 0 && changeValue < 0.2:
-            colorKey = "#FEFCFB";
-            break;
-          case changeValue > 0.2 && changeValue < 0.4:
-            colorKey = "#FADABE";
-            break;
-          case changeValue > 0.4 && changeValue < 0.6:
-            colorKey = "#F7C08E";
-            break;
-          case changeValue > 0.6 && changeValue < 0.8:
-            colorKey = "#F4A45E";
-            break;
-          case changeValue > 0.8 && changeValue < 1.0:
-            colorKey = "#F08C4D";
-            break;
-          case changeValue > 1.0 && changeValue < 1.2:
-            colorKey = "#EE7453";
-            break;
-          case changeValue > 1.2 && changeValue < 1.4:
-            colorKey = "#EB5A57";
-            break;
-          case changeValue > 1.4 && changeValue < 1.6:
-            colorKey = "#E24444";
-            break;
-          case changeValue > 1.6 && changeValue < 1.8:
-            colorKey = "#D72E2E";
-            break;
-          case changeValue > 1.8:
-            colorKey = "#CB1313";
-            break;
-          default:
-            colorKey = "#E1EBE5";
-        }
-
-        return {
-          ...country,
-          properties: {
-            ...country.properties,
-            colorKey,
-            countrySlug: countySlug,
-          },
-        };
-      });
+      const updatedFeatures = updateFeaturesWithColorKeys(
+        countriesData.features,
+        transformedForestCoverChangeAll,
+        selectedDataset
+      );
 
       return {
         ...countries,
         features: updatedFeatures,
       };
     }
-  }, [forestCoverChangeDataByYear, getCurrentForestData]);
+  }, [forestCoverChangeDataByYear, getCurrentForestData, selectedDataset]);
 
   const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
     const newCenter = [viewState.longitude, viewState.latitude];
@@ -187,7 +140,7 @@ export default function WorldMap({
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
     const features = map?.queryRenderedFeatures(event.point, {
-      layers: ["country-fill"],
+      layers: ["country-fill-jrc", "country-fill-gfw"],
     });
     const { point } = event;
     const country = features?.[0]?.properties?.name_long;
@@ -262,11 +215,22 @@ export default function WorldMap({
               allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
             }
           >
+            {/* JRC Layer */}
             <Layer
-              id="country-fill"
+              id="country-fill-jrc"
               type="fill"
               paint={{
-                "fill-color": ["get", "colorKey"],
+                "fill-color": ["get", "JRCColorKey"],
+                "fill-opacity": selectedDataset === "JRC" ? 1 : 0,
+              }}
+            />
+            {/* GFW Layer */}
+            <Layer
+              id="country-fill-gfw"
+              type="fill"
+              paint={{
+                "fill-color": ["get", "GFWColorKey"],
+                "fill-opacity": selectedDataset === "GFW" ? 1 : 0,
               }}
             />
             <Layer

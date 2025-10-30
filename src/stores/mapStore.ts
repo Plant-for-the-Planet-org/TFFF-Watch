@@ -23,7 +23,7 @@ interface WorldMapStore extends WorldMapState {
 export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   selectedCountry: null,
   selectedYear: "2024",
-  selectedDataset: "GFW",
+  selectedDataset: "JRC",
   clickPosition: null,
   forestData: { GFW: [], JRC: [] },
   isLoading: false,

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 
 interface LinkWithParamsProps {
   href: string;
@@ -14,7 +14,7 @@ interface LinkWithParamsProps {
   onClick?: () => void;
 }
 
-export default function LinkWithParams({
+function LinkWithParamsInner({
   href,
   children,
   className,
@@ -62,5 +62,34 @@ export default function LinkWithParams({
     >
       {children}
     </Link>
+  );
+}
+
+function LinkWithParamsFallback({
+  href,
+  children,
+  className,
+  target,
+  rel,
+  onClick,
+}: LinkWithParamsProps) {
+  return (
+    <Link
+      href={href}
+      className={className}
+      target={target}
+      rel={rel}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
+  );
+}
+
+export default function LinkWithParams(props: LinkWithParamsProps) {
+  return (
+    <Suspense fallback={<LinkWithParamsFallback {...props} />}>
+      <LinkWithParamsInner {...props} />
+    </Suspense>
   );
 }

@@ -2,6 +2,7 @@
 
 import { transformAllForestCoverChangeData } from "@/utils/country-helper";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
+import { updateFeaturesWithColorKeys } from "@/utils/map-colors";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import * as turf from "@turf/turf";
@@ -21,6 +22,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 // import countries from "./ne_50m_admin_0_countries.geo.json";
 import countries from "./countries-optimized.geo.json";
+import { useWorldMapStore } from "@/stores/mapStore";
 import WorldMapTFFFCard from "./WorldMapTFFFCard";
 
 export const GEOFENCE = turf.polygon([
@@ -49,6 +51,7 @@ export default function WorldMapView() {
   );
   const { setPoint, setCountry, setCountrySlug, setCountryISO2, setIsTFFF } =
     useWorldMap();
+  const { selectedDataset, getCurrentForestData } = useWorldMapStore();
 
   const mapRef = useRef<MapRef>(null);
 
@@ -70,78 +73,36 @@ export default function WorldMapView() {
   }, [width]);
 
   const allCountries = useMemo(() => {
-    if (!forestCoverChangeDataByYear.length) {
+    // Use current forest data from store, fallback to old data
+    const currentData = getCurrentForestData();
+    const dataToUse =
+      currentData.length > 0 ? currentData : forestCoverChangeDataByYear;
+
+    if (!dataToUse.length) {
       return { type: "FeatureCollection", features: [] };
     } else {
-      const transformedForestCoverChangeAll = transformAllForestCoverChangeData(
-        forestCoverChangeDataByYear
+      const transformedForestCoverChangeAll =
+        transformAllForestCoverChangeData(dataToUse);
+
+      const countriesData = countries as unknown as {
+        features: Array<{
+          properties: { iso_a2: string; [key: string]: unknown };
+          [key: string]: unknown;
+        }>;
+      };
+
+      const updatedFeatures = updateFeaturesWithColorKeys(
+        countriesData.features,
+        transformedForestCoverChangeAll,
+        selectedDataset
       );
-      // console.log({ transformedForestCoverChangeAll });
-
-      // Create a new array of features with updated properties
-      const updatedFeatures = countries.features.map((country) => {
-        const countyISO2 = country.properties.iso_a2;
-        const countySlug =
-          transformedForestCoverChangeAll[countyISO2]?.countrySlug ?? "";
-        const changeValue =
-          transformedForestCoverChangeAll[countyISO2]?.forestChange ?? 0;
-
-        let colorKey;
-        switch (true) {
-          case changeValue === undefined || isNaN(changeValue):
-            colorKey = "#E1EBE5";
-            break;
-          case changeValue > 0 && changeValue < 0.2:
-            colorKey = "#FEFCFB";
-            break;
-          case changeValue > 0.2 && changeValue < 0.4:
-            colorKey = "#FADABE";
-            break;
-          case changeValue > 0.4 && changeValue < 0.6:
-            colorKey = "#F7C08E";
-            break;
-          case changeValue > 0.6 && changeValue < 0.8:
-            colorKey = "#F4A45E";
-            break;
-          case changeValue > 0.8 && changeValue < 1.0:
-            colorKey = "#F08C4D";
-            break;
-          case changeValue > 1.0 && changeValue < 1.2:
-            colorKey = "#EE7453";
-            break;
-          case changeValue > 1.2 && changeValue < 1.4:
-            colorKey = "#EB5A57";
-            break;
-          case changeValue > 1.4 && changeValue < 1.6:
-            colorKey = "#E24444";
-            break;
-          case changeValue > 1.6 && changeValue < 1.8:
-            colorKey = "#D72E2E";
-            break;
-          case changeValue > 1.8:
-            colorKey = "#CB1313";
-            break;
-          default:
-            colorKey = "#E1EBE5";
-        }
-
-        // Return a new feature object with updated properties
-        return {
-          ...country,
-          properties: {
-            ...country.properties,
-            colorKey,
-            countrySlug: countySlug,
-          },
-        };
-      });
 
       return {
         ...countries,
         features: updatedFeatures,
       };
     }
-  }, [forestCoverChangeDataByYear]);
+  }, [forestCoverChangeDataByYear, getCurrentForestData, selectedDataset]);
 
   const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
     const newCenter = [viewState.longitude, viewState.latitude];
@@ -157,7 +118,7 @@ export default function WorldMapView() {
   const onClick = (event: maplibregl.MapLayerMouseEvent) => {
     const map = mapRef.current?.getMap();
     const features = map?.queryRenderedFeatures(event.point, {
-      layers: ["country-fill"],
+      layers: ["country-fill-jrc", "country-fill-gfw"],
     });
     const { point } = event;
     const country = features?.[0]?.properties?.name_long;
@@ -207,13 +168,26 @@ export default function WorldMapView() {
           <Source
             id="country"
             type="geojson"
-            data={allCountries as GeoJSON<Geometry, GeoJsonProperties>}
+            data={
+              allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
+            }
           >
+            {/* JRC Layer */}
             <Layer
-              id="country-fill"
+              id="country-fill-jrc"
               type="fill"
               paint={{
-                "fill-color": ["get", "colorKey"],
+                "fill-color": ["get", "JRCColorKey"],
+                "fill-opacity": selectedDataset === "JRC" ? 1 : 0,
+              }}
+            />
+            {/* GFW Layer */}
+            <Layer
+              id="country-fill-gfw"
+              type="fill"
+              paint={{
+                "fill-color": ["get", "GFWColorKey"],
+                "fill-opacity": selectedDataset === "GFW" ? 1 : 0,
               }}
             />
             <Layer

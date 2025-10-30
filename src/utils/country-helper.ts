@@ -63,7 +63,11 @@ export function getCountryDetailsBySlug(countrySlug: string): CountryDetails {
 
 type CountryForestData = {
   // [countryISO2: string]: number;
-  [countryISO2: string]: { countrySlug: string; forestChange: number };
+  [countryISO2: string]: {
+    countrySlug: string;
+    forestChange: number;
+    eligibility?: string;
+  };
 };
 // export function transformAllForestCoverChangeData(data: ForestCoverChange[]) {
 //   return data.reduce((acc: CountryForestData, row) => {
@@ -80,8 +84,21 @@ export function transformAllForestCoverChangeData(data: ForestCoverChange[]) {
     const countrySlug = row["country-slug"];
     const percDef = row.percentage_deforested || 0;
     const percDeg = row.percentage_degraded || 0;
-    // acc[countryISO2] = { countrySlug, forestChange: (percDef + percDeg) * 100 };
-    acc[countryISO2] = { countrySlug, forestChange: percDef + percDeg };
+
+    let eligibility = "INELIGIBLE";
+    if (row.eligibility_deforestation_rate_below_half_percent === true) {
+      if (row.eligibility_decreasing_trend_of_deforestation === false) {
+        eligibility = "ALMOST_ELIGIBLE";
+      } else {
+        eligibility = "ELIGIBLE";
+      }
+    }
+
+    acc[countryISO2] = {
+      countrySlug,
+      forestChange: percDef + percDeg,
+      eligibility,
+    };
     return acc;
   }, {});
 }

@@ -1,8 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
+import { api, urls } from "@/utils/axios-helper";
+import { useWorldMapStore } from "@/stores/mapStore";
+import { TFFFData } from "./types";
 import { DatasetType } from "./types";
 
 interface DatasetTabsProps {
@@ -22,10 +25,47 @@ export default function DatasetTabs({
 }: DatasetTabsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { setForestData, setIsLoading, setSelectedDataset, forestData } =
+    useWorldMapStore();
 
   // Get current dataset from URL or use default
   const selectedDataset =
     (searchParams.get("dataset") as DatasetType) || defaultDataset;
+
+  // Fetch data for a specific dataset
+  const fetchDatasetData = useCallback(
+    async (dataset: DatasetType) => {
+      // Check if we already have data for this dataset
+      if (forestData[dataset].length > 0) {
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        const data = await api<TFFFData[]>({
+          url: urls.forestChangeAll,
+          method: "GET",
+          token: "",
+          query: {
+            source: dataset === "GFW" ? "GFW" : "JRC",
+          },
+        });
+
+        setForestData(dataset, data);
+      } catch (error) {
+        console.error(`Error fetching ${dataset} data:`, error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [forestData, setForestData, setIsLoading]
+  );
+
+  // Update store when URL dataset changes
+  useEffect(() => {
+    setSelectedDataset(selectedDataset);
+    fetchDatasetData(selectedDataset);
+  }, [selectedDataset, setSelectedDataset, fetchDatasetData]);
   const datasets: { key: DatasetType; label: string; description: string }[] = [
     {
       key: "JRC",
@@ -49,12 +89,15 @@ export default function DatasetTabs({
   const handleTabClick = useCallback(
     (dataset: DatasetType) => {
       if (!disabled) {
+        // Fetch data for the new dataset if we don't have it
+        fetchDatasetData(dataset);
+
         const params = new URLSearchParams(searchParams.toString());
         params.set("dataset", dataset);
         router.push(`?${params.toString()}`, { scroll: false });
       }
     },
-    [disabled, router, searchParams]
+    [disabled, router, searchParams, fetchDatasetData]
   );
 
   return (

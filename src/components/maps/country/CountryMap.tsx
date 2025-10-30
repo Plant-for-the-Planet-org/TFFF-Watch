@@ -1,5 +1,6 @@
 "use client";
 
+import { api, urls } from "@/utils/axios-helper";
 import turfBbox from "@turf/bbox";
 import {
   bboxPolygon as turfBboxPolygon,
@@ -18,8 +19,6 @@ import type {
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef, useState } from "react";
 import countries from "../countries-optimized.geo.json";
-import { api, urls } from "@/utils/axios-helper";
-import { useCountryMapStore } from "@/stores/mapStore";
 import { CountryMapProps, LayerData } from "../shared/types";
 
 // Moved interfaces to shared/types.ts
