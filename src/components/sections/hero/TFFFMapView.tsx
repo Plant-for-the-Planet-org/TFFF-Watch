@@ -1,13 +1,18 @@
 "use client";
 
-import type { Props as CountryMapViewProps } from "@/components/maps/CountryMapView";
-import CountryMapView from "@/components/maps/CountryMapView";
-import CountryTFFFCard from "@/components/maps/CountryTFFFCard";
+import {
+  CountryMap,
+  DatasetTabs,
+  initializeBrazilDefault,
+  useWorldMapStore,
+  WorldMap,
+} from "@/components/maps";
+import CountryMapCard from "@/components/maps/country/CountryMapCard";
 import {
   CountryMapLegends,
-  LegendForDegradedOrDeforested,
+  LegendsForGFW,
+  LegendsForJRC,
 } from "@/components/maps/MapLegends";
-import WorldMapView from "@/components/maps/WorldMapView";
 import {
   CountryMapHeaderContent,
   WorldMapHeaderContent,
@@ -18,15 +23,18 @@ import { env } from "@/utils/env";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
 // import { forestChangeData } from "@/utils/forestChange.store";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
-import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useParams, useSearchParams } from "next/navigation";
+import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
 
 export function TFFFWorldMapView() {
   const { forestCoverChangeData, setForestCoverChangeDataByYear } =
     useForestCoverChangeData();
   const { year } = useWorldMap();
+
+  // New map store integration
+  const { selectedDataset, setForestData, setSelectedYear } =
+    useWorldMapStore();
 
   useEffect(() => {
     fetchForestCoverChangeDataV2({});
@@ -35,12 +43,35 @@ export function TFFFWorldMapView() {
   useEffect(() => {
     const _yearWise = forestCoverChangeData.filter((el) => el.year == year);
     setForestCoverChangeDataByYear(_yearWise);
-  }, [forestCoverChangeData, year, setForestCoverChangeDataByYear]);
+
+    // Update new store with forest data for both datasets initially
+    // This provides immediate data for map rendering, specific data will be fetched by DatasetTabs
+    setForestData("GFW", _yearWise);
+    setForestData("JRC", _yearWise); // Use as fallback until JRC-specific data is fetched
+    setSelectedYear(year);
+  }, [
+    forestCoverChangeData,
+    year,
+    setForestCoverChangeDataByYear,
+    setForestData,
+    setSelectedYear,
+  ]);
+
+  // Initialize Brazil default selection
+  useEffect(() => {
+    initializeBrazilDefault(useWorldMapStore.getState());
+  }, []);
 
   return (
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
         <BetaChip />
+
+        {/* Dataset Tabs */}
+        <div className="flex justify-center mb-4">
+          <DatasetTabs />
+        </div>
+
         <Br />
         <div className="relative z-10">
           <div className="bg-primary-light">
@@ -51,19 +82,22 @@ export function TFFFWorldMapView() {
             <Br />
           </div>
         </div>
+
         <div className="grow relative flex flex-col">
-          {/* <div className="mx-auto aspect-[1.5] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain"> */}
           <div className="mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
-            <WorldMapView />
+            <WorldMap
+              selectedYear={year}
+              dataset={selectedDataset}
+              defaultSelectedCountry="BR"
+              variant="hero"
+            />
           </div>
-          <div className="md:absolute left-0 bottom-0 min-w-48 max-w-fit mx-auto">
+          <div className="md:absolute left-0 bottom-0 min-w-48 max-w-fit mx-auto pointer-events-none">
             <Br cn="md:hidden" />
-            <LegendForDegradedOrDeforested />
+            {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
             <Br />
-            {/* <LegendForSponsorCapitalProviders /> */}
-            {/* <Br cn="md:hidden" /> */}
           </div>
-          <p className="text-xs text-center flex justify-center items-center gap-2">
+          {/* <p className="text-xs text-center flex justify-center items-center gap-2">
             <Image
               width={12}
               height={12}
@@ -71,7 +105,7 @@ export function TFFFWorldMapView() {
               alt="Click on a country for more data"
             />
             Click on a country for more data
-          </p>
+          </p> */}
         </div>
       </div>
       <Br />
@@ -81,48 +115,115 @@ export function TFFFWorldMapView() {
   );
 }
 
-type TFFFCountryMapViewProps = CountryMapViewProps &
-  CountryDetails & {
-    year: string;
-  };
+type TFFFCountryMapViewProps = CountryDetails & {
+  year: string;
+  dataset?: "GFW" | "JRC";
+};
 
-export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
-  const { push } = useRouter();
+function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
   const { country } = useParams();
-  const { year } = useWorldMap();
+  const searchParams = useSearchParams();
+
+  // Get dataset from URL params, fallback to props or default
+  const selectedDataset =
+    (searchParams.get("dataset") as "GFW" | "JRC") || props.dataset || "JRC";
 
   useEffect(() => {
     if (props.name)
       fetchForestCoverChangeDataV2({ country: props.name, iso2: props.iso2 });
   }, [props.name, props.iso2]);
 
-  useEffect(() => {
-    push(`/${country}/${year}`);
-  }, [country, year, push]);
+  // Removed problematic navigation that was causing 404 redirects
+
+  // Convert props to CountryData format
+  const countryData = {
+    iso2: props.iso2,
+    iso3: props.iso3,
+    name: props.name,
+    slug: country as string,
+    flagImgUrl: props.flagImgUrl,
+  };
+
+  // Debug logging
+  console.log("TFFFCountryMapView Debug:", {
+    props,
+    countryData,
+    selectedDataset,
+  });
 
   return (
-    <CountryMapViewContainer>
-      <div className="h-full flex flex-col">
-        <Br />
-        <CountryMapHeaderContent year={props.year} />
-        <Br />
-        <div className="grow grid grid-cols-1 md:grid-cols-2">
-          <div className="relative h-60 md:h-full">
-            <div className="absolute bottom-0 z-20">
-              <CountryMapLegends />
+    <div>
+      <div className="flex justify-center">
+        {/* Dataset Tabs */}
+        <DatasetTabs />
+      </div>
+      <Br />
+
+      <CountryMapViewContainer>
+        <div className="h-full flex flex-col">
+          <Br />
+          <CountryMapHeaderContent year={props.year} />
+          <Br />
+
+          <div className="grow grid grid-cols-1 md:grid-cols-2">
+            <div className="relative h-60 md:h-full">
+              <div className="absolute bottom-0 left-0 pointer-events-none">
+                <CountryMapLegends />
+              </div>
+              <CountryMap
+                country={countryData}
+                year={props.year}
+                dataset={selectedDataset}
+              />
             </div>
-            <CountryMapView
-              name={props.name}
-              year={props.year}
-              iso2={props.iso2}
-            />
+            <CountryMapCard country={countryData} dataset={selectedDataset} />
           </div>
-          <div className="flex justify-center items-center">
-            <CountryTFFFCard {...props} />
+        </div>
+      </CountryMapViewContainer>
+    </div>
+  );
+}
+
+function TFFFCountryMapViewFallback(props: TFFFCountryMapViewProps) {
+  return (
+    <div>
+      <div className="flex justify-center">
+        {/* Dataset Tabs Fallback */}
+        <div className="flex gap-1 p-1 bg-[#E4F6EB] rounded-xl border border-primary-light">
+          <div className="px-4 py-2 typo-p font-medium rounded-lg bg-white text-[#333333] shadow-sm">
+            Standard Estimate (JRC)
+          </div>
+          <div className="px-4 py-2 typo-p font-medium rounded-lg bg-transparent text-[#828282]">
+            Conservative Estimate (GFW)
           </div>
         </div>
       </div>
-    </CountryMapViewContainer>
+      <Br />
+      <CountryMapViewContainer>
+        <div className="h-full flex flex-col">
+          <Br />
+          <CountryMapHeaderContent year={props.year} />
+          <Br />
+          <div className="grow grid grid-cols-1 md:grid-cols-2">
+            <div className="relative h-60 md:h-full">
+              <div className="absolute bottom-0 z-20">
+                <CountryMapLegends />
+              </div>
+              <div className="bg-gray-200 animate-pulse h-full w-full rounded"></div>
+            </div>
+            <div className="bg-gray-100 animate-pulse rounded"></div>
+          </div>
+        </div>
+      </CountryMapViewContainer>
+    </div>
+  );
+}
+
+export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
+  return (
+    <Suspense fallback={<TFFFCountryMapViewFallback {...props} />}>
+      <TFFFCountryMapViewInner {...props} />
+    </Suspense>
   );
 }
 

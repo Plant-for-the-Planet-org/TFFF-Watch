@@ -1,6 +1,6 @@
+import { DatasetType } from "@/components/maps/shared/types";
 import AnnualPayout from "@/components/sections/features/AnnualPayout";
 import ForestCoverChange from "@/components/sections/features/ForestCoverChange";
-import PotentialPayoutVsExistingConservationFunding from "@/components/sections/features/PotentialPayoutVsExistingConservationFunding";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
 import { getCountryDetails } from "@/utils/country-helper";
@@ -15,6 +15,7 @@ export type PageParams = {
 
 type PageProps = {
   params: Promise<PageParams>;
+  searchParams: Promise<{ dataset?: string }>;
 };
 
 export async function generateMetadata({
@@ -28,13 +29,17 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
   const { country, year } = await params;
+  const { dataset } = await searchParams;
   const slug = country;
 
   const details = getCountryDetails({ country, slug });
 
   await fetchForestCoverChangeData(details.name);
+
+  // Validate dataset parameter
+  const validDataset: DatasetType = dataset === "JRC" ? "JRC" : "GFW"; // Default to GFW if invalid
 
   return (
     <div>
@@ -44,11 +49,12 @@ export default async function Page({ params }: PageProps) {
         iso2={details.iso2}
         iso3={details.iso3}
         flagImgUrl={details.flagImgUrl}
+        dataset={validDataset}
       />
       <Br />
       <ForestCoverChange />
-      <Br />
-      <PotentialPayoutVsExistingConservationFunding />
+      {/* <Br /> */}
+      {/* <PotentialPayoutVsExistingConservationFunding /> */}
       <Br />
       <AnnualPayout />
     </div>
