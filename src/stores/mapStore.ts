@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import {
   CountryData,
-  DatasetType,
-  TFFFData,
-  LayerData,
-  WorldMapState,
   CountryMapState,
+  DatasetType,
+  LayerData,
+  TFFFData,
+  WorldMapState,
 } from "../components/maps/shared/types";
 
 interface WorldMapStore extends WorldMapState {
@@ -34,7 +34,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
 
   setSelectedCountry: (country) => set({ selectedCountry: country }),
   setSelectedYear: (year) =>
-    set((state) => ({
+    set(() => ({
       selectedYear: year,
       // Clear forest data when year changes to force refetch
       forestData: { GFW: [], JRC: [] },

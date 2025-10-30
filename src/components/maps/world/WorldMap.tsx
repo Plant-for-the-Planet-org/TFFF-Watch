@@ -163,6 +163,21 @@ export default function WorldMap({
     const countrySlug = features?.[0]?.properties?.countrySlug;
     const countryISO2 = features?.[0]?.properties?.["iso_a2"];
 
+    // If clicked outside of any country, clear selection
+    if (!features || features.length === 0 || !country || !countryISO2) {
+      // Clear old store (use empty values since it doesn't accept null)
+      setPoint({ x: 0, y: 0 });
+      setCountry("");
+      setCountrySlug("");
+      setCountryISO2("");
+      setIsTFFF(false);
+
+      // Clear new store
+      setSelectedCountry(null);
+      setClickPosition(null);
+      return;
+    }
+
     // Update old store (for backward compatibility)
     setPoint(point);
     setCountry(country);
@@ -183,22 +198,20 @@ export default function WorldMap({
     else setIsTFFF(false);
 
     // Update new store
-    if (country && countryISO2) {
-      const countryData = {
-        iso2: countryISO2,
-        iso3: "", // We don't have ISO3 in the current data
-        name: country,
-        slug: countrySlug || "",
-        flagImgUrl: `http://purecatamphetamine.github.io/country-flag-icons/3x2/${countryISO2}.svg`,
-      };
+    const countryData = {
+      iso2: countryISO2,
+      iso3: "", // We don't have ISO3 in the current data
+      name: country,
+      slug: countrySlug || "",
+      flagImgUrl: `http://purecatamphetamine.github.io/country-flag-icons/3x2/${countryISO2}.svg`,
+    };
 
-      setSelectedCountry(countryData);
-      setClickPosition({ x: point.x, y: point.y });
+    setSelectedCountry(countryData);
+    setClickPosition({ x: point.x, y: point.y });
 
-      // Call external callback if provided
-      if (onCountryClick) {
-        onCountryClick(countryData);
-      }
+    // Call external callback if provided
+    if (onCountryClick) {
+      onCountryClick(countryData);
     }
   };
 
@@ -275,7 +288,7 @@ export default function WorldMap({
               id="country-line"
               type="line"
               paint={{
-                "line-color": "#FFFFFF",
+                "line-color": "#F0FAF4",
                 "line-width": 1,
               }}
             />

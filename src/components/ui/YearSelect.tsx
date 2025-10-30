@@ -48,7 +48,7 @@ export default function YearSelect({ initialValue, onChange }: Props) {
     setSelectedId(selected.id);
     setYear(selected.value);
     setSelectedYear(selected.value);
-  }, [initialValue, options, setYear]);
+  }, [initialValue, options, setYear, setSelectedYear]);
 
   // useEffect(() => {
   //   // wil come back later

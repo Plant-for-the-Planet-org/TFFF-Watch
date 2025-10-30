@@ -9,7 +9,7 @@ export function getJRCColorKey(eligibility: string): string {
     case "ELIGIBLE":
       return "#6FCF97";
     default:
-      return "#E1EBE5";
+      return "#FFFFFF";
   }
 }
 
@@ -49,7 +49,7 @@ export function getColorKeyForDataset(
   eligibility?: string
 ): string {
   return dataset === "JRC"
-    ? getJRCColorKey(eligibility || "INELIGIBLE")
+    ? getJRCColorKey(eligibility || "NA")
     : getGFWColorKey(changeValue);
 }
 
@@ -70,7 +70,7 @@ export function updateFeaturesWithColorKeys(
     const gfwForestChangeValue = transformedData[countyISO2]?.forestChange ?? 0;
     const jrcEligibility = transformedData[countyISO2]?.eligibility;
 
-    const JRCColorKey = getJRCColorKey(jrcEligibility || "INELIGIBLE");
+    const JRCColorKey = getJRCColorKey(jrcEligibility || "NA");
     const GFWColorKey = getGFWColorKey(gfwForestChangeValue);
     const colorKey = getColorKeyForDataset(
       dataset,
