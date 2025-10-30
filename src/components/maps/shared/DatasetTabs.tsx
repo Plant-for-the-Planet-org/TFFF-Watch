@@ -27,15 +27,23 @@ export default function DatasetTabs({
   const selectedDataset =
     (searchParams.get("dataset") as DatasetType) || defaultDataset;
   const datasets: { key: DatasetType; label: string; description: string }[] = [
-    { key: "GFW", label: "GFW", description: "Global Forest Watch data" },
-    { key: "JRC", label: "JRC", description: "Joint Research Centre data" },
+    {
+      key: "JRC",
+      label: "Standard Estimate (JRC)",
+      description: "Joint Research Centre data",
+    },
+    {
+      key: "GFW",
+      label: "Conservative Estimate (GFW)",
+      description: "Global Forest Watch data",
+    },
   ];
 
   const baseTabClasses =
-    "px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer";
-  const defaultActiveClasses = "bg-white text-primary shadow-sm";
+    "px-4 py-2 typo-p font-medium rounded-lg transition-colors duration-200 cursor-pointer";
+  const defaultActiveClasses = "bg-white text-[#333333] shadow-sm";
   const defaultInactiveClasses =
-    "bg-transparent text-primary-dark hover:bg-white/50";
+    "bg-transparent text-[#828282] hover:bg-[#E4F6EB]/50";
   const disabledClasses = "opacity-50 cursor-not-allowed";
 
   const handleTabClick = useCallback(
@@ -52,7 +60,7 @@ export default function DatasetTabs({
   return (
     <div
       className={twMerge(
-        "flex gap-1 p-1 bg-primary-light/50 rounded-xl border border-primary-light",
+        "flex gap-1 p-1 bg-[#E4F6EB] rounded-xl border border-primary-light",
         tabsClassName
       )}
     >

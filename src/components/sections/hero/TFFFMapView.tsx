@@ -73,6 +73,15 @@ export function TFFFWorldMapView() {
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
         <BetaChip />
+
+        {/* Dataset Tabs */}
+        <div className="flex justify-center mb-4">
+          <DatasetTabs
+            selectedDataset={selectedDataset}
+            onDatasetChange={setSelectedDataset}
+          />
+        </div>
+
         <Br />
         <div className="relative z-10">
           <div className="bg-primary-light">
@@ -82,14 +91,6 @@ export function TFFFWorldMapView() {
             <Br />
             <Br />
           </div>
-        </div>
-
-        {/* Dataset Tabs */}
-        <div className="flex justify-center mb-4">
-          <DatasetTabs
-            selectedDataset={selectedDataset}
-            onDatasetChange={setSelectedDataset}
-          />
         </div>
 
         <div className="grow relative flex flex-col">
@@ -160,35 +161,38 @@ export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
   });
 
   return (
-    <CountryMapViewContainer>
-      <div className="h-full flex flex-col">
-        <Br />
-        <CountryMapHeaderContent year={props.year} />
-        <Br />
-
+    <div>
+      <div className="flex justify-center">
         {/* Dataset Tabs */}
-        <div className="flex justify-center mb-4">
-          <DatasetTabs
-            selectedDataset={selectedDataset}
-            onDatasetChange={setSelectedDataset}
-          />
-        </div>
-
-        <div className="grow grid grid-cols-1 md:grid-cols-2">
-          <div className="relative h-60 md:h-full">
-            <div className="absolute bottom-0 z-20">
-              <CountryMapLegends />
-            </div>
-            <CountryMap
-              country={countryData}
-              year={props.year}
-              dataset={selectedDataset}
-            />
-          </div>
-          <CountryMapCard country={countryData} dataset={selectedDataset} />
-        </div>
+        <DatasetTabs
+          selectedDataset={selectedDataset}
+          onDatasetChange={setSelectedDataset}
+        />
       </div>
-    </CountryMapViewContainer>
+      <Br />
+
+      <CountryMapViewContainer>
+        <div className="h-full flex flex-col">
+          <Br />
+          <CountryMapHeaderContent year={props.year} />
+          <Br />
+
+          <div className="grow grid grid-cols-1 md:grid-cols-2">
+            <div className="relative h-60 md:h-full">
+              <div className="absolute bottom-0 z-20">
+                <CountryMapLegends />
+              </div>
+              <CountryMap
+                country={countryData}
+                year={props.year}
+                dataset={selectedDataset}
+              />
+            </div>
+            <CountryMapCard country={countryData} dataset={selectedDataset} />
+          </div>
+        </div>
+      </CountryMapViewContainer>
+    </div>
   );
 }
 
