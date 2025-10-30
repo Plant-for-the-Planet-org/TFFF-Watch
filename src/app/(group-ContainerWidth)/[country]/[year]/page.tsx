@@ -1,11 +1,10 @@
+import { DatasetType } from "@/components/maps/shared/types";
 import AnnualPayout from "@/components/sections/features/AnnualPayout";
 import ForestCoverChange from "@/components/sections/features/ForestCoverChange";
-import PotentialPayoutVsExistingConservationFunding from "@/components/sections/features/PotentialPayoutVsExistingConservationFunding";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
 import { getCountryDetails } from "@/utils/country-helper";
 import { fetchForestCoverChangeData } from "@/utils/forestChange.store";
-import { DatasetType } from "@/components/maps/shared/types";
 import { Metadata } from "next";
 import { humanize } from "underscore.string";
 
@@ -54,8 +53,8 @@ export default async function Page({ params, searchParams }: PageProps) {
       />
       <Br />
       <ForestCoverChange />
-      <Br />
-      <PotentialPayoutVsExistingConservationFunding />
+      {/* <Br /> */}
+      {/* <PotentialPayoutVsExistingConservationFunding /> */}
       <Br />
       <AnnualPayout />
     </div>
