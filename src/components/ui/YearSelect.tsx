@@ -1,6 +1,7 @@
 "use client";
 
 import { useWorldMap } from "@/utils/store";
+import { useWorldMapStore } from "@/stores/mapStore";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ type Props = {
 
 export default function YearSelect({ initialValue, onChange }: Props) {
   const { setYear } = useWorldMap();
+  const { setSelectedYear } = useWorldMapStore();
 
   const [selectedId, setSelectedId] = useState(0);
   const [options] = useState<
@@ -38,12 +40,14 @@ export default function YearSelect({ initialValue, onChange }: Props) {
       const selected = options[0];
       setSelectedId(selected.id);
       setYear(selected.value);
+      setSelectedYear(selected.value);
       return;
     }
 
     const selected = options.find((el) => el.value === initialValue)!;
     setSelectedId(selected.id);
     setYear(selected.value);
+    setSelectedYear(selected.value);
   }, [initialValue, options, setYear]);
 
   // useEffect(() => {
@@ -90,6 +94,7 @@ export default function YearSelect({ initialValue, onChange }: Props) {
               onClick={() => {
                 setSelectedId(el.id);
                 setYear(el.value);
+                setSelectedYear(el.value);
                 if (onChange) onChange(el.value);
               }}
             >

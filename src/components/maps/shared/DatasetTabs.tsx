@@ -30,6 +30,7 @@ export default function DatasetTabs({
     setSelectedDataset,
     datasetFetched,
     markDatasetFetched,
+    selectedYear,
   } = useWorldMapStore();
 
   // Get current dataset from URL or use default
@@ -39,8 +40,8 @@ export default function DatasetTabs({
   // Fetch data for a specific dataset
   const fetchDatasetData = useCallback(
     async (dataset: DatasetType) => {
-      // Check if we've already fetched this dataset
-      if (datasetFetched[dataset]) {
+      // Check if we've already fetched this dataset for this year
+      if (datasetFetched[selectedYear]?.[dataset]) {
         return;
       }
 
@@ -52,18 +53,41 @@ export default function DatasetTabs({
           token: "",
           query: {
             source: dataset === "GFW" ? "GFW" : "JRC",
+            year: selectedYear,
           },
         });
 
-        setForestData(dataset, data);
-        markDatasetFetched(dataset);
+        // Filter data to only include the selected year (convert to string for comparison)
+        const filteredData = data.filter(
+          (item) => String(item.year) === String(selectedYear)
+        );
+        console.log(
+          `DatasetTabs: Fetched ${dataset} data for year ${selectedYear}`,
+          {
+            totalRecords: data.length,
+            filteredRecords: filteredData.length,
+            sampleYears: data
+              .slice(0, 3)
+              .map((d) => ({ year: d.year, type: typeof d.year })),
+            selectedYear,
+            selectedYearType: typeof selectedYear,
+          }
+        );
+        setForestData(dataset, filteredData);
+        markDatasetFetched(dataset, selectedYear);
       } catch (error) {
         console.error(`Error fetching ${dataset} data:`, error);
       } finally {
         setIsLoading(false);
       }
     },
-    [datasetFetched, setForestData, setIsLoading, markDatasetFetched]
+    [
+      datasetFetched,
+      setForestData,
+      setIsLoading,
+      markDatasetFetched,
+      selectedYear,
+    ]
   );
 
   // Set selected dataset immediately on mount and when URL changes
@@ -71,10 +95,10 @@ export default function DatasetTabs({
     setSelectedDataset(selectedDataset);
   }, [selectedDataset, setSelectedDataset]);
 
-  // Fetch data when dataset changes
+  // Fetch data when dataset or year changes
   useEffect(() => {
     fetchDatasetData(selectedDataset);
-  }, [selectedDataset, fetchDatasetData]);
+  }, [selectedDataset, selectedYear, fetchDatasetData]);
   const datasets: { key: DatasetType; label: string; description: string }[] = [
     {
       key: "JRC",

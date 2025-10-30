@@ -11,17 +11,35 @@ export default function WorldMapCard() {
     selectedDataset,
     forestData,
     isLoading,
+    selectedYear,
   } = useWorldMapStore();
 
   const tfffData = useMemo(() => {
     if (!selectedCountry || !forestData[selectedDataset].length) return null;
 
-    return (
-      forestData[selectedDataset].find(
-        (data) => data["country-iso2"] === selectedCountry.iso2
-      ) || null
+    // Filter by both country and year (convert both to strings for comparison)
+    const data = forestData[selectedDataset].find(
+      (data) =>
+        data["country-iso2"] === selectedCountry.iso2 &&
+        String(data.year) === String(selectedYear)
     );
-  }, [selectedCountry, forestData, selectedDataset]);
+
+    // Debug logging
+    if (!data) {
+      console.log("WorldMapCard: No data found", {
+        country: selectedCountry.iso2,
+        selectedYear,
+        selectedDataset,
+        availableData: forestData[selectedDataset].slice(0, 3).map((d) => ({
+          country: d["country-iso2"],
+          year: d.year,
+          yearType: typeof d.year,
+        })),
+      });
+    }
+
+    return data || null;
+  }, [selectedCountry, forestData, selectedDataset, selectedYear]);
 
   if (!selectedCountry || !clickPosition) {
     return null;

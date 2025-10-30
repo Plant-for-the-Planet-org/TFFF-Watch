@@ -13,14 +13,16 @@ export default function CountryMapCard({
   country,
   dataset = "JRC",
 }: CountryMapCardProps) {
-  const { forestData, selectedDataset } = useWorldMapStore();
+  const { forestData, selectedDataset, selectedYear } = useWorldMapStore();
 
   // Use the dataset from props or fall back to store's selected dataset
   const activeDataset = dataset || selectedDataset;
 
-  // Find TFFF data for this country using dataset-specific data
+  // Find TFFF data for this country using dataset-specific data, filtered by year
   const tfffData = forestData[activeDataset]?.find(
-    (data) => data["country-iso2"] === country.iso2
+    (data) =>
+      data["country-iso2"] === country.iso2 &&
+      String(data.year) === String(selectedYear)
   );
 
   if (!country || !tfffData) {
