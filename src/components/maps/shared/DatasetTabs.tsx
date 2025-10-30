@@ -33,18 +33,17 @@ export default function DatasetTabs({
     setSelectedDataset,
     datasetFetched,
     markDatasetFetched,
-    selectedYear,
   } = useWorldMapStore();
 
   // Get current dataset from URL or use default
   const selectedDataset =
     (searchParams.get("dataset") as DatasetType) || defaultDataset;
 
-  // Fetch data for a specific dataset
+  // Fetch data for a specific dataset (fetch ALL years at once)
   const fetchDatasetData = useCallback(
     async (dataset: DatasetType) => {
-      // Check if we've already fetched this dataset for this year
-      if (datasetFetched[selectedYear]?.[dataset]) {
+      // Check if we've already fetched this dataset (not year-specific)
+      if (datasetFetched[dataset]) {
         return;
       }
 
@@ -56,41 +55,20 @@ export default function DatasetTabs({
           token: "",
           query: {
             source: dataset === "GFW" ? "GFW" : "JRC",
-            year: selectedYear,
+            // Do NOT include year - fetch all years at once
           },
         });
 
-        // Filter data to only include the selected year (convert to string for comparison)
-        const filteredData = data.filter(
-          (item) => String(item.year) === String(selectedYear)
-        );
-        console.log(
-          `DatasetTabs: Fetched ${dataset} data for year ${selectedYear}`,
-          {
-            totalRecords: data.length,
-            filteredRecords: filteredData.length,
-            sampleYears: data
-              .slice(0, 3)
-              .map((d) => ({ year: d.year, type: typeof d.year })),
-            selectedYear,
-            selectedYearType: typeof selectedYear,
-          }
-        );
-        setForestData(dataset, filteredData);
-        markDatasetFetched(dataset, selectedYear);
+        // Store ALL data (not filtered by year)
+        setForestData(dataset, data);
+        markDatasetFetched(dataset);
       } catch (error) {
         console.error(`Error fetching ${dataset} data:`, error);
       } finally {
         setIsLoading(false);
       }
     },
-    [
-      datasetFetched,
-      setForestData,
-      setIsLoading,
-      markDatasetFetched,
-      selectedYear,
-    ]
+    [datasetFetched, setForestData, setIsLoading, markDatasetFetched]
   );
 
   // Set selected dataset immediately on mount and when URL changes
@@ -98,10 +76,10 @@ export default function DatasetTabs({
     setSelectedDataset(selectedDataset);
   }, [selectedDataset, setSelectedDataset]);
 
-  // Fetch data when dataset or year changes
+  // Fetch data when dataset changes (NOT on year change)
   useEffect(() => {
     fetchDatasetData(selectedDataset);
-  }, [selectedDataset, selectedYear, fetchDatasetData]);
+  }, [selectedDataset, fetchDatasetData]);
   const datasets: { key: DatasetType; label: string; description: string }[] = [
     {
       key: "JRC",

@@ -4,7 +4,8 @@ import { useWorldMap } from "@/utils/store";
 import { useWorldMapStore } from "@/stores/mapStore";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Props = {
@@ -12,7 +13,10 @@ type Props = {
   onChange?: (value: string) => void;
 };
 
-export default function YearSelect({ initialValue, onChange }: Props) {
+function YearSelectContent({ initialValue, onChange }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { setYear } = useWorldMap();
   const { setSelectedYear } = useWorldMapStore();
 
@@ -95,6 +99,24 @@ export default function YearSelect({ initialValue, onChange }: Props) {
                 setSelectedId(el.id);
                 setYear(el.value);
                 setSelectedYear(el.value);
+
+                // Update URL path with new year (e.g., /brazil/2024 -> /brazil/2023)
+                const pathSegments = pathname.split("/");
+                // Find and replace the year segment (assuming format: /country/year)
+                const yearIndex = pathSegments.findIndex((segment) =>
+                  /^\d{4}$/.test(segment)
+                );
+
+                if (yearIndex !== -1) {
+                  pathSegments[yearIndex] = el.value;
+                  const newPath = pathSegments.join("/");
+                  const queryString = searchParams.toString();
+                  const newUrl = queryString
+                    ? `${newPath}?${queryString}`
+                    : newPath;
+                  router.push(newUrl, { scroll: false });
+                }
+
                 if (onChange) onChange(el.value);
               }}
             >
@@ -112,5 +134,22 @@ export default function YearSelect({ initialValue, onChange }: Props) {
         ))}
       </MenuItems>
     </Menu>
+  );
+}
+
+export default function YearSelect(props: Props) {
+  return (
+    <Suspense fallback={<YearSelectFallback />}>
+      <YearSelectContent {...props} />
+    </Suspense>
+  );
+}
+
+function YearSelectFallback() {
+  return (
+    <button className="mx-2 rounded-full font-bold bg-white px-5 py-1 border border-base-gray outline-none inline-flex gap-2 items-center justify-center">
+      <span>2024</span>
+      <Image width={8} height={8} src="/assets/ui/select-arrow.svg" alt="" />
+    </button>
   );
 }

@@ -18,8 +18,8 @@ interface WorldMapStore extends WorldMapState {
   setDefaultCountryLoaded: (loaded: boolean) => void;
   getCurrentForestData: () => TFFFData[];
   getSelectedCountryData: () => TFFFData | null;
-  datasetFetched: Record<string, { GFW: boolean; JRC: boolean }>;
-  markDatasetFetched: (dataset: DatasetType, year: string) => void;
+  datasetFetched: { GFW: boolean; JRC: boolean };
+  markDatasetFetched: (dataset: DatasetType) => void;
 }
 
 export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
@@ -30,14 +30,13 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   forestData: { GFW: [], JRC: [] },
   isLoading: false,
   defaultCountryLoaded: false,
-  datasetFetched: {},
+  datasetFetched: { GFW: false, JRC: false },
 
   setSelectedCountry: (country) => set({ selectedCountry: country }),
   setSelectedYear: (year) =>
     set(() => ({
       selectedYear: year,
-      // Clear forest data when year changes to force refetch
-      forestData: { GFW: [], JRC: [] },
+      // Do NOT clear forest data - we have all years
     })),
   setSelectedDataset: (dataset) => set({ selectedDataset: dataset }),
   setClickPosition: (position) => set({ clickPosition: position }),
@@ -47,14 +46,11 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
     })),
   setIsLoading: (loading) => set({ isLoading: loading }),
   setDefaultCountryLoaded: (loaded) => set({ defaultCountryLoaded: loaded }),
-  markDatasetFetched: (dataset, year) =>
+  markDatasetFetched: (dataset) =>
     set((state) => ({
       datasetFetched: {
         ...state.datasetFetched,
-        [year]: {
-          ...state.datasetFetched[year],
-          [dataset]: true,
-        },
+        [dataset]: true,
       },
     })),
 

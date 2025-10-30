@@ -4,6 +4,7 @@ import PlansforthePlanetAnalysis from "@/components/sections/features/Plansforth
 import RecentNews from "@/components/sections/features/RecentNews";
 import RecentPolicyPapersComentary from "@/components/sections/features/RecentPolicyPapersCommentary";
 import TFFFHero from "@/components/sections/features/TFFFHero";
+import WhatsAppInvite from "@/components/sections/features/WhatsAppInvite";
 import { TFFFWorldMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
 
@@ -24,6 +25,8 @@ export default function Home() {
         <RecentPolicyPapersComentary />
         <Br />
         <PlansforthePlanetAnalysis />
+        <Br />
+        <WhatsAppInvite />
       </div>
     </div>
   );

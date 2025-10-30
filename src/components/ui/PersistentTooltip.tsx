@@ -48,7 +48,7 @@ export default function PersistentTooltip({
         <div
           onMouseEnter={showTooltip}
           onMouseLeave={hideTooltip}
-          className={`absolute top-full mt-2 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-200 ${className}`}
+          className={`absolute z-50 top-full mt-2 left-1/2 -translate-x-1/2 transition-opacity duration-200 ${className}`}
         >
           {content}
         </div>

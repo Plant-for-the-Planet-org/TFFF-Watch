@@ -3,8 +3,11 @@
 import { BRAZIL_DEFAULT_COUNTRY, useWorldMapStore } from "@/stores/mapStore";
 import { transformAllForestCoverChangeData } from "@/utils/country-helper";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
-import { updateFeaturesWithColorKeys } from "@/utils/map-colors";
-import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
+import {
+  getGFWColorKey,
+  updateFeaturesWithColorKeys,
+} from "@/utils/map-colors";
+import { useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import * as turf from "@turf/turf";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -40,9 +43,6 @@ export default function WorldMap({
   onCountryClick,
 }: WorldMapProps = {}) {
   const { width } = useWindowSize();
-  const forestCoverChangeDataByYear = useForestCoverChangeData(
-    (state) => state.forestCoverChangeDataByYear
-  );
   const { setPoint, setCountry, setCountrySlug, setCountryISO2, setIsTFFF } =
     useWorldMap();
 
@@ -50,12 +50,12 @@ export default function WorldMap({
   const {
     selectedCountry,
     selectedDataset,
-    getCurrentForestData,
+    selectedYear,
+    forestData,
     setSelectedCountry,
     setClickPosition,
     defaultCountryLoaded,
     setDefaultCountryLoaded,
-    isLoading,
   } = useWorldMapStore();
 
   const mapRef = useRef<MapRef>(null);
@@ -96,11 +96,6 @@ export default function WorldMap({
   ]);
 
   const allCountries = useMemo(() => {
-    // Use current forest data from store, fallback to legacy data for both datasets
-    const currentData = getCurrentForestData();
-    const dataToUse =
-      currentData.length > 0 ? currentData : forestCoverChangeDataByYear;
-
     const countriesData = countries as unknown as {
       features: Array<{
         properties: { iso_a2: string; [key: string]: unknown };
@@ -108,39 +103,64 @@ export default function WorldMap({
       }>;
     };
 
-    if (!dataToUse.length) {
-      // No data available - render countries with default colors
-      const defaultFeatures = countriesData.features.map((country) => ({
-        ...country,
-        properties: {
-          ...country.properties,
-          colorKey: "#E1EBE5", // Default gray color
-          JRCColorKey: "#E1EBE5",
-          GFWColorKey: "#E1EBE5",
-          countrySlug: "",
-        },
-      }));
+    // Always start with blank map
+    const blankFeatures = countriesData.features.map((country) => ({
+      ...country,
+      properties: {
+        ...country.properties,
+        colorKey: "#E1EBE5", // Blank/neutral color
+        JRCColorKey: "#E1EBE5",
+        GFWColorKey: "#E1EBE5",
+        countrySlug: "",
+      },
+    }));
 
-      return {
-        ...countries,
-        features: defaultFeatures,
-      };
-    } else {
-      const transformedForestCoverChangeAll =
-        transformAllForestCoverChangeData(dataToUse);
+    // Filter JRC data by selected year
+    const jrcDataAll = forestData.JRC || [];
+    const jrcData = jrcDataAll.filter(
+      (item) => String(item.year) === String(selectedYear)
+    );
 
-      const updatedFeatures = updateFeaturesWithColorKeys(
-        countriesData.features,
-        transformedForestCoverChangeAll,
-        selectedDataset
+    // Filter GFW data by selected year
+    const gfwDataAll = forestData.GFW || [];
+    const gfwData = gfwDataAll.filter(
+      (item) => String(item.year) === String(selectedYear)
+    );
+
+    // Update JRC colors if we have JRC data
+    let featuresWithColors = blankFeatures;
+    if (jrcData.length > 0) {
+      const transformedJRC = transformAllForestCoverChangeData(jrcData);
+      featuresWithColors = updateFeaturesWithColorKeys(
+        featuresWithColors,
+        transformedJRC,
+        "JRC"
       );
-
-      return {
-        ...countries,
-        features: updatedFeatures,
-      };
     }
-  }, [forestCoverChangeDataByYear, getCurrentForestData, selectedDataset]);
+
+    // Update GFW colors if we have GFW data
+    if (gfwData.length > 0) {
+      const transformedGFW = transformAllForestCoverChangeData(gfwData);
+      featuresWithColors = featuresWithColors.map((country) => {
+        const countyISO2 = country.properties.iso_a2 as string;
+        const gfwEligibility = transformedGFW[countyISO2]?.eligibility;
+        const gfwColorKey = getGFWColorKey(gfwEligibility || "NA");
+
+        return {
+          ...country,
+          properties: {
+            ...country.properties,
+            GFWColorKey: gfwColorKey,
+          },
+        };
+      });
+    }
+
+    return {
+      ...countries,
+      features: featuresWithColors,
+    };
+  }, [selectedYear, forestData]);
 
   const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
     const newCenter = [viewState.longitude, viewState.latitude];
@@ -184,14 +204,14 @@ export default function WorldMap({
     setCountrySlug(countrySlug);
     setCountryISO2(countryISO2);
 
-    const currentData = getCurrentForestData();
-    const dataToUse =
-      currentData.length > 0
-        ? currentData
-        : selectedDataset === "GFW"
-        ? forestCoverChangeDataByYear
-        : [];
-    const isTFFF = dataToUse.find(
+    // Get current dataset data filtered by year
+    const { forestData } = useWorldMapStore.getState();
+    const currentDataAll = forestData[selectedDataset] || [];
+    const currentData = currentDataAll.filter(
+      (item) => String(item.year) === String(selectedYear)
+    );
+
+    const isTFFF = currentData.find(
       (el) => el["country-iso2"] === countryISO2 || el.country === country
     );
     if (isTFFF) setIsTFFF(true);
@@ -215,24 +235,7 @@ export default function WorldMap({
     }
   };
 
-  // Show loading state if no data is available and we're loading
-  const hasAnyData =
-    getCurrentForestData().length > 0 || forestCoverChangeDataByYear.length > 0;
-
-  if (!hasAnyData && isLoading) {
-    return (
-      <>
-        <div className="aspect-[1.75] w-full -translate-y-12 -z-10 flex items-center justify-center bg-gray-100 rounded">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
-            <p className="text-gray-600">Loading map data...</p>
-          </div>
-        </div>
-        <WorldMapCard />
-      </>
-    );
-  }
-
+  // Always render the map - no loading state needed
   return (
     <>
       <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
