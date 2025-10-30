@@ -18,6 +18,8 @@ interface WorldMapStore extends WorldMapState {
   setDefaultCountryLoaded: (loaded: boolean) => void;
   getCurrentForestData: () => TFFFData[];
   getSelectedCountryData: () => TFFFData | null;
+  datasetFetched: { GFW: boolean; JRC: boolean };
+  markDatasetFetched: (dataset: DatasetType) => void;
 }
 
 export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
@@ -28,6 +30,7 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   forestData: { GFW: [], JRC: [] },
   isLoading: false,
   defaultCountryLoaded: false,
+  datasetFetched: { GFW: false, JRC: false },
 
   setSelectedCountry: (country) => set({ selectedCountry: country }),
   setSelectedYear: (year) => set({ selectedYear: year }),
@@ -39,6 +42,10 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
     })),
   setIsLoading: (loading) => set({ isLoading: loading }),
   setDefaultCountryLoaded: (loaded) => set({ defaultCountryLoaded: loaded }),
+  markDatasetFetched: (dataset) =>
+    set((state) => ({
+      datasetFetched: { ...state.datasetFetched, [dataset]: true },
+    })),
 
   getCurrentForestData: () => {
     const state = get();

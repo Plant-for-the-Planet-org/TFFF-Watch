@@ -1,6 +1,6 @@
 "use client";
 
-import { useForestCoverChangeData } from "@/utils/store";
+import { useWorldMapStore } from "@/stores/mapStore";
 import TFFFCard from "../shared/TFFFCard";
 import { CountryData, DatasetType } from "../shared/types";
 
@@ -11,13 +11,16 @@ interface CountryMapCardProps {
 
 export default function CountryMapCard({
   country,
-  dataset = "GFW",
+  dataset = "JRC",
 }: CountryMapCardProps) {
-  const { forestCoverChangeDataByCountry } = useForestCoverChangeData();
+  const { forestData, selectedDataset } = useWorldMapStore();
 
-  // Find TFFF data for this country - use the country-specific data like the old component
-  const tfffData = forestCoverChangeDataByCountry.find(
-    (data) => +data.year === 2024 // Default to 2024 for now
+  // Use the dataset from props or fall back to store's selected dataset
+  const activeDataset = dataset || selectedDataset;
+
+  // Find TFFF data for this country using dataset-specific data
+  const tfffData = forestData[activeDataset]?.find(
+    (data) => data["country-iso2"] === country.iso2
   );
 
   if (!country || !tfffData) {
@@ -29,7 +32,7 @@ export default function CountryMapCard({
       <TFFFCard
         country={country}
         data={tfffData}
-        dataset={dataset}
+        dataset={activeDataset}
         variant="standalone"
         showCTA={false}
         size="default"

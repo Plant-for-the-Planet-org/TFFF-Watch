@@ -1,12 +1,11 @@
 "use client";
 
+import { useWorldMapStore } from "@/stores/mapStore";
+import { api, urls } from "@/utils/axios-helper";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
-import { api, urls } from "@/utils/axios-helper";
-import { useWorldMapStore } from "@/stores/mapStore";
-import { TFFFData } from "./types";
-import { DatasetType } from "./types";
+import { DatasetType, TFFFData } from "./types";
 
 interface DatasetTabsProps {
   tabsClassName?: string;
@@ -25,8 +24,13 @@ export default function DatasetTabs({
 }: DatasetTabsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setForestData, setIsLoading, setSelectedDataset, forestData } =
-    useWorldMapStore();
+  const {
+    setForestData,
+    setIsLoading,
+    setSelectedDataset,
+    datasetFetched,
+    markDatasetFetched,
+  } = useWorldMapStore();
 
   // Get current dataset from URL or use default
   const selectedDataset =
@@ -35,8 +39,8 @@ export default function DatasetTabs({
   // Fetch data for a specific dataset
   const fetchDatasetData = useCallback(
     async (dataset: DatasetType) => {
-      // Check if we already have data for this dataset
-      if (forestData[dataset].length > 0) {
+      // Check if we've already fetched this dataset
+      if (datasetFetched[dataset]) {
         return;
       }
 
@@ -52,20 +56,25 @@ export default function DatasetTabs({
         });
 
         setForestData(dataset, data);
+        markDatasetFetched(dataset);
       } catch (error) {
         console.error(`Error fetching ${dataset} data:`, error);
       } finally {
         setIsLoading(false);
       }
     },
-    [forestData, setForestData, setIsLoading]
+    [datasetFetched, setForestData, setIsLoading, markDatasetFetched]
   );
 
-  // Update store when URL dataset changes
+  // Set selected dataset immediately on mount and when URL changes
   useEffect(() => {
     setSelectedDataset(selectedDataset);
+  }, [selectedDataset, setSelectedDataset]);
+
+  // Fetch data when dataset changes
+  useEffect(() => {
     fetchDatasetData(selectedDataset);
-  }, [selectedDataset, setSelectedDataset, fetchDatasetData]);
+  }, [selectedDataset, fetchDatasetData]);
   const datasets: { key: DatasetType; label: string; description: string }[] = [
     {
       key: "JRC",

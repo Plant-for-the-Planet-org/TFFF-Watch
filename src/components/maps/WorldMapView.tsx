@@ -73,23 +73,38 @@ export default function WorldMapView() {
   }, [width]);
 
   const allCountries = useMemo(() => {
-    // Use current forest data from store, fallback to old data
+    // Use current forest data from store, fallback to legacy data for both datasets
     const currentData = getCurrentForestData();
     const dataToUse =
       currentData.length > 0 ? currentData : forestCoverChangeDataByYear;
 
+    const countriesData = countries as unknown as {
+      features: Array<{
+        properties: { iso_a2: string; [key: string]: unknown };
+        [key: string]: unknown;
+      }>;
+    };
+
     if (!dataToUse.length) {
-      return { type: "FeatureCollection", features: [] };
+      // No data available - render countries with default colors
+      const defaultFeatures = countriesData.features.map((country) => ({
+        ...country,
+        properties: {
+          ...country.properties,
+          colorKey: "#E1EBE5", // Default gray color
+          JRCColorKey: "#E1EBE5",
+          GFWColorKey: "#E1EBE5",
+          countrySlug: "",
+        },
+      }));
+
+      return {
+        ...countries,
+        features: defaultFeatures,
+      };
     } else {
       const transformedForestCoverChangeAll =
         transformAllForestCoverChangeData(dataToUse);
-
-      const countriesData = countries as unknown as {
-        features: Array<{
-          properties: { iso_a2: string; [key: string]: unknown };
-          [key: string]: unknown;
-        }>;
-      };
 
       const updatedFeatures = updateFeaturesWithColorKeys(
         countriesData.features,

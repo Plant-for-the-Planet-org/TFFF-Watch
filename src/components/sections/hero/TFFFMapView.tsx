@@ -1,18 +1,18 @@
 "use client";
 
 import {
-  CountryMapLegends,
-  LegendsForJRC,
-  LegendsForGFW,
-} from "@/components/maps/MapLegends";
-import {
-  WorldMap,
   CountryMap,
   DatasetTabs,
-  useWorldMapStore,
   initializeBrazilDefault,
+  useWorldMapStore,
+  WorldMap,
 } from "@/components/maps";
 import CountryMapCard from "@/components/maps/country/CountryMapCard";
+import {
+  CountryMapLegends,
+  LegendsForGFW,
+  LegendsForJRC,
+} from "@/components/maps/MapLegends";
 import {
   CountryMapHeaderContent,
   WorldMapHeaderContent,
@@ -23,9 +23,8 @@ import { env } from "@/utils/env";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
 // import { forestChangeData } from "@/utils/forestChange.store";
 import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
-import Image from "next/image";
 import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
 export function TFFFWorldMapView() {
   const { forestCoverChangeData, setForestCoverChangeDataByYear } =
@@ -44,8 +43,10 @@ export function TFFFWorldMapView() {
     const _yearWise = forestCoverChangeData.filter((el) => el.year == year);
     setForestCoverChangeDataByYear(_yearWise);
 
-    // Update new store with forest data
+    // Update new store with forest data for both datasets initially
+    // This provides immediate data for map rendering, specific data will be fetched by DatasetTabs
     setForestData("GFW", _yearWise);
+    setForestData("JRC", _yearWise); // Use as fallback until JRC-specific data is fetched
     setSelectedYear(year);
   }, [
     forestCoverChangeData,
@@ -90,12 +91,12 @@ export function TFFFWorldMapView() {
               variant="hero"
             />
           </div>
-          <div className="md:absolute left-0 bottom-0 min-w-48 max-w-fit mx-auto">
+          <div className="md:absolute left-0 bottom-0 min-w-48 max-w-fit mx-auto pointer-events-none">
             <Br cn="md:hidden" />
             {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
             <Br />
           </div>
-          <p className="text-xs text-center flex justify-center items-center gap-2">
+          {/* <p className="text-xs text-center flex justify-center items-center gap-2">
             <Image
               width={12}
               height={12}
@@ -103,7 +104,7 @@ export function TFFFWorldMapView() {
               alt="Click on a country for more data"
             />
             Click on a country for more data
-          </p>
+          </p> */}
         </div>
       </div>
     </WorldMapViewContainer>
@@ -162,7 +163,7 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
 
           <div className="grow grid grid-cols-1 md:grid-cols-2">
             <div className="relative h-60 md:h-full">
-              <div className="absolute bottom-0 z-20">
+              <div className="absolute bottom-0 left-0 pointer-events-none">
                 <CountryMapLegends />
               </div>
               <CountryMap

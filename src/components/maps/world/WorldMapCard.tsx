@@ -5,8 +5,13 @@ import { useMemo } from "react";
 import TFFFCard from "../shared/TFFFCard";
 
 export default function WorldMapCard() {
-  const { selectedCountry, clickPosition, selectedDataset, forestData } =
-    useWorldMapStore();
+  const {
+    selectedCountry,
+    clickPosition,
+    selectedDataset,
+    forestData,
+    isLoading,
+  } = useWorldMapStore();
 
   const tfffData = useMemo(() => {
     if (!selectedCountry || !forestData[selectedDataset].length) return null;
@@ -18,30 +23,44 @@ export default function WorldMapCard() {
     );
   }, [selectedCountry, forestData, selectedDataset]);
 
-  if (!selectedCountry || !tfffData || !clickPosition) {
+  if (!selectedCountry || !clickPosition) {
     return null;
   }
 
-  // Calculate position for popup
-  const cardStyle = {
-    position: "absolute" as const,
-    left:
-      clickPosition.x > window.innerWidth / 2 ? "auto" : clickPosition.x + 10,
-    right:
-      clickPosition.x > window.innerWidth / 2
-        ? window.innerWidth - clickPosition.x + 10
-        : "auto",
-    top:
-      clickPosition.y > window.innerHeight / 2 ? "auto" : clickPosition.y + 10,
-    bottom:
-      clickPosition.y > window.innerHeight / 2
-        ? window.innerHeight - clickPosition.y + 10
-        : "auto",
-    zIndex: 50,
-  };
+  // Show loading state if data is being fetched
+  if (isLoading && !tfffData) {
+    return (
+      <div
+        className="absolute z-50"
+        style={{
+          left: clickPosition.x,
+          top: clickPosition.y,
+          transform: "translate(-20%, -120%)",
+        }}
+      >
+        <div className="bg-white p-4 rounded-lg shadow-lg">
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 rounded w-32 mb-2"></div>
+            <div className="h-3 bg-gray-200 rounded w-24"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!tfffData) {
+    return null;
+  }
 
   return (
-    <div style={cardStyle}>
+    <div
+      className="absolute z-50"
+      style={{
+        left: clickPosition.x,
+        top: clickPosition.y,
+        transform: "translate(-20%, -120%)",
+      }}
+    >
       <TFFFCard
         country={selectedCountry}
         data={tfffData}
