@@ -1,30 +1,72 @@
 import Br from "@/components/ui/Br";
 import { ResponsiveContainer } from "@/components/ui/Container";
-import { api, urls } from "@/utils/axios-helper";
+import { urls } from "@/utils/axios-helper";
 import { News } from "@/utils/types";
-import { compareDesc, parse as dateParse } from "date-fns";
+import { compareDesc } from "date-fns";
 import { Fragment } from "react";
+import { XMLParser } from "fast-xml-parser";
 import NewsCard from "./NewsCard";
 import NewsLetter from "./NewsLetter";
 
+type SubstackRSSItem = {
+  title: string;
+  link: string;
+  pubDate: string;
+  "content:encoded": string;
+  description: string;
+  guid: string;
+  "dc:creator": string;
+};
+
+type SubstackRSSFeed = {
+  rss: {
+    channel: {
+      item: SubstackRSSItem[];
+    };
+  };
+};
+
+function mapSubstackToNews(item: SubstackRSSItem): News {
+  // Extract image from content:encoded HTML
+  const imageMatch = item["content:encoded"]?.match(/<img[^>]+src="([^">]+)"/);
+  const featuredImage = imageMatch ? imageMatch[1] : undefined;
+
+  return {
+    id: item.guid,
+    date: new Date(item.pubDate).toISOString(),
+    publisher: "Plans for the Planet",
+    title: item.title,
+    summary: item.description,
+    featured_image: featuredImage,
+    locale: "en",
+    author: item["dc:creator"],
+    url: item.link,
+  };
+}
+
 export default async function PlansforthePlanetAnalysis() {
-  let newsList: News[] = [];
+  let articles: News[] = [];
 
   try {
-    newsList = await api<News[]>({
-      url: urls.news,
-      method: "GET",
-      token: "", // Add token if required
+    const response = await fetch(urls.substackArticles, {
+      next: { revalidate: 3600 }, // Cache for 1 hour
     });
+    const xmlData = await response.text();
 
-    newsList.sort((a, b) =>
-      compareDesc(
-        dateParse(a.date, "dd/MM/yyyy", new Date()),
-        dateParse(b.date, "dd/MM/yyyy", new Date())
-      )
-    );
+    const parser = new XMLParser({
+      ignoreAttributes: false,
+      attributeNamePrefix: "@_",
+    });
+    const parsedData = parser.parse(xmlData) as SubstackRSSFeed;
+
+    const items = parsedData.rss.channel.item || [];
+    articles = items.map(mapSubstackToNews);
+
+    // Sort by date (most recent first) and take top 3
+    articles.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+    articles = articles.slice(0, 3);
   } catch (error) {
-    console.error("Error fetching news:", error);
+    console.error("Error fetching Substack articles:", error);
   }
 
   return (
@@ -40,21 +82,15 @@ export default async function PlansforthePlanetAnalysis() {
           {/* <div className="flex max-w-full lg:grid lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 overflow-x-scroll overscroll-x-auto scrollbar-transparent"> */}
           {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe"> */}
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
-            {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5"> */}
-            {newsList.slice(0, 3).map((el) => (
-              <Fragment key={el.id}>
+            {articles.map((article) => (
+              <Fragment key={article.id}>
                 <NewsCard
-                  title={el.title!}
-                  summary={el.summary!}
-                  image={el.featured_image!}
-                  publisher={el.publisher!}
-                  // publisher={el.author}
-                  datetime={dateParse(
-                    el.date,
-                    "dd/MM/yyyy",
-                    new Date()
-                  ).toISOString()}
-                  url={el.url}
+                  title={article.title!}
+                  summary={article.summary!}
+                  image={article.featured_image!}
+                  publisher={article.publisher!}
+                  datetime={article.date}
+                  url={article.url}
                 />
               </Fragment>
             ))}

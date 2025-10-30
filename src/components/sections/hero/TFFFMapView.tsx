@@ -21,6 +21,7 @@ import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import RewardsChart from "../charts/RewardsChart";
 
 export function TFFFWorldMapView() {
   const { forestCoverChangeData, setForestCoverChangeDataByYear } =
@@ -73,6 +74,9 @@ export function TFFFWorldMapView() {
           </p>
         </div>
       </div>
+      <Br />
+      <Br />
+      <RewardsChart />
     </WorldMapViewContainer>
   );
 }
