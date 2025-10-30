@@ -19,7 +19,7 @@ export default function Footer() {
               src="/assets/pftp.png"
               alt="Plant for the Planet Foundation"
             />
-            <span className="group-hover:underline">Plant-for-the-Planet</span>
+            <span className="underline">Plant-for-the-Planet</span>
           </Link>
           {/* <span>In partnership with</span>
           <span>

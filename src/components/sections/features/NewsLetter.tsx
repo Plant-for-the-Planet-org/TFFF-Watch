@@ -28,7 +28,7 @@ export default function NewsLetter() {
   }, []);
 
   return (
-    <div className="outer-rounding">
+    <div className="border border-primary-light bg-white outer-padding rounding-xl overflow-clip">
       {showNewsletter ? (
         <iframe
           src="https://plansfortheplanet.substack.com/embed"
