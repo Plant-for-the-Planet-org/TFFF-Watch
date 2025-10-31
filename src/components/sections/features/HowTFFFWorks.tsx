@@ -107,11 +107,11 @@ export default function HowTFFFWorks() {
               className="shrink-0 border border-base-gray rounded-lg bg-white w-10 h-10 p-2 md:w-14 md:h-14 md:p-3"
               width={32}
               height={32}
-              src="/assets/discounts.svg"
-              alt="Discounts"
+              src="/assets/penalties.svg"
+              alt="Penalties"
             />
             <div className="shrink">
-              <h3 className="font-bold typo-p">Discounts</h3>
+              <h3 className="font-bold typo-p">Penalties</h3>
               <p className="text-xs">
                 For every hectare newly deforested, $400-$800 will be deducted,
                 depending on the scale of deforestation and $140 is deducted for

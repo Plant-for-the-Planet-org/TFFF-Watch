@@ -72,7 +72,12 @@ export default function Footer() {
             <span> © {new Date().getFullYear()}</span>
           </div>
           <div className="lg:ml-2">
-            <Button cn="min-w-40" type="link" external href="#">
+            <Button
+              cn="min-w-40"
+              type="link"
+              external
+              href="https://donate.plant-for-the-planet.org/?to=proj_bFH0BU0Qw02RuetpQlLOMVYX&callback_url=https://www.plant-for-the-planet.org/"
+            >
               Donate
             </Button>
           </div>

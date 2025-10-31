@@ -70,7 +70,7 @@ export default function HowTFFFWorksFlowChart() {
             id="tfif-from-sponsors-desktop"
             className="hidden md:block absolute bottom-0 -right-[12px]"
           ></div>
-          <p className="text-xs uppercase">Junior debt</p>
+          <p className="text-xs uppercase">Sponsor Capital</p>
           <p className="font-semibold text-sm">$25bn invested</p>
           <p className="text-xs">
             as long-dated concessional loans, grants or guarantees
@@ -86,7 +86,7 @@ export default function HowTFFFWorksFlowChart() {
             id="tfif-from-markets-desktop"
             className="hidden md:block absolute bottom-0 -left-[12px]"
           ></div>
-          <p className="text-xs uppercase">Senior debt</p>
+          <p className="text-xs uppercase">Senior Market Debt</p>
           <p className="font-semibold text-sm">$100bn invested</p>
           <p className="text-xs">as market-rate fixed income bonds</p>
         </div>

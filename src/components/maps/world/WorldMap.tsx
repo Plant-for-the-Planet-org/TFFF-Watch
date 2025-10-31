@@ -292,7 +292,7 @@ export default function WorldMap({
               type="line"
               paint={{
                 "line-color": "#F0FAF4",
-                "line-width": 1,
+                "line-width": 1.5,
               }}
             />
           </Source>
