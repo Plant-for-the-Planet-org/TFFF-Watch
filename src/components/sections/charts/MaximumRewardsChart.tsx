@@ -5,19 +5,19 @@ import Br from "@/components/ui/Br";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { useWorldMapStore } from "@/stores/mapStore";
 import { TFFFData } from "@/components/maps/shared/types";
+import { getJRCColorKey } from "@/utils/map-colors";
 
-const CHART_COLORS = [
-  "#6EE7B7",
-  "#34D399",
-  "#10B981",
-  "#059669",
-  "#047857",
-  "#065F46",
-  "#064E3B",
-  "#10B981",
-  "#A7F3D0",
-  "#9CA3AF",
-];
+// Helper function to calculate eligibility
+function getEligibility(item: TFFFData): string {
+  if (item.eligibility_deforestation_rate_below_half_percent === true) {
+    if (item.eligibility_decreasing_trend_of_deforestation === false) {
+      return "ALMOST_ELIGIBLE";
+    } else {
+      return "ELIGIBLE";
+    }
+  }
+  return "INELIGIBLE";
+}
 
 export default function MaximumRewardsChart() {
   const { selectedDataset, forestData } = useWorldMapStore();
@@ -39,44 +39,63 @@ export default function MaximumRewardsChart() {
     );
 
     if (data2024.length === 0) {
-      return { sum: 0, countries: [] };
+      return { sum: 0, groups: [] };
     }
 
-    // Sort by base_reward_usd (descending)
-    const sortedData = [...data2024].sort(
-      (a, b) => b.base_reward_usd - a.base_reward_usd
+    // Group by eligibility
+    const eligible = data2024.filter(
+      (item) => getEligibility(item) === "ELIGIBLE"
+    );
+    const almostEligible = data2024.filter(
+      (item) => getEligibility(item) === "ALMOST_ELIGIBLE"
+    );
+    const ineligible = data2024.filter(
+      (item) => getEligibility(item) === "INELIGIBLE"
     );
 
-    // Get top 4 countries
-    const top4 = sortedData.slice(0, 4);
-    const others = sortedData.slice(4);
+    // Calculate sums for each group
+    const eligibleSum = eligible.reduce(
+      (acc, item) => acc + item.base_reward_usd,
+      0
+    );
+    const almostEligibleSum = almostEligible.reduce(
+      (acc, item) => acc + item.base_reward_usd,
+      0
+    );
+    const ineligibleSum = ineligible.reduce(
+      (acc, item) => acc + item.base_reward_usd,
+      0
+    );
 
-    // Calculate total sum from all data
-    const sum = sortedData.reduce((acc, item) => acc + item.base_reward_usd, 0);
+    const totalSum = eligibleSum + almostEligibleSum + ineligibleSum;
 
-    // Map top 4 to chart format
-    const countries = top4.map((item, index) => ({
-      iso2: item["country-iso2"],
-      name: item.country,
-      value: item.base_reward_usd,
-      color: CHART_COLORS[index],
-    }));
-
-    // Add "Others" if there are more than 4 countries
-    if (others.length > 0) {
-      const othersSum = others.reduce(
-        (acc, item) => acc + item.base_reward_usd,
-        0
-      );
-      countries.push({
-        iso2: "OTHER",
-        name: "Others",
-        value: othersSum,
-        color: "#9CA3AF",
+    const groups = [];
+    if (eligibleSum > 0) {
+      groups.push({
+        name: "Eligible",
+        value: eligibleSum,
+        color: getJRCColorKey("ELIGIBLE"),
+        count: eligible.length,
+      });
+    }
+    if (almostEligibleSum > 0) {
+      groups.push({
+        name: "Almost Eligible",
+        value: almostEligibleSum,
+        color: getJRCColorKey("ALMOST_ELIGIBLE"),
+        count: almostEligible.length,
+      });
+    }
+    if (ineligibleSum > 0) {
+      groups.push({
+        name: "Ineligible",
+        value: ineligibleSum,
+        color: getJRCColorKey("INELIGIBLE"),
+        count: ineligible.length,
       });
     }
 
-    return { sum, countries };
+    return { sum: totalSum, groups };
   }, [selectedDataset, forestData]);
 
   if (isLoading) {
@@ -109,7 +128,7 @@ export default function MaximumRewardsChart() {
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={chartData.countries}
+              data={chartData.groups}
               cx="50%"
               cy="50%"
               innerRadius="60%"
@@ -118,7 +137,7 @@ export default function MaximumRewardsChart() {
               startAngle={90}
               endAngle={-270}
             >
-              {chartData.countries.map((entry, index) => (
+              {chartData.groups.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
@@ -130,6 +149,23 @@ export default function MaximumRewardsChart() {
           </span>
         </div>
       </div>
+      <Br />
+      {/* <div className="flex flex-col gap-2">
+        {chartData.groups.map((group, index) => (
+          <div key={index} className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div
+                className="w-4 h-4 rounded"
+                style={{ backgroundColor: group.color }}
+              />
+              <span className="text-sm">{group.name}</span>
+            </div>
+            <span className="text-sm font-medium">
+              {group.count} {group.count === 1 ? "country" : "countries"}
+            </span>
+          </div>
+        ))}
+      </div> */}
     </div>
   );
 }

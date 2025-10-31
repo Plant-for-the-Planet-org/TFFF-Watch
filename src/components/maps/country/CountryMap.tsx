@@ -106,6 +106,7 @@ export default function CountryMap({
             dataset, // Include dataset in API call
           },
         });
+        console.log("new data");
         setLayersData(result);
       } catch (error) {
         console.error("Error fetching layers:", error);

@@ -329,12 +329,27 @@ export default function WorldMap({
         <button
           className="bg-white p-2 rounded-lg cursor-pointer"
           onClick={() => {
+            // Create a version with the correct colorKey based on selected dataset
+            const downloadData = {
+              ...allCountries,
+              features: allCountries.features.map((feature) => ({
+                ...feature,
+                properties: {
+                  ...feature.properties,
+                  colorKey:
+                    selectedDataset === "JRC"
+                      ? feature.properties.JRCColorKey
+                      : feature.properties.GFWColorKey,
+                },
+              })),
+            };
+
             downloadGeoJsonAsSvg(
-              allCountries as unknown as NaturalEarthCountryFeatureCollection,
+              downloadData as unknown as NaturalEarthCountryFeatureCollection,
               {
                 width: 800,
                 height: 800,
-                filename: "tfff-world-map.svg",
+                filename: `tfff-world-map-${selectedDataset}-${selectedYear}.svg`,
                 backgroundColor: "#F0FAF4",
                 strokeWidth: 1,
               }
