@@ -12,7 +12,7 @@ export default async function WhatsAppInvite() {
           height={100}
           width={100}
           className="text-center"
-          src={"/assets/Whatsapp.png"}
+          src="/assets/Whatsapp.png"
           alt="WhatsApp Icon"
         />
         <Br />

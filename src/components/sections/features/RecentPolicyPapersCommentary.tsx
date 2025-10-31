@@ -1,5 +1,6 @@
 import PaperCard from "@/components/sections/features/PaperCard";
 import Br from "@/components/ui/Br";
+import { Button } from "@/components/ui/Button";
 import { api, urls } from "@/utils/axios-helper";
 import { formatDateFromExcelToData } from "@/utils/datetime-helper";
 import { Policy } from "@/utils/types";
@@ -54,13 +55,13 @@ export default async function RecentPolicyPapersComentary() {
         </div>
       </div>
       <Br />
-      {/* <Br />
+      <Br />
       <div className="flex justify-center">
-        <Button type="link" external>
+        <Button type="link" external href="/policies">
           See All
         </Button>
       </div>
-      <Br /> */}
+      <Br />
     </div>
   );
 }
