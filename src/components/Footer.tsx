@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "./ui/Button";
 
 export default function Footer() {
   return (
@@ -19,7 +20,7 @@ export default function Footer() {
               src="/assets/pftp.png"
               alt="Plant for the Planet Foundation"
             />
-            <span className="group-hover:underline">Plant-for-the-Planet</span>
+            <span className="underline">Plant-for-the-Planet</span>
           </Link>
           {/* <span>In partnership with</span>
           <span>
@@ -40,34 +41,46 @@ export default function Footer() {
           </span> */}
         </div>
         <div></div>
-        <div className="flex gap-1 justify-center flex-wrap md:flex-nowrap">
-          <Link
-            className="hover:underline"
-            href="https://www.plant-for-the-planet.org/imprint/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Imprint
-          </Link>
-          ·
-          <Link
-            className="hover:underline"
-            href="https://www.plant-for-the-planet.org/terms-and-conditions"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Terms & Conditions
-          </Link>
-          ·
-          <Link
-            className="hover:underline"
-            href="https://www.plant-for-the-planet.org"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Plant-for-the-Planet Foundation
-          </Link>
-          <span> © {new Date().getFullYear()}</span>
+        <div className="flex justify-center items-center gap-2 flex-wrap">
+          <div className="flex gap-1 justify-center items-center flex-wrap md:flex-nowrap">
+            <Link
+              className="hover:underline"
+              href="https://www.plant-for-the-planet.org/imprint/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Imprint
+            </Link>
+            ·
+            <Link
+              className="hover:underline"
+              href="https://www.plant-for-the-planet.org/terms-and-conditions"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Terms & Conditions
+            </Link>
+            ·
+            <Link
+              className="hover:underline"
+              href="https://www.plant-for-the-planet.org"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Plant-for-the-Planet Foundation
+            </Link>
+            <span> © {new Date().getFullYear()}</span>
+          </div>
+          <div className="lg:ml-2">
+            <Button
+              cn="min-w-40"
+              type="link"
+              external
+              href="https://donate.plant-for-the-planet.org/?to=proj_bFH0BU0Qw02RuetpQlLOMVYX&callback_url=https://www.plant-for-the-planet.org/"
+            >
+              Donate
+            </Button>
+          </div>
         </div>
       </div>
     </footer>

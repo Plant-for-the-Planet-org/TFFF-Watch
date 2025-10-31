@@ -11,7 +11,7 @@ export function WorldMapHeaderContent() {
     <div className="flex flex-col items-center">
       <h2 className="font-bold typo-h2">Estimated TFFF Payouts</h2>
       <Br />
-      <h3 className="flex gap-2 items-center flex-wrap typo-h3">
+      {/* <h3 className="flex gap-2 items-center flex-wrap typo-h3">
         <span className="text-center font-bold">
           Forest loss in <i>Tropical Forest Forever Facility</i> countries in
           <YearSelect />
@@ -20,6 +20,9 @@ export function WorldMapHeaderContent() {
       <p className="text-center max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl typo-p">
         % of eligible forest cover deforested or degraded in tropical forest
         countries according to the TFFF’s standards
+      </p> */}
+      <p className="text-center max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl typo-p">
+        if TFFF were fully funded; based on 2024 forest change data
       </p>
     </div>
   );

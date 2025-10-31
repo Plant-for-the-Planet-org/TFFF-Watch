@@ -57,3 +57,19 @@ export function OverlayPressTFFFWatch() {
     </div>
   );
 }
+export function OverlayNewsTFFFWatch() {
+  return (
+    <div className="absolute inset-0 flex justify-center items-center">
+      <h2 className="font-bold text-white typo-h1">TFFF News</h2>
+    </div>
+  );
+}
+export function OverlayPoliciesTFFFWatch() {
+  return (
+    <div className="absolute inset-0 flex justify-center items-center">
+      <h2 className="font-bold text-white typo-h1">
+        Policy Papers & Commentary
+      </h2>
+    </div>
+  );
+}

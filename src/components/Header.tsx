@@ -1,9 +1,9 @@
 import HeaderMenu from "@/components/HeaderMenu";
 import Hr from "@/components/ui/Hr";
 import Image from "next/image";
-import Link from "next/link";
 import HeaderCountry from "./HeaderCountry";
 import Br from "./ui/Br";
+import LinkWithParams from "./ui/LinkWithParams";
 
 export default function Header() {
   return (
@@ -33,7 +33,7 @@ export default function Header() {
 export function Logo() {
   return (
     <div>
-      <Link href="/">
+      <LinkWithParams href="/" preserveParams={["dataset"]}>
         <h1>
           <Image
             className=" h-[24px] w-[160px] lg:h-[48px] lg:w-[256px]"
@@ -43,7 +43,7 @@ export function Logo() {
             alt="TFFF Watch"
           />
         </h1>
-      </Link>
+      </LinkWithParams>
     </div>
   );
 }
