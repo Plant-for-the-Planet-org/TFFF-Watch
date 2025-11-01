@@ -4,7 +4,6 @@ import ForestCoverChange from "@/components/sections/features/ForestCoverChange"
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
 import { getCountryDetails } from "@/utils/country-helper";
-import { fetchForestCoverChangeData } from "@/utils/forestChange.store";
 import { Metadata } from "next";
 import { humanize } from "underscore.string";
 
@@ -36,10 +35,8 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   const details = getCountryDetails({ country, slug });
 
-  await fetchForestCoverChangeData(details.name);
-
-  // Validate dataset parameter
-  const validDataset: DatasetType = dataset === "JRC" ? "JRC" : "GFW"; // Default to GFW if invalid
+  // Validate dataset parameter - default to JRC if not specified or invalid
+  const validDataset: DatasetType = dataset === "GFW" ? "GFW" : "JRC";
 
   return (
     <div>

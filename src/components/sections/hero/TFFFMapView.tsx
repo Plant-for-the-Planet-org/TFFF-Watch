@@ -20,12 +20,11 @@ import {
 import Br from "@/components/ui/Br";
 import { CountryDetails } from "@/utils/country-helper";
 import { env } from "@/utils/env";
-import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
-// import { forestChangeData } from "@/utils/forestChange.store";
 import { useForestCoverChangeData } from "@/utils/store";
 import { useParams, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
+import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
 
 export function TFFFWorldMapView() {
   const { forestCoverChangeData, setForestCoverChangeDataByYear } =
@@ -35,9 +34,9 @@ export function TFFFWorldMapView() {
   const { selectedDataset, setForestData, selectedYear, setSelectedYear } =
     useWorldMapStore();
 
-  useEffect(() => {
-    fetchForestCoverChangeDataV2({});
-  }, []);
+  // useEffect(() => {
+  //   fetchForestCoverChangeDataV2({});
+  // }, []);
 
   useEffect(() => {
     const _yearWise = forestCoverChangeData.filter(
@@ -65,7 +64,7 @@ export function TFFFWorldMapView() {
   return (
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
-        <BetaChip />
+        <VersionChip />
 
         {/* Dataset Tabs */}
         <div className="flex justify-center mb-4">
@@ -121,7 +120,7 @@ type TFFFCountryMapViewProps = CountryDetails & {
 };
 
 function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
-  const { country } = useParams();
+  const { country, year } = useParams();
   const searchParams = useSearchParams();
 
   // Get dataset from URL params, fallback to props or default
@@ -129,9 +128,16 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
     (searchParams.get("dataset") as "GFW" | "JRC") || props.dataset || "JRC";
 
   useEffect(() => {
-    if (props.name)
-      fetchForestCoverChangeDataV2({ country: props.name, iso2: props.iso2 });
-  }, [props.name, props.iso2]);
+    if (props.name && props.iso2) {
+      // Fetch country-specific data with the selected dataset
+      fetchForestCoverChangeDataV2({
+        year: year as string,
+        country: props.name,
+        iso2: props.iso2,
+        source: selectedDataset,
+      });
+    }
+  }, [year, props.name, props.iso2, selectedDataset]);
 
   // Removed problematic navigation that was causing 404 redirects
 
@@ -143,13 +149,6 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
     slug: country as string,
     flagImgUrl: props.flagImgUrl,
   };
-
-  // Debug logging
-  console.log("TFFFCountryMapView Debug:", {
-    props,
-    countryData,
-    selectedDataset,
-  });
 
   return (
     <div>
@@ -245,12 +244,11 @@ function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function BetaChip() {
+export function VersionChip() {
   const mapVersion = env.mapVersion;
   return (
     <div className="z-20 self-start bg-white text-primary text-xs py-0.5 px-2 rounded-full shadow-xl">
-      {/* BETA */}
-      Version {mapVersion}
+      {mapVersion}
     </div>
   );
 }

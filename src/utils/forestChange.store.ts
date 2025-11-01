@@ -29,20 +29,24 @@ export async function fetchForestCoverChangeDataV2({
   country,
   year,
   iso2 = "",
+  source = "JRC",
 }: {
   country?: string;
   year?: string;
   iso2?: string;
+  source?: "GFW" | "JRC";
 }) {
   const query: { [key: string]: string } = {};
 
-  console.log(country, year);
   if (iso2) {
     query["country-iso2"] = iso2;
   } else if (country) {
     const { iso2 } = getCountryDetails({ country, slug: country });
     query["country-iso2"] = iso2;
   }
+
+  // Add source parameter for dataset selection
+  query["source"] = source;
 
   try {
     const _results = await api<ForestCoverChange[]>({
@@ -68,6 +72,6 @@ export async function fetchForestCoverChangeDataV2({
 
     return _results;
   } catch (error) {
-    console.error("Error fetching news:", error);
+    console.error("Error fetching forest change data:", error);
   }
 }

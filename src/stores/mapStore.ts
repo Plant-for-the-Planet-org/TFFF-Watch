@@ -33,13 +33,11 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   datasetFetched: { GFW: false, JRC: false },
 
   setSelectedCountry: (country) => set({ selectedCountry: country }),
-  setSelectedYear: (year) => {
-    console.log("call", year);
-    return set(() => ({
+  setSelectedYear: (year) =>
+    set(() => ({
       selectedYear: year,
       // Do NOT clear forest data - we have all years
-    }));
-  },
+    })),
   setSelectedDataset: (dataset) => set({ selectedDataset: dataset }),
   setClickPosition: (position) => set({ clickPosition: position }),
   setForestData: (dataset, data) =>

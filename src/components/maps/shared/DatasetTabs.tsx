@@ -84,12 +84,12 @@ export default function DatasetTabs({
     {
       key: "JRC",
       label: "Standard Estimate (JRC + GFW)",
-      description: "Joint Research Centre data",
+      description: "",
     },
     {
       key: "GFW",
       label: "Tree-cover-change Estimate (GFW)",
-      description: "Global Forest Watch data",
+      description: "",
     },
   ];
 
@@ -167,7 +167,7 @@ function DatasetTabsInfoContent() {
     <div className="w-sm text-xs bg-background text-base-text px-3 py-2 rounded-lg shadow-lg">
       <div>
         We created TFFF payout estimates, based on two different global
-        deforestation classifications. Our Standard Estimate is based on the
+        deforestation classifications. Our Standard Estimate is based on the{" "}
         <Link
           href={"https://www.science.org/doi/10.1126/sciadv.abe1603"}
           className="text-blue-500"
