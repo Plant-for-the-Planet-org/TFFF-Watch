@@ -1,6 +1,7 @@
 import { DatasetType } from "@/components/maps/shared/types";
 
 export function getJRCColorKey(eligibility: string): string {
+  // console.log({ eligibility });
   switch (eligibility) {
     case "INELIGIBLE":
       return "#C4C4C4";

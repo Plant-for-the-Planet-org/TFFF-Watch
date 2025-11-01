@@ -16,8 +16,8 @@ export function WorldMapHeaderContent() {
           Forest loss in <i>Tropical Forest Forever Facility</i> countries in
           <YearSelect />
         </span>
-      </h3>
-      <p className="text-center max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl typo-p">
+      </h3> */}
+      {/* <p className="text-center max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl typo-p">
         % of eligible forest cover deforested or degraded in tropical forest
         countries according to the TFFF’s standards
       </p> */}

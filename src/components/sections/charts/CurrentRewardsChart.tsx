@@ -216,22 +216,6 @@ export default function CurrentRewardsChart() {
         </div>
       </div>
       <Br />
-      <div className="flex flex-col gap-2">
-        {chartData.legendGroups.map((group, index) => (
-          <div key={index} className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div
-                className="w-4 h-4 rounded"
-                style={{ backgroundColor: group.color }}
-              />
-              <span className="text-sm">{group.name}</span>
-            </div>
-            <span className="text-sm font-medium">
-              {group.count} {group.count === 1 ? "country" : "countries"}
-            </span>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

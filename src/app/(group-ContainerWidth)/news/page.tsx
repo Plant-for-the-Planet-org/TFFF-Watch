@@ -1,3 +1,4 @@
+import AllNews from "@/components/sections/features/news/AllNews";
 import SecondaryHero, {
   OverlayNewsTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
@@ -15,7 +16,7 @@ export default function Page() {
       <div>
         <SecondaryHero OverlayComponent={<OverlayNewsTFFFWatch />} />
         <Br />
-
+        <AllNews />
         <Br />
       </div>
     </div>

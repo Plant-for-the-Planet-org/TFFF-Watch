@@ -5,7 +5,7 @@ import { News } from "@/utils/types";
 import { compareDesc } from "date-fns";
 import { Fragment } from "react";
 import { XMLParser } from "fast-xml-parser";
-import NewsCard from "./NewsCard";
+import NewsCard from "../news/NewsCard";
 import NewsLetter from "./NewsLetter";
 
 type SubstackRSSItem = {
@@ -26,6 +26,32 @@ type SubstackRSSFeed = {
   };
 };
 
+// Helper function to decode HTML entities
+function decodeHtmlEntities(text: string): string {
+  if (typeof document !== "undefined") {
+    // Browser environment
+    const textarea = document.createElement("textarea");
+    textarea.innerHTML = text;
+    return textarea.value;
+  } else {
+    // Server environment - handle common entities manually
+    return text
+      .replace(/&#8217;/g, "'") // Right single quotation mark
+      .replace(/&#8216;/g, "'") // Left single quotation mark
+      .replace(/&#8220;/g, '"') // Left double quotation mark
+      .replace(/&#8221;/g, '"') // Right double quotation mark
+      .replace(/&#8211;/g, "–") // En dash
+      .replace(/&#8212;/g, "—") // Em dash
+      .replace(/&#8230;/g, "…") // Horizontal ellipsis
+      .replace(/&amp;/g, "&") // Ampersand
+      .replace(/&lt;/g, "<") // Less than
+      .replace(/&gt;/g, ">") // Greater than
+      .replace(/&quot;/g, '"') // Quotation mark
+      .replace(/&#39;/g, "'") // Apostrophe
+      .replace(/&nbsp;/g, " "); // Non-breaking space
+  }
+}
+
 function mapSubstackToNews(item: SubstackRSSItem): News {
   // Extract image from content:encoded HTML
   const imageMatch = item["content:encoded"]?.match(/<img[^>]+src="([^">]+)"/);
@@ -35,11 +61,13 @@ function mapSubstackToNews(item: SubstackRSSItem): News {
     id: item.guid,
     date: new Date(item.pubDate).toISOString(),
     publisher: "Plans for the Planet",
-    title: item.title,
-    summary: item.description,
+    title: decodeHtmlEntities(item.title),
+    summary: decodeHtmlEntities(item.description),
     featured_image: featuredImage,
     locale: "en",
-    author: item["dc:creator"],
+    author: item["dc:creator"]
+      ? decodeHtmlEntities(item["dc:creator"])
+      : undefined,
     url: item.link,
   };
 }

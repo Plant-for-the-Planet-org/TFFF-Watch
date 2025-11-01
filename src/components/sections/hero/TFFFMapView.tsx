@@ -22,7 +22,7 @@ import { CountryDetails } from "@/utils/country-helper";
 import { env } from "@/utils/env";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
 // import { forestChangeData } from "@/utils/forestChange.store";
-import { useForestCoverChangeData, useWorldMap } from "@/utils/store";
+import { useForestCoverChangeData } from "@/utils/store";
 import { useParams, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
@@ -30,10 +30,9 @@ import RewardsChart from "../charts/RewardsChart";
 export function TFFFWorldMapView() {
   const { forestCoverChangeData, setForestCoverChangeDataByYear } =
     useForestCoverChangeData();
-  const { year } = useWorldMap();
 
   // New map store integration
-  const { selectedDataset, setForestData, setSelectedYear } =
+  const { selectedDataset, setForestData, selectedYear, setSelectedYear } =
     useWorldMapStore();
 
   useEffect(() => {
@@ -41,17 +40,18 @@ export function TFFFWorldMapView() {
   }, []);
 
   useEffect(() => {
-    const _yearWise = forestCoverChangeData.filter((el) => el.year == year);
+    const _yearWise = forestCoverChangeData.filter(
+      (el) => el.year == selectedYear
+    );
     setForestCoverChangeDataByYear(_yearWise);
 
     // Update new store with forest data for both datasets initially
     // This provides immediate data for map rendering, specific data will be fetched by DatasetTabs
     setForestData("GFW", _yearWise);
     setForestData("JRC", _yearWise); // Use as fallback until JRC-specific data is fetched
-    setSelectedYear(year);
   }, [
     forestCoverChangeData,
-    year,
+    selectedYear,
     setForestCoverChangeDataByYear,
     setForestData,
     setSelectedYear,
@@ -86,7 +86,7 @@ export function TFFFWorldMapView() {
         <div className="grow relative flex flex-col">
           <div className="mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
             <WorldMap
-              selectedYear={year}
+              selectedYear={selectedYear}
               dataset={selectedDataset}
               defaultSelectedCountry="BR"
               variant="hero"
@@ -191,10 +191,10 @@ function TFFFCountryMapViewFallback(props: TFFFCountryMapViewProps) {
         {/* Dataset Tabs Fallback */}
         <div className="flex gap-1 p-1 bg-[#E4F6EB] rounded-xl border border-primary-light">
           <div className="px-4 py-2 typo-p font-medium rounded-lg bg-white text-[#333333] shadow-sm">
-            Standard Estimate (JRC)
+            Standard Estimate (JRC + GFW)
           </div>
           <div className="px-4 py-2 typo-p font-medium rounded-lg bg-transparent text-[#828282]">
-            Conservative Estimate (GFW)
+            Tree-cover-change Estimate (GFW)
           </div>
         </div>
       </div>

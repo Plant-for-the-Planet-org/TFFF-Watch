@@ -1,3 +1,4 @@
+import AllPolicies from "@/components/sections/features/policies/AllPolicies";
 import SecondaryHero, {
   OverlayPoliciesTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";
@@ -5,8 +6,8 @@ import Br from "@/components/ui/Br";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Press · TFFF Watch",
-  description: "Access press releases and contact us for press inquiries.",
+  title: "Policy Papers & Commentary  · TFFF Watch",
+  description: ".",
 };
 
 export default function Page() {
@@ -15,7 +16,7 @@ export default function Page() {
       <div>
         <SecondaryHero OverlayComponent={<OverlayPoliciesTFFFWatch />} />
         <Br />
-
+        <AllPolicies />
         <Br />
       </div>
     </div>

@@ -69,21 +69,15 @@ type CountryForestData = {
     eligibility?: string;
   };
 };
-// export function transformAllForestCoverChangeData(data: ForestCoverChange[]) {
-//   return data.reduce((acc: CountryForestData, row) => {
-//     const countryISO2 = row["country-iso2"];
-//     const percDef = row.percentage_deforested || 0;
-//     const percDeg = row.percentage_degraded || 0;
-//     acc[countryISO2] = percDef + percDeg;
-//     return acc;
-//   }, {});
-// }
+
 export function transformAllForestCoverChangeData(data: ForestCoverChange[]) {
   return data.reduce((acc: CountryForestData, row) => {
     const countryISO2 = row["country-iso2"];
     const countrySlug = row["country-slug"];
     const percDef = row.percentage_deforested || 0;
     const percDeg = row.percentage_degraded || 0;
+
+    console.log(1);
 
     let eligibility = "INELIGIBLE";
     if (row.eligibility_deforestation_rate_below_half_percent === true) {

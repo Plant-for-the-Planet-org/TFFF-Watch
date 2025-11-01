@@ -28,7 +28,7 @@ export default async function RecentNews() {
   }
 
   return (
-    <ResponsiveContainer cn="">
+    <ResponsiveContainer>
       <div className="bg-secondary-light outer-rounding outer-padding-3">
         <Br />
         <h2 className="text-center font-bold typo-h2">🌿 Recent News</h2>
@@ -60,11 +60,13 @@ export default async function RecentNews() {
         </div>
         <Br />
         <Br />
+
         <div className="flex justify-center">
           <Button type="link" external href="/news">
             See All
           </Button>
         </div>
+
         <Br />
       </div>
     </ResponsiveContainer>

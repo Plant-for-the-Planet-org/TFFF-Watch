@@ -117,15 +117,14 @@ export default function WorldMap({
 
     // Filter JRC data by selected year
     const jrcDataAll = forestData.JRC || [];
-    const jrcData = jrcDataAll.filter(
-      (item) => String(item.year) === String(selectedYear)
-    );
+    const jrcData = jrcDataAll.filter((item) => item.year == selectedYear);
 
     // Filter GFW data by selected year
     const gfwDataAll = forestData.GFW || [];
-    const gfwData = gfwDataAll.filter(
-      (item) => String(item.year) === String(selectedYear)
-    );
+    const gfwData = gfwDataAll.filter((item) => item.year == selectedYear);
+
+    console.log(forestData, selectedYear);
+    console.log({ jrcData, gfwData });
 
     // Update JRC colors if we have JRC data
     let featuresWithColors = blankFeatures;

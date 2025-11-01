@@ -83,12 +83,12 @@ export default function DatasetTabs({
   const datasets: { key: DatasetType; label: string; description: string }[] = [
     {
       key: "JRC",
-      label: "Standard Estimate (JRC)",
+      label: "Standard Estimate (JRC + GFW)",
       description: "Joint Research Centre data",
     },
     {
       key: "GFW",
-      label: "Conservative Estimate (GFW)",
+      label: "Tree-cover-change Estimate (GFW)",
       description: "Global Forest Watch data",
     },
   ];
