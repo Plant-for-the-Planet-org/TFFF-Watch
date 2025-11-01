@@ -25,7 +25,7 @@ function CustomTooltip({
         <p className="font-semibold text-sm whitespace-nowrap">{data.name}</p>
         <p className="text-xs text-gray-600">{data.eligibility}</p>
         <p className="text-sm font-medium mt-1">
-          ${(data.value / 1000000).toFixed(2)}M
+          ${(data.value / 1000000).toFixed(2)}m
         </p>
       </div>
     );
