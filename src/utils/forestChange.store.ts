@@ -49,6 +49,7 @@ export async function fetchForestCoverChangeDataV2({
   query["source"] = source;
 
   try {
+    console.log("API call with query:", query);
     const _results = await api<ForestCoverChange[]>({
       url: urls.forestChange,
       query: query,
@@ -56,7 +57,14 @@ export async function fetchForestCoverChangeDataV2({
       token: "",
     });
 
+    console.log("API response:", _results?.length, "records");
+
     if (country && year) {
+      // For specific country and year, still set the country data for charts
+      _results.sort((a, b) => +a.year - +b.year);
+      useForestCoverChangeData
+        .getState()
+        .setForestCoverChangeDataByCountry(_results);
     } else if (country) {
       _results.sort((a, b) => +a.year - +b.year);
       useForestCoverChangeData

@@ -120,7 +120,7 @@ type TFFFCountryMapViewProps = CountryDetails & {
 };
 
 function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
-  const { country, year } = useParams();
+  const { country } = useParams();
   const searchParams = useSearchParams();
 
   // Get dataset from URL params, fallback to props or default
@@ -129,15 +129,19 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
 
   useEffect(() => {
     if (props.name && props.iso2) {
+      console.log("Fetching data for:", {
+        country: props.name,
+        iso2: props.iso2,
+        source: selectedDataset,
+      });
       // Fetch country-specific data with the selected dataset
       fetchForestCoverChangeDataV2({
-        year: year as string,
         country: props.name,
         iso2: props.iso2,
         source: selectedDataset,
       });
     }
-  }, [year, props.name, props.iso2, selectedDataset]);
+  }, [props.name, props.iso2, selectedDataset]);
 
   // Removed problematic navigation that was causing 404 redirects
 

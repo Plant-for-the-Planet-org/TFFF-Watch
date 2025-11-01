@@ -21,6 +21,10 @@ export default function AnnualPayoutAreaChart() {
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
   useEffect(() => {
+    console.log(
+      "AnnualPayoutAreaChart data:",
+      forestCoverChangeDataByCountry?.length
+    );
     if (!forestCoverChangeDataByCountry?.length) return;
 
     const _chartData = forestCoverChangeDataByCountry.map((el) => ({
@@ -29,6 +33,7 @@ export default function AnnualPayoutAreaChart() {
         el.eligibility_combined === false ? 0 : el.reward_after_deductions_usd,
     }));
 
+    console.log("Annual payout chart data:", _chartData);
     setChartData(_chartData);
   }, [forestCoverChangeDataByCountry]);
 

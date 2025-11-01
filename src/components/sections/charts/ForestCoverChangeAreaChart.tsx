@@ -33,6 +33,10 @@ export default function ForestCoverChangeAreaChart() {
   const [chartData, setChartData] = useState<ChartData[]>([]);
 
   useEffect(() => {
+    console.log(
+      "ForestCoverChangeAreaChart data:",
+      forestCoverChangeDataByCountry?.length
+    );
     if (!forestCoverChangeDataByCountry?.length) return;
 
     const _chartData = forestCoverChangeDataByCountry.map((el) => ({
@@ -42,6 +46,7 @@ export default function ForestCoverChangeAreaChart() {
       // degradation: -(el.deforested_ha + el.degraded_forest_ha),
     }));
 
+    console.log("Chart data:", _chartData);
     setChartData(_chartData);
   }, [forestCoverChangeDataByCountry]);
 
