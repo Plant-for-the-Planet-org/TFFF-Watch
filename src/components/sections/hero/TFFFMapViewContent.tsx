@@ -11,7 +11,7 @@ export function WorldMapHeaderContent() {
     <div className="flex flex-col items-center">
       <h2 className="font-bold typo-h2">Estimated TFFF Payouts</h2>
       <Br />
-      {/* <h3 className="flex gap-2 items-center flex-wrap typo-h3">
+      {/* <h3 className="flex gap-2 items-center flex-wrap">
         <span className="text-center font-bold">
           Forest loss in <i>Tropical Forest Forever Facility</i> countries in
           <YearSelect />
@@ -31,7 +31,7 @@ export function WorldMapHeaderContent() {
 export function CountryMapHeaderContent({ year }: HeaderProps) {
   return (
     <div className="flex flex-col items-center">
-      <h3 className="flex gap-2 items-center flex-wrap typo-h3">
+      <h3 className="flex gap-2 items-center flex-wrap">
         <span className="text-center font-bold">
           Forest change in
           <YearSelect initialValue={year} />

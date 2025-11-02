@@ -25,6 +25,10 @@ import { useParams, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
+import {
+  GFW2BTop10CountriesChart,
+  JRC5BTop10CountriesChart,
+} from "../charts/Top10BarChart";
 
 export function TFFFWorldMapView() {
   const { forestCoverChangeData, setForestCoverChangeDataByYear } =
@@ -96,20 +100,18 @@ export function TFFFWorldMapView() {
             {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
             <Br />
           </div>
-          {/* <p className="text-xs text-center flex justify-center items-center gap-2">
-            <Image
-              width={12}
-              height={12}
-              src="/assets/cursor.svg"
-              alt="Click on a country for more data"
-            />
-            Click on a country for more data
-          </p> */}
         </div>
       </div>
       <Br />
       <Br />
       <RewardsChart />
+      <Br />
+      <Br />
+      {selectedDataset === "JRC" ? (
+        <JRC5BTop10CountriesChart />
+      ) : (
+        <GFW2BTop10CountriesChart />
+      )}
     </WorldMapViewContainer>
   );
 }

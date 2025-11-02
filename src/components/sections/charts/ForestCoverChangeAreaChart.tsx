@@ -39,12 +39,14 @@ export default function ForestCoverChangeAreaChart() {
     );
     if (!forestCoverChangeDataByCountry?.length) return;
 
-    const _chartData = forestCoverChangeDataByCountry.map((el) => ({
-      year: el.year,
-      degradation: -el.degraded_forest_ha,
-      deforestation: -(el.degraded_forest_ha + el.deforested_ha),
-      // degradation: -(el.deforested_ha + el.degraded_forest_ha),
-    }));
+    const _chartData = forestCoverChangeDataByCountry
+      .filter((el) => +el.year > 2018)
+      .map((el) => ({
+        year: el.year,
+        degradation: -el.degraded_forest_ha,
+        deforestation: -(el.degraded_forest_ha + el.deforested_ha),
+        // degradation: -(el.deforested_ha + el.degraded_forest_ha),
+      }));
 
     console.log("Chart data:", _chartData);
     setChartData(_chartData);

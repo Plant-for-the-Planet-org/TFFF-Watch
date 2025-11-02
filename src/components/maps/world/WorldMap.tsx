@@ -123,8 +123,8 @@ export default function WorldMap({
     const gfwDataAll = forestData.GFW || [];
     const gfwData = gfwDataAll.filter((item) => item.year == selectedYear);
 
-    console.log(forestData, selectedYear);
-    console.log({ jrcData, gfwData });
+    // console.log(forestData, selectedYear);
+    // console.log({ jrcData, gfwData });
 
     // Update JRC colors if we have JRC data
     let featuresWithColors = blankFeatures;

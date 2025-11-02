@@ -94,7 +94,7 @@ export default function DatasetTabs({
   ];
 
   const baseTabClasses =
-    "px-4 py-2 typo-p font-medium rounded-lg transition-colors duration-200 cursor-pointer";
+    "px-4 py-2 typo-p font-medium rounded-lg transition-colors duration-200 cursor-pointer outline-none";
   const defaultActiveClasses = "bg-white text-[#333333] shadow-sm";
   const defaultInactiveClasses =
     "bg-transparent text-[#828282] hover:bg-[#E4F6EB]/50";
@@ -146,7 +146,7 @@ export default function DatasetTabs({
       <div className="flex items-center">
         <PersistentTooltip
           trigger={
-            <button className="h-8 w-8 flex justify-center">
+            <button className="h-8 w-8 flex justify-center outline-none">
               <Image
                 width={16}
                 height={16}

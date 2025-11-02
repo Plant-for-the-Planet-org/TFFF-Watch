@@ -54,176 +54,130 @@ export default function AboutTFFFWatch() {
         <Br />
         <Hr />
         <Br />
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="shrink">
-            <h2 className="font-bold typo-h2">Cautionary Note</h2>
-            <Br />
-            <div className="typo-p">
-              <p>
-                <b>Global models</b>
-              </p>
-              <Br />
-              <p>
-                Under TFFF rules, participating rainforest countries will
-                calculate the deforestation rates in their country themselves –
-                based on models approved by the TFFF – and submit those as part
-                of their payout claims. Since no such models are currently
-                available, TFFF Watch is based on global models created by
-                Plant-for-the-Planet, using data from Hansen/Global Forest Watch
-                and the JRC’s Tropical Moist Forest.
-              </p>
-              <Br />
-              <p>
-                <b>A conservative assessment</b>
-              </p>
-              <Br />
-              <p>
-                The WRI’s Global Forest Watch forest classification tends to
-                come to higher deforestation and degradation assessments than
-                its main alternative EU’s Joint Research Center classification.
-                By using the former as the basis for our model, we have choosen
-                to opt for the stricter option which disqualifies more countries
-                and results in lower payouts: Better to underestimate than
-                overestimate payouts.
-              </p>
-              <Br />
-              <p>
-                Under the TFFF rules, countries will publish their own
-                assessments based on which their payouts are calculated. While
-                these will have to follow certain TFFF standards, countries will
-                likely choose more permissive models and lead to higher payouts.
-              </p>
-              <Br />
-              <p>
-                Deforestation and degradation areas are highly sensitive to
-                small changes in methodology. Since the monitoring rules as set
-                out in Concept Note 3.0 do not specify data sources or lack key
-                details, we needed to make certain assumptions (see methodology
-                section) for this model. The methodology has not (yet) been
-                peer-reviewed. We intend to update our model as more information
-                becomes available.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="shrink">
-            <h2 className="font-bold typo-h2">Cautionary Note</h2>
-            <Br />
-            <div className="typo-p">
-              <p>
-                <b>A conservative assessment</b>
-              </p>
-              <Br />
-              <p>
-                The WRI’s Global Forest Watch forest classification tends to
-                come to higher deforestation and degradation assessments than
-                its main alternative EU’s Joint Research Center classification.
-                By using the former as the basis for our model, we have choosen
-                to opt for the stricter option which disqualifies more countries
-                and results in lower payouts: Better to underestimate than
-                overestimate payouts.
-              </p>
-              <Br />
-              <p>
-                Under the TFFF rules, countries will publish their own
-                assessments based on which their payouts are calculated. While
-                these will have to follow certain TFFF standards, countries will
-                likely choose more permissive models and lead to higher payouts.
-              </p>
-              <Br />
-              <p>
-                Deforestation and degradation areas are highly sensitive to
-                small changes in methodology. Since the monitoring rules as set
-                out in Concept Note 3.0 do not specify data sources or lack key
-                details, we needed to make certain assumptions (see methodology
-                section) for this model. The methodology has not (yet) been
-                peer-reviewed. We intend to update our model as more information
-                becomes available.
-              </p>
-            </div>
-          </div>
-        </div>
-        <Br />
-        <Hr />
-        <Br />
         <div>
           <h2 className="font-bold typo-h2">Analysis Methodology</h2>
           <Br />
-          <Br />
           <div className="typo-p">
+            <h2 className="font-bold typo-h3">
+              Tree cover loss estimate (GFW-based)
+            </h2>
+            <Br />
+            <b>a. Baseline</b>
             <p>
-              The TFFF Watch is a satellite-based monitoring system designed to
-              track forest changes as defined by the TFFF rules and support
-              performance-based payment mechanisms. By integrating
-              high-resolution satellite data and scientifically established
-              methodologies, the system ensures accurate, transparent, and
-              consistent evaluation of forest conservation outcomes across
-              tropical and subtropical regions.
-            </p>
-            <Br></Br>
-            <b>Baseline Forest Calculations</b>
-            <p>
-              To establish the forest baseline, the system first identifies
-              tropical and subtropical moist broadleaf forests for inclusion
-              using the Ecoregion-Based Approach dataset (
-              <Link
-                href="https://academic.oup.com/bioscience/article/67/6/534/3102935"
-                className="underline text-blue-400"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Dinerstein et al., 2017
-              </Link>
-              ). Within these zones, the Hansen/Global Forest Watch dataset (
+              The baseline forest extent is calculated using the{" "}
               <Link
                 href="https://www.science.org/doi/10.1126/science.1244693"
                 className="underline text-blue-400"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Hansen et al., 2013
+                Hansen Global Forest Watch
+              </Link>{" "}
+              (GFW) Tree Cover dataset. First, all tropical and subtropical
+              broadleaf moist forest areas within the 74 TFFF-specified
+              countries are identified using the Ecoregion-Based Approach from{" "}
+              <Link
+                href="https://academic.oup.com/bioscience/article/67/6/534/3102935"
+                className="underline text-blue-400"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Dinerstein et al., (2017)
               </Link>
-              ) is used to calculate the remaining forest cover as of the
-              previous year. The baseline is established by subtracting areas of
-              tree cover loss recorded annually from 2000 onwards and adding
-              areas of forest gain observed between 2000 and 2012. This results
-              in a dynamic, annually updated map of remaining forest cover,
-              which serves as the reference area for the base payouts and
-              subsequent deforestation and degradation assessments.
+              Within these zones, the tree cover from the year 2000 is
+              considered the forest baseline. This baseline is then updated
+              annually by subtracting the cumulative area of tree cover loss and
+              adding areas of forest gain observed from 2000 to 2012. The result
+              is a dynamically evolving baseline that reflects changes in forest
+              extent over time.
             </p>
-            <Br></Br>
-            <b>Deforestation Monitoring</b>
+            <Br />
+            <b>b. Deforestation</b>
             <p>
-              New deforestation events are identified annually using updated
-              Hansen/Global Forest Watch data. These are areas of tree cover
-              loss that occur within the forest baseline in the current
-              reporting year. In addition, deforestation rates from the previous
-              year are calculated to determine a country’s eligibility for TFFF
-              payments, in accordance with predefined thresholds and criteria.
-              This ensures that payments are made only to countries that meet or
-              exceed performance expectations in limiting deforestation.
+              Annual deforestation is assessed by identifying the total area of
+              tree cover loss that occurs within the defined forest baseline
+              during the reporting year. In this estimate, all tree cover loss
+              not associated with fire is classified as deforestation. These
+              values are aggregated at the country level to quantify area lost
+              annually and evaluate performance against TFFF criteria.
             </p>
-            <Br></Br>
-            <b>Degradation Assessment</b>
+            <Br />
+            <b>c. Degradation</b>
             <p>
               Forest degradation is assessed using the Global Forest Watch
-              fire-related forest loss dataset (Tyukavina et al., 2022). This
-              dataset builds on the Hansen et al. (2013) global 30m forest cover
-              loss map for 2001–2019, extended through 2024. The data
-              disaggregate annual forest loss into fire-related and non-fire
-              drivers, with uncertainty accounted for through confidence codes.
+              fire-related forest loss dataset developed by{" "}
+              <Link
+                href="https://www.frontiersin.org/journals/remote-sensing/articles/10.3389/frsen.2022.825190/full"
+                className="underline text-blue-400"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Tyukavina et al
+              </Link>
+              . Fire-related loss is extracted and overlaid onto the forest
+              baseline to determine areas where degradation (defined as fire
+              damage within standing forests) has occurred. Only fire-induced
+              tree cover loss is included in the degradation category, aligning
+              with TFFF definitions, while all other causes of loss are assigned
+              to deforestation.
             </p>
-            <Br></Br>
+            <Br />
+
+            <h2 className="font-bold typo-h3">
+              Standard estimate (JRC + GFW-based)
+            </h2>
+            <Br />
+            <b>a. Baseline</b>
             <p>
-              For degradation monitoring, the system overlays this dataset with
-              the annually updated forest baseline to ensure that only remaining
-              forest areas are considered. Annual country-level statistics on
-              fire-related forest loss are then derived, providing the basis for
-              calculating degradation impacts. These results feed directly into
-              TFFF’s performance assessments and contribute to payment
-              adjustments for the reporting year.
+              The baseline is generated using two complementary datasets.
+              Tropical areas that fall within the spatial coverage of the JRC
+              Tropical Moist Forest (TMF) dataset (
+              <Link
+                href="https://www.science.org/doi/10.1126/sciadv.abe1603"
+                className="underline text-blue-400"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Vancutsem et al., 2021
+              </Link>{" "}
+              ) are analyzed using TMF classifications. In these zones, forest
+              cover is defined as a combination of undisturbed and
+              non-fire-related degraded forest. Non-fire degradation is not
+              considered a loss under TFFF rules; therefore, these areas are
+              classified as remaining forest.
             </p>
+            <p>
+              Subtropical regions located outside the TMF dataset extent are
+              analyzed using the Hansen Tree Cover dataset using the same
+              process as in the Tree Cover Loss Estimate. The combination of
+              TMF-derived tropical baselines and Hansen-derived subtropical
+              baselines ensures full geographic coverage across all TFFF
+              countries.
+            </p>
+            <Br />
+            <b>b. Deforestation</b>
+            <p>
+              Annual deforestation in tropical regions is calculated by
+              comparing total forest area (undisturbed plus non-fire degraded
+              forest) between the current year and the previous year using TMF
+              data. A reduction in forest area is classified as deforestation.
+              In subtropical regions, deforestation is calculated identically to
+              the GFW-based method, as these areas rely on the Hansen dataset.
+            </p>
+            <Br />
+            <b>c. Degradation</b>
+            <p>
+              Degradation is identified in tropical regions by intersecting the
+              TMF degraded forest class with the MODIS burned area product. Only
+              areas confirmed by both datasets as burned and classified as
+              degraded are included in the degradation category, in accordance
+              with TFFF definitions that consider only fire-related degradation.
+              In subtropical regions, fire-related degradation is assessed using
+              the Hansen-based fire loss data in the same manner as the Tree
+              Cover Loss Estimate.
+            </p>
+            <Br />
+
             <Br></Br>
             <b>Feedback</b>
             <p>

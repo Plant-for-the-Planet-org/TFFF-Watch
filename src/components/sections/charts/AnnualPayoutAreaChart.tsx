@@ -27,11 +27,15 @@ export default function AnnualPayoutAreaChart() {
     );
     if (!forestCoverChangeDataByCountry?.length) return;
 
-    const _chartData = forestCoverChangeDataByCountry.map((el) => ({
-      year: el.year,
-      value:
-        el.eligibility_combined === false ? 0 : el.reward_after_deductions_usd,
-    }));
+    const _chartData = forestCoverChangeDataByCountry
+      .filter((el) => +el.year > 2018)
+      .map((el) => ({
+        year: el.year,
+        value:
+          el.eligibility_combined === false
+            ? 0
+            : el.reward_after_deductions_usd,
+      }));
 
     console.log("Annual payout chart data:", _chartData);
     setChartData(_chartData);

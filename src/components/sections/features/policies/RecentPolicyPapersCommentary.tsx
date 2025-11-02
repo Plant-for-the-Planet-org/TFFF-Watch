@@ -58,7 +58,7 @@ export default async function RecentPolicyPapersComentary() {
       <Br />
       <Br />
       <div className="flex justify-center">
-        <Button type="link" external href="/policies">
+        <Button type="link" external href="/policy-papers-commentary">
           See All
         </Button>
       </div>

@@ -7,7 +7,8 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "News · TFFF Watch",
-  description: ".",
+  description:
+    "Key news articles published about the Tropical Forest Forever Facility (TFFF)",
 };
 
 export default function Page() {
