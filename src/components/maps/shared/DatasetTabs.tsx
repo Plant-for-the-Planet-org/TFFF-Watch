@@ -164,7 +164,7 @@ export default function DatasetTabs({
 
 function DatasetTabsInfoContent() {
   return (
-    <div className="w-sm text-xs bg-background text-base-text px-3 py-2 rounded-lg shadow-lg">
+    <div className="w-2xs lg:w-sm text-xs bg-background text-base-text px-3 py-2 rounded-lg shadow-lg">
       <div>
         We created TFFF payout estimates, based on two different global
         deforestation classifications. Our Standard Estimate is based on the{" "}

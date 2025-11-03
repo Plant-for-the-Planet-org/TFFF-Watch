@@ -4,7 +4,7 @@ export function LegendsForJRC() {
   return (
     <div className="text-center">
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-start gap-2 text-sm">
           <div className="shrink-0 w-8 h-6 border border-black bg-[#C4C4C4]"></div>
           <div className="text-left md:max-w-1/2">
             <p>Currently ineligible rainforest countries</p>
@@ -14,7 +14,7 @@ export function LegendsForJRC() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-start gap-2 text-sm">
           <div className="shrink-0 w-8 h-6 border border-black bg-[#8FBDF1]"></div>
           <div className="text-left md:max-w-1/2">
             <p>Almost eligible</p>
@@ -25,7 +25,7 @@ export function LegendsForJRC() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-start gap-2 text-sm">
           <div className="shrink-0 w-8 h-6 border border-black bg-[#6FCF97]"></div>
           <div className="text-left md:max-w-1/2">
             <p>Fully eligible countries</p>
@@ -49,7 +49,7 @@ export function LegendsForGFW() {
     // </div>
     <div className="text-center">
       <div className="space-y-2">
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-start gap-2 text-sm">
           <div className="shrink-0 w-8 h-6 border border-black bg-[#C4C4C4]"></div>
           <div className="text-left md:max-w-1/2">
             <p>Currently ineligible rainforest countries</p>
@@ -59,7 +59,7 @@ export function LegendsForGFW() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-start gap-2 text-sm">
           <div className="shrink-0 w-8 h-6 border border-black bg-[#8FBDF1]"></div>
           <div className="text-left md:max-w-1/2">
             <p>Almost eligible</p>
@@ -70,7 +70,7 @@ export function LegendsForGFW() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-start gap-2 text-sm">
           <div className="shrink-0 w-8 h-6 border border-black bg-[#6FCF97]"></div>
           <div className="text-left md:max-w-1/2">
             <p>Fully eligible countries</p>

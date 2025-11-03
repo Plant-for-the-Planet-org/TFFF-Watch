@@ -185,7 +185,7 @@ export default function CurrentRewardsChart() {
         for fully and almost eligible countries
       </p>
       <Br />
-      <div className="relative w-full aspect-square max-w-[300px] md:max-w-2/3 mx-auto">
+      <div className="relative w-full aspect-square max-w-[300px] md:max-w-2/3 mx-auto outlines-none">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie

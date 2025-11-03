@@ -87,7 +87,7 @@ export function TFFFWorldMapView() {
         </div>
 
         <div className="grow relative flex flex-col">
-          <div className="mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
+          <div className="relative mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
             <WorldMap
               selectedYear={selectedYear}
               dataset={selectedDataset}
@@ -95,7 +95,7 @@ export function TFFFWorldMapView() {
               variant="hero"
             />
           </div>
-          <div className="md:absolute left-0 bottom-0 min-w-48 max-w-fit mx-auto pointer-events-none">
+          <div className="sm:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
             <Br cn="md:hidden" />
             {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
             <Br />

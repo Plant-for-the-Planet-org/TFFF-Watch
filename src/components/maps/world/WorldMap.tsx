@@ -317,14 +317,16 @@ export default function WorldMap({
           </div>
         </div>
       </div>
-      <div className="absolute right-0 bottom-0 text-xs flex items-end-safe">
-        <div className="text mr-2 pb-0.5">
+
+      <div className="absolute sm:mt-auto right-0 bottom-0 text-xs flex items-end-safe">
+        <div className="mr-2 text-right pb-0.5">
           Please cite data as{" "}
           <Link className="text-primary italic" href="">
             tfffwatch.org
           </Link>{" "}
           by Plant-for-the-Planet
         </div>
+
         <button
           className="bg-white p-2 rounded-lg cursor-pointer"
           onClick={() => {

@@ -65,7 +65,6 @@ export default async function RecentPolicyPapersComentary() {
         </div>
         <Br />
       </div>
-      r
     </ResponsiveContainer>
   );
 }

@@ -203,7 +203,7 @@ export default function MaximumRewardsChart() {
         degradation entirely
       </p>
       <Br />
-      <div className="relative w-full aspect-square max-w-[300px] md:max-w-2/3 mx-auto">
+      <div className="relative w-full aspect-square max-w-[300px] md:max-w-2/3 mx-auto outlines-none">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
