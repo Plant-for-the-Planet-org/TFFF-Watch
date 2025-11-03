@@ -29,14 +29,15 @@ export async function fetchForestCoverChangeDataV2({
   country,
   year,
   iso2 = "",
+  source = "JRC",
 }: {
   country?: string;
   year?: string;
   iso2?: string;
+  source?: "GFW" | "JRC";
 }) {
   const query: { [key: string]: string } = {};
 
-  console.log(country, year);
   if (iso2) {
     query["country-iso2"] = iso2;
   } else if (country) {
@@ -44,7 +45,11 @@ export async function fetchForestCoverChangeDataV2({
     query["country-iso2"] = iso2;
   }
 
+  // Add source parameter for dataset selection
+  query["source"] = source;
+
   try {
+    console.log("API call with query:", query);
     const _results = await api<ForestCoverChange[]>({
       url: urls.forestChange,
       query: query,
@@ -52,7 +57,14 @@ export async function fetchForestCoverChangeDataV2({
       token: "",
     });
 
+    console.log("API response:", _results?.length, "records");
+
     if (country && year) {
+      // For specific country and year, still set the country data for charts
+      _results.sort((a, b) => +a.year - +b.year);
+      useForestCoverChangeData
+        .getState()
+        .setForestCoverChangeDataByCountry(_results);
     } else if (country) {
       _results.sort((a, b) => +a.year - +b.year);
       useForestCoverChangeData
@@ -68,6 +80,6 @@ export async function fetchForestCoverChangeDataV2({
 
     return _results;
   } catch (error) {
-    console.error("Error fetching news:", error);
+    console.error("Error fetching forest change data:", error);
   }
 }

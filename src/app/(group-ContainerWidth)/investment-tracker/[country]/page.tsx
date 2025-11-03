@@ -20,7 +20,7 @@ const investingCountries = [
   "UAE",
   // "Netherlands",
   // "Singapore",
-  // "EU",
+  "EU",
   "Brazil",
   "China",
   "Indonesia",
@@ -66,7 +66,7 @@ the current analysis.`;
     });
   }
 
-  let data: InvestmentTrackerForCountry | null = null;
+  // let data: InvestmentTrackerForCountry | null = null;
   let richData: InvestmentTrackerForCountry | null = null;
 
   let chartData: null | {
@@ -75,13 +75,13 @@ the current analysis.`;
   } = null;
 
   try {
-    const results = await api<InvestmentTrackerForCountry[]>({
-      url: urls.investmentTracker,
-      query: { country: capitalize(country) },
-      method: "GET",
-      token: "",
-    });
-    data = results[0];
+    // const results = await api<InvestmentTrackerForCountry[]>({
+    //   url: urls.investmentTracker,
+    //   query: { country: capitalize(country) },
+    //   method: "GET",
+    //   token: "",
+    // });
+    // data = results[0];
 
     const res = await api<InvestmentTrackerForCountry[]>({
       url: urls.investmentTrackerRich,
@@ -105,7 +105,7 @@ the current analysis.`;
     console.error("Error fetching news:", error);
   }
 
-  if (!data) return null;
+  if (!richData) return null;
   return (
     <div>
       <div>
@@ -120,7 +120,7 @@ the current analysis.`;
         <Br />
         {country !== investingCountries.at(-1) && (
           <>
-            <InvestmentProgress investment_stage={data.investment_stage} />
+            <InvestmentProgress investment_stage={richData.investment_stage} />
             <Br />
           </>
         )}

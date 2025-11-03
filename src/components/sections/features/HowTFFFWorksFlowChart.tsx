@@ -18,7 +18,7 @@ export default function HowTFFFWorksFlowChart() {
             alt=""
           />
         </div>
-        <h3 className="font-bold typo-h3 text-center">Investors</h3>
+        <h3 className="font-bold text-center">Investors</h3>
         <Br />
         <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
           <div className="border border-base-gray p-2 rounded-xl bg-white flex gap-2 items-center relative">
@@ -70,7 +70,7 @@ export default function HowTFFFWorksFlowChart() {
             id="tfif-from-sponsors-desktop"
             className="hidden md:block absolute bottom-0 -right-[12px]"
           ></div>
-          <p className="text-xs uppercase">Junior debt</p>
+          <p className="text-xs uppercase">Sponsor Capital</p>
           <p className="font-semibold text-sm">$25bn invested</p>
           <p className="text-xs">
             as long-dated concessional loans, grants or guarantees
@@ -86,7 +86,7 @@ export default function HowTFFFWorksFlowChart() {
             id="tfif-from-markets-desktop"
             className="hidden md:block absolute bottom-0 -left-[12px]"
           ></div>
-          <p className="text-xs uppercase">Senior debt</p>
+          <p className="text-xs uppercase">Senior Market Debt</p>
           <p className="font-semibold text-sm">$100bn invested</p>
           <p className="text-xs">as market-rate fixed income bonds</p>
         </div>
@@ -123,7 +123,7 @@ export default function HowTFFFWorksFlowChart() {
           />
         </div>
         <div className="mt-5 text-center">
-          <h3 className="text-primary-dark font-bold typo-h3">
+          <h3 className="text-primary-dark font-bold">
             Tropical Forest Investment Fund (TFIF)
           </h3>
           <Br />
@@ -146,13 +146,13 @@ export default function HowTFFFWorksFlowChart() {
       <div className="max-w-xl mx-auto relative padding-3">
         <div className="grid grid-cols-2 gap-4">
           <div className="text-right self-center">
-            <p className="font-bold text-primary-dark typo-h3">~2.7%</p>
+            <p className="font-bold text-primary-dark">~2.7%</p>
             <p className="text-xs">
               remains after investor interest payments and goes to the TFFF
             </p>
           </div>
           <div className="text-left self-center">
-            <p className="font-bold text-primary-dark typo-h3">~4.9%</p>
+            <p className="font-bold text-primary-dark">~4.9%</p>
             <p className="text-xs">interest payments to investors</p>
           </div>
         </div>
@@ -182,7 +182,7 @@ export default function HowTFFFWorksFlowChart() {
         </div>
         <div className="mt-5 text-center">
           <Br />
-          <h3 className="text-white font-bold typo-h3">
+          <h3 className="text-white font-bold">
             Tropical Forest Forever Facility (TFFF)
           </h3>
           <p className="text-white typo-p">hosted by the World Bank</p>

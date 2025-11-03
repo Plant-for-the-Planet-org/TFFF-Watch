@@ -1,7 +1,7 @@
 "use client";
 
 import Br from "@/components/ui/Br";
-import { Button } from "@/components/ui/Button";
+import LinkWithParams from "@/components/ui/LinkWithParams";
 import { CountryDetails } from "@/utils/country-helper";
 import { toReadable } from "@/utils/number-helper";
 import { useForestCoverChangeData } from "@/utils/store";
@@ -161,15 +161,24 @@ export default function CountryTFFFCard({
       {CTA && (
         <>
           <Br cn="hidden md:block" />
-          <Button
-            cn="min-w-32 rounded-t-none md:rounded-xl w-full"
-            // href={`/${name}/${year}`}
+          <LinkWithParams
             href={`/${countrySlug}/${year}`}
-            type="link"
-            external
+            preserveParams={["dataset"]}
+            className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl cursor-pointer transition-colors min-w-32 rounded-t-none md:rounded-xl w-full"
           >
-            All Data
-          </Button>
+            <span className="flex justify-between items-center flex-nowrap">
+              <span></span>
+              <span className="font-semibold typo-p px-4">All Data</span>
+              <span>
+                <Image
+                  width={12}
+                  height={12}
+                  src="/assets/ui/Arrow.svg"
+                  alt="External Arrow"
+                />
+              </span>
+            </span>
+          </LinkWithParams>
         </>
       )}
     </div>

@@ -54,6 +54,7 @@
   @apply text-xl lg:text-2xl;
 }
 .typo-h3 {
+  @apply text-lg lg:text-xl;
 }
 .typo-p {
   @apply text-sm lg:text-base;

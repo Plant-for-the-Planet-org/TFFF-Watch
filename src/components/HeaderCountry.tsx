@@ -21,7 +21,7 @@ export default function HeaderCountry() {
   return (
     <div>
       <Br />
-      <p className="flex gap-2 items-center typo-h3">
+      <p className="flex gap-2 items-center">
         <img className="w-6 h-4 p-0.5" alt="" src={details.flagImgUrl} />
         <b>{details.name}</b>
       </p>

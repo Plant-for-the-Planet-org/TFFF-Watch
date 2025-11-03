@@ -1,5 +1,5 @@
-import PressContacts from "@/components/sections/features/PressContacts";
-import PressReleases from "@/components/sections/features/PressReleases";
+import PressContacts from "@/components/sections/features/press/PressContacts";
+import PressReleases from "@/components/sections/features/press/PressReleases";
 import SecondaryHero, {
   OverlayPressTFFFWatch,
 } from "@/components/sections/hero/SecondaryHero";

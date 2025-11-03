@@ -133,5 +133,11 @@
   },
   { "country": "Vanuatu", "countrySlug": "vanuatu", "countryIso2": "VU" },
   { "country": "Venezuela", "countrySlug": "venezuela", "countryIso2": "VE" },
-  { "country": "Viet Nam", "countrySlug": "viet-nam", "countryIso2": "VN" }
+  { "country": "Viet Nam", "countrySlug": "viet-nam", "countryIso2": "VN" },
+  { "country": "Zimbabwe", "countrySlug": "zimbabwe", "countryIso2": "ZW" },
+  {
+    "country": "Côte d'Ivoire",
+    "countrySlug": "cote-d-ivoire",
+    "countryIso2": "CI"
+  }
 ]

@@ -1,37 +1,34 @@
-import PaperCard from "@/components/sections/features/PaperCard";
+import PressReleaseCard from "@/components/sections/features/press/PressReleaseCard";
 import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
-import { formatDateFromExcelToData } from "@/utils/datetime-helper";
-import { Policy } from "@/utils/types";
+import { PressRelease } from "@/utils/types";
 import { compareDesc, parse as dateParse } from "date-fns";
 import { Fragment } from "react";
 
-export default async function RecentPolicyPapersComentary() {
-  let policyList: Policy[] = [];
+export default async function PressReleases() {
+  let pressReleaseList: PressRelease[] = [];
 
   try {
-    policyList = await api<Policy[]>({
-      url: urls.policyBriefs,
+    pressReleaseList = await api<PressRelease[]>({
+      url: urls.pressReleases,
       method: "GET",
       token: "", // Add token if required
     });
 
-    policyList.sort((a, b) =>
+    pressReleaseList.sort((a, b) =>
       compareDesc(
-        dateParse(a.date, "dd.MM.yyyy", new Date()),
-        dateParse(b.date, "dd.MM.yyyy", new Date())
+        dateParse(a.date, "dd/MM/yyyy", new Date()),
+        dateParse(b.date, "dd/MM/yyyy", new Date())
       )
     );
   } catch (error) {
-    console.error("Error fetching policy papers:", error);
+    console.error("Error fetching press releases:", error);
   }
 
   return (
-    <div className="bg-primary-light outer-rounding outer-padding-3">
+    <div className="bg-secondary-light outer-rounding outer-padding-3">
       <Br />
-      <h2 className="text-center font-bold typo-h2">
-        📰 Recent Policy Papers & Commentary
-      </h2>
+      <h2 className="text-center font-bold typo-h2">📝 Press Release</h2>
       <Br />
       <Br />
       <div>
@@ -39,28 +36,33 @@ export default async function RecentPolicyPapersComentary() {
         {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 xl:gap-5 place-items-center place-content-center-safe"> */}
         <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
           {/* <div className="flex gap-3 md:gap-4 xl:gap-5"> */}
-          {policyList.slice(0, 3).map((el) => (
+          {pressReleaseList.slice(0, 3).map((el) => (
             <Fragment key={el.id}>
-              <PaperCard
+              <PressReleaseCard
                 title={el.title!}
                 summary={el.summary!}
                 image={el.featured_image!}
-                publisher={el.publisher!}
-                datetime={formatDateFromExcelToData(el.date)}
+                // publisher={el.publisher!}
+                // publisher={el.author}
+                datetime={dateParse(
+                  el.date,
+                  "dd/MM/yyyy",
+                  new Date()
+                ).toISOString()}
                 url={el.url}
               />
             </Fragment>
           ))}
         </div>
       </div>
-      <Br />
       {/* <Br />
-      <div className="flex justify-center">
+      <Br /> */}
+      {/* <div className="flex justify-center">
         <Button type="link" external>
           See All
         </Button>
-      </div>
-      <Br /> */}
+      </div> */}
+      <Br />
     </div>
   );
 }
