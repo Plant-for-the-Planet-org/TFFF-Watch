@@ -188,7 +188,7 @@ export default function MaximumRewardsChart() {
         </p>
         <Br />
         <div className="flex items-center justify-center h-64">
-          <p className="text-foreground">Loading...</p>
+          <p className="text-foreground"></p>
         </div>
       </div>
     );
