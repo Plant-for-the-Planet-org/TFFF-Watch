@@ -66,7 +66,6 @@ the current analysis.`;
     });
   }
 
-  // let data: InvestmentTrackerForCountry | null = null;
   let richData: InvestmentTrackerForCountry | null = null;
 
   let chartData: null | {
@@ -75,21 +74,15 @@ the current analysis.`;
   } = null;
 
   try {
-    // const results = await api<InvestmentTrackerForCountry[]>({
-    //   url: urls.investmentTracker,
-    //   query: { country: capitalize(country) },
-    //   method: "GET",
-    //   token: "",
-    // });
-    // data = results[0];
-
     const res = await api<InvestmentTrackerForCountry[]>({
       url: urls.investmentTrackerRich,
       query: { country: capitalize(country) },
       method: "GET",
       token: "",
+      nextOptions: { revalidate: 1800 }, // same 30 min window
     });
     richData = res[0];
+    console.log(`[page.tsx] Fetched Rich Data for ${country}`);
 
     const chartDataresult = await api<InvestmentTrackerSum[]>({
       url: urls.investmentTrackerSum,

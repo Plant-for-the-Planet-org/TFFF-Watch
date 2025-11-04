@@ -33,13 +33,14 @@ export type APIOptions = {
   };
   params?: object;
   token: string;
+  nextOptions?: NextFetchRequestConfig;
 };
 
 export interface APIError {
   message: string;
   status?: number;
   code?: string;
-  data?: object;
+  data?: object | string;
 }
 
 export async function api<T = unknown>({
@@ -50,6 +51,7 @@ export async function api<T = unknown>({
   query = {},
   params,
   token,
+  nextOptions,
 }: APIOptions): Promise<T> {
   try {
     // Prepare headers
@@ -75,12 +77,33 @@ export async function api<T = unknown>({
       });
     }
 
+    // ✅ Use fetch() instead of axios when nextOptions are present
+    if (nextOptions) {
+      const res = await fetch(`${finalUrl}${queryString}`, {
+        method,
+        headers,
+        body: body ? JSON.stringify(body) : undefined,
+        next: nextOptions,
+      });
+
+      if (!res.ok) {
+        throw {
+          message: `API request failed: ${res.status}`,
+          status: res.status,
+          data: await res.text(),
+        } as APIError;
+      }
+
+      return (await res.json()) as T;
+    }
+
     const response = await axios({
       url: `${finalUrl}${queryString}`,
       method: method.toUpperCase(),
       headers,
       data: body,
       validateStatus: (status) => status < 500, // Handle HTTP errors manually
+      fetchOptions: { next: nextOptions },
     });
 
     if (response.status >= 400) {
