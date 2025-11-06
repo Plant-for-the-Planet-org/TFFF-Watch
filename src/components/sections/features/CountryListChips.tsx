@@ -17,6 +17,7 @@ export default function CountryListChips({ country }: Props) {
     { label: "Brazil", iso2: "BR", emoji: "🇧🇷", selected: false },
     { label: "China", iso2: "CN", emoji: "🇨🇳", selected: false },
     { label: "Indonesia", iso2: "ID", emoji: "🇮🇩", selected: false },
+    { label: "Portugal", iso2: "PT", emoji: "🇵🇹", selected: false },
     // { label: "Azerbaijan", iso2: "AZ", emoji: "🇦🇿", selected: false },
     { label: "Others", iso2: "OT", emoji: "🌍", noFlag: true, selected: false },
   ];
