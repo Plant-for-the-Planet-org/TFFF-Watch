@@ -329,7 +329,7 @@ const CustomLabel = (props: CustomLabelWithDataProps) => {
         fontSize={12}
       >
         <tspan x={x} dy={12} fontWeight="700">
-          {toReadableAmountLong(labelData.actualValue)}
+          {toReadableAmountLong(labelData.actualValue, true, true)}
         </tspan>
         <tspan x={x} dy={12} fontWeight="400" fontSize={11}>
           {labelData.name}

@@ -15,18 +15,23 @@ export function toReadableAmountLong(
 ): string {
   const num = +n;
   const prefix = withSymbol ? "$" : "";
-  const toFixedValue = decimal ? 1 : 0;
+  const decimalPlaces = decimal ? 3 : 0;
+
+  // Helper to remove trailing zeros
+  const formatNumber = (value: number) => {
+    return parseFloat(value.toFixed(decimalPlaces)).toString();
+  };
 
   if (num >= 1e9) {
     // For billions
-    return `${prefix}${(num / 1e9).toFixed(toFixedValue)} Billion`;
+    return `${prefix}${formatNumber(num / 1e9)} Billion`;
   } else if (num >= 1e6) {
     // For millions
-    return `${prefix}${(num / 1e6).toFixed(toFixedValue)} Million`;
+    return `${prefix}${formatNumber(num / 1e6)} Million`;
   } else if (num >= 1e3) {
     // For thousands
-    return `${prefix}${(num / 1e3).toFixed(toFixedValue)} Thousand`;
+    return `${prefix}${formatNumber(num / 1e3)} Thousand`;
   }
 
-  return `${prefix}${num.toFixed(toFixedValue)}`;
+  return `${prefix}${formatNumber(num)}`;
 }
