@@ -6,6 +6,7 @@ import { toReadable } from "@/utils/number-helper";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { TFFFCardProps } from "./types";
+import { slugify } from "underscore.string";
 
 export default function TFFFCard({
   country,
@@ -153,7 +154,7 @@ export default function TFFFCard({
         <>
           <Br cn="hidden md:block" />
           <LinkWithParams
-            href={`/${country.slug}/${data.year}`}
+            href={`/${country?.slug || slugify(country.name)}/${data?.year}`}
             preserveParams={["dataset"]}
             className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl cursor-pointer transition-colors min-w-32 rounded-t-none md:rounded-xl w-full"
           >

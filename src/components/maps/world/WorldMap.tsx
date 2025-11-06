@@ -135,12 +135,36 @@ export default function WorldMap({
         transformedJRC,
         "JRC"
       );
+
+      // featuresWithColors = featuresWithColors.map((country) => {
+      //   const countrySlug = country.properties.countrySlug as string;
+      //   const countyISO2 = country.properties.iso_a2 as string;
+      //   const jrcEligibility = transformedJRC[countyISO2]?.eligibility;
+      //   const jrcColorKey = getGFWColorKey(jrcEligibility || "NA");
+
+      //   return {
+      //     ...country,
+      //     properties: {
+      //       ...country.properties,
+      //       countrySlug,
+      //       GFWColorKey: jrcColorKey,
+      //     },
+      //   };
+      // });
     }
 
     // Update GFW colors if we have GFW data
     if (gfwData.length > 0) {
       const transformedGFW = transformAllForestCoverChangeData(gfwData);
+
+      // featuresWithColors = updateFeaturesWithColorKeys(
+      //   featuresWithColors,
+      //   transformedGFW,
+      //   "GFW"
+      // );
+
       featuresWithColors = featuresWithColors.map((country) => {
+        const countrySlug = country.properties.countrySlug as string;
         const countyISO2 = country.properties.iso_a2 as string;
         const gfwEligibility = transformedGFW[countyISO2]?.eligibility;
         const gfwColorKey = getGFWColorKey(gfwEligibility || "NA");
@@ -149,6 +173,7 @@ export default function WorldMap({
           ...country,
           properties: {
             ...country.properties,
+            countrySlug,
             GFWColorKey: gfwColorKey,
           },
         };

@@ -304,7 +304,22 @@ const CustomLabel = (props: CustomLabelWithDataProps) => {
   const textAnchor: "start" | "end" = x > cx ? "start" : "end";
 
   return (
-    <g id="weird-label">
+    <g className="group">
+      {labelData.id === "pledged" && (
+        <foreignObject
+          x={x - (80 + 30)}
+          y={y - 40}
+          width={160}
+          height={40}
+          className="relative"
+        >
+          <div className="hidden group-hover:block absolute z-50 inset-0 shadow">
+            <div className="bg-background rounded-xl p-2 text-center">
+              <p className="text-sm">$ {labelData.actualValue}</p>
+            </div>
+          </div>
+        </foreignObject>
+      )}
       <text
         className="hidden sm:block"
         x={x}
