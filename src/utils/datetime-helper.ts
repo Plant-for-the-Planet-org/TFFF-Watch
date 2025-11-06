@@ -1,4 +1,9 @@
-import { parse as parseDate, differenceInDays, isToday } from "date-fns";
+import {
+  parse as parseDate,
+  differenceInDays,
+  isToday,
+  formatDistanceToNow,
+} from "date-fns";
 
 export function formatDateForCardBadge(date: Date) {
   const monthNames = [
@@ -30,24 +35,16 @@ export function formatDateFromExcelToData(dateString: string) {
 
 export function formatDateAgo(date: string) {
   const parsedDate = parseDate(date, "dd.MM.yyyy", new Date());
-
   // Check if the date is today
   if (isToday(parsedDate)) {
     return "today";
   }
 
-  // Calculate difference in days
+  // Use formatDistanceToNow for relative time formatting
   const daysDifference = differenceInDays(new Date(), parsedDate);
-
-  // For dates within the last day but not today (edge case)
-  if (daysDifference === 0) {
-    return "today";
-  }
-
-  // For dates older than today, show days ago
   if (daysDifference === 1) {
     return "1 day ago";
   }
 
-  return `${daysDifference} days ago`;
+  return formatDistanceToNow(parsedDate, { addSuffix: true });
 }
