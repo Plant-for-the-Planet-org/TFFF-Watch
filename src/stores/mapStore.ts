@@ -15,11 +15,11 @@ interface WorldMapStore extends WorldMapState {
   setClickPosition: (position: { x: number; y: number } | null) => void;
   setForestData: (dataset: DatasetType, data: TFFFData[]) => void;
   setIsLoading: (loading: boolean) => void;
-  setDefaultCountryLoaded: (loaded: boolean) => void;
   getCurrentForestData: () => TFFFData[];
   getSelectedCountryData: () => TFFFData | null;
   datasetFetched: { GFW: boolean; JRC: boolean };
   markDatasetFetched: (dataset: DatasetType) => void;
+  resetDatasetFetched: () => void;
 }
 
 export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
@@ -29,7 +29,6 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
   clickPosition: null,
   forestData: { GFW: [], JRC: [] },
   isLoading: false,
-  defaultCountryLoaded: false,
   datasetFetched: { GFW: false, JRC: false },
 
   setSelectedCountry: (country) => set({ selectedCountry: country }),
@@ -45,7 +44,6 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
       forestData: { ...state.forestData, [dataset]: data },
     })),
   setIsLoading: (loading) => set({ isLoading: loading }),
-  setDefaultCountryLoaded: (loaded) => set({ defaultCountryLoaded: loaded }),
   markDatasetFetched: (dataset) =>
     set((state) => ({
       datasetFetched: {
@@ -53,6 +51,10 @@ export const useWorldMapStore = create<WorldMapStore>((set, get) => ({
         [dataset]: true,
       },
     })),
+  resetDatasetFetched: () =>
+    set({
+      datasetFetched: { GFW: false, JRC: false },
+    }),
 
   getCurrentForestData: () => {
     const state = get();
@@ -112,19 +114,3 @@ export const useCountryMapStore = create<CountryMapStore>((set, get) => ({
     return state.tfffData[state.dataset];
   },
 }));
-
-export const BRAZIL_DEFAULT_COUNTRY: CountryData = {
-  iso2: "BR",
-  iso3: "BRA",
-  name: "Brazil",
-  slug: "brazil",
-  flagImgUrl:
-    "http://purecatamphetamine.github.io/country-flag-icons/3x2/BR.svg",
-};
-
-export const initializeBrazilDefault = (store: WorldMapStore) => {
-  if (!store.defaultCountryLoaded && !store.selectedCountry) {
-    store.setSelectedCountry(BRAZIL_DEFAULT_COUNTRY);
-    store.setDefaultCountryLoaded(true);
-  }
-};

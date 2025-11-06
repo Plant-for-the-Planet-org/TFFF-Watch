@@ -3,7 +3,6 @@
 import {
   CountryMap,
   DatasetTabs,
-  initializeBrazilDefault,
   useWorldMapStore,
   WorldMap,
 } from "@/components/maps";
@@ -35,12 +34,18 @@ export function TFFFWorldMapView() {
     useForestCoverChangeData();
 
   // New map store integration
-  const { selectedDataset, setForestData, selectedYear, setSelectedYear } =
-    useWorldMapStore();
+  const {
+    selectedDataset,
+    setForestData,
+    selectedYear,
+    setSelectedYear,
+    resetDatasetFetched,
+  } = useWorldMapStore();
 
-  // useEffect(() => {
-  //   fetchForestCoverChangeDataV2({});
-  // }, []);
+  // Reset dataset fetched flags when component mounts (returning to home page)
+  useEffect(() => {
+    resetDatasetFetched();
+  }, [resetDatasetFetched]);
 
   useEffect(() => {
     const _yearWise = forestCoverChangeData.filter(
@@ -59,11 +64,6 @@ export function TFFFWorldMapView() {
     setForestData,
     setSelectedYear,
   ]);
-
-  // Initialize Brazil default selection
-  useEffect(() => {
-    initializeBrazilDefault(useWorldMapStore.getState());
-  }, []);
 
   return (
     <WorldMapViewContainer>
@@ -91,7 +91,6 @@ export function TFFFWorldMapView() {
             <WorldMap
               selectedYear={selectedYear}
               dataset={selectedDataset}
-              defaultSelectedCountry="BR"
               variant="hero"
             />
           </div>

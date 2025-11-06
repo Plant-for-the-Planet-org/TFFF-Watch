@@ -1,12 +1,9 @@
 "use client";
 
-import { BRAZIL_DEFAULT_COUNTRY, useWorldMapStore } from "@/stores/mapStore";
+import { useWorldMapStore } from "@/stores/mapStore";
 import { transformAllForestCoverChangeData } from "@/utils/country-helper";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
-import {
-  getGFWColorKey,
-  updateFeaturesWithColorKeys,
-} from "@/utils/map-colors";
+import { getGFWColorKey } from "@/utils/map-colors";
 import { useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
 import * as turf from "@turf/turf";
@@ -38,24 +35,18 @@ export const GEOFENCE = turf.polygon([
   ],
 ]);
 
-export default function WorldMap({
-  defaultSelectedCountry,
-  onCountryClick,
-}: WorldMapProps = {}) {
+export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   const { width } = useWindowSize();
   const { setPoint, setCountry, setCountrySlug, setCountryISO2, setIsTFFF } =
     useWorldMap();
 
   // New store integration
   const {
-    selectedCountry,
     selectedDataset,
     selectedYear,
     forestData,
     setSelectedCountry,
     setClickPosition,
-    defaultCountryLoaded,
-    setDefaultCountryLoaded,
   } = useWorldMapStore();
 
   const mapRef = useRef<MapRef>(null);
@@ -76,24 +67,6 @@ export default function WorldMap({
       setViewState((prev) => ({ ...prev, zoom: -1 }));
     }
   }, [width]);
-
-  // Initialize Brazil default selection
-  useEffect(() => {
-    if (
-      defaultSelectedCountry === "BR" &&
-      !defaultCountryLoaded &&
-      !selectedCountry
-    ) {
-      setSelectedCountry(BRAZIL_DEFAULT_COUNTRY);
-      setDefaultCountryLoaded(true);
-    }
-  }, [
-    defaultSelectedCountry,
-    defaultCountryLoaded,
-    selectedCountry,
-    setSelectedCountry,
-    setDefaultCountryLoaded,
-  ]);
 
   const allCountries = useMemo(() => {
     const countriesData = countries as unknown as {
@@ -123,46 +96,30 @@ export default function WorldMap({
     const gfwDataAll = forestData.GFW || [];
     const gfwData = gfwDataAll.filter((item) => item.year == selectedYear);
 
-    // console.log(forestData, selectedYear);
-    // console.log({ jrcData, gfwData });
-
     // Update JRC colors if we have JRC data
     let featuresWithColors = blankFeatures;
     if (jrcData.length > 0) {
       const transformedJRC = transformAllForestCoverChangeData(jrcData);
-      featuresWithColors = updateFeaturesWithColorKeys(
-        featuresWithColors,
-        transformedJRC,
-        "JRC"
-      );
+      featuresWithColors = featuresWithColors.map((country) => {
+        const countrySlug = country.properties.countrySlug as string;
+        const countyISO2 = country.properties.iso_a2 as string;
+        const jrcEligibility = transformedJRC[countyISO2]?.eligibility;
+        const jrcColorKey = getGFWColorKey(jrcEligibility || "NA");
 
-      // featuresWithColors = featuresWithColors.map((country) => {
-      //   const countrySlug = country.properties.countrySlug as string;
-      //   const countyISO2 = country.properties.iso_a2 as string;
-      //   const jrcEligibility = transformedJRC[countyISO2]?.eligibility;
-      //   const jrcColorKey = getGFWColorKey(jrcEligibility || "NA");
-
-      //   return {
-      //     ...country,
-      //     properties: {
-      //       ...country.properties,
-      //       countrySlug,
-      //       GFWColorKey: jrcColorKey,
-      //     },
-      //   };
-      // });
+        return {
+          ...country,
+          properties: {
+            ...country.properties,
+            countrySlug,
+            JRCColorKey: jrcColorKey,
+          },
+        };
+      });
     }
 
     // Update GFW colors if we have GFW data
     if (gfwData.length > 0) {
       const transformedGFW = transformAllForestCoverChangeData(gfwData);
-
-      // featuresWithColors = updateFeaturesWithColorKeys(
-      //   featuresWithColors,
-      //   transformedGFW,
-      //   "GFW"
-      // );
-
       featuresWithColors = featuresWithColors.map((country) => {
         const countrySlug = country.properties.countrySlug as string;
         const countyISO2 = country.properties.iso_a2 as string;

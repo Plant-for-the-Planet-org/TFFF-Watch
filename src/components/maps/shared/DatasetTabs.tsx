@@ -41,9 +41,9 @@ export default function DatasetTabs({
 
   // Fetch data for a specific dataset (fetch ALL years at once)
   const fetchDatasetData = useCallback(
-    async (dataset: DatasetType) => {
+    async (dataset: DatasetType, force: boolean = false) => {
       // Check if we've already fetched this dataset (not year-specific)
-      if (datasetFetched[dataset]) {
+      if (datasetFetched[dataset] && !force) {
         return;
       }
 
@@ -54,7 +54,7 @@ export default function DatasetTabs({
           method: "GET",
           token: "",
           query: {
-            source: dataset === "GFW" ? "GFW" : "JRC",
+            source: dataset,
             // Do NOT include year - fetch all years at once
           },
         });
@@ -103,15 +103,12 @@ export default function DatasetTabs({
   const handleTabClick = useCallback(
     (dataset: DatasetType) => {
       if (!disabled) {
-        // Fetch data for the new dataset if we don't have it
-        fetchDatasetData(dataset);
-
         const params = new URLSearchParams(searchParams.toString());
         params.set("dataset", dataset);
         router.push(`?${params.toString()}`, { scroll: false });
       }
     },
-    [disabled, router, searchParams, fetchDatasetData]
+    [disabled, router, searchParams]
   );
 
   return (

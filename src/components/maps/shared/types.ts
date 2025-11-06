@@ -87,7 +87,6 @@ export interface WorldMapState {
     JRC: TFFFData[];
   };
   isLoading: boolean;
-  defaultCountryLoaded: boolean;
 }
 
 // Country Map State

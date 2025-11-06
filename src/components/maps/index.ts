@@ -21,9 +21,4 @@ export type {
 } from "./shared/types";
 
 // Store hooks
-export {
-  useWorldMapStore,
-  useCountryMapStore,
-  BRAZIL_DEFAULT_COUNTRY,
-  initializeBrazilDefault,
-} from "../../stores/mapStore";
+export { useWorldMapStore, useCountryMapStore } from "../../stores/mapStore";
