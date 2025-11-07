@@ -3,10 +3,10 @@ import { ResponsiveContainer } from "@/components/ui/Container";
 import { urls } from "@/utils/axios-helper";
 import { News } from "@/utils/types";
 import { compareDesc } from "date-fns";
-import { Fragment } from "react";
 import { XMLParser } from "fast-xml-parser";
-import NewsCard from "../news/NewsCard";
+import { Fragment } from "react";
 import NewsLetter from "./NewsLetter";
+import PressReleaseCard from "./PressReleaseCard";
 
 type SubstackRSSItem = {
   title: string;
@@ -112,7 +112,7 @@ export default async function PlansforthePlanetAnalysis() {
           <div className="grid grid-cols-1 md:flex gap-3 md:gap-4 xl:gap-5 justify-center">
             {articles.map((article) => (
               <Fragment key={article.id}>
-                <NewsCard
+                <PressReleaseCard
                   title={article.title!}
                   summary={article.summary!}
                   image={article.featured_image!}
@@ -124,6 +124,7 @@ export default async function PlansforthePlanetAnalysis() {
             ))}
           </div>
         </div>
+        <Br />
         <Br />
         {/* <Br />
         <div className="flex justify-center">
