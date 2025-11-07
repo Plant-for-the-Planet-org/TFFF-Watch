@@ -164,7 +164,7 @@ export default function CurrentRewardsChart() {
       <div className="bg-background border border-primary-light rounding-lg outer-padding-3">
         <h2 className="typo-h2 font-bold text-center">Current Rewards</h2>
         <p className="text-sm text-center text-foreground">
-          if TFFF was already operation, based on 2024 data
+          if TFFF was already operational, based on 2024 data
           <br />
           for fully and almost eligible countries
         </p>
@@ -180,7 +180,7 @@ export default function CurrentRewardsChart() {
     <div className="bg-background border border-primary-light rounding-lg outer-padding-3">
       <h2 className="typo-h2 font-bold text-center">Current Rewards</h2>
       <p className="text-sm text-center text-foreground">
-        if TFFF was already operation, based on 2024 data
+        if TFFF was already operational, based on 2024 data
         <br />
         for fully and almost eligible countries
       </p>
