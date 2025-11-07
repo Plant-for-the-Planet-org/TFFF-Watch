@@ -19,6 +19,7 @@ export default function CountryListChips({ country }: Props) {
     { label: "Indonesia", iso2: "ID", emoji: "🇮🇩", selected: false },
     { label: "Portugal", iso2: "PT", emoji: "🇵🇹", selected: false },
     // { label: "Azerbaijan", iso2: "AZ", emoji: "🇦🇿", selected: false },
+    { label: "Philanthropies", iso2: "", emoji: "", noFlag: true, selected: false },
     { label: "Others", iso2: "OT", emoji: "🌍", noFlag: true, selected: false },
   ];
   countryList.find((el) => el.label === country)!.selected = true;
@@ -41,11 +42,15 @@ export default function CountryListChips({ country }: Props) {
             {el?.noFlag ? (
               <p className="mr-1">{el.emoji}</p>
             ) : (
-              <img
-                className="w-6 h-4 p-0.5"
-                alt=""
-                src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${el.iso2}.svg`}
-              />
+              <>
+                {el?.iso2 && (
+                  <img
+                    className="w-6 h-4 p-0.5"
+                    alt=""
+                    src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${el.iso2}.svg`}
+                    />
+                )}
+              </>
             )}
             {/* <span>{el.emoji}</span> */}
             {el.label}

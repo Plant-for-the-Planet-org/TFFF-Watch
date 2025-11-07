@@ -25,6 +25,7 @@ const investingCountries = [
   "China",
   "Indonesia",
   "Portugal",
+  "Philanthropies",
   "Others",
 ];
 
