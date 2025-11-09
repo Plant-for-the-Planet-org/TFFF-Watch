@@ -49,14 +49,16 @@ export default function InvestmentTrackerContent({
           </ContentSection>
         )}
 
-        {/* {hasContent(endorsements) && (
-          <ContentSection
+        <div className="hidden">
+          {hasContent(endorsements) && (
+            <ContentSection
             icon="/assets/investment-endorsement.svg"
             title="Endorsements"
-          >
-            <RichToHTML content={endorsements!} />
-          </ContentSection>
-        )} */}
+            >
+              <RichToHTML content={endorsements!} />
+            </ContentSection>
+          )}
+        </div>
 
         {hasContent(CSOs) && (
           <ContentSection
