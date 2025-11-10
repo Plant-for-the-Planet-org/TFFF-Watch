@@ -28,6 +28,7 @@ import {
   GFW2BTop10CountriesChart,
   JRC5BTop10CountriesChart,
 } from "../charts/Top10BarChart";
+import Image from "next/image";
 
 export function TFFFWorldMapView() {
   const { forestCoverChangeData, setForestCoverChangeDataByYear } =
@@ -68,7 +69,11 @@ export function TFFFWorldMapView() {
   return (
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
-        <VersionChip />
+        <div className="flex justify-between items-center">
+          <VersionChip />
+          <ClickTooltip />
+        </div>
+        <Br />
 
         {/* Dataset Tabs */}
         <div className="flex justify-center mb-4">
@@ -87,14 +92,13 @@ export function TFFFWorldMapView() {
         </div>
 
         <div className="grow relative flex flex-col">
-          <div className="relative mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
-            <WorldMap
-              selectedYear={selectedYear}
-              dataset={selectedDataset}
-              variant="hero"
-            />
-          </div>
-          <div className="sm:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
+          <WorldMap
+            selectedYear={selectedYear}
+            dataset={selectedDataset}
+            variant="hero"
+          />
+
+          <div className="mb-8 sm:mb-0 sm:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
             <Br cn="md:hidden" />
             {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
             <Br />
@@ -188,44 +192,9 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
   );
 }
 
-function TFFFCountryMapViewFallback(props: TFFFCountryMapViewProps) {
-  return (
-    <div>
-      <div className="flex justify-center">
-        {/* Dataset Tabs Fallback */}
-        <div className="flex gap-1 p-1 bg-[#E4F6EB] rounded-xl border border-primary-light">
-          <div className="px-4 py-2 typo-p font-medium rounded-lg bg-white text-[#333333] shadow-sm">
-            Standard Estimate (JRC + GFW)
-          </div>
-          <div className="px-4 py-2 typo-p font-medium rounded-lg bg-transparent text-[#828282]">
-            Tree-cover-change Estimate (GFW)
-          </div>
-        </div>
-      </div>
-      <Br />
-      <CountryMapViewContainer>
-        <div className="h-full flex flex-col">
-          <Br />
-          <CountryMapHeaderContent year={props.year} />
-          <Br />
-          <div className="grow grid grid-cols-1 md:grid-cols-2">
-            <div className="relative h-60 md:h-full">
-              <div className="absolute bottom-0 z-20">
-                <CountryMapLegends />
-              </div>
-              <div className="bg-gray-200 animate-pulse h-full w-full rounded"></div>
-            </div>
-            <div className="bg-gray-100 animate-pulse rounded"></div>
-          </div>
-        </div>
-      </CountryMapViewContainer>
-    </div>
-  );
-}
-
 export function TFFFCountryMapView(props: TFFFCountryMapViewProps) {
   return (
-    <Suspense fallback={<TFFFCountryMapViewFallback {...props} />}>
+    <Suspense fallback={<></>}>
       <TFFFCountryMapViewInner {...props} />
     </Suspense>
   );
@@ -252,8 +221,34 @@ function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
 export function VersionChip() {
   const mapVersion = env.mapVersion;
   return (
-    <div className="z-20 self-start bg-white text-primary text-xs py-0.5 px-2 rounded-full shadow-xl">
+    <div className="z-20 bg-white text-primary text-xs py-0.5 px-2 rounded-full shadow-xl">
       {mapVersion}
+    </div>
+  );
+}
+
+export function ClickTooltip() {
+  return (
+    <div className="relative group">
+      <button
+        className="bg-white rounded-lg p-1 cursor-pointer overflow-clip"
+        onClick={() => {}}
+      >
+        <Image
+          className="-translate-x-0.5"
+          width={32}
+          height={32}
+          src="/assets/finger-tap.gif"
+          alt=""
+        />
+      </button>
+
+      {/* Tooltip */}
+      <div className="absolute right-full mr-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+        <div className="bg-background text-base-text text-sm px-3 py-2 rounded-full whitespace-nowrap shadow-lg">
+          Click on a country for more data
+        </div>
+      </div>
     </div>
   );
 }

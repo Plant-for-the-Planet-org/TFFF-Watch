@@ -12,6 +12,7 @@ import {
   Layer,
   Map,
   MapRef,
+  // NavigationControl,
   Source,
   ViewStateChangeEvent,
 } from "@vis.gl/react-maplibre";
@@ -219,85 +220,70 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   // Always render the map - no loading state needed
   return (
     <>
-      <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
-        <Map
-          ref={mapRef}
-          {...viewState}
-          cursor="default"
-          keyboard={false}
-          scrollZoom={false}
-          dragPan={true}
-          dragRotate={false}
-          touchPitch={false}
-          touchZoomRotate={false}
-          doubleClickZoom={false}
-          interactive={true}
-          attributionControl={false}
-          renderWorldCopies={false}
-          onMove={onMove}
-          onClick={onClick}
-          onLoad={() => {
-            const map = mapRef.current?.getMap();
-            map?.addControl(
-              new maplibregl.AttributionControl({ compact: true })
-            );
-          }}
-        >
-          <Source
-            id="country"
-            type="geojson"
-            data={
-              allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
-            }
+      <div className="relative mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
+        <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
+          <Map
+            ref={mapRef}
+            {...viewState}
+            cursor="default"
+            keyboard={false}
+            scrollZoom={false}
+            dragPan={true}
+            dragRotate={false}
+            touchPitch={false}
+            touchZoomRotate={false}
+            doubleClickZoom={false}
+            interactive={true}
+            attributionControl={false}
+            renderWorldCopies={false}
+            onMove={onMove}
+            onClick={onClick}
+            onLoad={() => {
+              const map = mapRef.current?.getMap();
+              map?.addControl(
+                new maplibregl.AttributionControl({ compact: true })
+              );
+            }}
           >
-            {/* JRC Layer */}
-            <Layer
-              id="country-fill-jrc"
-              type="fill"
-              paint={{
-                "fill-color": ["get", "JRCColorKey"],
-                "fill-opacity": selectedDataset === "JRC" ? 1 : 0,
-              }}
-            />
-            {/* GFW Layer */}
-            <Layer
-              id="country-fill-gfw"
-              type="fill"
-              paint={{
-                "fill-color": ["get", "GFWColorKey"],
-                "fill-opacity": selectedDataset === "GFW" ? 1 : 0,
-              }}
-            />
-            <Layer
-              id="country-line"
-              type="line"
-              paint={{
-                "line-color": "#F0FAF4",
-                "line-width": 1.5,
-              }}
-            />
-          </Source>
-          {/* <NavigationControl position="bottom-right" showCompass={false} /> */}
-        </Map>
-      </div>
-      <WorldMapCard />
+            <Source
+              id="country"
+              type="geojson"
+              data={
+                allCountries as unknown as GeoJSON<Geometry, GeoJsonProperties>
+              }
+            >
+              {/* JRC Layer */}
+              <Layer
+                id="country-fill-jrc"
+                type="fill"
+                paint={{
+                  "fill-color": ["get", "JRCColorKey"],
+                  "fill-opacity": selectedDataset === "JRC" ? 1 : 0,
+                }}
+              />
+              {/* GFW Layer */}
+              <Layer
+                id="country-fill-gfw"
+                type="fill"
+                paint={{
+                  "fill-color": ["get", "GFWColorKey"],
+                  "fill-opacity": selectedDataset === "GFW" ? 1 : 0,
+                }}
+              />
+              <Layer
+                id="country-line"
+                type="line"
+                paint={{
+                  "line-color": "#F0FAF4",
+                  "line-width": 1.5,
+                }}
+              />
+            </Source>
 
-      <div className="absolute right-0 top-0">
-        <div className="relative group">
-          <button
-            className="bg-white p-2 rounded-lg cursor-pointer"
-            onClick={() => {}}
-          >
-            <Image width={24} height={24} src="/assets/finger-tap.svg" alt="" />
-          </button>
-
-          {/* Tooltip */}
-          <div className="absolute right-full mr-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-            <div className="bg-background text-base-text text-sm px-3 py-2 rounded-full whitespace-nowrap shadow-lg">
-              Click on a country for more data
-            </div>
-          </div>
+            {/* <NavigationControl position="bottom-right" showCompass={false} /> */}
+          </Map>
         </div>
+        <WorldMapCard />
       </div>
 
       <div className="absolute sm:mt-auto right-0 bottom-0 text-xs flex items-end-safe">

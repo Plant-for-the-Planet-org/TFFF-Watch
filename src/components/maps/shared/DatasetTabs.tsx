@@ -83,7 +83,7 @@ export default function DatasetTabs({
   const datasets: { key: DatasetType; label: string; description: string }[] = [
     {
       key: "JRC",
-      label: "Standard Estimate (JRC + GFW)",
+      label: "Standard Estimate (JRC+GFW)",
       description: "",
     },
     {
@@ -94,8 +94,8 @@ export default function DatasetTabs({
   ];
 
   const baseTabClasses =
-    "px-4 py-2 typo-p font-medium rounded-lg transition-colors duration-200 cursor-pointer outline-none";
-  const defaultActiveClasses = "bg-white text-[#333333] shadow-sm";
+    "px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 text-sm font-regular rounded-lg transition-colors duration-200 cursor-pointer outline-none";
+  const defaultActiveClasses = "bg-white font-medium text-[#333333] shadow-sm";
   const defaultInactiveClasses =
     "bg-transparent text-[#828282] hover:bg-[#E4F6EB]/50";
   const disabledClasses = "opacity-50 cursor-not-allowed";
