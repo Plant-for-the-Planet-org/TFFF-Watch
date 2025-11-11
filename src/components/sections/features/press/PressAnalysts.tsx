@@ -15,7 +15,7 @@ const persons = [
     name: "Pakhi Das",
     role: "Policy Advisor at Plant-for-the-Planet TFFF Investment Tracking",
     src: "pakhi-das.png",
-    linkedin: "https://www.linkedin.com/in/pakhidas/",
+    linkedin: "",
     email: "mailto:pakhi.das@plant-for-the-planet.org",
     phone: "",
   },
