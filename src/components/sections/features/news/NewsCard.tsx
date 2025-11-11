@@ -17,7 +17,7 @@ export default function NewsCard(props: Props) {
     <div className="group flex-1/3 grow-0 shrink p-3 bg-white border border-primary-medium-light rounding-xl">
       <div className="relative mb-2 overflow-hidden rounded-lg lg:rounded-xl">
         <img
-          className="aspect-[2.42] md:aspect-[4/3] w-fit object-center object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+          className="aspect-[2.42] md:aspect-[4/3] w-full object-center object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
           src={props.image}
           alt={props.title}
           loading="lazy"

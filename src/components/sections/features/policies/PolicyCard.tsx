@@ -15,10 +15,13 @@ type Props = {
 export default function PolicyCard(props: Props) {
   return (
     <div className="group flex-1/3 grow-0 shrink p-3 bg-white border border-primary-medium-light rounding-xl">
-      <div className="flex flex-row gap-2 items-center md:flex-col h-full">
+      {/* <div className="flex flex-row gap-2 items-center md:flex-col h-full"> */}
+      <div className="relative mb-2 overflow-hidden rounded-lg lg:rounded-xl">
         <div className="flex-2/5 w-full h-full md:flex-auto border border-base-gray relative mb-2 overflow-hidden rounding-lg">
           <img
-            className="aspect-[4/3] w-full p-4 object-center object-contain transition-transform duration-300 ease-in-out group-hover:scale-110"
+            // className="aspect-[4/3] w-full p-4 object-center object-contain transition-transform duration-300 ease-in-out group-hover:scale-110"
+            // className="aspect-[4/3] w-full object-center object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+            className="aspect-[4/3] w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
             src={props.image}
             alt={props.title}
             loading="lazy"
