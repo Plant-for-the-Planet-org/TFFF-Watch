@@ -149,6 +149,18 @@ export default function ForestCoverChangeAreaChart() {
               // custom tick component to prevent wrapping and color ticks
               tick={(props) => <LeftYAxisTick {...props} />}
               width={90}
+              label={{
+                value: "Degraded (ha)",
+                angle: -90,
+                position: "insideLeft",
+                fill: strokes.degradation,
+                offset: 0,
+                style: {
+                  textAnchor: "middle",
+                  fontSize: 12,
+                  whiteSpace: "nowrap",
+                },
+              }}
             />
 
             {/* RIGHT Y: deforestation (larger-magnitude series) */}
@@ -161,6 +173,18 @@ export default function ForestCoverChangeAreaChart() {
               // removed label prop (user requested no axis label text)
               tick={(props) => <RightYAxisTick {...props} />}
               width={90}
+              label={{
+                value: "Deforested (ha)",
+                angle: 90,
+                position: "insideRight",
+                fill: strokes.deforestation,
+                offset: 0,
+                style: {
+                  textAnchor: "middle",
+                  fontSize: 12,
+                  whiteSpace: "nowrap",
+                },
+              }}
             />
 
             <XAxis dataKey="year" fontSize={14} tickLine={false} />
@@ -168,7 +192,8 @@ export default function ForestCoverChangeAreaChart() {
             {/* IMPORTANT: changed type from "monotone" (smooth/rounded) to "linear" (straight lines / hard edges) */}
             <Area
               yAxisId="right"
-              type="linear" // Was: "monotone" -> change removes curve smoothing
+              // type="linear" // Was: "monotone" -> change removes curve smoothing
+              type="monotone" // Was: "monotone" -> change removes curve smoothing
               dataKey="deforestation"
               stroke={strokes.deforestation}
               strokeWidth={2}
@@ -183,7 +208,8 @@ export default function ForestCoverChangeAreaChart() {
 
             <Area
               yAxisId="left"
-              type="linear" // Was: "monotone" -> change removes curve smoothing
+              // type="linear" // Was: "monotone" -> change removes curve smoothing
+              type="monotone" // Was: "monotone" -> change removes curve smoothing
               dataKey="degradation"
               stroke={strokes.degradation}
               strokeWidth={2}
