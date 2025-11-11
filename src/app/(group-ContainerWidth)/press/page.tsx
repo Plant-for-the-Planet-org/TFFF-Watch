@@ -1,3 +1,4 @@
+import PressAnalysts from "@/components/sections/features/press/PressAnalysts";
 import PressContacts from "@/components/sections/features/press/PressContacts";
 import PressReleases from "@/components/sections/features/press/PressReleases";
 import SecondaryHero, {
@@ -17,7 +18,10 @@ export default function Page() {
       <div>
         <SecondaryHero OverlayComponent={<OverlayPressTFFFWatch />} />
         <Br />
-        <PressContacts />
+        <div className="grid grid-cols-2 gap-4">
+          <PressAnalysts />
+          <PressContacts />
+        </div>
         <Br />
         <PressReleases />
       </div>

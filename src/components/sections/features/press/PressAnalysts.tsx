@@ -4,36 +4,29 @@ import Link from "next/link";
 
 const persons = [
   {
-    name: "Tina Anjou",
-    role: "Teamlead Communications",
-    src: "tina-anjou.png",
-    linkedin: "https://www.linkedin.com/in/tina-anjou-5952786/",
-    email: "mailto:tina.anjou@plant-for-the-planet.org",
+    name: "Felix Finkbeiner",
+    role: "Founder of Plant-for-the-Planet Forests & Monitoring",
+    src: "felix-finkbeiner.png",
+    linkedin: "https://www.linkedin.com/in/felixfinkbeiner/",
+    email: "mailto:felix.finkbeiner@plant-for-the-planet.org",
     phone: "",
   },
   {
-    name: "Victoria Krumbeck",
-    role: "PR Manager",
-    src: "victoria-krumbeck.png",
-    linkedin: "",
-    email: "mailto:victoria.krumbeck@plant-for-the-planet.org",
+    name: "Pakhi Das",
+    role: "Policy Advisor at Plant-for-the-Planet TFFF Investment Tracking",
+    src: "pakhi-das.png",
+    linkedin: "https://www.linkedin.com/in/pakhidas/",
+    email: "mailto:pakhi.das@plant-for-the-planet.org",
     phone: "",
   },
 ];
 
-export default function PressContacts() {
+export default function PressAnalysts() {
   return (
-    <div className="bg-secondary-light outer-rounding outer-padding-3">
+    <div className="bg-primary-light outer-rounding outer-padding-3">
       <Br />
-      <h2 className="text-center font-bold typo-h2">Press Contact</h2>
-      <p className="text-center typo-p">
-        <a
-          className="hover:underline"
-          href="mailto:media@plant-for-the-planet.org"
-        >
-          media@plant-for-the-planet.org
-        </a>
-      </p>
+      <h2 className="text-center font-bold typo-h2">TFFF Analysts</h2>
+      <p className="text-center typo-p">‎ </p>
       <Br />
       <Br />
       <div className="flex gap-4 justify-center flex-wrap">
@@ -51,7 +44,7 @@ export default function PressContacts() {
                 alt={el.src}
               />
             </div>
-            <div className="text-center typo-p">
+            <div className="text-center typo-p px-4">
               <p>
                 <b>{el.name}</b>
               </p>
