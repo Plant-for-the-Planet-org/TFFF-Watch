@@ -25,6 +25,8 @@ const investingCountries = [
   "China",
   "Indonesia",
   "Portugal",
+  /* "Asian_Infrastructure_Investment_Bank", */ "AIIB",
+  /* "European_Bank_for_Reconstruction_and_Development", */ "EBRD",
   "Philanthropies",
   "Others",
 ];
@@ -46,11 +48,13 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { country } = await params;
 
+  const countryContentInMetadata = capitalize(country);
+  // countryContentInMetadata = countryContentInMetadata.replaceAll("_", " ");
+  // console.log("METADATA: ", { countryContentInMetadata });
+
   return {
-    title: `${capitalize(country)} Investment Tracker · TFFF Watch`,
-    description: `Is ${capitalize(
-      country
-    )} contributing to the Tropical Forest Forever Facility?`,
+    title: `${countryContentInMetadata} Investment Tracker · TFFF Watch`,
+    description: `Is ${countryContentInMetadata} contributing to the Tropical Forest Forever Facility?`,
   };
 }
 
@@ -76,6 +80,8 @@ the current analysis.`;
   } = null;
 
   try {
+    // const countryQueryValue = country.replaceAll("_", " ");
+
     const res = await api<InvestmentTrackerForCountry[]>({
       url: urls.investmentTrackerRich,
       query: { country: capitalize(country) },
