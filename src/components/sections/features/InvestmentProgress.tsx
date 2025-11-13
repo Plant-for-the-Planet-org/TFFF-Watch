@@ -34,8 +34,14 @@ export default function InvestmentProgress({ investment_stage }: Props) {
     },
     {
       stage: 5,
-      label: "Capital invested",
-      display: ["Capital", "invested"],
+      label: "Partial Capital invested",
+      display: ["Full Capital", "invested"],
+      success: false,
+    },
+    {
+      stage: 6,
+      label: "Full Capital invested",
+      display: ["Full Capital", "invested"],
       success: false,
     },
   ];

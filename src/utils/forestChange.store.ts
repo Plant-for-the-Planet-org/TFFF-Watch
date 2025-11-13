@@ -21,7 +21,7 @@ export async function fetchForestCoverChangeData(country?: string) {
 
     return _results;
   } catch (error) {
-    console.error("Error fetching news:", error);
+    console.error("Error fetching fetchForestCoverChangeData:", error);
   }
 }
 
