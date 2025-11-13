@@ -315,7 +315,12 @@ const CustomLabel = (props: CustomLabelWithDataProps) => {
         >
           <div className="hidden group-hover:block absolute z-50 inset-0 shadow">
             <div className="bg-background rounded-xl p-2 text-center">
-              <p className="text-sm">$ {labelData.actualValue}</p>
+              <p className="text-sm">
+                ${" "}
+                {labelData.actualValue.toLocaleString("en-US", {
+                  maximumFractionDigits: 0,
+                })}
+              </p>
             </div>
           </div>
         </foreignObject>

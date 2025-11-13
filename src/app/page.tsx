@@ -14,9 +14,9 @@ export default function Home() {
       <TFFFHero />
       <div className="website-container">
         <Br />
-        <TFFFWorldMapView />
-        <Br />
         <InvestmentTracker />
+        <Br />
+        <TFFFWorldMapView />
         <Br />
         <InfoGrid />
         <Br />
