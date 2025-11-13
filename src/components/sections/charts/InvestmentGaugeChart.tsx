@@ -356,6 +356,25 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
             ))}
           </Pie>
 
+          {/* Norway 2026 edge marker */}
+          <Pie
+            isAnimationActive={false}
+            data={[{ value: 1 }]}
+            startAngle={87.1}
+            endAngle={87.11}
+            innerRadius="120%"
+            outerRadius="160%"
+            dataKey="value"
+            cy="90%"
+            labelLine={false}
+            stroke="#000000"
+            strokeWidth={1}
+            strokeDasharray={4.5}
+          >
+            <Cell fill="transparent" />
+            <Cell fill="transparent" />
+          </Pie>
+
           {/* Labels layer */}
           {labelData.map((label, index) => {
             const angle = 180 - (label.position / 100) * 180;
