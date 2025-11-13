@@ -6,7 +6,6 @@ import Br from "@/components/ui/Br";
 import { api, urls } from "@/utils/axios-helper";
 import { PageError } from "@/utils/errors";
 import {
-  InvestmentTrackerSum,
   InvestmentTrackerCapitals,
   InvestmentTrackerForCountry,
 } from "@/utils/types";
@@ -76,10 +75,10 @@ the current analysis.`;
   let capitalsData: InvestmentTrackerCapitals[] = [];
   let richData: InvestmentTrackerForCountry | null = null;
 
-  let chartData: null | {
-    invested: number;
-    pledged: number;
-  } = null;
+  // let chartData: null | {
+  //   invested: number;
+  //   pledged: number;
+  // } = null;
 
   try {
     // const countryQueryValue = country.replaceAll("_", " ");
@@ -101,16 +100,16 @@ the current analysis.`;
     });
     capitalsData = capitalsDataResults;
 
-    const chartDataresult = await api<InvestmentTrackerSum[]>({
-      url: urls.investmentTrackerSum,
-      method: "GET",
-      token: "",
-    });
+    // const chartDataresult = await api<InvestmentTrackerSum[]>({
+    //   url: urls.investmentTrackerSum,
+    //   method: "GET",
+    //   token: "",
+    // });
 
-    chartData = {
-      invested: chartDataresult[0].sum_invested_capital,
-      pledged: chartDataresult[0].sum_pledged_capital,
-    };
+    // chartData = {
+    //   invested: chartDataresult[0].sum_invested_capital,
+    //   pledged: chartDataresult[0].sum_pledged_capital,
+    // };
   } catch (error) {
     console.error("Error fetching Investments:", error);
   }
@@ -119,13 +118,7 @@ the current analysis.`;
   return (
     <div>
       <div>
-        {chartData && (
-          <InvestmentTracker
-            invested={chartData.invested}
-            pledged={chartData.pledged}
-          />
-        )}
-
+        <InvestmentTracker />
         <Br />
         <CountryListChips country={country} capitalsData={capitalsData} />
         <Br />

@@ -225,7 +225,9 @@ export default function CountryListChips({ country, capitalsData }: Props) {
   return (
     <div className="w-full relative">
       {/* <div className="w-16 absolute inset-y-0 left-0 bg-white/30 backdrop-blur-sm"></div> */}
-      <p className="typo-p font-bold mb-2">Sovereigns</p>
+      <p className="typo-p font-bold mb-2 text-center xl:text-left">
+        Sovereigns
+      </p>
       <div
         // ref={scrollContainerRef}
         // onWheel={handleWheel}
@@ -234,7 +236,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
         // onMouseUp={handleMouseUp}
         // onMouseMove={handleMouseMove}
         // className="w-full flex gap-3 pr-16 pb-4 overflow-x-scroll overscroll-x-auto scrollbar-transparent cursor-grab active:cursor-grabbing select-none"
-        className="w-full flex gap-3 pb-4 flex-wrap"
+        className="w-full flex justify-center xl:justify-start gap-3 pb-4 flex-wrap"
       >
         {countryList.map((el, key) => (
           <Link
@@ -270,8 +272,10 @@ export default function CountryListChips({ country, capitalsData }: Props) {
         ))}
       </div>
 
-      <p className="typo-p font-bold mb-2">Development Banks & Others</p>
-      <div className="w-full flex gap-3 pb-4 flex-wrap">
+      <p className="typo-p font-bold mb-2 text-center xl:text-left">
+        Development Banks & Others
+      </p>
+      <div className="w-full flex justify-center xl:justify-start  gap-3 pb-4 flex-wrap">
         {banksOthersList.map((el, key) => (
           <Link
             className={twMerge(

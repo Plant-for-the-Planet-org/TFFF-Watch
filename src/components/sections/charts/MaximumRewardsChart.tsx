@@ -1,5 +1,5 @@
-// components/MaximumRewardsChart.tsx
 "use client";
+
 import { useEffect, useState, useMemo } from "react";
 import Br from "@/components/ui/Br";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";

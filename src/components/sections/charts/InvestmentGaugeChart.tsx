@@ -1,74 +1,307 @@
-import { toReadableAmountLong } from "@/utils/number-helper";
+import { toReadableAmount, toReadableAmountLong } from "@/utils/number-helper";
+import { InvestmentTrackerCapitals } from "@/utils/types";
+import Image from "next/image";
 import { useMemo } from "react";
-import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
-interface InvestmentGaugeChartProps {
-  invested?: number;
-  pledged?: number;
-  target?: number;
-}
+type Props = {
+  chartData: InvestmentTrackerCapitals[];
+};
+
+const COLORS = {
+  pledged: "#90BDF2",
+  invested: "#6fcf97",
+  target: "#DFE5ED",
+  norway2026: "#DFE5ED",
+};
+
+const TARGET = 25000000000;
+const NORWAY_2026_TARGET = 12900000000;
+const LABEL_OFFSET_X = 10;
+
+type PieData = {
+  id: string;
+  label: string;
+  value: number;
+  color: string;
+  country?: string;
+};
 
 type LabelData = {
   id: string;
   name: string;
   actualValue: number;
-  position: number; // 0..100
+  position: number;
   originalPosition: number;
   color: string;
 };
 
-const COLORS = {
-  invested: "#082447",
-  pledged: "#6fcf97",
-  target: "#DFE5ED",
+interface CustomLabelProps {
+  cx: number;
+  cy: number;
+  midAngle: number;
+  innerRadius: number;
+  outerRadius: number;
+  index: number;
+  startAngle: number;
+  endAngle: number;
+  payload?: { name: string; value: number };
+}
+
+interface CustomLabelWithDataProps extends CustomLabelProps {
+  labelData: LabelData;
+  stackingIndex: number;
+}
+
+const CustomLabel = (props: CustomLabelWithDataProps) => {
+  const { cx, cy, outerRadius = 0, labelData } = props;
+
+  const isRight = labelData.position >= 50;
+  const xRight = cx + outerRadius + LABEL_OFFSET_X;
+  const xLeft = cx - outerRadius - LABEL_OFFSET_X;
+  const baseY = cy - outerRadius * 0.05;
+
+  let x = isRight ? xRight : xLeft;
+  let y = baseY;
+
+  // Dynamic circular position for pledged label
+  if (labelData.id === "pledged" && labelData.position > 0) {
+    let angleDeg = 180 - (labelData.position / 100) * 180;
+    if (labelData.position < 5) {
+      angleDeg -= 9;
+    }
+
+    const angleRad = (Math.PI * angleDeg) / 180;
+    const radius = outerRadius * 1.1;
+    x = cx + radius * Math.cos(angleRad);
+    y = cy - radius * Math.sin(angleRad);
+  }
+
+  // Dynamic circular position for norway2026 label
+  if (labelData.id === "norway2026" && labelData.position > 0) {
+    let angleDeg = 180 - (labelData.position / 100) * 180;
+    if (labelData.position < 5) {
+      angleDeg -= 10;
+    }
+
+    const angleRad = (Math.PI * angleDeg) / 180;
+    const radius = outerRadius * 1.1;
+    x = cx + radius * Math.cos(angleRad);
+    y = cy - radius * Math.sin(angleRad);
+  }
+
+  // Keep invested label fixed baseline on left
+  if (labelData.id === "invested") {
+    x = xLeft;
+    y = baseY;
+  }
+
+  // Keep target label baseline centered right
+  if (labelData.id === "target") {
+    x = xRight;
+    y = baseY;
+  }
+
+  const textAnchor: "start" | "end" = x > cx ? "start" : "end";
+
+  if (labelData.id === "norway2026") {
+    return (
+      <g>
+        {labelData.id === "norway2026" && (
+          <foreignObject
+            x={x - 48}
+            y={y - 48}
+            width={288}
+            height={32 + 96}
+            className=""
+          >
+            <>
+              <div className="h-full w-full flex flex-col justify-end items-start relative">
+                <div className="flex justify-center items-center gap-1 text-xs">
+                  <p className="font-bold">2026 Target</p>
+                  <div className="relative group">
+                    <Image
+                      width={14}
+                      height={14}
+                      src={"/assets/tooltip-info-icon-2.svg"}
+                      alt=""
+                    />
+                    <div className="hidden group-hover:block absolute z-50 -top-16 left-4">
+                      <div className="bg-white w-48 p-2 px-4 rounded-xl">
+                        <p className="text-xs">
+                          $12.9bn in total pledges required by end of 2026 to
+                          unlock Norway’s pledge (see Norway tracker tab)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-center items-center gap-1 text-xs">
+                  <p>set by Norway</p>
+                </div>
+              </div>
+              <div className="hidden group-hover:block absolute z-50 top-0">
+                <div className="bg-white">some text</div>
+              </div>
+            </>
+          </foreignObject>
+        )}
+      </g>
+    );
+  }
+  return (
+    <g className="group">
+      {labelData.id === "pledged" && (
+        <foreignObject
+          x={x - (80 + 30)}
+          y={y - 40}
+          width={160}
+          height={40}
+          className="relative"
+        >
+          <div className="hidden group-hover:block absolute z-50 inset-0 shadow">
+            <div className="bg-background rounded-xl p-2 text-center">
+              <p className="text-sm">
+                ${" "}
+                {labelData.actualValue.toLocaleString("en-US", {
+                  maximumFractionDigits: 0,
+                })}
+              </p>
+            </div>
+          </div>
+        </foreignObject>
+      )}
+      {labelData.id === "norway2026" && <></>}
+      <text
+        className="hidden sm:block"
+        x={x}
+        y={y}
+        textAnchor={textAnchor}
+        fill="#111827"
+        fontSize={12}
+      >
+        {labelData.id === "norway2026" ? (
+          <></>
+        ) : (
+          <>
+            <tspan x={x} dy={12} fontWeight="700">
+              {toReadableAmountLong(
+                labelData.actualValue,
+                true,
+                true
+              ).toLowerCase()}
+            </tspan>
+            <tspan x={x} dy={12} fontWeight="400" fontSize={11}>
+              {labelData.name}
+            </tspan>
+          </>
+        )}
+      </text>
+    </g>
+  );
 };
 
-const LABEL_OFFSET_X = 10; // horizontal gap from pie edge
+function CustomPieTooltip({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: Array<{
+    payload: PieData;
+  }>;
+}) {
+  if (active && payload && payload.length) {
+    if (!payload[0].payload?.id?.includes("pledged")) return null;
+    const data = payload[0].payload;
+    return (
+      <div className="bg-background border border-primary-light rounding-lg p-2 px-4">
+        <p className="font-semibold text-sm whitespace-nowrap">
+          {data.country || data.label}
+        </p>
+        <p className="text-sm">
+          {toReadableAmountLong(data.value).toLowerCase()}
+        </p>
+      </div>
+    );
+  }
+  return null;
+}
 
-export default function InvestmentGaugeChart({
-  invested = 0,
-  pledged = 0,
-  target = 25000000000,
-}: InvestmentGaugeChartProps) {
-  const chartData = useMemo(() => {
-    const invPct = target > 0 ? Math.min(100, (invested / target) * 100) : 0;
-    const plgPct = target > 0 ? Math.min(100, (pledged / target) * 100) : 0;
+export default function InvestmentGaugeChart({ chartData }: Props) {
+  const chartTotalPledgedText = useMemo(() => {
+    const totalPledged = chartData.reduce(
+      (sum, row) => sum + (row?.pledged_capital || 0),
+      0
+    );
+    return `${toReadableAmount(totalPledged)} of ${toReadableAmount(
+      TARGET
+    )} pledged`;
+  }, [chartData]);
 
-    return [
-      {
-        id: "invested",
-        name: "Invested Capital",
-        value: invested,
-        pct: invPct,
-        color: COLORS.invested,
-      },
-      {
-        id: "pledged",
-        name: "Pledged Capital",
-        value: pledged,
-        pct: plgPct,
-        color: COLORS.pledged,
-      },
-      {
-        id: "target",
-        name: "Target",
-        value: target,
-        pct: 100,
-        color: COLORS.target,
-      },
-    ];
-  }, [invested, pledged, target]);
+  const { pieData, labelData } = useMemo(() => {
+    const totalInvested = chartData.reduce(
+      (sum, row) => sum + (row?.invested_capital || 0),
+      0
+    );
+    const totalPledged = chartData.reduce(
+      (sum, row) => sum + (row?.pledged_capital || 0),
+      0
+    );
 
-  // Simple label positions: left stack or right aligned
-  const { labelData } = useMemo(() => {
-    const invPct = chartData.find((d) => d.name === "Invested Capital")!.pct;
-    const plgPct = chartData.find((d) => d.name === "Pledged Capital")!.pct;
+    const data: PieData[] = [];
+
+    // 1. Invested - single pie
+    data.push({
+      id: "invested",
+      label: "Invested Capital",
+      value: totalInvested,
+      color: COLORS.invested,
+    });
+
+    // 2. Pledged - each country as separate pie
+    chartData
+      .filter((row) => row.pledged_capital > 0)
+      .sort((a, b) => b.pledged_capital - a.pledged_capital)
+      .forEach((row) => {
+        data.push({
+          id: `pledged-${row.country}`,
+          label: "Pledged Capital",
+          value: row.pledged_capital,
+          color: COLORS.pledged,
+          country: row.country,
+        });
+      });
+
+    // // 3. Norway 2026 Target
+    data.push({
+      id: "norway2026",
+      label: "Norway 2026 Target",
+      value: NORWAY_2026_TARGET - (totalInvested + totalPledged),
+      color: COLORS.norway2026,
+    });
+
+    // 4. Remaining
+    const remaining = TARGET - NORWAY_2026_TARGET;
+    data.push({
+      id: "remaining",
+      label: "Remaining",
+      value: remaining,
+      color: COLORS.target,
+    });
+
+    // Calculate positions for labels
+    const invPct =
+      TARGET > 0 ? Math.min(100, (totalInvested / TARGET) * 100) : 0;
+    const plgPct =
+      TARGET > 0 ? Math.min(100, (totalPledged / TARGET) * 100) : 0;
+    const norwayPct =
+      TARGET > 0 ? Math.min(100, (NORWAY_2026_TARGET / TARGET) * 100) : 0;
 
     const labels: LabelData[] = [
       {
         id: "invested",
         name: "Invested Capital",
-        actualValue: invested,
+        actualValue: totalInvested,
         position: invPct,
         originalPosition: invPct,
         color: COLORS.invested,
@@ -76,33 +309,40 @@ export default function InvestmentGaugeChart({
       {
         id: "pledged",
         name: "Pledged Capital",
-        actualValue: pledged,
-        position: plgPct,
-        originalPosition: plgPct,
+        actualValue: totalPledged,
+        position: invPct + plgPct,
+        originalPosition: invPct + plgPct,
         color: COLORS.pledged,
+      },
+      {
+        id: "norway2026",
+        name: "Norway 2026 Target",
+        actualValue: NORWAY_2026_TARGET,
+        position: norwayPct,
+        originalPosition: norwayPct,
+        color: COLORS.norway2026,
       },
       {
         id: "target",
         name: "Target",
-        actualValue: target,
+        actualValue: TARGET,
         position: 100,
         originalPosition: 100,
         color: COLORS.target,
       },
     ];
 
-    // Return all labels; stacking/placement handled by CustomLabel below
-    return { labelData: labels };
-  }, [chartData, invested, pledged, target]);
+    return { pieData: data, labelData: labels };
+  }, [chartData]);
 
   return (
     <div className="outlines-none">
       <ResponsiveContainer width="100%" height="100%" minHeight={220}>
         <PieChart>
-          {/* base semicircle (target background) */}
+          {/* Main data pie */}
           <Pie
             isAnimationActive={false}
-            data={[{ value: 100 }]}
+            data={pieData}
             startAngle={180}
             endAngle={0}
             innerRadius="130%"
@@ -111,66 +351,12 @@ export default function InvestmentGaugeChart({
             cy="90%"
             labelLine={false}
           >
-            <Cell fill={COLORS.target} />
+            {pieData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
           </Pie>
 
-          {/* pledged ring slice */}
-          {chartData.find((d) => d.name === "Pledged Capital")!.pct > 0 && (
-            <Pie
-              isAnimationActive={false}
-              data={[
-                {
-                  value: chartData.find((d) => d.name === "Pledged Capital")!
-                    .pct,
-                },
-                {
-                  value:
-                    100 -
-                    chartData.find((d) => d.name === "Pledged Capital")!.pct,
-                },
-              ]}
-              startAngle={180}
-              endAngle={0}
-              innerRadius="130%"
-              outerRadius="150%"
-              dataKey="value"
-              cy="90%"
-              labelLine={false}
-            >
-              <Cell fill={COLORS.pledged} />
-              <Cell fill="transparent" />
-            </Pie>
-          )}
-
-          {/* invested ring slice */}
-          {chartData.find((d) => d.name === "Invested Capital")!.pct > 0 && (
-            <Pie
-              isAnimationActive={false}
-              data={[
-                {
-                  value: chartData.find((d) => d.name === "Invested Capital")!
-                    .pct,
-                },
-                {
-                  value:
-                    100 -
-                    chartData.find((d) => d.name === "Invested Capital")!.pct,
-                },
-              ]}
-              startAngle={180}
-              endAngle={0}
-              innerRadius="130%"
-              outerRadius="150%"
-              dataKey="value"
-              cy="90%"
-              labelLine={false}
-            >
-              <Cell fill={COLORS.invested} />
-              <Cell fill="transparent" />
-            </Pie>
-          )}
-
-          {/* Labels layer - each label is its own tiny Pie so Recharts gives positioning props */}
+          {/* Labels layer */}
           {labelData.map((label, index) => {
             const angle = 180 - (label.position / 100) * 180;
             const startAngle = angle - 0.1;
@@ -203,143 +389,32 @@ export default function InvestmentGaugeChart({
             );
           })}
 
+          <Tooltip
+            content={<CustomPieTooltip />}
+            wrapperStyle={{ zIndex: 1000, pointerEvents: "none" }}
+            cursor={false}
+          />
+
           <text
             x="50%"
-            y="85%"
+            y="80%"
             textAnchor="middle"
             dominantBaseline="middle"
-            className="typo-h2"
+            className="text-xs uppercase font-bold text-base-text"
           >
-            Sponsor Capital
+            Pledged Capital
+          </text>
+          <text
+            x="50%"
+            y="88%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            className="typo-h3"
+          >
+            {chartTotalPledgedText}
           </text>
         </PieChart>
       </ResponsiveContainer>
-
-      <div className="sm:hidden flex flex-wrap justify-center gap-4 mt-4 px-4">
-        {chartData.map((item) => (
-          <div key={item.name} className="flex items-center gap-2">
-            <div
-              className="w-3 h-3 rounded-sm"
-              style={{ backgroundColor: item.color }}
-            />
-            <div className="text-center">
-              <div className="text-sm font-semibold text-gray-800">
-                {toReadableAmountLong(item.value)}
-              </div>
-              <div className="text-xs text-gray-600">{item.name}</div>
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
-
-interface CustomLabelProps {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  innerRadius: number;
-  outerRadius: number;
-  index: number;
-  startAngle: number;
-  endAngle: number;
-  payload?: { name: string; value: number };
-}
-
-interface CustomLabelWithDataProps extends CustomLabelProps {
-  labelData: LabelData;
-  stackingIndex: number;
-}
-
-/**
- * Simplified label placement:
- * - If label.position >= 50 => place on the right outside the semicircle
- * - else => place on the left outside the semicircle and stack vertically using stackingIndex
- * This intentionally avoids complex polar math and just places labels next to the pie like the 2nd image.
- */
-// Replace the existing CustomLabel function body with this exact code
-// Replace entire CustomLabel function with this
-// Replace entire CustomLabel function with this
-// Replace entire CustomLabel function with this
-const CustomLabel = (props: CustomLabelWithDataProps) => {
-  const { cx, cy, outerRadius = 0, labelData } = props;
-
-  const isRight = labelData.position >= 50;
-  const xRight = cx + outerRadius + LABEL_OFFSET_X;
-  const xLeft = cx - outerRadius - LABEL_OFFSET_X;
-  const baseY = cy - outerRadius * 0.05;
-
-  let x = isRight ? xRight : xLeft;
-  let y = baseY;
-
-  // --- Dynamic circular position for pledged label ---
-  if (labelData.id === "pledged" && labelData.position > 0) {
-    // Convert pledged percentage (0–100) to polar angle within the semicircle (180° → 0°)
-    let angleDeg = 180 - (labelData.position / 100) * 180;
-    if (labelData.position < 5) {
-      angleDeg -= 9;
-    }
-
-    const angleRad = (Math.PI * angleDeg) / 180;
-
-    // Position label slightly outside the pie edge
-    const radius = outerRadius * 1.1;
-    x = cx + radius * Math.cos(angleRad);
-    y = cy - radius * Math.sin(angleRad);
-  }
-
-  // Keep invested label fixed baseline on left
-  if (labelData.id === "invested") {
-    x = xLeft;
-    y = baseY;
-  }
-
-  // Keep target label baseline centered right
-  if (labelData.id === "target") {
-    x = xRight;
-    y = baseY;
-  }
-
-  const textAnchor: "start" | "end" = x > cx ? "start" : "end";
-
-  return (
-    <g className="group">
-      {labelData.id === "pledged" && (
-        <foreignObject
-          x={x - (80 + 30)}
-          y={y - 40}
-          width={160}
-          height={40}
-          className="relative"
-        >
-          <div className="hidden group-hover:block absolute z-50 inset-0 shadow">
-            <div className="bg-background rounded-xl p-2 text-center">
-              <p className="text-sm">
-                ${" "}
-                {labelData.actualValue.toLocaleString("en-US", {
-                  maximumFractionDigits: 0,
-                })}
-              </p>
-            </div>
-          </div>
-        </foreignObject>
-      )}
-      <text
-        className="hidden sm:block"
-        x={x}
-        y={y}
-        textAnchor={textAnchor}
-        fill="#111827"
-        fontSize={12}
-      >
-        <tspan x={x} dy={12} fontWeight="700">
-          {toReadableAmountLong(labelData.actualValue, true, true)}
-        </tspan>
-        <tspan x={x} dy={12} fontWeight="400" fontSize={11}>
-          {labelData.name}
-        </tspan>
-      </text>
-    </g>
-  );
-};

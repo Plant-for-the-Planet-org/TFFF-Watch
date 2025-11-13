@@ -5,11 +5,20 @@ export function toReadable(n: number | string) {
 }
 
 export function toReadableAmount(n: number | string) {
-  return "$" + millify(+n, { lowercase: true, precision: 1, locales: "en" });
+  return (
+    "$" +
+    millify(+n, {
+      lowercase: true,
+      precision: 2,
+      locales: "en",
+      units: ["", "k", "mn", "bn", "t"],
+    })
+  );
 }
 
 export function toReadableAmountLong(
   n: number | string,
+
   withSymbol = true,
   decimal = false
 ): string {
