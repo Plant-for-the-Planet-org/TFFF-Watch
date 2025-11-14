@@ -16,7 +16,9 @@ export default function Home() {
         <Br />
         <InvestmentTracker />
         <Br />
-        <TFFFWorldMapView />
+        <div id="estimated-payouts">
+          <TFFFWorldMapView />
+        </div>
         <Br />
         <InfoGrid />
         <Br />
