@@ -17,7 +17,7 @@ const COLORS = {
 
 const TARGET = 25000000000;
 const NORWAY_2026_TARGET = 12900000000;
-const LABEL_OFFSET_X = 10;
+const LABEL_OFFSET_X = 8;
 
 type PieData = {
   id: string;
@@ -254,7 +254,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
     // 1. Invested - single pie
     data.push({
       id: "invested",
-      label: "Invested Capital",
+      label: "Invested capital",
       value: totalInvested,
       color: COLORS.invested,
     });
@@ -266,7 +266,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
       .forEach((row) => {
         data.push({
           id: `pledged-${row.country}`,
-          label: "Pledged Capital",
+          label: "Pledged capital",
           value: row.pledged_capital,
           color: COLORS.pledged,
           country: row.country,
@@ -301,7 +301,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
     const labels: LabelData[] = [
       {
         id: "invested",
-        name: "Invested Capital",
+        name: "Invested capital",
         actualValue: totalInvested,
         position: invPct,
         originalPosition: invPct,
@@ -309,7 +309,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
       },
       {
         id: "pledged",
-        name: "Pledged Capital",
+        name: "Pledged capital",
         actualValue: totalPledged,
         position: invPct + plgPct,
         originalPosition: invPct + plgPct,
@@ -436,6 +436,27 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
           </text>
         </PieChart>
       </ResponsiveContainer>
+
+      <div className="sm:hidden flex flex-wrap justify-center gap-4 mt-4 px-4">
+        {labelData.map((item) => (
+          <>
+            {item.id === "norway2026" ? null : (
+              <div key={item.name} className="flex items-center gap-2">
+                <div
+                  className="w-3 h-3 rounded-sm"
+                  style={{ backgroundColor: item.color }}
+                />
+                <div className="text-center">
+                  <div className="text-sm font-semibold text-gray-800">
+                    {toReadableAmountLong(item.actualValue, true, true)}
+                  </div>
+                  <div className="text-xs text-gray-600">{item.name}</div>
+                </div>
+              </div>
+            )}
+          </>
+        ))}
+      </div>
     </div>
   );
 }

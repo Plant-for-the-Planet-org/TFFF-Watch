@@ -69,15 +69,17 @@ export function TFFFWorldMapView() {
   return (
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
-        <div className="flex justify-between items-center">
-          <VersionChip />
+        <div className="md:hidden text-right">
           <ClickTooltip />
+          <Br />
         </div>
-        <Br />
-
         {/* Dataset Tabs */}
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-between mb-4">
+          <div className="hidden md:block w-10"></div>
           <DatasetTabs />
+          <div className="hidden md:block">
+            <ClickTooltip />
+          </div>
         </div>
 
         <Br />
@@ -220,11 +222,7 @@ function CountryMapViewContainer({ children }: { children: React.ReactNode }) {
 
 export function VersionChip() {
   const mapVersion = env.mapVersion;
-  return (
-    <div className="z-20 bg-white text-primary text-xs py-0.5 px-2 rounded-full shadow-xl">
-      {mapVersion}
-    </div>
-  );
+  return <div className="z-20 text-xs">{mapVersion}</div>;
 }
 
 export function ClickTooltip() {

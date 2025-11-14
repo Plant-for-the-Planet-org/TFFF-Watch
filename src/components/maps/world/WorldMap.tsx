@@ -3,6 +3,7 @@
 import { useWorldMapStore } from "@/stores/mapStore";
 import { transformAllForestCoverChangeData } from "@/utils/country-helper";
 import { downloadGeoJsonAsSvg } from "@/utils/download-map";
+import { env } from "@/utils/env";
 import { getGFWColorKey } from "@/utils/map-colors";
 import { useWorldMap } from "@/utils/store";
 import { NaturalEarthCountryFeatureCollection } from "@/utils/types";
@@ -288,11 +289,14 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
 
       <div className="absolute sm:mt-auto right-0 bottom-0 text-xs flex items-end-safe">
         <div className="mr-2 text-right pb-0.5">
-          Please cite data as{" "}
-          <Link className="text-primary italic" href="">
-            tfffwatch.org
-          </Link>{" "}
-          by Plant-for-the-Planet
+          <VersionChip />
+          <div>
+            Please cite data as{" "}
+            <Link className="text-primary italic" href="">
+              tfffwatch.org
+            </Link>{" "}
+            <span className="italic"> by Plant-for-the-Planet</span>
+          </div>
         </div>
 
         <button
@@ -330,4 +334,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
       </div>
     </>
   );
+}
+
+function VersionChip() {
+  const mapVersion = env.mapVersion;
+  return <div className="z-20 text-xs">{mapVersion}</div>;
 }

@@ -34,6 +34,7 @@ export default function InvestmentTracker() {
       <Br />
       <div className="grid lg:grid-cols-2">
         <div className="mx-auto flex flex-col items-center lg:block extra-padding-x-4">
+          <ConditionalPadding />
           <h2 className="font-bold typo-h2">Investment Tracker</h2>
           <Br />
           <p className="typo-p">
@@ -41,6 +42,7 @@ export default function InvestmentTracker() {
             and foundations. It is to serve as the core of the TFFF’s
             investments and as junior debt in the case of losses. The sponsor
             capital is intended to leverage $100 billion in private investments.
+            We track sponsor capital investments only.
           </p>
           <Br />
           <div className="hidden lg:block">
@@ -71,7 +73,18 @@ function CTAButton() {
   if (path.includes("investment-tracker")) return null;
   return (
     <Button type="link" href="/investment-tracker/Norway">
-      Committed & Invested Funds
+      Pledges & investments
     </Button>
+  );
+}
+
+function ConditionalPadding() {
+  const path = usePathname();
+
+  if (!path.includes("investment-tracker")) return null;
+  return (
+    <div className="hidden md:block mt-1">
+      <Br />
+    </div>
   );
 }
