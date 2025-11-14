@@ -4,8 +4,16 @@ export function toReadable(n: number | string) {
   return millify(+n, { lowercase: true, precision: 2, locales: "en" });
 }
 
-export function toReadableAmount(n: number | string) {
-  return "$" + millify(+n, { lowercase: true, precision: 1, locales: "en" });
+export function toReadableAmount(n: number | string, decimal: boolean = true) {
+  return (
+    "$" +
+    millify(+n, {
+      lowercase: true,
+      precision: decimal ? 2 : 0,
+      locales: "en",
+      units: ["", "k", "m", "bn", "t"],
+    })
+  );
 }
 
 export function toReadableAmountLong(

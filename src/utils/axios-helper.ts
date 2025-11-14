@@ -18,6 +18,8 @@ export const urls = {
     "https://automate.plant-for-the-planet.org/webhook/cache/tfff-investment-tracker",
   investmentTrackerRich:
     "https://automate.plant-for-the-planet.org/webhook/uncached/investment-tracker-rich",
+  investmentTrackerCapitals:
+    "https://automate.plant-for-the-planet.org/webhook/uncached/investment-tracker-capitals",
   investmentTrackerSum:
     "https://automate.plant-for-the-planet.org/webhook/uncached/investment-tracker-sum",
   layersProxyAPI: "/api/layers",
@@ -86,6 +88,7 @@ export async function api<T = unknown>({
         next: nextOptions,
       });
 
+      // console.log(`${finalUrl}${queryString}`);
       if (!res.ok) {
         throw {
           message: `API request failed: ${res.status}`,

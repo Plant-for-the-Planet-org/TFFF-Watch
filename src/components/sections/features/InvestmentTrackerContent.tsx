@@ -25,15 +25,6 @@ export default function InvestmentTrackerContent({
       <Br cn="hidden lg:block" />
 
       <div className="extra-padding-x-4 flex flex-col divide-y divide-base-gray">
-        {hasContent(background) && (
-          <ContentSection
-            icon="/assets/investment-background.svg"
-            title="Background"
-          >
-            <RichToHTML content={background!} />
-          </ContentSection>
-        )}
-
         {hasContent(status) && (
           <ContentSection icon="/assets/investment-status.svg" title="Status">
             <RichToHTML content={status!} />
@@ -49,10 +40,19 @@ export default function InvestmentTrackerContent({
           </ContentSection>
         )}
 
+        {hasContent(background) && (
+          <ContentSection
+            icon="/assets/investment-background.svg"
+            title="Other engagements for tropical forests"
+          >
+            <RichToHTML content={background!} />
+          </ContentSection>
+        )}
+
         {hasContent(endorsements) && (
           <ContentSection
             icon="/assets/investment-endorsement.svg"
-            title="Endorsements"
+            title="Statements"
           >
             <RichToHTML content={endorsements!} />
           </ContentSection>

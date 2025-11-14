@@ -4,40 +4,24 @@ import InvestmentGaugeChart from "@/components/sections/charts/InvestmentGaugeCh
 import Br from "@/components/ui/Br";
 import { Button } from "@/components/ui/Button";
 import { api, urls } from "@/utils/axios-helper";
-import { InvestmentTrackerSum } from "@/utils/types";
+import { InvestmentTrackerCapitals } from "@/utils/types";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-interface InvestmentTrackerProps {
-  invested?: number;
-  pledged?: number;
-  target?: number;
-}
-
-export default function InvestmentTracker({
-  invested = 0,
-  pledged = 0,
-  target = 25000000000,
-}: InvestmentTrackerProps) {
-  const [capitals, setCapitals] = useState({
-    invested,
-    pledged,
-  });
+export default function InvestmentTracker() {
+  const [chartData, setChartData] = useState<InvestmentTrackerCapitals[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
-        const result = await api<InvestmentTrackerSum[]>({
-          url: urls.investmentTrackerSum,
+        const result = await api<InvestmentTrackerCapitals[]>({
+          url: urls.investmentTrackerCapitals,
           method: "GET",
           token: "",
         });
 
-        if (result[0]) {
-          setCapitals({
-            invested: result[0].sum_invested_capital,
-            pledged: result[0].sum_pledged_capital,
-          });
+        if (result.length) {
+          setChartData([...result]);
         }
       } catch (error) {
         console.error("Error fetching investment sums:", error);
@@ -65,9 +49,10 @@ export default function InvestmentTracker({
         </div>
         <div>
           <InvestmentGaugeChart
-            invested={capitals?.invested ?? 0}
-            pledged={capitals?.pledged ?? 0}
-            target={target}
+            chartData={chartData}
+            // invested={capitals?.invested ?? 0}
+            // pledged={capitals?.pledged ?? 0}
+            // target={target}
           />
         </div>
       </div>
@@ -85,7 +70,7 @@ function CTAButton() {
 
   if (path.includes("investment-tracker")) return null;
   return (
-    <Button type="link" href="/investment-tracker/Germany">
+    <Button type="link" href="/investment-tracker/Norway">
       Committed & Invested Funds
     </Button>
   );

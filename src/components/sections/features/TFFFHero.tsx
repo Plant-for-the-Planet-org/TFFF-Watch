@@ -20,9 +20,9 @@ export default function TFFFHero() {
                 <div>
                   <h2 className="font-bold typo-h2">The TFFF</h2>
                   <p className="typo-p">
-                    or Tropical Forest Forever Facility, is a proposed
-                    investment fund. The fund’s profits reward countries for
-                    protecting their rainforest.
+                    or Tropical Forest Forever Facility, is an investment fund.
+                    The fund’s profits reward countries for protecting their
+                    rainforest.
                   </p>
                 </div>
               </div>
@@ -41,9 +41,8 @@ export default function TFFFHero() {
                 <div>
                   <h2 className="font-bold typo-h2">TFFF Watch</h2>
                   <p className="typo-p">
-                    tracks the investment negotiations and uses satellite
-                    analysis to show how much countries would receive if the
-                    TFFF already existed.
+                    is an independent platform tracking investments into the
+                    TFFF and estimates future payouts to rainforest countries
                   </p>
                 </div>
               </div>

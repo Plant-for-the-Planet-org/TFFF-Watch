@@ -49,6 +49,15 @@ export type InvestmentTrackerForCountry = {
   How_an_investment_could_work: string;
 };
 
+export type InvestmentTrackerCapitals = {
+  row_number: number;
+  last_updated: string;
+  country: string;
+  investment_stage: number;
+  pledged_capital: number;
+  invested_capital: number;
+};
+
 export type InvestmentTrackerSum = {
   sum_pledged_capital: number;
   sum_invested_capital: number;
