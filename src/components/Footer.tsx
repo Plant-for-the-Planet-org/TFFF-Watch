@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-base-gray/30 outer-rounding outer-padding-3">
       <div className="flex flex-col lg:flex-row justify-between items-center gap-y-4 flex-wrap typo-p">
         <div className="flex justify-center gap-2 items-center">
-          <span>Built by</span>
+          <span>Built By</span>
           <Link
             className="flex items-center gap-2 group"
             href="https://www.plant-for-the-planet.org"

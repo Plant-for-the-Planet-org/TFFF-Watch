@@ -52,7 +52,7 @@ export default function InvestmentTrackerContent({
         {hasContent(endorsements) && (
           <ContentSection
             icon="/assets/investment-endorsement.svg"
-            title="Endorsements"
+            title="Statements"
           >
             <RichToHTML content={endorsements!} />
           </ContentSection>

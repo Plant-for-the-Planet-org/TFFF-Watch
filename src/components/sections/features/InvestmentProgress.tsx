@@ -30,7 +30,7 @@ export default function InvestmentProgress({ investment_stage }: Props) {
     {
       stage: 4,
       label: "Specific investment amount named publicly",
-      display: ["Specific investment", "amount ", "namedpublicly"],
+      display: ["Specific investment", "amount ", "named publicly"],
       success: false,
     },
     {

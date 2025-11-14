@@ -1,4 +1,4 @@
-import { toReadableAmount, toReadableAmountLong } from "@/utils/number-helper";
+import { toReadableAmountLong } from "@/utils/number-helper";
 import { InvestmentTrackerCapitals } from "@/utils/types";
 import Image from "next/image";
 import { useMemo } from "react";
@@ -219,7 +219,8 @@ function CustomPieTooltip({
           {data.country || data.label}
         </p>
         <p className="text-sm">
-          {toReadableAmountLong(data.value).toLowerCase()}
+          {toReadableAmountLong(data.value, true, false).toLowerCase()}
+          {/* {toReadableAmount(data.value).toLowerCase()} */}
         </p>
       </div>
     );
@@ -228,15 +229,15 @@ function CustomPieTooltip({
 }
 
 export default function InvestmentGaugeChart({ chartData }: Props) {
-  const chartTotalPledgedText = useMemo(() => {
-    const totalPledged = chartData.reduce(
-      (sum, row) => sum + (row?.pledged_capital || 0),
-      0
-    );
-    return `${toReadableAmount(totalPledged)} of ${toReadableAmount(
-      TARGET
-    )} pledged`;
-  }, [chartData]);
+  // const chartTotalPledgedText = useMemo(() => {
+  //   const totalPledged = chartData.reduce(
+  //     (sum, row) => sum + (row?.pledged_capital || 0),
+  //     0
+  //   );
+  //   return `${toReadableAmount(totalPledged)} of ${toReadableAmount(
+  //     TARGET
+  //   )} pledged`;
+  // }, [chartData]);
 
   const { pieData, labelData } = useMemo(() => {
     const totalInvested = chartData.reduce(
@@ -414,7 +415,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
             cursor={false}
           />
 
-          <text
+          {/* <text
             x="50%"
             y="80%"
             textAnchor="middle"
@@ -422,7 +423,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
             className="text-xs uppercase font-bold text-base-text"
           >
             Pledged Capital
-          </text>
+          </text> */}
           <text
             x="50%"
             y="88%"
@@ -430,7 +431,8 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
             dominantBaseline="middle"
             className="typo-h3"
           >
-            {chartTotalPledgedText}
+            {/* {chartTotalPledgedText} */}
+            Sponsor Capital
           </text>
         </PieChart>
       </ResponsiveContainer>

@@ -70,7 +70,7 @@ function CTAButton() {
 
   if (path.includes("investment-tracker")) return null;
   return (
-    <Button type="link" href="/investment-tracker/Germany">
+    <Button type="link" href="/investment-tracker/Norway">
       Committed & Invested Funds
     </Button>
   );

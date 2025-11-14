@@ -122,7 +122,10 @@ the current analysis.`;
         <Br />
         <CountryListChips country={country} capitalsData={capitalsData} />
         <Br />
-        {country !== investingCountries.at(-1) && (
+        {country === investingCountries.at(-1) ||
+        country === investingCountries.at(-2) ? (
+          <></>
+        ) : (
           <>
             <InvestmentProgress investment_stage={richData.investment_stage} />
             <Br />

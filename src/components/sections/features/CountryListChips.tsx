@@ -157,7 +157,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
     },
   ];
 
-  const banksOthersList = [
+  const banksOthersList: ChipItemType[] = [
     {
       // slug: "Asian_Infrastructure_Investment_Bank",
       // label: "Asian Infrastructure Investment Bank",
@@ -167,6 +167,8 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       emoji: "🏦",
       noFlag: true,
       selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
     },
     {
       // slug: "European_Bank_for_Reconstruction_and_Development",
@@ -177,6 +179,8 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       emoji: "🏦",
       noFlag: true,
       selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
     },
     {
       slug: "EU",
@@ -185,6 +189,8 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       emoji: "🇪🇺",
       noFlag: true,
       selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
     },
     {
       slug: "Philanthropies",
@@ -193,6 +199,8 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       emoji: "🤝",
       noFlag: true,
       selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
     },
     {
       slug: "Others",
@@ -201,6 +209,8 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       emoji: "🌍",
       noFlag: true,
       selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
     },
   ];
 
@@ -216,6 +226,17 @@ export default function CountryListChips({ country, capitalsData }: Props) {
     el.investedCapital = found?.invested_capital ?? null;
   });
   countryList.sort((a, b) => {
+    if (a.pledgedCapital === null) return 1;
+    if (b.pledgedCapital === null) return -1;
+    return b.pledgedCapital - a.pledgedCapital;
+  });
+
+  banksOthersList.forEach((el) => {
+    const found = capitalsData.find((cap) => cap.country === el.label);
+    el.pledgedCapital = found?.pledged_capital ?? null;
+    el.investedCapital = found?.invested_capital ?? null;
+  });
+  banksOthersList.sort((a, b) => {
     if (a.pledgedCapital === null) return 1;
     if (b.pledgedCapital === null) return -1;
     return b.pledgedCapital - a.pledgedCapital;
@@ -266,7 +287,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
             )}
             <span>{el.label}</span>
             {el.pledgedCapital ? (
-              <span>({toReadableAmount(el.pledgedCapital)})</span>
+              <span>({toReadableAmount(el.pledgedCapital, false)})</span>
             ) : null}
           </Link>
         ))}
@@ -279,7 +300,8 @@ export default function CountryListChips({ country, capitalsData }: Props) {
         {banksOthersList.map((el, key) => (
           <Link
             className={twMerge(
-              "border border-base-gray bg-base-gray rounded-full px-5 py-1.5 text-nowrap",
+              "rounded-full px-5 py-1.5 text-nowrap",
+              el?.pledgedCapital ? "bg-primary-light" : "bg-base-gray",
               el?.selected ? "bg-base-text text-white" : "",
               "flex justify-center items-center gap-2"
             )}
@@ -302,6 +324,9 @@ export default function CountryListChips({ country, capitalsData }: Props) {
               </>
             )}
             {el.label}
+            {el.pledgedCapital ? (
+              <span>({toReadableAmount(el.pledgedCapital, false)})</span>
+            ) : null}
           </Link>
         ))}
       </div>
