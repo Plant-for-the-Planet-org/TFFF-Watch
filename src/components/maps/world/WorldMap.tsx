@@ -26,6 +26,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import countries from "../countries-optimized.geo.json";
 import { WorldMapProps } from "../shared/types";
 import WorldMapCard from "./WorldMapCard";
+import { ClickTooltip } from "@/components/sections/hero/TFFFMapView";
 
 export const GEOFENCE = turf.polygon([
   [
@@ -66,7 +67,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     } else if (width > 768) {
       setViewState((prev) => ({ ...prev, zoom: 0 }));
     } else {
-      setViewState((prev) => ({ ...prev, zoom: -1 }));
+      setViewState({ latitude: 20, longitude: 20, zoom: -0.25 });
     }
   }, [width]);
 
@@ -222,6 +223,9 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   return (
     <>
       <div className="relative mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
+        <div className="md:hidden absolute z-40 bottom-0 left-0">
+          <ClickTooltip />
+        </div>
         <div className="aspect-[1.75] w-full -translate-y-12 -z-10">
           <Map
             ref={mapRef}
@@ -287,7 +291,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
         <WorldMapCard />
       </div>
 
-      <div className="absolute sm:mt-auto right-0 bottom-0 text-xs flex items-end-safe">
+      <div className="absolute md:mt-auto right-0 bottom-0 text-xs flex items-end-safe">
         <div className="mr-2 text-right pb-0.5">
           <VersionChip />
           <div>

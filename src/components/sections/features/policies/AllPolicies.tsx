@@ -33,7 +33,7 @@ export default async function AllPolicies() {
       <Br />
       <div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 xl:gap-5">
-          {policyList.slice(0, 12).map((el) => (
+          {policyList.map((el) => (
             <Fragment key={el.id}>
               <PolicyCard
                 title={el.title!}

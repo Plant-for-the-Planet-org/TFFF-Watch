@@ -1,4 +1,4 @@
-import { toReadableAmountLong } from "@/utils/number-helper";
+import { toReadableAmount, toReadableAmountLong } from "@/utils/number-helper";
 import { InvestmentTrackerCapitals } from "@/utils/types";
 import Image from "next/image";
 import { useMemo } from "react";
@@ -30,6 +30,7 @@ type PieData = {
 type LabelData = {
   id: string;
   name: string;
+  nameShort?: string;
   actualValue: number;
   position: number;
   originalPosition: number;
@@ -302,6 +303,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
       {
         id: "invested",
         name: "Invested capital",
+        nameShort: "Invested",
         actualValue: totalInvested,
         position: invPct,
         originalPosition: invPct,
@@ -310,6 +312,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
       {
         id: "pledged",
         name: "Pledged capital",
+        nameShort: "Pledged",
         actualValue: totalPledged,
         position: invPct + plgPct,
         originalPosition: invPct + plgPct,
@@ -326,6 +329,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
       {
         id: "target",
         name: "Target",
+        nameShort: "Target",
         actualValue: TARGET,
         position: 100,
         originalPosition: 100,
@@ -437,20 +441,23 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
         </PieChart>
       </ResponsiveContainer>
 
-      <div className="sm:hidden flex flex-wrap justify-center gap-4 mt-4 px-4">
+      <div className="sm:hidden flex flex-nowrap justify-between gap-2 mt-4 px-3">
         {labelData.map((item) => (
           <>
             {item.id === "norway2026" ? null : (
-              <div key={item.name} className="flex items-center gap-2">
+              <div
+                key={item.name}
+                className="flex justify-center items-center gap-2"
+              >
                 <div
-                  className="w-3 h-3 rounded-sm"
+                  className="w-4 h-4 rounded-sm"
                   style={{ backgroundColor: item.color }}
                 />
                 <div className="text-center">
                   <div className="text-sm font-semibold text-gray-800">
-                    {toReadableAmountLong(item.actualValue, true, true)}
+                    {toReadableAmount(item.actualValue, true)}
                   </div>
-                  <div className="text-xs text-gray-600">{item.name}</div>
+                  <div className="text-xs text-gray-600">{item.nameShort}</div>
                 </div>
               </div>
             )}

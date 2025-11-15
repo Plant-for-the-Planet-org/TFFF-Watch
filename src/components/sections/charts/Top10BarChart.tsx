@@ -1,16 +1,16 @@
 import Image from "next/image";
 
-export function GFW2BTop10CountriesChart() {
+export function GFWTop10CountriesChart() {
   return (
     <div>
-      <Image width={1440} height={833} src="/assets/2b-Top-10-GFW.svg" alt="" />
+      <Image width={1440} height={833} src="/assets/Top-10-GFW.png" alt="" />
     </div>
   );
 }
-export function JRC5BTop10CountriesChart() {
+export function JRC10CountriesChart() {
   return (
     <div>
-      <Image width={1440} height={833} src="/assets/5b-Top-10–JRC.svg" alt="" />
+      <Image width={1440} height={833} src="/assets/Top-10-JRC.png" alt="" />
     </div>
   );
 }

@@ -25,8 +25,8 @@ import { Suspense, useEffect } from "react";
 import RewardsChart from "../charts/RewardsChart";
 import { fetchForestCoverChangeDataV2 } from "@/utils/forestChange.store";
 import {
-  GFW2BTop10CountriesChart,
-  JRC5BTop10CountriesChart,
+  GFWTop10CountriesChart,
+  JRC10CountriesChart,
 } from "../charts/Top10BarChart";
 import Image from "next/image";
 
@@ -69,10 +69,6 @@ export function TFFFWorldMapView() {
   return (
     <WorldMapViewContainer>
       <div className="h-full flex flex-col">
-        <div className="md:hidden text-right">
-          <ClickTooltip />
-          <Br />
-        </div>
         {/* Dataset Tabs */}
         <div className="flex justify-between mb-4">
           <div className="hidden md:block w-10"></div>
@@ -100,7 +96,7 @@ export function TFFFWorldMapView() {
             variant="hero"
           />
 
-          <div className="mb-8 sm:mb-0 sm:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
+          <div className="mb-8 md:mb-0 md:absolute left-0 bottom-0 min-w-48 max-w-fit pointer-events-none">
             <Br cn="md:hidden" />
             {selectedDataset === "JRC" ? <LegendsForJRC /> : <LegendsForGFW />}
             <Br />
@@ -110,12 +106,10 @@ export function TFFFWorldMapView() {
       <Br />
       <Br />
       <RewardsChart />
-      <Br />
-      <Br />
       {selectedDataset === "JRC" ? (
-        <JRC5BTop10CountriesChart />
+        <JRC10CountriesChart />
       ) : (
-        <GFW2BTop10CountriesChart />
+        <GFWTop10CountriesChart />
       )}
     </WorldMapViewContainer>
   );

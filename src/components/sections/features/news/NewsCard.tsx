@@ -32,7 +32,7 @@ export default function NewsCard(props: Props) {
                     {formatPublisherForCardBadge(props.publisher!, 16)}
                   </span>
                   <span className="md:hidden xl:inline-block">
-                    {formatPublisherForCardBadge(props.publisher!)}
+                    {formatPublisherForCardBadge(props.publisher!, 24)}
                   </span>
                 </span>
               </p>
