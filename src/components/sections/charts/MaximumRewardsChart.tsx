@@ -180,12 +180,12 @@ export default function MaximumRewardsChart() {
   if (isLoading) {
     return (
       <div className="bg-background border border-primary-light rounding-lg outer-padding-3">
-        <h2 className="typo-h2 font-bold text-center">Maximum Rewards</h2>
-        <p className="text-sm text-center text-foreground">
-          If countries ended deforestation and forest
-          <br />
-          degradation entirely
-        </p>
+        <div className="max-w-3xs mx-auto">
+          <h2 className="typo-h2 font-bold text-center">Maximum Rewards</h2>
+          <p className="text-sm text-center text-foreground">
+            If countries ended deforestation and forest degradation entirely
+          </p>
+        </div>
         <Br />
         <div className="flex items-center justify-center h-64">
           <p className="text-foreground"></p>
@@ -196,12 +196,12 @@ export default function MaximumRewardsChart() {
 
   return (
     <div className="bg-white border border-primary-medium-light rounding-xl padding-3">
-      <h2 className="typo-h2 font-bold text-center">Maximum Rewards</h2>
-      <p className="text-sm text-center text-foreground">
-        If countries ended deforestation and forest
-        <br />
-        degradation entirely
-      </p>
+      <div className="max-w-3xs mx-auto">
+        <h2 className="typo-h2 font-bold text-center">Maximum Rewards</h2>
+        <p className="text-sm text-center text-foreground">
+          If countries ended deforestation and forest degradation entirely
+        </p>
+      </div>
       <Br />
       <div className="relative w-full aspect-square max-w-[300px] md:max-w-2/3 mx-auto outlines-none">
         <ResponsiveContainer width="100%" height="100%">

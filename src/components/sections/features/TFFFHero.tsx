@@ -4,11 +4,11 @@ export default function TFFFHero() {
   return (
     <div className="relative -mt-3 md:-mt-4 xl:-mt-5">
       <div className="website-container relative md:absolute z-20 inset-x-0 bottom-0">
-        <div className="outer-padding-3">
-          <div className="grid gap-4 xl:gap-5 grid-cols-1 md:grid-cols-2">
+        <div className="outer-padding-3 h-full">
+          <div className="grid gap-4 xl:gap-5 grid-cols-1 md:grid-cols-2 mt-64 sm:mt-42 md:mt-0">
             <div className="text-white rounding-xl padding-3 bg-black/50 backdrop-blur-xl">
               <div className="flex gap-4 items-center">
-                <div className="shrink-0 self-stretch aspect-square">
+                <div className="shrink-0 aspect-square">
                   <Image
                     className="p-3 aspect-square rounding-lg bg-black/25 backdrop-blur-2xl"
                     height={64}
@@ -29,7 +29,7 @@ export default function TFFFHero() {
             </div>
             <div className="text-white rounding-xl padding-3 bg-black/50 backdrop-blur-xl">
               <div className="flex gap-4 items-center">
-                <div className="shrink-0 self-stretch aspect-square">
+                <div className="shrink-0 aspect-square">
                   <Image
                     className="p-3 aspect-square rounding-lg bg-black/25 backdrop-blur-2xl"
                     height={64}
@@ -59,7 +59,7 @@ export default function TFFFHero() {
           decoding="async"
           // priority
           // fetchPriority="high"
-          className="w-full h-full h-100vh max-h-[64vh] object-cover object-center"
+          className="w-full h-full md:max-h-[64vh] object-cover object-center"
           src="/assets/tropical-rainforest.webp"
           alt="Tropical Rainforest with Big Trees"
         />
