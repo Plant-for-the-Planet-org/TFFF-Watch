@@ -1,8 +1,11 @@
 "use client";
 
 import { useWorldMapStore } from "@/stores/mapStore";
-import { useMemo } from "react";
+import { useMemo, useEffect, useRef, useState } from "react";
+import { useWindowSize } from "@uidotdev/usehooks";
 import TFFFCard from "../shared/TFFFCard";
+
+const THRESHOLD_SCREEN_WIDTH = 1024;
 
 export default function WorldMapCard() {
   const {
@@ -14,17 +17,22 @@ export default function WorldMapCard() {
     selectedYear,
   } = useWorldMapStore();
 
+  const { width: windowWidth } = useWindowSize();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState<{ left: number; top: number }>({
+    left: 0,
+    top: 0,
+  });
+
   const tfffData = useMemo(() => {
     if (!selectedCountry || !forestData[selectedDataset].length) return null;
 
-    // Filter by both country and year (convert both to strings for comparison)
     const data = forestData[selectedDataset].find(
       (data) =>
         data["country-iso2"] === selectedCountry.iso2 &&
         String(data.year) === String(selectedYear)
     );
 
-    // Debug logging
     if (!data) {
       console.log("WorldMapCard: No data found", {
         country: selectedCountry.iso2,
@@ -41,19 +49,57 @@ export default function WorldMapCard() {
     return data || null;
   }, [selectedCountry, forestData, selectedDataset, selectedYear]);
 
+  useEffect(() => {
+    if (!clickPosition || !wrapperRef.current || !windowWidth) return;
+    if (windowWidth >= THRESHOLD_SCREEN_WIDTH) return;
+
+    const rect = wrapperRef.current.getBoundingClientRect();
+    const cardWidth = rect.width || wrapperRef.current.offsetWidth;
+    const cardHeight = rect.height || wrapperRef.current.offsetHeight;
+
+    const gap = 8;
+    const margin = 8;
+
+    let left = clickPosition.x - cardWidth / 2;
+    let top = clickPosition.y - gap - cardHeight;
+    if (top < margin) top = clickPosition.y + gap;
+
+    const viewportWidth = windowWidth;
+    const viewportHeight =
+      typeof window !== "undefined" ? window.innerHeight : 0;
+    left = Math.max(margin, Math.min(viewportWidth - cardWidth - margin, left));
+    if (viewportHeight) {
+      top = Math.max(
+        margin,
+        Math.min(viewportHeight - cardHeight - margin, top)
+      );
+    }
+
+    setPosition({ left, top });
+  }, [clickPosition, windowWidth]);
+
   if (!selectedCountry || !clickPosition) {
     return null;
   }
 
-  // Show loading state if data is being fetched
   if (isLoading && !tfffData) {
     return (
       <div
+        ref={wrapperRef}
         className="absolute z-50"
         style={{
-          left: clickPosition.x,
-          top: clickPosition.y,
-          transform: "translate(-20%, -120%)",
+          left:
+            windowWidth && windowWidth < THRESHOLD_SCREEN_WIDTH
+              ? position.left
+              : clickPosition.x,
+          top:
+            windowWidth && windowWidth < THRESHOLD_SCREEN_WIDTH
+              ? position.top
+              : clickPosition.y,
+          transform:
+            windowWidth && windowWidth < THRESHOLD_SCREEN_WIDTH
+              ? undefined
+              : "translate(-50%, -120%)",
         }}
       >
         <div className="bg-white p-4 rounded-lg shadow-lg">
@@ -72,11 +118,16 @@ export default function WorldMapCard() {
 
   return (
     <div
+      ref={wrapperRef}
       className="absolute z-50"
       style={{
-        left: clickPosition.x,
-        top: clickPosition.y,
-        transform: "translate(-20%, -120%)",
+        left:
+          windowWidth && windowWidth < 1024 ? position.left : clickPosition.x,
+        top: windowWidth && windowWidth < 1024 ? position.top : clickPosition.y,
+        transform:
+          windowWidth && windowWidth < 1024
+            ? undefined
+            : "translate(-50%, -120%)",
       }}
     >
       <TFFFCard
