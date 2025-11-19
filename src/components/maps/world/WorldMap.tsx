@@ -67,7 +67,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
     } else if (width > 768) {
       setViewState((prev) => ({ ...prev, zoom: 0 }));
     } else {
-      setViewState({ latitude: 20, longitude: 20, zoom: -0.25 });
+      setViewState({ latitude: 10, longitude: 10, zoom: 0 });
     }
   }, [width]);
 
@@ -147,6 +147,8 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
   }, [selectedYear, forestData]);
 
   const onMove = useCallback(({ viewState }: ViewStateChangeEvent) => {
+    if (viewState.zoom < 0) return;
+
     const newCenter = [viewState.longitude, viewState.latitude];
     if (turf.booleanPointInPolygon(newCenter, GEOFENCE)) {
       setViewState({
@@ -233,7 +235,7 @@ export default function WorldMap({ onCountryClick }: WorldMapProps = {}) {
             cursor="default"
             keyboard={false}
             scrollZoom={false}
-            dragPan={true}
+            dragPan={false}
             dragRotate={false}
             touchPitch={false}
             touchZoomRotate={false}
