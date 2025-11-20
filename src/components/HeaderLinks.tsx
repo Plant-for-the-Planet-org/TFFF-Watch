@@ -55,11 +55,14 @@ export default function HeaderLinks() {
   }, [pathname]);
 
   return (
-    <div className="flex gap-3 xl:gap-5 items-center">
+    <div className="flex gap-4 lg:gap-5 xl:gap-6 items-center">
       {options.map((option) => (
         <div
           key={option.id}
-          className={twJoin(option.isActive ? "font-bold" : "font-medium")}
+          className={twJoin(
+            "typo-p",
+            option.isActive ? "font-semibold" : "font-regular"
+          )}
         >
           <Link href={option.href}>{option.label}</Link>
         </div>
