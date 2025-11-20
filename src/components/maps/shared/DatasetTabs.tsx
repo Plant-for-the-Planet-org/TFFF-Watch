@@ -142,6 +142,7 @@ export default function DatasetTabs({
 
       <div className="flex items-center">
         <PersistentTooltip
+          className="border border-primary-light"
           trigger={
             <button className="h-8 w-8 flex justify-center outline-none">
               <Image
