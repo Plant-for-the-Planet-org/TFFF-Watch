@@ -75,11 +75,6 @@ the current analysis.`;
   let capitalsData: InvestmentTrackerCapitals[] = [];
   let richData: InvestmentTrackerForCountry | null = null;
 
-  // let chartData: null | {
-  //   invested: number;
-  //   pledged: number;
-  // } = null;
-
   try {
     // const countryQueryValue = country.replaceAll("_", " ");
 
@@ -99,17 +94,6 @@ the current analysis.`;
       token: "",
     });
     capitalsData = capitalsDataResults;
-
-    // const chartDataresult = await api<InvestmentTrackerSum[]>({
-    //   url: urls.investmentTrackerSum,
-    //   method: "GET",
-    //   token: "",
-    // });
-
-    // chartData = {
-    //   invested: chartDataresult[0].sum_invested_capital,
-    //   pledged: chartDataresult[0].sum_pledged_capital,
-    // };
   } catch (error) {
     console.error("Error fetching Investments:", error);
   }

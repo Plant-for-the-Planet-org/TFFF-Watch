@@ -2,6 +2,7 @@ import HeaderMenu from "@/components/HeaderMenu";
 import Hr from "@/components/ui/Hr";
 import Image from "next/image";
 import HeaderCountry from "./HeaderCountry";
+import HeaderLinks from "./HeaderLinks";
 import Br from "./ui/Br";
 import LinkWithParams from "./ui/LinkWithParams";
 
@@ -12,11 +13,13 @@ export default function Header() {
       <div className="website-container padding-x-3">
         <div className="flex justify-between items-center ">
           <Logo />
-          <div className="hidden md:flex justify-center">
+          {/* <div className="hidden md:flex justify-center">
             <HeaderCountry />
-            <div className="w-[160px] lg:w-[192px]"></div>
+          </div> */}
+          <div className="hidden lg:block">
+            <HeaderLinks />
           </div>
-          <div className="-mr-2 md:-mr-4">
+          <div className="-mr-2 lg:hidden">
             <HeaderMenu />
           </div>
         </div>

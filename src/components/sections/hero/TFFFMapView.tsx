@@ -29,6 +29,7 @@ import {
   JRC10CountriesChart,
 } from "../charts/Top10BarChart";
 import Image from "next/image";
+import HeaderCountry from "@/components/HeaderCountry";
 
 export function TFFFWorldMapView() {
   const { forestCoverChangeData, setForestCoverChangeDataByYear } =
@@ -157,7 +158,10 @@ function TFFFCountryMapViewInner(props: TFFFCountryMapViewProps) {
 
   return (
     <div>
-      <div className="flex justify-center">
+      <div className="flex justify-between md:px-4 lg:px-5 xl:px-6">
+        <div className="hidden md:block">
+          <HeaderCountry />
+        </div>
         {/* Dataset Tabs */}
         <DatasetTabs />
       </div>
