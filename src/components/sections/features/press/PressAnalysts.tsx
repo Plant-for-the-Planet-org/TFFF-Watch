@@ -33,7 +33,7 @@ export default function PressAnalysts() {
         {persons.map((el, key) => (
           <div
             key={key}
-            className="group bg-white w-[244px] aspect-[3/4] flex flex-col gap-y-4 justify-center items-center rounding-lg"
+            className="group bg-white w-[244px] aspect-[3/4] flex flex-col gap-y-4 justify-center items-center rounding-lg py-6"
           >
             <div className="aspect-square rounded-full h-36 w-36 overflow-hidden">
               <Image

@@ -55,7 +55,7 @@ export default function HeaderLinks() {
   }, [pathname]);
 
   return (
-    <div className="flex gap-4 lg:gap-5 xl:gap-6 items-center">
+    <div className="flex gap-6 lg:gap-8 xl:gap-10 items-center">
       {options.map((option) => (
         <div
           key={option.id}
