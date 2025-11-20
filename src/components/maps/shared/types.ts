@@ -69,9 +69,17 @@ export interface LayerData {
   id: string;
   country: string;
   analysisYear: number;
+  // GFW layers
   currentForestLayer: LayerConfig;
-  fireLossLayer: LayerConfig;
   lossInYearLayer: LayerConfig;
+  fireLossLayer: LayerConfig;
+  // JRC layers
+  totalTropicalForestLayer: LayerConfig;
+  tropicalDeforestationLayer: LayerConfig;
+  tropicalDegradationLayer: LayerConfig;
+  subtropicalForestLayer: LayerConfig;
+  subtropicalDeforestationLayer: LayerConfig;
+  subtropicalDegradationLayer: LayerConfig;
   createdAt: string;
   updatedAt: string;
 }
