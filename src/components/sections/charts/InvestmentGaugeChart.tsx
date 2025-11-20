@@ -16,7 +16,7 @@ const COLORS = {
 };
 
 const TARGET = 25000000000;
-const NORWAY_2026_TARGET = 12900000000;
+const NORWAY_2026_TARGET = 13000000000;
 const LABEL_OFFSET_X = 8;
 
 type PieData = {
@@ -130,7 +130,7 @@ const CustomLabel = (props: CustomLabelWithDataProps) => {
                     <div className="hidden group-hover:block absolute z-50 -top-16 left-4">
                       <div className="bg-white border border-primary-light w-48 p-2 px-4 rounded-xl">
                         <p className="text-xs">
-                          $12.9bn in total pledges required by end of 2026 to
+                          $13 bn in total pledges required by end of 2026 to
                           unlock Norway’s pledge (see Norway tracker tab)
                         </p>
                       </div>

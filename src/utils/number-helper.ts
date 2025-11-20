@@ -6,7 +6,7 @@ export function toReadable(n: number | string) {
 
 export function toReadableAmount(n: number | string, decimal: boolean = true) {
   // Chnage first ternary statement to true to use decimal always
-  const ifBillions = +n >= 1e9 ? false : false;
+  const ifBillions = +n >= 1e9 ? true : false;
   return (
     "$" +
     millify(+n, {
