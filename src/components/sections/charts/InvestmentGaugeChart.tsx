@@ -275,15 +275,15 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
       });
 
     // // 3. Norway 2026 Target
-    data.push({
-      id: "norway2026",
-      label: "Norway 2026 Target",
-      value: NORWAY_2026_TARGET - (totalInvested + totalPledged),
-      color: COLORS.norway2026,
-    });
+    // data.push({
+    //   id: "norway2026",
+    //   label: "Norway 2026 Target",
+    //   value: NORWAY_2026_TARGET - (totalInvested + totalPledged),
+    //   color: COLORS.norway2026,
+    // });
 
     // 4. Remaining
-    const remaining = TARGET - NORWAY_2026_TARGET;
+    const remaining = TARGET - (totalInvested + totalPledged);
     data.push({
       id: "remaining",
       label: "Remaining",
@@ -365,8 +365,8 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
           <Pie
             isAnimationActive={false}
             data={[{ value: 1 }]}
-            startAngle={87.1}
-            endAngle={87.11}
+            startAngle={86.44}
+            endAngle={86.45}
             innerRadius="120%"
             outerRadius="160%"
             dataKey="value"
