@@ -8,7 +8,13 @@ import {
   featureCollection as turfFeatureCollection,
 } from "@turf/turf";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Layer, Map, MapRef, Source } from "@vis.gl/react-maplibre";
+import {
+  Layer,
+  Map,
+  MapRef,
+  NavigationControl,
+  Source,
+} from "@vis.gl/react-maplibre";
 import type {
   Feature,
   FeatureCollection,
@@ -124,9 +130,12 @@ export default function CountryMap({
           repositionMap();
         }}
         renderWorldCopies={false}
-        interactive={false}
+        interactive={true}
+        dragPan={true}
+        doubleClickZoom={true}
         attributionControl={false}
       >
+        <NavigationControl />
         {countryFeatureCollection && (
           <Source id="country" type="geojson" data={countryFeatureCollection}>
             <Layer
@@ -245,7 +254,7 @@ export default function CountryMap({
               id="tropical-deforestation-source"
               type="raster"
               tiles={[layersData.tropicalDeforestationLayer?.tileUrl]}
-              tileSize={256}
+              tileSize={64}
             >
               <Layer
                 id="tropical-deforestation-layer"
@@ -262,7 +271,7 @@ export default function CountryMap({
               id="subtropical-deforestation-source"
               type="raster"
               tiles={[layersData.subtropicalDeforestationLayer?.tileUrl]}
-              tileSize={256}
+              tileSize={64}
             >
               <Layer
                 id="subtropical-deforestation-layer"
@@ -279,7 +288,7 @@ export default function CountryMap({
               id="tropical-degradation-source"
               type="raster"
               tiles={[layersData.tropicalDegradationLayer?.tileUrl]}
-              tileSize={256}
+              tileSize={64}
             >
               <Layer
                 id="tropical-degradation-layer"
@@ -296,7 +305,7 @@ export default function CountryMap({
               id="subtropical-degradation-source"
               type="raster"
               tiles={[layersData.subtropicalDegradationLayer?.tileUrl]}
-              tileSize={256}
+              tileSize={64}
             >
               <Layer
                 id="subtropical-degradation-layer"
