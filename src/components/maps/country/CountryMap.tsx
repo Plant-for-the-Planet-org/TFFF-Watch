@@ -8,7 +8,13 @@ import {
   featureCollection as turfFeatureCollection,
 } from "@turf/turf";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Layer, Map, MapRef, Source } from "@vis.gl/react-maplibre";
+import {
+  Layer,
+  Map,
+  MapRef,
+  NavigationControl,
+  Source,
+} from "@vis.gl/react-maplibre";
 import type {
   Feature,
   FeatureCollection,
@@ -106,7 +112,7 @@ export default function CountryMap({
             dataset, // Include dataset in API call
           },
         });
-        console.log("new data");
+        console.log("Layers Data", result);
         setLayersData(result);
       } catch (error) {
         console.error("Error fetching layers:", error);
@@ -124,9 +130,12 @@ export default function CountryMap({
           repositionMap();
         }}
         renderWorldCopies={false}
-        interactive={false}
+        interactive={true}
+        dragPan={true}
+        doubleClickZoom={true}
         attributionControl={false}
       >
+        <NavigationControl />
         {countryFeatureCollection && (
           <Source id="country" type="geojson" data={countryFeatureCollection}>
             <Layer
@@ -148,8 +157,9 @@ export default function CountryMap({
           </Source>
         )}
 
-        {showLayers && layersData && (
+        {showLayers && layersData && dataset === "GFW" && (
           <>
+            {/* GFW Mode: Forest layer (bottom) */}
             <Source
               key={`current-forest-${dataset}`}
               id="current-forest-source"
@@ -159,7 +169,6 @@ export default function CountryMap({
             >
               <Layer
                 id="current-forest-layer"
-                beforeId="fire-loss-layer"
                 type="raster"
                 paint={{
                   "raster-opacity": 0.8,
@@ -167,23 +176,7 @@ export default function CountryMap({
               />
             </Source>
 
-            <Source
-              key={`fire-loss-${dataset}`}
-              id="fire-loss-source"
-              type="raster"
-              tiles={[layersData.fireLossLayer?.tileUrl]}
-              tileSize={256}
-            >
-              <Layer
-                id="fire-loss-layer"
-                beforeId="loss-in-year-layer"
-                type="raster"
-                paint={{
-                  "raster-opacity": 0.8,
-                }}
-              />
-            </Source>
-
+            {/* GFW Mode: Deforestation layer (middle) */}
             <Source
               key={`loss-in-year-${dataset}`}
               id="loss-in-year-source"
@@ -193,6 +186,129 @@ export default function CountryMap({
             >
               <Layer
                 id="loss-in-year-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+
+            {/* GFW Mode: Fire loss layer (top) */}
+            <Source
+              key={`fire-loss-${dataset}`}
+              id="fire-loss-source"
+              type="raster"
+              tiles={[layersData.fireLossLayer?.tileUrl]}
+              tileSize={256}
+            >
+              <Layer
+                id="fire-loss-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+          </>
+        )}
+
+        {showLayers && layersData && dataset === "JRC" && (
+          <>
+            {/* JRC Mode: Tropical forest layer (bottom) */}
+            <Source
+              key={`total-tropical-forest-${dataset}`}
+              id="total-tropical-forest-source"
+              type="raster"
+              tiles={[layersData.totalTropicalForestLayer?.tileUrl]}
+              tileSize={256}
+            >
+              <Layer
+                id="total-tropical-forest-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+
+            {/* JRC Mode: Subtropical forest layer (bottom) */}
+            <Source
+              key={`subtropical-forest-${dataset}`}
+              id="subtropical-forest-source"
+              type="raster"
+              tiles={[layersData.subtropicalForestLayer?.tileUrl]}
+              tileSize={256}
+            >
+              <Layer
+                id="subtropical-forest-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+
+            {/* JRC Mode: Tropical deforestation layer (middle) */}
+            <Source
+              key={`tropical-deforestation-${dataset}`}
+              id="tropical-deforestation-source"
+              type="raster"
+              tiles={[layersData.tropicalDeforestationLayer?.tileUrl]}
+              tileSize={64}
+            >
+              <Layer
+                id="tropical-deforestation-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+
+            {/* JRC Mode: Subtropical deforestation layer (middle) */}
+            <Source
+              key={`subtropical-deforestation-${dataset}`}
+              id="subtropical-deforestation-source"
+              type="raster"
+              tiles={[layersData.subtropicalDeforestationLayer?.tileUrl]}
+              tileSize={64}
+            >
+              <Layer
+                id="subtropical-deforestation-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+
+            {/* JRC Mode: Tropical degradation layer (top) */}
+            <Source
+              key={`tropical-degradation-${dataset}`}
+              id="tropical-degradation-source"
+              type="raster"
+              tiles={[layersData.tropicalDegradationLayer?.tileUrl]}
+              tileSize={64}
+            >
+              <Layer
+                id="tropical-degradation-layer"
+                type="raster"
+                paint={{
+                  "raster-opacity": 0.8,
+                }}
+              />
+            </Source>
+
+            {/* JRC Mode: Subtropical degradation layer (top) */}
+            <Source
+              key={`subtropical-degradation-${dataset}`}
+              id="subtropical-degradation-source"
+              type="raster"
+              tiles={[layersData.subtropicalDegradationLayer?.tileUrl]}
+              tileSize={64}
+            >
+              <Layer
+                id="subtropical-degradation-layer"
                 type="raster"
                 paint={{
                   "raster-opacity": 0.8,
