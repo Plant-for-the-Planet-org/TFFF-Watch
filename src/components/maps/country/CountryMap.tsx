@@ -8,13 +8,7 @@ import {
   featureCollection as turfFeatureCollection,
 } from "@turf/turf";
 import { useWindowSize } from "@uidotdev/usehooks";
-import {
-  Layer,
-  Map,
-  MapRef,
-  NavigationControl,
-  Source,
-} from "@vis.gl/react-maplibre";
+import { Layer, Map, MapRef, Source } from "@vis.gl/react-maplibre";
 import type {
   Feature,
   FeatureCollection,
@@ -130,12 +124,12 @@ export default function CountryMap({
           repositionMap();
         }}
         renderWorldCopies={false}
-        interactive={true}
-        dragPan={true}
-        doubleClickZoom={true}
+        interactive={false}
+        // dragPan={true}
+        // doubleClickZoom={true}
         attributionControl={false}
       >
-        <NavigationControl />
+        {/* <NavigationControl /> */}
         {countryFeatureCollection && (
           <Source id="country" type="geojson" data={countryFeatureCollection}>
             <Layer
