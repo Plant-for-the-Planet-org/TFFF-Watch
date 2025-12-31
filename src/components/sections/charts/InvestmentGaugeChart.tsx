@@ -16,7 +16,8 @@ const COLORS = {
 };
 
 const TARGET = 25000000000;
-const NORWAY_2026_TARGET = 12900000000;
+const NORWAY_2026_TARGET = 10000000000;
+const NORWAY_2026_TARGET_LABEL = 12500000000;
 const LABEL_OFFSET_X = 8;
 
 type PieData = {
@@ -128,9 +129,9 @@ const CustomLabel = (props: CustomLabelWithDataProps) => {
                       alt=""
                     />
                     <div className="hidden group-hover:block absolute z-50 -top-16 left-4">
-                      <div className="bg-white w-48 p-2 px-4 rounded-xl">
+                      <div className="bg-white border border-primary-light w-48 p-2 px-4 rounded-xl">
                         <p className="text-xs">
-                          $12.9bn in total pledges required by end of 2026 to
+                          $10 bn in total pledges required by end of 2026 to
                           unlock Norway’s pledge (see Norway tracker tab)
                         </p>
                       </div>
@@ -220,7 +221,7 @@ function CustomPieTooltip({
           {data.country || data.label}
         </p>
         <p className="text-sm">
-          {toReadableAmountLong(data.value, true, false).toLowerCase()}
+          {toReadableAmountLong(data.value, true, true).toLowerCase()}
           {/* {toReadableAmount(data.value).toLowerCase()} */}
         </p>
       </div>
@@ -275,15 +276,15 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
       });
 
     // // 3. Norway 2026 Target
-    data.push({
-      id: "norway2026",
-      label: "Norway 2026 Target",
-      value: NORWAY_2026_TARGET - (totalInvested + totalPledged),
-      color: COLORS.norway2026,
-    });
+    // data.push({
+    //   id: "norway2026",
+    //   label: "Norway 2026 Target",
+    //   value: NORWAY_2026_TARGET - (totalInvested + totalPledged),
+    //   color: COLORS.norway2026,
+    // });
 
     // 4. Remaining
-    const remaining = TARGET - NORWAY_2026_TARGET;
+    const remaining = TARGET - (totalInvested + totalPledged);
     data.push({
       id: "remaining",
       label: "Remaining",
@@ -297,7 +298,7 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
     const plgPct =
       TARGET > 0 ? Math.min(100, (totalPledged / TARGET) * 100) : 0;
     const norwayPct =
-      TARGET > 0 ? Math.min(100, (NORWAY_2026_TARGET / TARGET) * 100) : 0;
+      TARGET > 0 ? Math.min(100, (NORWAY_2026_TARGET_LABEL / TARGET) * 100) : 0;
 
     const labels: LabelData[] = [
       {
@@ -365,8 +366,8 @@ export default function InvestmentGaugeChart({ chartData }: Props) {
           <Pie
             isAnimationActive={false}
             data={[{ value: 1 }]}
-            startAngle={87.1}
-            endAngle={87.11}
+            startAngle={116.3}
+            endAngle={116.31}
             innerRadius="120%"
             outerRadius="160%"
             dataKey="value"
