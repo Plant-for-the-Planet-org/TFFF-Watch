@@ -1,5 +1,6 @@
 import { DatasetType } from "@/components/maps/shared/types";
 import AnnualPayout from "@/components/sections/features/AnnualPayout";
+import CountrySingnatories from "@/components/sections/features/CountrySignatories";
 import ForestCoverChange from "@/components/sections/features/ForestCoverChange";
 import { TFFFCountryMapView } from "@/components/sections/hero/TFFFMapView";
 import Br from "@/components/ui/Br";
@@ -54,6 +55,8 @@ export default async function Page({ params, searchParams }: PageProps) {
       {/* <PotentialPayoutVsExistingConservationFunding /> */}
       <Br />
       <AnnualPayout />
+      <Br />
+      <CountrySingnatories />
     </div>
   );
 }
