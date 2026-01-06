@@ -17,6 +17,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import countries from "../countries-optimized.geo.json";
 import * as turf from "@turf/turf";
 import { GEOFENCE } from "./WorldMap";
+import Br from "@/components/ui/Br";
 
 // Types
 interface CountryProperties {
@@ -204,7 +205,7 @@ export default function EndorsementMap({
   }, []);
 
   return (
-    <div className="relative mx-auto aspect-[2] w-full h-full max-w-full max-h-full md:w-3/4 md:h-3/4 object-contain">
+    <div className="relative mx-auto w-full h-full max-w-full max-h-full object-contain">
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center z-50 rounded-lg">
           <div className="text-primary">Loading endorsement data...</div>
@@ -217,7 +218,26 @@ export default function EndorsementMap({
         </div>
       )}
 
-      <div className="aspect-[1.75] w-full -z-10">
+      <Br />
+      <Br />
+      <div className="relative z-10">
+        <div className="bg-primary-light">
+          <div className="flex flex-col items-center">
+            <h2 className="font-bold text-sm md:text-xl lg:text-2xl">
+              Countries that signed the TFFF Declaration
+            </h2>
+            {/* <p className="text-center max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl typo-p">
+              if TFFF were fully funded; based on 2024 forest change data
+            </p> */}
+          </div>
+        </div>
+        <div className="bg-gradient-to-b from-primary-light to-transparent">
+          <Br />
+          <Br />
+        </div>
+      </div>
+
+      <div className="aspect-[2] w-full -z-10">
         <Map
           ref={mapRef}
           {...viewState}
@@ -261,8 +281,8 @@ export default function EndorsementMap({
                 "fill-opacity": [
                   "case",
                   ["==", ["get", "iso_a2"], hoveredCountry || ""],
-                  0.8,
-                  0.6,
+                  1,
+                  0.5,
                 ],
               }}
             />

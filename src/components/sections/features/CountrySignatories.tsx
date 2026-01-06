@@ -1,9 +1,11 @@
 "use client";
 
-import ContentSection from "@/components/ui/ContentSection";
-import RichToHTML from "./RichToHTML";
-import dynamic from "next/dynamic";
+import { useState } from "react";
+import { Dialog } from "@/components/ui/Dialog";
 import Br from "@/components/ui/Br";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
 
 // Dynamically import the map component to avoid SSR issues with map libraries
 const EndorsementMap = dynamic(
@@ -12,6 +14,8 @@ const EndorsementMap = dynamic(
 );
 
 export default function CountrySignatories() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const handleCountryClick = (country: {
     iso2: string;
     slug: string;
@@ -24,7 +28,47 @@ export default function CountrySignatories() {
   return (
     <div className="border border-base-gray rounded-xl padding-3">
       <div className="extra-padding-x-4 flex flex-col divide-y divide-base-gray">
-        <ContentSection
+        <div>
+          <h2 className="font-bold typo-h2 flex items-center gap-2">
+            <Image
+              width={32}
+              height={32}
+              src={"/assets/investment-endorsement.svg"}
+              alt={"Signatory of the TFFF Declaration"}
+            />
+            <p>
+              Signatory of the
+              <Link
+                href="https://tfff.earth/wp-content/uploads/2025/11/Declaration-on-the-Launch-of-the-TFFF.pdf"
+                className="underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                TFFF Declaration
+              </Link>
+            </p>
+          </h2>
+          <Br />
+          <button
+            onClick={() => setIsDialogOpen(true)}
+            className="typo-p underline hover:no-underline"
+          >
+            See all signatories
+          </button>
+        </div>
+
+        {/* Dialog with Map */}
+        <Dialog
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          className="max-w-[90vw] max-h-[90vh] xl:max-w-[75vw]"
+        >
+          <div className="h-full w-full bg-primary-light rounded-lg overflow-hidden">
+            <EndorsementMap onCountryClick={handleCountryClick} />
+          </div>
+        </Dialog>
+
+        {/* <ContentSection
           icon="/assets/investment-endorsement.svg"
           title="Signatory of the TFFF Declaration"
           className="mb-4"
@@ -34,7 +78,7 @@ export default function CountrySignatories() {
           <div className="h-[500px] bg-primary-light w-full rounded-lg overflow-hidden">
             <EndorsementMap onCountryClick={handleCountryClick} />
           </div>
-        </ContentSection>
+        </ContentSection> */}
       </div>
     </div>
   );
