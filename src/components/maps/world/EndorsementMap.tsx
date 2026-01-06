@@ -282,7 +282,7 @@ export default function EndorsementMap({
                   "case",
                   ["==", ["get", "iso_a2"], hoveredCountry || ""],
                   1,
-                  0.5,
+                  1,
                 ],
               }}
             />

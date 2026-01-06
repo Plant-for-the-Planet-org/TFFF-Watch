@@ -68,7 +68,7 @@ export function Dialog({
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none"
+          className="absolute z-20 right-2 top-2 h-4 w-4 md:h-8 md:w-8 rounded p-1 md:p-2 shadow bg-white focus:outline-none"
           aria-label="Close dialog"
         >
           <Image src="/assets/x.svg" width={16} height={16} alt="Close" />
