@@ -3,15 +3,9 @@
 import { useState } from "react";
 import { Dialog } from "@/components/ui/Dialog";
 import Br from "@/components/ui/Br";
-import dynamic from "next/dynamic";
+import EndorsementMap from "@/components/maps/world/EndorsementMap";
 import Image from "next/image";
 import Link from "next/link";
-
-// Dynamically import the map component to avoid SSR issues with map libraries
-const EndorsementMap = dynamic(
-  () => import("@/components/maps/world/EndorsementMap"),
-  { ssr: false }
-);
 
 export default function CountrySignatories() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -37,7 +31,7 @@ export default function CountrySignatories() {
               alt={"Signatory of the TFFF Declaration"}
             />
             <p>
-              Signatory of the
+              Signatory of the{" "}
               <Link
                 href="https://tfff.earth/wp-content/uploads/2025/11/Declaration-on-the-Launch-of-the-TFFF.pdf"
                 className="underline"
