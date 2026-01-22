@@ -76,7 +76,7 @@ export default function EndorsementMap({
     const fetchEndorsementData = async () => {
       try {
         const response = await fetch(
-          "https://automate.plant-for-the-planet.org/webhook/uncached/endorsement-countries"
+          "https://automate.plant-for-the-planet.org/webhook/uncached/endorsement-countries",
         );
         if (!response.ok) {
           throw new Error("Failed to fetch endorsement data");
@@ -172,7 +172,7 @@ export default function EndorsementMap({
         });
       }
     },
-    [onCountryClick]
+    [onCountryClick],
   );
 
   // Handle mouse move for hover effect
@@ -208,7 +208,27 @@ export default function EndorsementMap({
     <div className="relative mx-auto w-full h-full max-w-full max-h-full object-contain">
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center z-50 rounded-lg">
-          <div className="text-primary">Loading endorsement data...</div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="animate-spin text-primary lucide lucide-loader-icon lucide-loader"
+          >
+            <path d="M12 2v4" />
+            <path d="m16.2 7.8 2.9-2.9" />
+            <path d="M18 12h4" />
+            <path d="m16.2 16.2 2.9 2.9" />
+            <path d="M12 18v4" />
+            <path d="m4.9 19.1 2.9-2.9" />
+            <path d="M2 12h4" />
+            <path d="m4.9 4.9 2.9 2.9" />
+          </svg>
         </div>
       )}
 
@@ -259,7 +279,7 @@ export default function EndorsementMap({
           onLoad={() => {
             const map = mapRef.current?.getMap();
             map?.addControl(
-              new maplibregl.AttributionControl({ compact: true })
+              new maplibregl.AttributionControl({ compact: true }),
             );
           }}
         >

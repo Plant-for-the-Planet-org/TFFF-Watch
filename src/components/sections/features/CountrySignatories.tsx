@@ -6,6 +6,7 @@ import Br from "@/components/ui/Br";
 import EndorsementMap from "@/components/maps/world/EndorsementMap";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
 export default function CountrySignatories() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -21,8 +22,8 @@ export default function CountrySignatories() {
 
   return (
     <div className="border border-base-gray rounded-xl padding-3">
-      <div className="extra-padding-x-4 flex flex-col divide-y divide-base-gray">
-        <div>
+      <div className="flex flex-col divide-y divide-base-gray">
+        <div className="flex flex-col sm:flex-row justify-between flex-wrap">
           <h2 className="font-bold typo-h2 flex items-center gap-2">
             <Image
               width={32}
@@ -42,13 +43,16 @@ export default function CountrySignatories() {
               </Link>
             </p>
           </h2>
-          <Br />
-          <button
-            onClick={() => setIsDialogOpen(true)}
-            className="typo-p underline hover:no-underline"
+          <Br cn="sm:none" />
+          <Button
+            type="button"
+            cn="min-w-40"
+            onClick={() => {
+              setIsDialogOpen(true);
+            }}
           >
-            See all signatories
-          </button>
+            All signatories
+          </Button>
         </div>
 
         {/* Dialog with Map */}
