@@ -155,6 +155,15 @@ export default function CountryListChips({ country, capitalsData }: Props) {
       pledgedCapital: null,
       investedCapital: null,
     },
+    {
+      slug: "Netherlands",
+      label: "Netherlands",
+      iso2: "NL",
+      emoji: "🇳🇱",
+      selected: false,
+      pledgedCapital: null,
+      investedCapital: null,
+    },
   ];
 
   const banksOthersList: ChipItemType[] = [
@@ -269,7 +278,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
               el?.selected
                 ? "border border-base-text bg-base-text text-white"
                 : "",
-              "flex justify-center items-center gap-2"
+              "flex justify-center items-center gap-2",
             )}
             key={key}
             href={`/investment-tracker/${el.slug}`}
@@ -311,7 +320,7 @@ export default function CountryListChips({ country, capitalsData }: Props) {
               el?.selected
                 ? "border border-base-text bg-base-text text-white"
                 : "",
-              "flex justify-center items-center gap-2"
+              "flex justify-center items-center gap-2",
             )}
             key={key}
             href={`/investment-tracker/${el.slug}`}

@@ -25,6 +25,7 @@ const investingCountries = [
   "China",
   "Indonesia",
   "Portugal",
+  "Netherlands",
   /* "Asian_Infrastructure_Investment_Bank", */ "AIIB",
   /* "European_Bank_for_Reconstruction_and_Development", */ "EBRD",
   "Philanthropies",
