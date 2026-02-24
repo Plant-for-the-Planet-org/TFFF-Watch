@@ -60,14 +60,12 @@ export function getGFWColorKey(eligibility: string): string {
 export function getColorKeyForDataset(
   dataset: DatasetType,
   changeValue: number,
-  eligibility?: string
+  eligibility?: string,
 ): string {
-  // return dataset === "JRC"
-  //   ? getJRCColorKey(eligibility || "NA")
-  //   : getGFWColorKey(changeValue);
-  return dataset === "JRC"
+  // All three datasets use the same eligibility-based coloring
+  return dataset === "JRC" || dataset === "GFW_20P" || dataset === "GFW_30P"
     ? getJRCColorKey(eligibility || "")
-    : getGFWColorKey(eligibility || "");
+    : getJRCColorKey(eligibility || "");
 }
 
 export function updateFeaturesWithColorKeys(
@@ -79,7 +77,7 @@ export function updateFeaturesWithColorKeys(
     string,
     { countrySlug: string; forestChange: number; eligibility?: string }
   >,
-  dataset: DatasetType
+  dataset: DatasetType,
 ) {
   return features.map((country) => {
     const countyISO2 = country.properties.iso_a2;
@@ -94,7 +92,7 @@ export function updateFeaturesWithColorKeys(
     const colorKey = getColorKeyForDataset(
       dataset,
       gfwForestChangeValue,
-      eligibility
+      eligibility,
     );
 
     return {
