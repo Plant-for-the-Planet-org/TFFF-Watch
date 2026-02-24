@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 type Props = {
@@ -9,6 +9,7 @@ type Props = {
   cn?: string;
   external?: boolean;
   children?: ReactNode;
+  onClick?: ComponentProps<"button">["onClick"];
 };
 
 export function Button({
@@ -17,6 +18,7 @@ export function Button({
   cn = "",
   external = false,
   children,
+  onClick,
 }: Props) {
   const body = (
     <span className="flex justify-between items-center flex-nowrap">
@@ -37,7 +39,7 @@ export function Button({
 
   const className = twMerge(
     "inline-block bg-primary hover:bg-primary-dark text-white min-w-64 px-6 py-3 rounded-xl cursor-pointer transition-colors",
-    cn
+    cn,
   );
 
   if (type === "link")
@@ -51,7 +53,11 @@ export function Button({
       </Link>
     );
 
-  return <button className={className}>{body}</button>;
+  return (
+    <button className={className} onClick={onClick}>
+      {body}
+    </button>
+  );
 }
 
 type IconButtonProps = {
@@ -77,7 +83,7 @@ export function IconButton({
       className={twMerge(
         "block bg-primary text-white h-10 w-10 rounded-full cursor-pointer",
         small && "h-8 w-8",
-        cn
+        cn,
       )}
     >
       <span className="h-full flex justify-center items-center">
