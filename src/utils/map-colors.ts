@@ -27,6 +27,10 @@ export function getGFWColorKey(eligibility: string): string {
   }
 }
 
+export function getEndorsementColorKey(hasEndorsed: boolean): string {
+  return hasEndorsed ? "#6FCF97" : "#FFFFFF";
+}
+
 // export function getGFWColorKey(changeValue: number): string {
 //   // Different color scheme for GFW data
 //   switch (true) {

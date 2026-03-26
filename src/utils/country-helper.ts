@@ -94,3 +94,34 @@ export function transformAllForestCoverChangeData(data: ForestCoverChange[]) {
     return acc;
   }, {});
 }
+
+export interface EndorsementData {
+  [key: string]: {
+    countrySlug: string;
+    hasEndorsed: boolean;
+    hasInvested: boolean;
+  };
+}
+
+export function transformEndorsementData(
+  data: Array<{
+    "country-iso2": string;
+    "country-slug": string;
+    has_endorsed: string;
+    has_invested: string;
+  }>
+): EndorsementData {
+  return data.reduce((acc: EndorsementData, row) => {
+    const countryISO2 = row["country-iso2"];
+    const countrySlug = row["country-slug"];
+    const hasEndorsed = row.has_endorsed === "YES";
+    const hasInvested = row.has_invested === "YES";
+
+    acc[countryISO2] = {
+      countrySlug,
+      hasEndorsed,
+      hasInvested,
+    };
+    return acc;
+  }, {});
+}
