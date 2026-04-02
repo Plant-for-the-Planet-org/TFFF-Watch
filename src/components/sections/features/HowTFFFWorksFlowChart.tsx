@@ -1,11 +1,25 @@
-import Br from "@/components/ui/Br";
+// import Br from "@/components/ui/Br";
 import Image from "next/image";
-import HowTFFFWorksFlowChartArrows from "./FlowChartArrorw";
+// import HowTFFFWorksFlowChartArrows from "./FlowChartArrorw";
 
 export default function HowTFFFWorksFlowChart() {
   return (
-    <div className="p-5">
-      <div className="max-w-3xl mx-auto border border-dashed border-primary rounding-xl padding-2 relative">
+    <div className="">
+      <Image
+        className="mx-auto hidden md:block"
+        src="/assets/explainer/flowchart-web.png"
+        alt="How TFFF Works"
+        width={1000}
+        height={1000}
+      />
+      <Image
+        className="mx-auto md:hidden"
+        src="/assets/explainer/flowchart-mobile.png"
+        alt="How TFFF Works"
+        width={1000}
+        height={1000}
+      />
+      {/* <div className="max-w-3xl mx-auto border border-dashed border-primary rounding-xl padding-2 relative">
         <div
           id="investors-from-tfif"
           className="absolute top-[50%] -right-[4px]"
@@ -60,7 +74,7 @@ export default function HowTFFFWorksFlowChart() {
           </div>
         </div>
       </div>
-      <div className="m-2 max-w-2xl mx-auto grid grid-cols-2">
+      <div className="m-2 max-w-2xl mx-auto grid grid-cols-2 md:gap-8">
         <div className="w-full md:w-2/3 justify-self-start text-left md:justify-self-center md:text-right relative">
           <div
             className="hidden md:block absolute top-0 -right-[12px]"
@@ -95,7 +109,7 @@ export default function HowTFFFWorksFlowChart() {
       <Br cn="md:hidden" />
       <Br />
 
-      <div className="max-w-xl mx-auto relative padding-3 bg-white rounding-xl">
+      <div className="max-w-3xl mx-auto relative padding-3 bg-white rounding-xl">
         <div
           id="tfif-from-sponsors"
           className="md:hidden absolute -left-[12px] -top-8"
@@ -115,7 +129,7 @@ export default function HowTFFFWorksFlowChart() {
 
         <div className="absolute flex justify-center inset-x-0 translate-y-[-80%]">
           <Image
-            className="w-12 md:w-[10%] border border-primary-light rounded-xl aspect-square p-2 md:p-3 bg-white"
+            className="w-12 md:w-[8%] border border-primary-light rounded-xl aspect-square p-2 md:p-3 bg-white"
             width={36}
             height={42}
             src="/assets/tfif.svg"
@@ -140,6 +154,40 @@ export default function HowTFFFWorksFlowChart() {
             ODA-eligible countries.
           </p>
           <Br />
+
+          <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-3 gap-2 ">
+              <div></div>
+              <div className="bg-primary-light border-primary border-2 border-dashed rounded-full px-6 py-2.5">
+                <p className="text-primary-dark text-xs font-semibold">
+                  TFIF Board
+                </p>
+              </div>
+              <div></div>
+            </div>
+            <div className="grid grid-cols-3 gap-2 items-center justify-between">
+              <div></div>
+              <div className="place-self-center bg-primary rounded-lg px-6 py-2.5">
+                <p className="text-white text-xs font-semibold">TFIF CFO</p>
+              </div>
+              <div className="place-self-center bg-primary rounded-lg px-6 py-2.5">
+                <p className="text-white text-xs font-semibold">TFIF CIO</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-2 items-center justify-between">
+              <div></div>
+              <div className="place-self-center bg-black rounded-lg px-6 py-2.5">
+                <p className="text-white text-xs font-semibold">
+                  Treasury Manager
+                </p>
+              </div>
+              <div className="place-self-center bg-base-gray rounded-lg px-6 py-2.5">
+                <p className="text-base-text text-xs font-semibold">
+                  External Manager(s)
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -201,7 +249,7 @@ export default function HowTFFFWorksFlowChart() {
         </div>
       </div>
 
-      <HowTFFFWorksFlowChartArrows />
+      <HowTFFFWorksFlowChartArrows /> */}
     </div>
   );
 }
