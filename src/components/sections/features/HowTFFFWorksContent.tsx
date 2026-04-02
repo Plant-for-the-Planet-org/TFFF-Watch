@@ -1,6 +1,7 @@
 import Br from "@/components/ui/Br";
 import Hr from "@/components/ui/Hr";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HowTFFFWorksContent() {
   return (
@@ -22,11 +23,19 @@ export default function HowTFFFWorksContent() {
             capital. The fund’s core objective is to reward tropical forest
             countries that are already maintaining or reducing deforestation
             rates but require ongoing financial support to continue doing so.
-            Although more than 140 countries pledged at COP26 in Glasgow to end
-            deforestation by 2030, current deforestation rates show that we are
-            not on track to meet this goal. The TFFF seeks to address this
-            shortfall by offering a long-term, performance-based funding model
-            that rewards forest conservation.
+            Although more than 140 countries{" "}
+            <Link
+              className="text-primary-dark font-semibold underline"
+              href="https://www.unccd.int/news-stories/statements/glasgow-leaders-declaration-forests-and-land-use"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              pledged at COP26 in Glasgow
+            </Link>{" "}
+            to end deforestation by 2030, current deforestation rates show that
+            we are not on track to meet this goal. The TFFF seeks to address
+            this shortfall by offering a long-term, performance-based funding
+            model that rewards forest conservation.
           </p>
           <Br />
           <p>
@@ -82,12 +91,18 @@ export default function HowTFFFWorksContent() {
           </ol>
           <Br />
           <p>
+            Both these arms have different legal identities, governance
+            structures, and operational mandates. The Facility and the TFIF will
+            have their own governance structures and separate charters, which
+            will be mutually consistent and cross-referenced.
+          </p>
+          {/* <p>
             These two arms will be coordinated by a central secretariat that
             ensures coherence between fund management and conservation outcomes.
             Each arm will be managed by separate trustees to maintain
             independent financial oversight, though a single institution may
             perform both roles if strict separation of accounts is upheld
-          </p>
+          </p> */}
         </div>
       </div>
       <Br />
@@ -153,8 +168,16 @@ export default function HowTFFFWorksContent() {
           <p>
             TFIF proposes to adopt an investment strategy that primarily seeks
             climate and sustainability-related investments in ODA-eligible
-            countries (e.g., green, blue, or sustainable bonds) to qualify under
-            NCQG criteria, secondarily prioritizes ODA-eligible vanilla
+            countries (e.g., green, blue, or sustainable bonds) to qualify under{" "}
+            <Link
+              className="text-primary-dark font-semibold underline"
+              href="https://unfccc.int/sites/default/files/resource/UNFCCC_NCQG2023_flyer_web.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              New Collective Quantificatied Goal
+            </Link>{" "}
+            (NCQG) criteria, secondarily prioritizes ODA-eligible vanilla
             sovereign debt excluding items on a negative exclusion list, and may
             also invest in instruments issued by non-ODA eligible countries and
             developed market economies.
