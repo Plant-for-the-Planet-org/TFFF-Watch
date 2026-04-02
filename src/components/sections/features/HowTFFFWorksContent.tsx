@@ -71,8 +71,7 @@ export default function HowTFFFWorksContent() {
         <Br />
         <div className="typo-p">
           <p>
-            The TFFF is proposed to be structured as a two-arm facility, most
-            likely managed by the World Bank:
+            The TFFF is proposed to be structured as a two-arm facility.
           </p>
           <Br />
           <ol className="typo-p list-decimal ml-4.5">
